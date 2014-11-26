@@ -1,0 +1,59 @@
+{
+  "name": "mpromise",
+  "version": "0.4.3",
+  "description": "Promises A+ conformant implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/_mocha"
+  },
+  "devDependencies": {
+    "longjohn": "~0.2.1",
+    "promises-aplus-tests": "~2.0.2",
+    "mocha": "~1.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aheckmann/mpromise"
+  },
+  "keywords": [
+    "promise",
+    "mongoose",
+    "aplus",
+    "a+",
+    "plus"
+  ],
+  "author": {
+    "name": "Aaron Heckmann",
+    "email": "aaron.heckmann+github@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aheckmann/mpromise/issues"
+  },
+  "homepage": "https://github.com/aheckmann/mpromise",
+  "_id": "mpromise@0.4.3",
+  "dist": {
+    "shasum": "edc47a75a2a177b0e9382735db52dbec3808cc33",
+    "tarball": "http://registry.npmjs.org/mpromise/-/mpromise-0.4.3.tgz"
+  },
+  "_from": "mpromise@0.4.3",
+  "_npmVersion": "1.3.13",
+  "_npmUser": {
+    "name": "refack",
+    "email": "refael@empeeric.com"
+  },
+  "maintainers": [
+    {
+      "name": "aaron",
+      "email": "aaron.heckmann+github@gmail.com"
+    },
+    {
+      "name": "refack",
+      "email": "refael@empeeric.com"
+    }
+  ],
+  "directories": {},
+  "_shasum": "edc47a75a2a177b0e9382735db52dbec3808cc33",
+  "_resolved": "https://registry.npmjs.org/mpromise/-/mpromise-0.4.3.tgz",
+  "readme": "ERROR: No README data found!"
+}

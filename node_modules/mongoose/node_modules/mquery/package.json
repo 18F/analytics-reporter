@@ -1,0 +1,61 @@
+{
+  "name": "mquery",
+  "version": "0.8.0",
+  "description": "Expressive query building for MongoDB",
+  "main": "lib/mquery.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aheckmann/mquery.git"
+  },
+  "dependencies": {
+    "sliced": "0.0.5",
+    "debug": "0.7.4",
+    "regexp-clone": "0.0.1"
+  },
+  "devDependencies": {
+    "mongodb": "1.4.4",
+    "mocha": "1.9.x"
+  },
+  "bugs": {
+    "url": "https://github.com/aheckmann/mquery/issues/new"
+  },
+  "author": {
+    "name": "Aaron Heckmann",
+    "email": "aaron.heckmann+github@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "mongodb",
+    "query",
+    "builder"
+  ],
+  "homepage": "https://github.com/aheckmann/mquery/",
+  "_id": "mquery@0.8.0",
+  "dist": {
+    "shasum": "1e5b8c2a5a52f5583bd08932700b85440ee25f60",
+    "tarball": "http://registry.npmjs.org/mquery/-/mquery-0.8.0.tgz"
+  },
+  "_from": "mquery@0.8.0",
+  "_npmVersion": "1.4.4",
+  "_npmUser": {
+    "name": "aaron",
+    "email": "aaron.heckmann@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "aaron",
+      "email": "aaron.heckmann+github@gmail.com"
+    },
+    {
+      "name": "ebensing",
+      "email": "ebensing38@gmail.com"
+    }
+  ],
+  "directories": {},
+  "_shasum": "1e5b8c2a5a52f5583bd08932700b85440ee25f60",
+  "_resolved": "https://registry.npmjs.org/mquery/-/mquery-0.8.0.tgz",
+  "readme": "ERROR: No README data found!"
+}
