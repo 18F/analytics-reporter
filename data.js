@@ -11,7 +11,7 @@ var jwt = new googleapis.auth.JWT(
 );
 
 module.exports = function() {
-    General.findOne({slug: "test1" }, function (err, doc) {
+    models.General.findOne({slug: "test1" }, function (err, doc) {
         jwt.authorize(function(err, result) {
             ga.data.ga.get({
                 'auth': jwt,
@@ -20,10 +20,9 @@ module.exports = function() {
                 "end-date": '2014-09-01',
                 "metrics": "ga:visits"
             }, function(err, res) {
-                console.log('The answer to life, the universe, and everything!');
                 console.log(res);
-                // doc.data = res;
-                // doc.save();
+                doc.data = res;
+                doc.save();
             });
         });
     });
