@@ -1,0 +1,9 @@
+// Config variables for the app.
+// Copy config.js.example to config.js and fill in.
+
+module.exports = {
+
+  // The gserviceaccount email associated with your Google Analytics access.
+  email: null,
+
+};

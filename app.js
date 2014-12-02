@@ -2,14 +2,10 @@
 require('mongoose').connect('mongodb://localhost/analytics_db');
 
 // Set up the cronjob.
-var get_data = require('./analytics/get_analytics');
 var schedule = require('node-schedule');
 var rule = new schedule.RecurrenceRule();
 rule.minute = new schedule.Range(0, 59, 1);
-var j = schedule.scheduleJob(rule, function(){
-    console.log('The answer to life, the universe, and everything!');
-    get_data();
-});
+schedule.scheduleJob(rule, require("./data"));
 
 
 // Define the app, and middleware.
@@ -21,8 +17,7 @@ app.set('port', process.env.PORT || 3000);
 
 // Attach the routes.
 app.get('/', function(req, res) {res.send("Hello, world!")});
-require('./routes/specific_api')(app);
-require('./routes/general_api')(app);
+require('./routes')(app);
 
 
 // Boot it up!

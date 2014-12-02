@@ -1,9 +1,14 @@
-// API authentication.
+// Auth to the API and fetch a batch of data.
 
-var General = require('./../models/general'),
-    jwt = require('./jwt.js'),
+var models = require('./models'),
+    config = require('/config'),
     googleapis = require('googleapis'),
     ga = googleapis.analytics('v3');
+
+var jwt = new googleapis.auth.JWT(
+    config.email, 'secret_key.pem', null,
+    ['https://www.googleapis.com/auth/analytics.readonly']
+);
 
 module.exports = function() {
     General.findOne({slug: "test1" }, function (err, doc) {
@@ -15,7 +20,8 @@ module.exports = function() {
                 "end-date": '2014-09-01',
                 "metrics": "ga:visits"
             }, function(err, res) {
-                console.log(res)
+                console.log('The answer to life, the universe, and everything!');
+                console.log(res);
                 // doc.data = res;
                 // doc.save();
             });

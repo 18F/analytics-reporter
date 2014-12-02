@@ -1,3 +1,4 @@
 .DS_Store
 *.p12
 *.pem
+/config.js
