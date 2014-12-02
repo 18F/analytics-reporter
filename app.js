@@ -6,8 +6,22 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+//routes
 var specific_api = require('./routes/specific_api');
 var general_api = require('./routes/general_api');
+
+//google analytics api
+var get_data = require('./analytics/get_analytics.js');
+
+//cron
+var schedule = require('node-schedule');
+var rule = new schedule.RecurrenceRule();
+rule.minute = new schedule.Range(0, 59, 1);
+var j = schedule.scheduleJob(rule, function(){
+    console.log('The answer to life, the universe, and everything!');
+    get_data()
+});
+
 
 var app = express();
 
@@ -28,7 +42,7 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/data/api/specific', specific_api);
-app.use('/data/api/public', specific_api);
+app.use('/data/api/general', general_api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
