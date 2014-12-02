@@ -1,7 +1,7 @@
 // Auth to the API and fetch a batch of data.
 
 var models = require('./models'),
-    config = require('/config'),
+    config = require('./config'),
     googleapis = require('googleapis'),
     ga = googleapis.analytics('v3');
 

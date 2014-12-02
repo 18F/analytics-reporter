@@ -6,4 +6,9 @@ module.exports = {
   // The gserviceaccount email associated with your Google Analytics access.
   email: null,
 
+  mongo: {
+    host: 'localhost',
+    database: 'analytics_db'
+  }
+
 };

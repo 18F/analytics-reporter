@@ -1,5 +1,7 @@
 // Connect to the database.
-require('mongoose').connect('mongodb://localhost/analytics_db');
+var mongo = require("./config").mongo;
+require('mongoose').connect('mongodb://' + mongo.host + '/' + mongo.database);
+
 
 // Set up the cronjob.
 var schedule = require('node-schedule');
@@ -16,8 +18,9 @@ app.set('port', process.env.PORT || 3000);
 
 
 // Attach the routes.
+var models = require("./models");
 app.get('/', function(req, res) {res.send("Hello, world!")});
-require('./routes')(app);
+require('./routes')(app, models);
 
 
 // Boot it up!

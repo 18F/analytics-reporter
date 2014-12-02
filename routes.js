@@ -7,8 +7,6 @@ module.exports = function(app, models) {
   });
 
   app.get('/data/api/general/:slug', function (req, res) {
-    if (!req.params.slug) return res.status(400);
-
     models.General.find({ slug: req.params.slug }, function (err, docs) {
       res.json(docs);
     });
@@ -19,8 +17,6 @@ module.exports = function(app, models) {
   });
 
   app.get('/data/api/specific/:slug', function (req, res) {
-    if (!req.params.slug) return res.status(400);
-
     models.Specific.find({ slug: req.params.slug }, function (err, docs) {
       res.json(docs);
     });
