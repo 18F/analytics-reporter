@@ -1,21 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
+var Specific = require('./../models/specific');
 
-//Database
-var Specific = require('./../models/specific')
+module.exports = function(app) {
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
-});
+  app.get('/data/api/specific/', function(req, res) {
+    res.send("API specific!");
+  });
 
-router.get('/:slug', function (req, res) {
-    if (req.params.slug) {
-        Specific.find({ slug: req.params.slug }, function (err, docs) {
-            res.json(docs);
-        });
-    }
-});
+  app.get('/data/api/specific/:slug', function (req, res) {
+    if (!req.params.slug) return res.status(400);
 
-module.exports = router;
+    Specific.find({ slug: req.params.slug }, function (err, docs) {
+      res.json(docs);
+    });
+  });
+
+};

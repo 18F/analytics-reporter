@@ -1,15 +1,12 @@
-//api auth
-function get_data() {
-    //Database
-    var General = require('./../models/general')
-    //authentication
-    var jwt = require('./jwt.js');
-    //api
-    var googleapis = require('googleapis');
-    var ga = googleapis.analytics('v3');
-    //call api and update
-    General.findOne({ slug: "test1" }, function (err, doc) {
+// API authentication.
 
+var General = require('./../models/general'),
+    jwt = require('./jwt.js'),
+    googleapis = require('googleapis'),
+    ga = googleapis.analytics('v3');
+
+module.exports = function() {
+    General.findOne({slug: "test1" }, function (err, doc) {
         jwt.authorize(function(err, result) {
             ga.data.ga.get({
                 'auth': jwt,
@@ -19,13 +16,9 @@ function get_data() {
                 "metrics": "ga:visits"
             }, function(err, res) {
                 console.log(res)
-                doc.data = res;
-                doc.save();
-                });
+                // doc.data = res;
+                // doc.save();
             });
         });
+    });
 };
-
-module.exports = get_data
-
-

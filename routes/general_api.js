@@ -1,21 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
+var General = require('./../models/general');
 
-//Database
-var General = require('./../models/general')
+module.exports = function(app) {
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
-});
+  app.get('/data/api/general/', function(req, res) {
+    res.send("API general!");
+  });
 
-router.get('/:slug', function (req, res) {
-    if (req.params.slug) {
-        General.find({ slug: req.params.slug }, function (err, docs) {
-            res.json(docs);
-        });
-    }
-});
+  app.get('/data/api/general/:slug', function (req, res) {
+    if (!req.params.slug) return res.status(400);
 
-module.exports = router;
+    General.find({ slug: req.params.slug }, function (err, docs) {
+      res.json(docs);
+    });
+  });
+
+};
