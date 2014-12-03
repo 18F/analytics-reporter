@@ -1,3 +1,4 @@
+/*
 // Auth to the API and fetch a batch of data.
 
 var models = require('./models'),
@@ -42,4 +43,4 @@ module.exports = function() {
         });
     });
 };
-
+*/
