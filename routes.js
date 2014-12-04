@@ -30,33 +30,50 @@ module.exports = function(app, models) {
     res.send("API general!");
   });
 
+  app.get('/data/api/general/:slug', function (req, res) {
+    models.Analytics.findOne(
+      { slug: req.params.slug,
+        kind: "general"
+      }, function (err, doc) {
+        if (doc){
+        res.json(doc.data);
+      } else {
+        res.send('{error: "No Data"}')
+      }
+    });
+  });
+
   app.get('/data/api/specific/', function(req, res) {
     res.send("API specific!");
   });
 
-  app.get('/data/api/:kind/:slug', function (req, res) {
+  app.get('/data/api/specific/:slug', function (req, res) {
     models.Analytics.findOne(
         { slug: req.params.slug,
-          kind: req.params.kind
+          kind: "specific"
         }, function (err, doc) {
-          var current_time = (new Date()).getTime();
+          if (doc){
+            var current_time = (new Date()).getTime();
 
-          if(current_time - doc.update_interval > doc.last_update){
-            console.log("update");
-            jwt.authorize(function(err, result) {
-                var query = construct_query(doc.apicall);
-                ga.data.ga.get(query, function(err, result) {
-                    doc.data = result;
-                    doc.last_update = current_time;
-                    doc.save();
-                    res.json(doc.data);
-                });
-            });
+            if(current_time - doc.update_interval > doc.last_update){
+              console.log("update");
+              jwt.authorize(function(err, result) {
+                  var query = construct_query(doc.apicall);
+                  ga.data.ga.get(query, function(err, result) {
+                      doc.data = result;
+                      doc.last_update = current_time;
+                      doc.save();
+                      res.json(doc.data);
+                  });
+              });
 
-          }
-          else{
-            console.log("leave it")
-            res.json(doc.data);
+            }
+            else{
+              console.log("leave it")
+              res.json(doc.data);
+            }
+          } else {
+            res.send('{error: "No Data"}')
           }
     });
   });

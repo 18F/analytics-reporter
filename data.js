@@ -1,4 +1,3 @@
-/*
 // Auth to the API and fetch a batch of data.
 
 var models = require('./models'),
@@ -27,7 +26,7 @@ function construct_query(URL){
 
 //loops through documents and updates them
 module.exports = function() {
-    models.General.find({}, function(err, docs) {
+    models.Analytics.find({kind: "general"}, function(err, docs) {
         jwt.authorize(function(err, result) {
             for (i = 0; i < docs.length; i++)
             {
@@ -43,4 +42,4 @@ module.exports = function() {
         });
     });
 };
-*/
+

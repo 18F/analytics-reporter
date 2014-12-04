@@ -3,6 +3,13 @@ var mongo = require("./config").mongo;
 require('mongoose').connect('mongodb://' + mongo.host + '/' + mongo.database);
 
 
+// Set up the cronjob.
+var schedule = require('node-schedule');
+var rule = new schedule.RecurrenceRule();
+rule.minute = new schedule.Range(0, 59, 10);
+schedule.scheduleJob(rule, require("./data"));
+
+
 // Define the app, and middleware.
 var express = require('express'),
     app = express();
