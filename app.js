@@ -5,9 +5,10 @@ require('mongoose').connect('mongodb://' + mongo.host + '/' + mongo.database);
 
 // Set up the cronjob.
 var schedule = require('node-schedule');
+var data = require("./data")
 var rule = new schedule.RecurrenceRule();
 rule.minute = new schedule.Range(0, 59, 10);
-schedule.scheduleJob(rule, require("./data"));
+schedule.scheduleJob(rule, data.update_general());
 
 
 // Define the app, and middleware.
