@@ -2,5 +2,3 @@
 *.p12
 *.pem
 /config.js
-node_modules/hjs/
-node_modules/less-middleware/
