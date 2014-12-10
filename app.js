@@ -5,7 +5,7 @@ require('mongoose').connect('mongodb://' + mongo.host + '/' + mongo.database);
 
 // Set up the cronjob.
 var schedule = require('node-schedule');
-var data = require("./data")
+var data = require("./data");
 var rule = new schedule.RecurrenceRule();
 rule.minute = new schedule.Range(0, 59, 10);
 schedule.scheduleJob(rule, data.update_general());
@@ -20,7 +20,9 @@ app.set('port', process.env.PORT || 3000);
 
 // Attach the routes.
 var models = require("./models");
-app.get('/', function(req, res) {res.send("Hello, world!")});
+app.get('/', function(req, res) {
+    res.send("Hello, world!")
+});
 require('./routes')(app, models);
 
 
@@ -28,13 +30,17 @@ require('./routes')(app, models);
 var fs = require('fs'),
     models = require('./models');
 fs.readFile('analytics_urls.txt', function(err, data) {
-    if(err) throw err;
+    if (err) throw err;
     var array = data.toString().split("\n");
-    for(i in array) {
+    for (i in array) {
         element = array[i].split("|");
-        var analytics = new models.Analytics(
-            {slug: element[0], apicall: element[1], kind: element[2],
-                update_interval: element[3], last_update: 0});
+        var analytics = new models.Analytics({
+            slug: element[0],
+            apicall: element[1],
+            kind: element[2],
+            update_interval: element[3],
+            last_update: 0
+        });
         console.log(analytics)
         analytics.save()
     }
@@ -43,5 +49,5 @@ fs.readFile('analytics_urls.txt', function(err, data) {
 
 // Boot it up!
 var server = app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + server.address().port);
+    console.log('Express server listening on port ' + server.address().port);
 });
