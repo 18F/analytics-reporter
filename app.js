@@ -2,14 +2,6 @@
 var mongo = require("./config").mongo;
 require('mongoose').connect('mongodb://' + mongo.host + '/' + mongo.database);
 
-
-// Set up the cronjob.
-var schedule = require('node-schedule');
-var rule = new schedule.RecurrenceRule();
-rule.minute = new schedule.Range(0, 59, 1);
-schedule.scheduleJob(rule, require("./data"));
-
-
 // Define the app, and middleware.
 var express = require('express'),
     app = express();
@@ -19,11 +11,16 @@ app.set('port', process.env.PORT || 3000);
 
 // Attach the routes.
 var models = require("./models");
-app.get('/', function(req, res) {res.send("Hello, world!")});
+app.get('/', function (req, res) {
+    res.send("Hello, world!");
+});
 require('./routes')(app, models);
 
+//init model
+data = require("./data");
+data.init_endpoints()
 
 // Boot it up!
-var server = app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + server.address().port);
+var server = app.listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + server.address().port);
 });
