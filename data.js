@@ -54,10 +54,11 @@ module.exports = {
                     slug: req._parsedUrl.query,
                     apicall: req._parsedUrl.query,
                     update_interval: 3600000,
-                    last_update: (new Date()).getTime()
+                    last_update: (new Date()).getTime(),
+                    data: result
                 });
                 doc.save();
-                res.json(result);
+                res.json(doc.data);
                 console.log("End Point Generated")
                 }
                 else{
@@ -83,7 +84,7 @@ module.exports = {
                 });
             } else {
                 console.log("leave it")
-                res.json(doc.data);
+                res.json(doc);
             }
         } else {
             res.status(404).json("The endpoint you attempted to reach does not exist, try a different API call.");
