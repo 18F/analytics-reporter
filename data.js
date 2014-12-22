@@ -70,7 +70,6 @@ module.exports = {
     get_or_update: function(err, res, doc) {
         if (doc) {
             var current_time = (new Date()).getTime();
-            console.log(current_time - doc.update_interval > doc.last_update)
             if (current_time - doc.update_interval > doc.last_update) {
                 console.log("update");
                 jwt.authorize(function(err, result) {
