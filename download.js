@@ -1,24 +1,26 @@
-// download
+// Downloading infrastructure.
 
+//
 var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
     url = require('url'),
     fs = require('fs');
 
-var models = require('../models'),
-    config = require('../config');
+var models = require('./models'),
+    config = require('./config');
 
 var jwt = new googleapis.auth.JWT(
     config.email,
-    '../secret_key.pem',
+    'secret_key.pem',
     null, ['https://www.googleapis.com/auth/analytics.readonly']
 );
 
 
 // The reports we want to run.
-var reports = require("./reports").reports;
+var reports = JSON.parse(fs.readFileSync("./reports.json")).reports;
 
-// Google Analytics data fetching and transformation utilities
+// Google Analytics data fetching and transformation utilities.
+// This should really move to its own analytics.js file.
 var Analytics = {
 
     query: function(report, callback) {
