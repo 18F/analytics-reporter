@@ -41,7 +41,22 @@ is(req, ['application/json']) // 'application/json'
 is(req, ['html']) // false
 ```
 
-#### Each type can be:
+### type = is.is(mediaType, types)
+
+`mediaType` is the [media type](https://tools.ietf.org/html/rfc6838) string. `types` is an array of types.
+
+```js
+var mediaType = 'application/json'
+
+is.is(mediaType, ['json'])             // 'json'
+is.is(mediaType, ['html', 'json'])     // 'json'
+is.is(mediaType, ['application/*'])    // 'application/json'
+is.is(mediaType, ['application/json']) // 'application/json'
+
+is.is(mediaType, ['html']) // false
+```
+
+### Each type can be:
 
 - An extension name such as `json`. This name will be returned if matched.
 - A mime type such as `application/json`.
