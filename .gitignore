@@ -4,4 +4,5 @@
 /config.js
 /data/*.json
 /data/*.csv
-
+/node_modules
+.python-version
