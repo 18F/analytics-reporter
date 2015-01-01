@@ -2,7 +2,6 @@
 *.p12
 *.pem
 /config.js
-/data/*.json
-/data/*.csv
+/data
 /node_modules
 .python-version
