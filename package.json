@@ -19,6 +19,7 @@
     "express": "~4.9.0",
     "googleapis": "^1.0.21",
     "mongoose": "^3.8.19",
-    "node-schedule": "^0.1.13"
+    "node-schedule": "^0.1.13",
+    "mkdirp": "*"
   }
 }

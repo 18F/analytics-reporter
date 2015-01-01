@@ -4,7 +4,8 @@
 var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
     url = require('url'),
-    fs = require('fs');
+    fs = require('fs'),
+    mkdirp = require('mkdirp');
 
 var models = require('./models'),
     config = require('./config');
@@ -38,13 +39,49 @@ var Analytics = {
         });
     },
 
+    // type is "original" or "processed"
+    path: function(type, report) {
+        return "data/" + type + "/" + report.name + ".json";
+    },
 
+    // given a raw google analytics response, transform it into our schema
+    // TODO: way more thoughtful about this - and possibly report-specific.
+    process: function(data) {
+        return {
+            rows: data.rows,
+            columnHeaders: data.columnHeaders
+        }
+    }
 
 };
 
 module.exports = Analytics;
 
-// TODO: Testing
-// Analytics.query(reports[0], function(err, data) {
-//     console.log(arguments);
-// })
+/*  Actually download the files. This should be separated from the above
+    modules at some point.
+*/
+
+mkdirp.sync("data/original");
+mkdirp.sync("data/processed");
+
+for (var i=0; i<reports.length; i++) {
+    var report = reports[i];
+
+    console.log("\n[" + report.name + "] Fetching...");
+    Analytics.query(report, function(err, original) {
+        if (err) return console.log("ERROR: " + err);
+
+        // pretty printed raw Google Analytics data
+        console.log("[" + report.name + "] Saving original...");
+        var originalJSON = JSON.stringify(original, null, 2);
+        fs.writeFileSync(Analytics.path("original", report), originalJSON);
+
+        // transform to our format
+        console.log("[" + report.name + "] Saving processed...");
+        var processed = Analytics.process(original);
+        var processedJSON = JSON.stringify(processed, null, 2);
+        fs.writeFileSync(Analytics.path("processed", report), processedJSON);
+
+        console.log("[" + report.name + "] Done.");
+    });
+}
