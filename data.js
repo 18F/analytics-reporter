@@ -15,7 +15,7 @@ var jwt = new googleapis.auth.JWT(
 // constructs a query based on apicall url in the document
 function construct_query(URL) {
     var query = JSON
-        .parse('{"' + decodeURI(url.parse(URL).search)
+        .parse('{"' + URL
             .replace(/\?/g, '')
             .replace(/"/g, '\\"')
             .replace(/&/g, '","')
@@ -26,30 +26,44 @@ function construct_query(URL) {
 }
 
 module.exports = {
-
+    //do we really need to init endpoints??
     init_endpoints: function() {
         fs.readFile('analytics_urls.txt', function (err, data) {
             if (err) {throw err; }
-            var array = data.toString().split("\n");
+            var array = data.toString().split("\n")
+            array.pop()
             for (i in array) {
                 element = array[i].split("|");
-                var analytics = new models.Analytics({
+                var doc = new models.Analytics({
                     slug: element[0],
                     apicall: element[1],
                     update_interval: element[3],
                     last_update: 0
                 });
                 console.log("End Point Generated")
-                analytics.save()
+                doc.save()
             }
     })},
 
-    //update with a cache
     create_and_get: function(err, req, res) {
         jwt.authorize(function(err, result) {
-            var query = construct_query("https://www.googleapis.com/analytics/v3/data/ga?" + req.params.apicall);
+            var query = construct_query(req._parsedUrl.query)
             ga.data.ga.get(query, function(err, result) {
-                res.json(result);
+                if (result){
+                var doc = new models.Analytics({
+                    slug: req._parsedUrl.query,
+                    apicall: req._parsedUrl.query,
+                    update_interval: 3600000,
+                    last_update: (new Date()).getTime(),
+                    data: result
+                });
+                doc.save();
+                res.json(doc.data);
+                console.log("End Point Generated")
+                }
+                else{
+                    res.status(404).json("The endpoint you attempted to reach does not exist, try a different API call.");
+                }
             });
         });
     },
@@ -57,7 +71,6 @@ module.exports = {
     get_or_update: function(err, res, doc) {
         if (doc) {
             var current_time = (new Date()).getTime();
-
             if (current_time - doc.update_interval > doc.last_update) {
                 console.log("update");
                 jwt.authorize(function(err, result) {
@@ -74,7 +87,7 @@ module.exports = {
                 res.json(doc);
             }
         } else {
-            res.send("No Data")
+            res.status(404).json("The endpoint you attempted to reach does not exist, try a different API call.");
         }
 
     }
