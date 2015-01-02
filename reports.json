@@ -1,0 +1,12 @@
+
+{
+  "reports": [
+    {
+      "name": "weekly-users",
+      "dimensions": "ga:dayOfWeekName,ga:date",
+      "metrics": "ga:users",
+      "start-date" : "8daysAgo",
+      "end-date" : "yesterday"
+    }
+  ]
+}

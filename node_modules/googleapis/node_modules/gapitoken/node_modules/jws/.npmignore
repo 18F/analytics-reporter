@@ -1,5 +1,0 @@
-node_modules
-/test/keys
-/test/private.pem
-/test/public.pem
-/test/wrong-public.pem
