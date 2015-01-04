@@ -3,9 +3,9 @@
     {
       "name": "weekly-users",
       "query": {
-        "dimensions": "ga:dayOfWeekName,ga:date",
+        "dimensions": "ga:date",
         "metrics": "ga:users",
-        "start-date" : "8daysAgo",
+        "start-date" : "7daysAgo",
         "end-date" : "yesterday"
       },
       "meta": {
