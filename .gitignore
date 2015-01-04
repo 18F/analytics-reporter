@@ -1,7 +1,7 @@
 .DS_Store
 *.p12
 *.pem
-/config.js
 /data
 /node_modules
 .python-version
+/.env
