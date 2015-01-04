@@ -1,6 +1,5 @@
 // Downloading infrastructure.
 
-//
 var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
     url = require('url'),
@@ -27,11 +26,12 @@ var Analytics = {
     query: function(report, callback) {
 
         // insert IDs and auth data
-        report.ids = config.account.ids;
-        report.auth = jwt;
+        var query = report.query;
+        query.ids = config.account.ids;
+        query.auth = jwt;
 
         jwt.authorize(function(err, result) {
-            ga.data.ga.get(report, function(err, result) {
+            ga.data.ga.get(query, function(err, result) {
                 if (err) return callback(err, null);
                 // TODO: transform, then return transformed data
                 callback(null, result);

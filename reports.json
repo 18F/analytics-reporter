@@ -1,12 +1,18 @@
-
 {
   "reports": [
     {
       "name": "weekly-users",
-      "dimensions": "ga:dayOfWeekName,ga:date",
-      "metrics": "ga:users",
-      "start-date" : "8daysAgo",
-      "end-date" : "yesterday"
+      "query": {
+        "dimensions": "ga:dayOfWeekName,ga:date",
+        "metrics": "ga:users",
+        "start-date" : "8daysAgo",
+        "end-date" : "yesterday"
+      },
+      "meta": {
+        "site": "all",
+        "description:": "Weekly visitors to all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
     }
   ]
 }
