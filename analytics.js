@@ -1,17 +1,18 @@
-// Downloading infrastructure.
+/*
+ * Workhorse module for Google Analytics interaction.
+ */
 
 var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
-    url = require('url'),
     fs = require('fs');
 
-var models = require('./models'),
-    config = require('./config');
+var config = require('./config');
 
 var jwt = new googleapis.auth.JWT(
     config.email,
     config.key,
-    null, ['https://www.googleapis.com/auth/analytics.readonly']
+    null,
+    ['https://www.googleapis.com/auth/analytics.readonly']
 );
 
 

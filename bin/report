@@ -11,7 +11,7 @@
  * Where (for now) [name] is given in reports.json.
  */
 
-var Analytics = require("../download");
+var Analytics = require("../analytics");
 
 var run = function(name, options) {
   if (!options) options = {};
