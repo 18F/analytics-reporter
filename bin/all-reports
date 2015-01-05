@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+/*
+ * Run all analytics reports output JSON to disk, current dir.
+ *
+ * Usage: all-reports
+ */
+
+var Analytics = require("../download"),
+    fs = require("fs");
+
+
+var run = function(dir, options) {
+  if (!dir) dir = ".";
+  if (!options) options = {};
+
+  var names = Object.keys(Analytics.reports);
+
+  for (var i=0; i<names.length; i++) {
+    var report = Analytics.reports[names[i]];
+
+    console.log("\n[" + report.name + "] Fetching...");
+    Analytics.query(report, function(err, data) {
+        if (err) return console.log("ERROR: " + JSON.stringify(err));
+
+        console.log("[" + report.name + "] Saving report data...");
+        var json = JSON.stringify(data, null, 2);
+        fs.writeFileSync(dir + "/" + report.name + ".json", json);
+
+        console.log("[" + report.name + "] Done.");
+    });
+  }
+};
+
+var options = require('minimist')(process.argv.slice(2));
+// console.log(options);
+run(options._[0], options);

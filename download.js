@@ -58,10 +58,6 @@ var Analytics = {
         return [in_date.substr(0,4), in_date.substr(4, 2), in_date.substr(6, 2)].join("-")
     },
 
-    path: function(report) {
-        return "data/" + report.name + ".json";
-    },
-
     // Given a report and a raw google response, transform it into our schema.
     process: function(report, data) {
         var result = {
@@ -94,22 +90,3 @@ var Analytics = {
 };
 
 module.exports = Analytics;
-
-/*  Actually download the files. This should be separated from the above
-    modules at some point.
-*/
-
-// for (var i=0; i<reports.length; i++) {
-//     var report = reports[i];
-
-//     console.log("\n[" + report.name + "] Fetching...");
-//     Analytics.query(report, function(err, data) {
-//         if (err) return console.log("ERROR: " + JSON.stringify(err));
-
-//         console.log("[" + report.name + "] Saving report data...");
-//         var json = JSON.stringify(data, null, 2);
-//         fs.writeFileSync(Analytics.path(report), json);
-
-//         console.log("[" + report.name + "] Done.");
-//     });
-// }
