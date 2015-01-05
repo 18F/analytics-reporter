@@ -33,8 +33,8 @@ var Analytics = {
         // Insert IDs and auth data. Dupe the object so it doesn't
         // modify the report object for later work.
         var query = {
-            dimensions: report.query.dimensions,
-            metrics: report.query.metrics,
+            dimensions: report.query.dimensions.join(","),
+            metrics: report.query.metrics.join(","),
             "start-date": report.query['start-date'],
             "end-date": report.query['end-date']
         }
@@ -47,7 +47,8 @@ var Analytics = {
                 if (err) return callback(err, null);
 
                 // debug: write google output to disk
-                // fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
+                require("mkdirp").mkdirp("data/google");
+                fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
 
                 callback(null, Analytics.process(report, result));
             });
@@ -57,6 +58,12 @@ var Analytics = {
     // translate 20141228 -> 2014-12-28
     date_format: function(in_date) {
         return [in_date.substr(0,4), in_date.substr(4, 2), in_date.substr(6, 2)].join("-")
+    },
+
+    mapping: {
+        "ga:date": "date",
+        "ga:users": "visitors",
+        "ga:deviceCategory": "device"
     },
 
     // Given a report and a raw google response, transform it into our schema.
@@ -69,21 +76,41 @@ var Analytics = {
             totals: {}
         };
 
-        // only valid for ga:date by ga:users
+        // Calculate each individual data point.
         for (var i=0; i<data.rows.length; i++) {
             var row = data.rows[i];
 
-            result.data.push({
-                date: Analytics.date_format(row[0]),
-                visitors: row[1]
-            });
+            var point = {};
+            for (var j=0; j<row.length; j++) {
+                var field = Analytics.mapping[data.columnHeaders[j].name];
+                var value = row[j];
+
+                if (field == "date")
+                    value = Analytics.date_format(value);
+
+                point[field] = value;
+            }
+
+            result.data.push(point);
         }
 
-        // calculate totals
-        result.totals.visitors = data.totalsForAllResults["ga:users"]
-        // ga:date should always be the first dimension
-        result.totals.start_date = Analytics.date_format(data.rows[0][0]);
-        result.totals.end_date = Analytics.date_format(data.rows[data.rows.length-1][0]);
+        // Go through those data points to calculate totals.
+        // Right now, this is totally report-specific.
+        result.totals.visitors = 0; // data.totalsForAllResults["ga:users"]
+        for (var i=0; i<result.data.length; i++)
+            result.totals.visitors += parseInt(result.data[i].visitors);
+
+        if (report.name == "devices") {
+            result.totals.devices = {mobile: 0, desktop: 0, tablet: 0};
+            for (var i=0; i<result.data.length; i++)
+                result.totals.devices[result.data[i].device] += parseInt(result.data[i].visitors);
+        }
+
+        // presumably we're organizing these by date
+        if (result.data[0].date) {
+            result.totals.start_date = result.data[0].date;
+            result.totals.end_date = result.data[result.data.length-1].date;
+        }
 
         return result;
     }
