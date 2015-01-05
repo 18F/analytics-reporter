@@ -5,6 +5,9 @@
   "scripts": {
     "start": "node app.js"
   },
+  "bin": {
+    "report": "./bin/report"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/18f/analytics-proxy-nodejs.git"
@@ -20,6 +23,7 @@
     "googleapis": "^1.0.21",
     "mongoose": "^3.8.19",
     "node-schedule": "^0.1.13",
-    "mkdirp": "*"
+    "mkdirp": "*",
+    "minimist": "*"
   }
 }
