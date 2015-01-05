@@ -9,7 +9,8 @@
  */
 
 var Analytics = require("../analytics"),
-    fs = require("fs");
+    fs = require("fs"),
+    async = require("async");
 
 
 var run = function(options) {
@@ -18,8 +19,8 @@ var run = function(options) {
 
   var names = Object.keys(Analytics.reports);
 
-  for (var i=0; i<names.length; i++) {
-    var report = Analytics.reports[names[i]];
+  var eachReport = function(name, done) {
+    var report = Analytics.reports[name];
 
     console.log("\n[" + report.name + "] Fetching...");
     Analytics.query(report, function(err, data) {
@@ -30,8 +31,18 @@ var run = function(options) {
         fs.writeFileSync(options.output + "/" + report.name + ".json", json);
 
         console.log("[" + report.name + "] Done.");
+        done();
     });
-  }
+  };
+
+  async.eachSeries(names, eachReport, function(err) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+
+    console.log("All done.");
+  });
 };
 
 run(require('minimist')(process.argv.slice(2)));
