@@ -47,8 +47,8 @@ var Analytics = {
                 if (err) return callback(err, null);
 
                 // debug: write google output to disk
-                require("mkdirp").mkdirp("data/google");
-                fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
+                // require("mkdirp").mkdirp("data/google");
+                // fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
 
                 callback(null, Analytics.process(report, result));
             });
