@@ -25,32 +25,57 @@ var Analytics = {
 
     query: function(report, callback) {
 
-        // insert IDs and auth data
-        var query = report.query;
+        // Insert IDs and auth data. Dupe the object so it doesn't
+        // modify the report object for later work.
+        var query = {
+            dimensions: report.query.dimensions,
+            metrics: report.query.metrics,
+            "start-date": report.query['start-date'],
+            "end-date": report.query['end-date']
+        }
         query.ids = config.account.ids;
         query.auth = jwt;
 
         jwt.authorize(function(err, result) {
+            if (err) return callback(err, null);
             ga.data.ga.get(query, function(err, result) {
                 if (err) return callback(err, null);
-                // TODO: transform, then return transformed data
-                callback(null, result);
+                callback(null, Analytics.process(report, result));
             });
         });
     },
 
-    // type is "original" or "processed"
-    path: function(type, report) {
-        return "data/" + type + "/" + report.name + ".json";
+    path: function(report) {
+        return "data/" + report.name + ".json";
     },
 
-    // given a raw google analytics response, transform it into our schema
-    // TODO: way more thoughtful about this - and possibly report-specific.
-    process: function(data) {
-        return {
-            rows: data.rows,
-            columnHeaders: data.columnHeaders
+    // Given a report and a raw google response, transform it into our schema.
+    process: function(report, data) {
+        var result = {
+            name: report.name,
+            query: report.query,
+            meta: report.meta,
+            data: [],
+            totals: {}
+        };
+
+        // only valid for ga:date by ga:users
+        for (var i=0; i<data.rows.length; i++) {
+            var row = data.rows[i];
+
+            result.data.push({
+                date: row[0],
+                visitors: row[1]
+            });
         }
+
+        // calculate totals
+        result.totals.visitors = data.totalsForAllResults["ga:users"]
+        // ga:date should always be the first dimension
+        result.totals.start_date = data.rows[0][0];
+        result.totals.end_date = data.rows[data.rows.length-1][0];
+
+        return result;
     }
 
 };
@@ -61,26 +86,16 @@ module.exports = Analytics;
     modules at some point.
 */
 
-mkdirp.sync("data/original");
-mkdirp.sync("data/processed");
-
 for (var i=0; i<reports.length; i++) {
     var report = reports[i];
 
     console.log("\n[" + report.name + "] Fetching...");
-    Analytics.query(report, function(err, original) {
-        if (err) return console.log("ERROR: " + err);
+    Analytics.query(report, function(err, data) {
+        if (err) return console.log("ERROR: " + JSON.stringify(err));
 
-        // pretty printed raw Google Analytics data
-        console.log("[" + report.name + "] Saving original...");
-        var originalJSON = JSON.stringify(original, null, 2);
-        fs.writeFileSync(Analytics.path("original", report), originalJSON);
-
-        // transform to our format
-        console.log("[" + report.name + "] Saving processed...");
-        var processed = Analytics.process(original);
-        var processedJSON = JSON.stringify(processed, null, 2);
-        fs.writeFileSync(Analytics.path("processed", report), processedJSON);
+        console.log("[" + report.name + "] Saving report data...");
+        var json = JSON.stringify(data, null, 2);
+        fs.writeFileSync(Analytics.path(report), json);
 
         console.log("[" + report.name + "] Done.");
     });
