@@ -25,6 +25,7 @@
     "mongoose": "^3.8.19",
     "node-schedule": "^0.1.13",
     "mkdirp": "*",
-    "minimist": "*"
+    "minimist": "*",
+    "async": "*"
   }
 }
