@@ -59,7 +59,7 @@
       }
     },
       {
-      "name": "top_pages_7days",
+      "name": "top-pages-7-days",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -74,7 +74,7 @@
       }
     },
     {
-      "name": "top_pages_30days",
+      "name": "top-pages-30-days",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -89,7 +89,7 @@
       }
     },
     {
-      "name": "top_pages_90days",
+      "name": "top-pages-90-days",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
