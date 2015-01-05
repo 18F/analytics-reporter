@@ -43,6 +43,13 @@ var Analytics = {
         if (report.query.filters)
             query.filters = report.query.filters.join(",");
 
+        if (report.query['max-results'])
+            query['max-results'] = report.query['max-results'];
+
+        if (report.query['sort'])
+            query['sort'] = report.query['sort'];
+
+
         // Specify the account, and auth token.
         query.ids = config.account.ids;
         query.auth = jwt;
@@ -52,9 +59,8 @@ var Analytics = {
             ga.data.ga.get(query, function(err, result) {
                 if (err) return callback(err, null);
 
-                // debug: write google output to disk
-                require("mkdirp").mkdirp("data/google");
-                fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
+                if (config.debug)
+                    fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
 
                 callback(null, Analytics.process(report, result));
             });
@@ -176,7 +182,6 @@ var Analytics = {
             result.totals.start_date = result.data[0].date;
             result.totals.end_date = result.data[result.data.length-1].date;
         }
-
         return result;
     }
 
