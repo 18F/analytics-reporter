@@ -59,11 +59,10 @@ var Analytics = {
             ga.data.ga.get(query, function(err, result) {
                 if (err) return callback(err, null);
 
-                require("mkdirp").mkdirp("data/google/", function(err) {
+                if (config.debug)
                     fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
-                    callback(null, Analytics.process(report, result));
-                });
 
+                callback(null, Analytics.process(report, result));
             });
         });
     },
