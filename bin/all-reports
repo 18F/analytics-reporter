@@ -8,7 +8,7 @@
  * --output: Change output directory. Defaults to CWD.
  */
 
-var Analytics = require("../download"),
+var Analytics = require("../analytics"),
     fs = require("fs");
 
 
