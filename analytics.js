@@ -63,7 +63,10 @@ var Analytics = {
     mapping: {
         "ga:date": "date",
         "ga:users": "visitors",
-        "ga:deviceCategory": "device"
+        "ga:sessions": "visits",
+        "ga:deviceCategory": "device",
+        "ga:operatingSystem": "os",
+        "ga:operatingSystemVersion": "os_version"
     },
 
     // Given a report and a raw google response, transform it into our schema.
@@ -96,14 +99,21 @@ var Analytics = {
 
         // Go through those data points to calculate totals.
         // Right now, this is totally report-specific.
-        result.totals.visitors = 0; // data.totalsForAllResults["ga:users"]
-        for (var i=0; i<result.data.length; i++)
-            result.totals.visitors += parseInt(result.data[i].visitors);
+        if ("visitors" in result.data[0]) {
+            result.totals.visitors = 0;
+            for (var i=0; i<result.data.length; i++)
+                result.totals.visitors += parseInt(result.data[i].visitors);
+        }
+        if ("sessions" in result.data[0]) {
+            result.totals.sessions = 0;
+            for (var i=0; i<result.data.length; i++)
+                result.totals.sessions += parseInt(result.data[i].sessions);
+        }
 
         if (report.name == "devices") {
             result.totals.devices = {mobile: 0, desktop: 0, tablet: 0};
             for (var i=0; i<result.data.length; i++)
-                result.totals.devices[result.data[i].device] += parseInt(result.data[i].visitors);
+                result.totals.devices[result.data[i].device] += parseInt(result.data[i].visits);
         }
 
         // presumably we're organizing these by date
