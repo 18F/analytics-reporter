@@ -18,7 +18,7 @@ var run = function(name, options) {
 
   if (!name || !Analytics.reports[name]) {
     var names = Object.keys(Analytics.reports);
-    console.log("Usage:\n\treport [name]\n\treport all\n\nAvailable reports: " + names.join(", "));
+    console.log("Usage: report [name]\n\nAvailable reports: " + names.join(", "));
     process.exit(1);
   }
 
