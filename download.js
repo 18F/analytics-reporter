@@ -3,8 +3,7 @@
 var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
     url = require('url'),
-    fs = require('fs'),
-    mkdirp = require('mkdirp');
+    fs = require('fs');
 
 var models = require('./models'),
     config = require('./config');
@@ -18,10 +17,15 @@ var jwt = new googleapis.auth.JWT(
 
 // The reports we want to run.
 var reports = JSON.parse(fs.readFileSync("./reports.json")).reports;
+var by_name = {};
+for (var i=0; i<reports.length; i++)
+    by_name[reports[i].name] = reports[i];
 
 // Google Analytics data fetching and transformation utilities.
 // This should really move to its own analytics.js file.
 var Analytics = {
+
+    reports: by_name,
 
     query: function(report, callback) {
 
@@ -40,13 +44,18 @@ var Analytics = {
             if (err) return callback(err, null);
             ga.data.ga.get(query, function(err, result) {
                 if (err) return callback(err, null);
+
+                // debug: write google output to disk
+                // fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
+
                 callback(null, Analytics.process(report, result));
             });
         });
     },
 
-    path: function(report) {
-        return "data/" + report.name + ".json";
+    // translate 20141228 -> 2014-12-28
+    date_format: function(in_date) {
+        return [in_date.substr(0,4), in_date.substr(4, 2), in_date.substr(6, 2)].join("-")
     },
 
     // Given a report and a raw google response, transform it into our schema.
@@ -64,7 +73,7 @@ var Analytics = {
             var row = data.rows[i];
 
             result.data.push({
-                date: row[0],
+                date: Analytics.date_format(row[0]),
                 visitors: row[1]
             });
         }
@@ -72,8 +81,8 @@ var Analytics = {
         // calculate totals
         result.totals.visitors = data.totalsForAllResults["ga:users"]
         // ga:date should always be the first dimension
-        result.totals.start_date = data.rows[0][0];
-        result.totals.end_date = data.rows[data.rows.length-1][0];
+        result.totals.start_date = Analytics.date_format(data.rows[0][0]);
+        result.totals.end_date = Analytics.date_format(data.rows[data.rows.length-1][0]);
 
         return result;
     }
@@ -81,22 +90,3 @@ var Analytics = {
 };
 
 module.exports = Analytics;
-
-/*  Actually download the files. This should be separated from the above
-    modules at some point.
-*/
-
-for (var i=0; i<reports.length; i++) {
-    var report = reports[i];
-
-    console.log("\n[" + report.name + "] Fetching...");
-    Analytics.query(report, function(err, data) {
-        if (err) return console.log("ERROR: " + JSON.stringify(err));
-
-        console.log("[" + report.name + "] Saving report data...");
-        var json = JSON.stringify(data, null, 2);
-        fs.writeFileSync(Analytics.path(report), json);
-
-        console.log("[" + report.name + "] Done.");
-    });
-}

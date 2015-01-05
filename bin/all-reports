@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+/*
+ * Run all analytics reports output JSON to disk.
+ *
+ * Usage: all-reports
+ *
+ * --output: Change output directory. Defaults to CWD.
+ */
+
+var Analytics = require("../download"),
+    fs = require("fs");
+
+
+var run = function(options) {
+  if (!options) options = {};
+  if (!options.output) options.output = ".";
+
+  var names = Object.keys(Analytics.reports);
+
+  for (var i=0; i<names.length; i++) {
+    var report = Analytics.reports[names[i]];
+
+    console.log("\n[" + report.name + "] Fetching...");
+    Analytics.query(report, function(err, data) {
+        if (err) return console.log("ERROR: " + JSON.stringify(err));
+
+        console.log("[" + report.name + "] Saving report data...");
+        var json = JSON.stringify(data, null, 2);
+        fs.writeFileSync(options.output + "/" + report.name + ".json", json);
+
+        console.log("[" + report.name + "] Done.");
+    });
+  }
+};
+
+run(require('minimist')(process.argv.slice(2)));

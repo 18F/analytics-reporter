@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+/*
+ * Run a given analytics report and generate JSON via STDOUT.
+ *
+ * Usage:
+ *   report [name]
+ *
+ * No option flags at this time.
+ *
+ * Where (for now) [name] is given in reports.json.
+ */
+
+var Analytics = require("../download");
+
+var run = function(name, options) {
+  if (!options) options = {};
+
+  if (!name || !Analytics.reports[name]) {
+    var names = Object.keys(Analytics.reports);
+    console.log("Usage: report [name]\n\nAvailable reports: " + names.join(", "));
+    process.exit(1);
+  }
+
+  var report = Analytics.reports[name];
+  Analytics.query(report, function(err, result) {
+    if (err) return process.exit(1);
+
+    console.log(JSON.stringify(result, null, 2));
+  });
+}
+
+var options = require('minimist')(process.argv.slice(2));
+// console.log(options);
+run(options._[0], options);
