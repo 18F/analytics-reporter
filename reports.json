@@ -1,22 +1,37 @@
 {
   "reports": [
     {
-      "name": "users",
+      "name": "users_by_last7days",
       "query": {
         "dimensions": ["ga:date"],
         "metrics": ["ga:users"],
         "start-date" : "7daysAgo",
-        "end-date" : "yesterday"
+        "end-date" : "yesterday",
+        "sort": "ga:date"
       },
       "meta": {
-        "description:": "Weekly visitors to all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "description:": "Weekly visitors by day to all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
     },
     {
-      "name": "devices",
+      "name": "devices_by_last7days",
       "query": {
         "dimensions": ["ga:date" ,"ga:deviceCategory"],
+        "metrics": ["ga:sessions"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date"
+      },
+      "meta": {
+        "description": "Weekly desktop/mobile/tablet visits by day for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "devices_by_last7days",
+      "query": {
+        "dimensions": ["ga:deviceCategory"],
         "metrics": ["ga:sessions"],
         "start-date": "7daysAgo",
         "end-date": "yesterday"
@@ -27,29 +42,92 @@
       }
     },
     {
-      "name": "os",
+      "name": "os_by_last7days",
       "query": {
         "dimensions": ["ga:date" ,"ga:operatingSystem"],
         "metrics": ["ga:sessions"],
         "start-date": "7daysAgo",
-        "end-date": "yesterday"
+        "end-date": "yesterday",
+        "sort": "ga:date"
+
       },
       "meta": {
-        "description": "Weekly visits, broken down by operating system, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "description": "Weekly visits, broken down by operating system and date, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
     },
     {
-      "name": "windows",
+      "name": "windows_by_last7days",
       "query": {
         "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
         "metrics": ["ga:sessions"],
         "start-date": "7daysAgo",
         "end-date": "yesterday",
-        "filters": ["ga:operatingSystem==Windows"]
+        "filters": ["ga:operatingSystem==Windows"],
+        "sort": "ga:date"
       },
       "meta": {
-        "description": "Weekly visits, broken down by operating system, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "description": "Weekly visits from Windows users, broken down by operating system version and date, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+      {
+      "name": "top_pages_last7days",
+      "query": {
+        "dimensions": ["ga:hostname"],
+        "metrics": ["ga:sessions"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "max-results": "20"
+      },
+      "meta": {
+        "description": "Last week's top 20 pages in terms of sessions for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "top_pages_last30days",
+      "query": {
+        "dimensions": ["ga:hostname"],
+        "metrics": ["ga:sessions"],
+        "start-date": "30daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "max-results": "20"
+      },
+      "meta": {
+        "description": "Last 30 day's top 20 pages in terms of sessions for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "top_pages_last90days",
+      "query": {
+        "dimensions": ["ga:hostname"],
+        "metrics": ["ga:sessions"],
+        "start-date": "90daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "max-results": "20"
+      },
+      "meta": {
+        "description": "Last 90 day's top 20 pages in terms of sessions for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "sources_last7days",
+      "query": {
+        "dimensions": ["ga:source"],
+        "metrics": ["ga:sessions"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "max-results": "20"
+      },
+      "meta": {
+        "description": "Breakdown of top 20 sources in terms of sessions for the last week",
         "documentation": "http://www.usa.gov/performance"
       }
     }
