@@ -10,7 +10,7 @@ var models = require('./models'),
 
 var jwt = new googleapis.auth.JWT(
     config.email,
-    'secret_key.pem',
+    config.key,
     null, ['https://www.googleapis.com/auth/analytics.readonly']
 );
 
