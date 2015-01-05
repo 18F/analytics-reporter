@@ -16,12 +16,6 @@ It was partially inspired by [Google Analytics superProxy](https://github.com/go
 npm install
 ```
 
-* Create the config file:
-
-```bash
-cp config.js.example config.js
-```
-
 * [Create Google API service account and take note of the client email](https://developers.google.com/accounts/docs/OAuth2ServiceAccount).
 
 * Download the P12 private key file and place it in the root of the project.
@@ -31,6 +25,18 @@ cp config.js.example config.js
 ```bash
 openssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -nodes
 ```
+
+* Add the client email to the list of users with read & analyze permissions under Google Analytics' `Admin > Administration › User Management` section.
+
+* Set the following environment variables:
+
+```bash
+export ANALYTICS_REPORT_EMAIL="<client email ex. demoemailadress_444@developer.gserviceaccount.com>"
+export ANALYTICS_REPORT_IDS="<GA profile ID ex. ga:XXXXXX>"
+export ANALYTICS_KEY_PATH=<path to secret_key.pem>
+
+```
+
 
 ### Public domain
 
