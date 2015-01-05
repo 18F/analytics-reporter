@@ -1,7 +1,7 @@
 {
   "reports": [
     {
-      "name": "users_by_last7days",
+      "name": "users",
       "query": {
         "dimensions": ["ga:date"],
         "metrics": ["ga:users"],
@@ -15,7 +15,7 @@
       }
     },
     {
-      "name": "devices_by_last7days",
+      "name": "devices",
       "query": {
         "dimensions": ["ga:date" ,"ga:deviceCategory"],
         "metrics": ["ga:sessions"],
@@ -29,20 +29,7 @@
       }
     },
     {
-      "name": "devices_by_last7days",
-      "query": {
-        "dimensions": ["ga:deviceCategory"],
-        "metrics": ["ga:sessions"],
-        "start-date": "7daysAgo",
-        "end-date": "yesterday"
-      },
-      "meta": {
-        "description": "Weekly desktop/mobile/tablet visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
-        "documentation": "http://www.usa.gov/performance"
-      }
-    },
-    {
-      "name": "os_by_last7days",
+      "name": "os",
       "query": {
         "dimensions": ["ga:date" ,"ga:operatingSystem"],
         "metrics": ["ga:sessions"],
@@ -57,7 +44,7 @@
       }
     },
     {
-      "name": "windows_by_last7days",
+      "name": "windows",
       "query": {
         "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
         "metrics": ["ga:sessions"],
@@ -72,7 +59,7 @@
       }
     },
       {
-      "name": "top_pages_last7days",
+      "name": "top_pages_7days",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -87,7 +74,7 @@
       }
     },
     {
-      "name": "top_pages_last30days",
+      "name": "top_pages_30days",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -102,7 +89,7 @@
       }
     },
     {
-      "name": "top_pages_last90days",
+      "name": "top_pages_90days",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -117,7 +104,7 @@
       }
     },
     {
-      "name": "sources_last7days",
+      "name": "sources",
       "query": {
         "dimensions": ["ga:source"],
         "metrics": ["ga:sessions"],
