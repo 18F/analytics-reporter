@@ -38,6 +38,12 @@ var Analytics = {
             "start-date": report.query['start-date'],
             "end-date": report.query['end-date']
         }
+
+        // Optional filters.
+        if (report.query.filters)
+            query.filters = report.query.filters.join(",");
+
+        // Specify the account, and auth token.
         query.ids = config.account.ids;
         query.auth = jwt;
 
@@ -47,8 +53,8 @@ var Analytics = {
                 if (err) return callback(err, null);
 
                 // debug: write google output to disk
-                // require("mkdirp").mkdirp("data/google");
-                // fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
+                require("mkdirp").mkdirp("data/google");
+                fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
 
                 callback(null, Analytics.process(report, result));
             });
@@ -63,8 +69,24 @@ var Analytics = {
     mapping: {
         "ga:date": "date",
         "ga:users": "visitors",
-        "ga:deviceCategory": "device"
+        "ga:sessions": "visits",
+        "ga:deviceCategory": "device",
+        "ga:operatingSystem": "os",
+        "ga:operatingSystemVersion": "os_version"
     },
+
+    // The OSes we care about for the OS breakdown. The rest can be "Other".
+    // These are the extract strings used by Google Analytics.
+    oses: [
+        "Android", "BlackBerry",  "Windows Phone", "iOS",
+        "Linux", "Macintosh", "Windows"
+    ],
+
+    // The versions of Windows we care about for the Windows version breakdown.
+    // The rest can be "Other". These are the exact strings used by Google Analytics.
+    windows_versions: [
+        "XP", "Vista", "7", "8", "8.1"
+    ],
 
     // Given a report and a raw google response, transform it into our schema.
     process: function(report, data) {
@@ -96,14 +118,57 @@ var Analytics = {
 
         // Go through those data points to calculate totals.
         // Right now, this is totally report-specific.
-        result.totals.visitors = 0; // data.totalsForAllResults["ga:users"]
-        for (var i=0; i<result.data.length; i++)
-            result.totals.visitors += parseInt(result.data[i].visitors);
+        if ("visitors" in result.data[0]) {
+            result.totals.visitors = 0;
+            for (var i=0; i<result.data.length; i++)
+                result.totals.visitors += parseInt(result.data[i].visitors);
+        }
+        if ("sessions" in result.data[0]) {
+            result.totals.sessions = 0;
+            for (var i=0; i<result.data.length; i++)
+                result.totals.sessions += parseInt(result.data[i].sessions);
+        }
 
         if (report.name == "devices") {
             result.totals.devices = {mobile: 0, desktop: 0, tablet: 0};
             for (var i=0; i<result.data.length; i++)
-                result.totals.devices[result.data[i].device] += parseInt(result.data[i].visitors);
+                result.totals.devices[result.data[i].device] += parseInt(result.data[i].visits);
+        }
+
+        if (report.name == "os") {
+            // initialize all cared-about OSes to 0
+            result.totals.os = {};
+            for (var i=0; i<Analytics.oses.length; i++)
+                result.totals.os[Analytics.oses[i]] = 0;
+            result.totals.os["Other"] = 0;
+
+            for (var i=0; i<result.data.length; i++) {
+                var os = result.data[i].os;
+
+                // Bucket any we don't care about under "Other".
+                if (Analytics.oses.indexOf(os) < 0)
+                    os = "Other";
+
+                result.totals.os[os] += parseInt(result.data[i].visits);
+            }
+        }
+
+        if (report.name == "windows") {
+            // initialize all cared-about versions to 0
+            result.totals.os_version = {};
+            for (var i=0; i<Analytics.windows_versions.length; i++)
+                result.totals.os_version[Analytics.windows_versions[i]] = 0;
+            result.totals.os_version["Other"] = 0;
+
+            for (var i=0; i<result.data.length; i++) {
+                var version = result.data[i].os_version;
+
+                // Bucket any we don't care about under "Other".
+                if (Analytics.windows_versions.indexOf(version) < 0)
+                    version = "Other";
+
+                result.totals.os_version[version] += parseInt(result.data[i].visits);
+            }
         }
 
         // presumably we're organizing these by date

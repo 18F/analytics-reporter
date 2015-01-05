@@ -1,0 +1,57 @@
+{
+  "reports": [
+    {
+      "name": "users",
+      "query": {
+        "dimensions": ["ga:date"],
+        "metrics": ["ga:users"],
+        "start-date" : "7daysAgo",
+        "end-date" : "yesterday"
+      },
+      "meta": {
+        "description:": "Weekly visitors to all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "devices",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:deviceCategory"],
+        "metrics": ["ga:sessions"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday"
+      },
+      "meta": {
+        "description": "Weekly desktop/mobile/tablet visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "os",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:operatingSystem"],
+        "metrics": ["ga:sessions"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday"
+      },
+      "meta": {
+        "description": "Weekly visits, broken down by operating system, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "windows",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
+        "metrics": ["ga:sessions"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "filters": ["ga:operatingSystem==Windows"]
+      },
+      "meta": {
+        "description": "Weekly visits, broken down by operating system, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    }
+  ]
+}
