@@ -127,7 +127,7 @@
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
         "max-results": "10000",
-        "filters": ["ga:sessions>2000"]
+        "filters": ["ga:sessions>1000"]
       },
       "meta": {
         "description": "Ranking change of domains with over 2000 views for each of the last two days",
