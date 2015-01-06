@@ -1,42 +1,82 @@
-## Light-weight Google Analytics Proxy
+## Analytics Reporter
 
 *This project is still under construction.*
 
-Analytics Proxy allows you to publicly share Google Analytics reporting data.
+A lightweight system for publishing analytics data from Google Analytics profiles.
 
-It was partially inspired by [Google Analytics superProxy](https://github.com/googleanalytics/google-analytics-super-proxy); however, unlike [Google Analytics superProxy](https://github.com/googleanalytics/google-analytics-super-proxy) it doesn’t need to be deployed on [Google App Engine](https://appengine.google.com/)
 
 ### Setup
 
-* Install [MongoDB](https://www.mongodb.org/) and [Node](http://nodejs.org/).
-
-* Install Node dependencies:
+* You'll need [Node](http://nodejs.org). Then install Node dependencies:
 
 ```bash
 npm install
 ```
 
-* [Create Google API service account and take note of the client email](https://developers.google.com/accounts/docs/OAuth2ServiceAccount).
+* [Create an API service account](https://developers.google.com/accounts/docs/OAuth2ServiceAccount) in the Google developer dashboard.
 
-* Download the P12 private key file and place it in the root of the project.
+* Take the generated client email address (ends with `gserviceaccount.com`) and grant it `Read & Analyze` permissions to the Google Analytics profile(s) whose data you wish to publish.
 
-* Make the key usable with:
+* Download the `.p12` private key file from the dashboard, and transform it into a `.pem` file:
 
 ```bash
 openssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -nodes
 ```
 
-* Add the client email to the list of users with read & analyze permissions under Google Analytics' `Admin > Administration › User Management` section.
-
 * Set the following environment variables:
 
 ```bash
-export ANALYTICS_REPORT_EMAIL="<client email ex. demoemailadress_444@developer.gserviceaccount.com>"
-export ANALYTICS_REPORT_IDS="<GA profile ID ex. ga:XXXXXX>"
-export ANALYTICS_KEY_PATH=<path to secret_key.pem>
+export ANALYTICS_REPORT_EMAIL="asdfghjkl@developer.gserviceaccount.com"
+export ANALYTICS_REPORT_IDS="ga:XXXXXX"
+export ANALYTICS_KEY_PATH="/path/to/secret_key.pem"
+```
+You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv).
 
+* Test your configuration by printing a report to STDOUT:
+
+```bash
+./bin/report users
 ```
 
+If you see a nicely formatted JSON file, you are all set.
+
+### Use
+
+Reports are named and described in [`reports.json`](reports.json). You can publish reports in 2 ways:
+
+* **Print a single report to STDOUT** with the `./bin/report` command:
+
+```bash
+./bin/report devices
+```
+
+It should print something like:
+
+```javascript
+{
+  "name": "devices",
+  "query": {
+    "dimensions": [
+      "ga:date",
+      "ga:deviceCategory"
+    ],
+    "metrics": [
+      "ga:sessions"
+    ],
+    "start-date": "7daysAgo"
+
+    // ...
+  }
+}
+```
+
+* **Save every report to disk** with the `./bin/all-reports` command:
+
+```bash
+./bin/all-reports
+```
+
+It will drop a copy of every report (`users.json`, `devices.json`, etc.) to disk in the current working directory. Override the output directory with the `--output` flag.
 
 ### Public domain
 
