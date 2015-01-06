@@ -78,7 +78,8 @@ var Analytics = {
         "ga:sessions": "visits",
         "ga:deviceCategory": "device",
         "ga:operatingSystem": "os",
-        "ga:operatingSystemVersion": "os_version"
+        "ga:operatingSystemVersion": "os_version",
+        "ga:hostname": "domain"
     },
 
     // The OSes we care about for the OS breakdown. The rest can be "Other".
