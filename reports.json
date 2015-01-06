@@ -117,6 +117,22 @@
         "description": "Breakdown of top 20 sources in terms of sessions for the last week",
         "documentation": "http://www.usa.gov/performance"
       }
+    },
+    {
+      "name": "rank-change",
+      "query": {
+        "dimensions": ["ga:hostname","ga:date"],
+        "metrics": ["ga:sessions"],
+        "start-date": "2daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions",
+        "max-results": "1000",
+        "filters": ["ga:sessions>5000"]
+      },
+      "meta": {
+        "description": "NOne",
+        "documentation": "http://www.usa.gov/performance"
+      }
     }
   ]
 }
