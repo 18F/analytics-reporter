@@ -126,11 +126,11 @@
         "start-date": "2daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
-        "max-results": "1000",
-        "filters": ["ga:sessions>5000"]
+        "max-results": "10000",
+        "filters": ["ga:sessions>2000"]
       },
       "meta": {
-        "description": "NOne",
+        "description": "Ranking change of domains with over 2000 views for each of the last two days",
         "documentation": "http://www.usa.gov/performance"
       }
     }

@@ -189,31 +189,23 @@ var Analytics = {
             var complete = {};
             var rank_counter;
             var current_date = "";
-            for (var i=0; i<result.data.length; i++){
 
+            // Loop through data and calculate rank change for domains that appear twice
+            for (var i=0; i<result.data.length; i++){
                 if (current_date != result.data[i]["date"]){
                     rank_counter = 0;
                     current_date = result.data[i]["date"]
                 }
-
                 rank_counter++;
-
                 if (temp[result.data[i]["domain"]]) {
                     complete[result.data[i]["domain"]] = temp[result.data[i]["domain"]] - rank_counter;
-                    delete temp[result.data[i]["domain"]];
                 }
                 else {
                     temp[result.data[i]["domain"]] = rank_counter;
                 }
             }
-
-            for (var key in temp){
-                complete[key] = "New to Top Domains";
-            }
-
             result.data = complete
         }
-
         return result;
 
     }
