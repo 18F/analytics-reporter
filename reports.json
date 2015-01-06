@@ -135,7 +135,7 @@
     {
       "name": "ie-version",
       "query": {
-        "dimensions": ["ga:date","ga:browser","ga:browserVersion"],
+        "dimensions": ["ga:date","ga:browserVersion"],
         "metrics": ["ga:sessions"],
         "start-date": "7daysAgo",
         "end-date": "yesterday",

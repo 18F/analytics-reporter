@@ -106,6 +106,12 @@ var Analytics = {
         "IE with Chrome Frame", "BlackBerry", "UC Browser"
     ],
 
+    // The versions of IE we care about for the IE version breakdown.
+    // The rest can be "Other". These are the exact strings used by Google Analytics.
+    ie_versions: [
+        "11.0", "10.0", "9.0", "8.0", "7.0", "6.0"
+    ],
+
 
     // Given a report and a raw google response, transform it into our schema.
     process: function(report, data) {
@@ -208,11 +214,20 @@ var Analytics = {
         }
 
         if (report.name == "ie-version") {
+            // initialize all cared-about versions to 0
+            result.totals.ie_version = {};
+            for (var i=0; i<Analytics.ie_versions.length; i++)
+                result.totals.ie_version[Analytics.ie_versions[i]] = 0;
+            result.totals.ie_version["Other"] = 0;
 
-            result.totals.browser_version = {};
             for (var i=0; i<result.data.length; i++) {
-                var version = result.data[i].browser_version
-                result.totals.browser_version[version] = parseInt(result.data[i].visits);
+                var version = result.data[i].browser_version;
+
+                // Bucket any we don't care about under "Other".
+                if (Analytics.ie_versions.indexOf(version) < 0)
+                    version = "Other";
+
+                result.totals.ie_version[version] += parseInt(result.data[i].visits);
             }
         }
 
