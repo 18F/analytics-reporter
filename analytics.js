@@ -79,7 +79,8 @@ var Analytics = {
         "ga:deviceCategory": "device",
         "ga:operatingSystem": "os",
         "ga:operatingSystemVersion": "os_version",
-        "ga:hostname": "domain"
+        "ga:hostname": "domain",
+        "ga:source": "source"
     },
 
     // The OSes we care about for the OS breakdown. The rest can be "Other".
