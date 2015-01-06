@@ -79,7 +79,9 @@ var Analytics = {
         "ga:deviceCategory": "device",
         "ga:operatingSystem": "os",
         "ga:operatingSystemVersion": "os_version",
-        "ga:hostname": "domain"
+        "ga:hostname": "domain",
+        "ga:browser" : 'browser',
+        "ga:browserVersion" : "browser_version"
     },
 
     // The OSes we care about for the OS breakdown. The rest can be "Other".
@@ -94,6 +96,15 @@ var Analytics = {
     windows_versions: [
         "XP", "Vista", "7", "8", "8.1"
     ],
+
+    // The browsers we care about for the browser report. The rest are "Other"
+    //  These are the exact strings used by Google Analytics.
+    browsers: [
+        "Internet Explorer", "Chrome", "Safari", "Firefox", "Android Browser",
+        "Safari (in-app)", "Amazon Silk", "Opera", "Opera Mini",
+        "IE with Chrome Frame", "BlackBerry", "UC Browser"
+    ],
+
 
     // Given a report and a raw google response, transform it into our schema.
     process: function(report, data) {
@@ -175,6 +186,32 @@ var Analytics = {
                     version = "Other";
 
                 result.totals.os_version[version] += parseInt(result.data[i].visits);
+            }
+        }
+
+        if (report.name == "browsers") {
+
+            result.totals.browser = {};
+            for (var i=0; i<Analytics.browsers.length; i++)
+                result.totals.browser[Analytics.browsers[i]] = 0;
+            result.totals.browser["Other"] = 0;
+
+            for (var i=0; i<result.data.length; i++) {
+                var browser = result.data[i].browser;
+
+                if (Analytics.browsers.indexOf(browser) < 0)
+                    browser = "Other";
+
+                result.totals.browser[browser] += parseInt(result.data[i].visits);
+            }
+        }
+
+        if (report.name == "ie-version") {
+
+            result.totals.browser_version = {};
+            for (var i=0; i<result.data.length; i++) {
+                var version = result.data[i].browser_version
+                result.totals.browser_version[version] = parseInt(result.data[i].visits);
             }
         }
 

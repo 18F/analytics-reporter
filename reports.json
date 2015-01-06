@@ -111,12 +111,42 @@
         "start-date": "7daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:sessions",
-        "max-results": "20"
+        "max-results": "50"
       },
       "meta": {
-        "description": "Breakdown of top 20 sources in terms of sessions for the last week",
+        "description": "Breakdown of top 50 sources in terms of sessions for the last week",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "browsers",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:browser"],
+        "metrics": ["ga:sessions"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions"
+      },
+      "meta": {
+        "description": "Weekly visits by browser for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "documentation": "http://www.usa.gov/performance"
+      }
+    },
+    {
+      "name": "ie-version",
+      "query": {
+        "dimensions": ["ga:date","ga:browser","ga:browserVersion"],
+        "metrics": ["ga:sessions"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions",
+        "filters": ["ga:browser==Internet Explorer"]
+      },
+      "meta": {
+        "description": "Weekly visits by browser for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
     }
+
   ]
 }
