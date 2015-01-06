@@ -81,7 +81,8 @@ var Analytics = {
         "ga:operatingSystemVersion": "os_version",
         "ga:hostname": "domain",
         "ga:browser" : 'browser',
-        "ga:browserVersion" : "browser_version"
+        "ga:browserVersion" : "browser_version",
+        "ga:source": "source"
     },
 
     // The OSes we care about for the OS breakdown. The rest can be "Other".
