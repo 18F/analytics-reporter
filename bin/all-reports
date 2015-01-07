@@ -6,18 +6,40 @@
  * Usage: all-reports
  *
  * --output: Change output directory. Defaults to CWD.
+ * --publish: Instead of writing to disk, publish to an S3 bucket.
+ * --only: only run one report.
  */
 
 var Analytics = require("../analytics"),
+    config = require("../config"),
     fs = require("fs"),
     async = require("async");
+
+
+// AWS credentials are looked for in env vars or in ~/.aws/config.
+// AWS bucket and path need to be set in env vars mentioned in config.js.
+
+var AWS = require("aws-sdk");
+
+var publish = function(name, json, callback) {
+  console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
+
+  new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
+    Key: config.aws.path + "/" + name + ".json",
+    Body: json,
+    ContentType: "application/json",
+    ACL: "public-read",
+    CacheControl: "max-age=" + (config.aws.cache || 0)
+  }, callback);
+};
 
 
 var run = function(options) {
   if (!options) options = {};
   if (!options.output) options.output = ".";
 
-  var names = Object.keys(Analytics.reports);
+  // can be overridden to only do one report
+  var names = options.only ? [options.only] : Object.keys(Analytics.reports);
 
   var eachReport = function(name, done) {
     var report = Analytics.reports[name];
@@ -28,10 +50,19 @@ var run = function(options) {
 
         console.log("[" + report.name + "] Saving report data...");
         var json = JSON.stringify(data, null, 2);
-        fs.writeFileSync(options.output + "/" + report.name + ".json", json);
 
-        console.log("[" + report.name + "] Done.");
-        done();
+        var written = function(err) {
+          if (err)
+            console.error("ERROR: " + JSON.stringify(err));
+          else
+            console.log("[" + report.name + "] Done.");
+          done();
+        };
+
+        if (options.publish)
+          publish(report.name, json, written);
+        else
+          fs.writeFile(options.output + "/" + report.name + ".json", json, written);
     });
   };
 

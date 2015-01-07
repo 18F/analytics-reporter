@@ -40,6 +40,20 @@ You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/a
 
 If you see a nicely formatted JSON file, you are all set.
 
+* (Optional) Authorize yourself for S3 publishing.
+
+If you plan to use this project's lightweight S3 publishing system, you'll need to add 6 more environment variables:
+
+```
+export AWS_REGION=us-east-1
+export AWS_ACCESS_KEY_ID=[your-key]
+export AWS_SECRET_ACCESS_KEY=[your-secret-key]
+
+export AWS_BUCKET=[your-bucket]
+export AWS_BUCKET_PATH=[your-path]
+export AWS_CACHE_TIME=0
+```
+
 ### Use
 
 Reports are named and described in [`reports.json`](reports.json). You can publish reports in 2 ways:
@@ -77,6 +91,26 @@ It should print something like:
 ```
 
 It will drop a copy of every report (`users.json`, `devices.json`, etc.) to disk in the current working directory. Override the output directory with the `--output` flag.
+
+Use the `--only` flag to limit this to a single report:
+
+```bash
+./bin/all-reports --only devices
+```
+
+* **Publish every report to S3** by adding `--publish` to `all-reports`:
+
+```bash
+./bin/all-reports --publish
+```
+
+This will put a copy of every report into S3, at the bucket and path you've specified in your environment variables.
+
+You can also limit this to a single report:
+
+```bash
+./bin/all-reports --publish --only devices
+```
 
 ### Public domain
 
