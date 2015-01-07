@@ -1,5 +1,5 @@
 {
-  "name": "18f_analytics_proxy",
+  "name": "analytics-reporter",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/18f/analytics-proxy-nodejs.git"
+    "url": "git://github.com/18f/analytics-reporter.git"
   },
   "bugs": {
-    "url": "https://github.com/18f/analytics-proxy-nodejs/issues"
+    "url": "https://github.com/18f/analytics-reporter/issues"
   },
-  "homepage": "https://github.com/18f/analytics-proxy-nodejs",
+  "homepage": "https://github.com/18f/analytics-reporter",
   "license": "CC0",
   "dependencies": {
     "body-parser": "~1.8.1",
