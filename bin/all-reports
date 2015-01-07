@@ -29,7 +29,7 @@ var publish = function(name, json, callback) {
     Body: json,
     ContentType: "application/json",
     ACL: "public-read",
-    CacheControl: "max-age=" + (config.aws.cache || 3600)
+    CacheControl: "max-age=" + (config.aws.cache || 0)
   }, callback);
 };
 

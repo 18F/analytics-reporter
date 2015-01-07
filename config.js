@@ -11,7 +11,7 @@ module.exports = {
   aws: {
     bucket: process.env.AWS_BUCKET,
     path: process.env.AWS_BUCKET_PATH,
-    // in seconds. Defaults to an hour (3600)
+    // HTTP cache time in seconds. Defaults to 0.
     cache: process.env.AWS_CACHE_TIME
   },
 
