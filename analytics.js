@@ -236,7 +236,31 @@ var Analytics = {
             result.totals.start_date = result.data[0].date;
             result.totals.end_date = result.data[result.data.length-1].date;
         }
+
+        if (report.name == "rank-change") {
+            var temp = {};
+            var complete = {};
+            var rank_counter;
+            var current_date = "";
+
+            // Loop through data and calculate rank change for domains that appear twice
+            for (var i=0; i<result.data.length; i++){
+                if (current_date != result.data[i]["date"]){
+                    rank_counter = 0;
+                    current_date = result.data[i]["date"]
+                }
+                rank_counter++;
+                if (temp[result.data[i]["domain"]]) {
+                    complete[result.data[i]["domain"]] = temp[result.data[i]["domain"]] - rank_counter;
+                }
+                else {
+                    temp[result.data[i]["domain"]] = rank_counter;
+                }
+            }
+            result.data = complete
+        }
         return result;
+
     }
 
 };

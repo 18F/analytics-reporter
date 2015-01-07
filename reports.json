@@ -147,6 +147,22 @@
         "description": "Weekly visits from Internet Explorer users broken down by version for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
+    },
+    {
+      "name": "rank-change",
+      "query": {
+        "dimensions": ["ga:hostname","ga:date"],
+        "metrics": ["ga:sessions"],
+        "start-date": "2daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions",
+        "max-results": "10000",
+        "filters": ["ga:sessions>1000"]
+      },
+      "meta": {
+        "description": "Ranking change of domains with over 2000 views for each of the last two days",
+        "documentation": "http://www.usa.gov/performance"
+      }
     }
 
   ]
