@@ -10,7 +10,7 @@
         "sort": "ga:date"
       },
       "meta": {
-        "description:": "Weekly visitors by day to all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
+        "description": "Weekly visitors by day to all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
     },
