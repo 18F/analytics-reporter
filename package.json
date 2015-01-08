@@ -1,11 +1,34 @@
 {
   "name": "analytics-reporter",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.1.0",
+  "description": "A lightweight command line tool for reporting and publishing analytics data from a Google Analytics account.",
+  "keywords": ["analytics", "google analytics"],
+  "homepage": "https://github.com/18f/analytics-reporter",
+  "license": "CC0-1.0",
   "scripts": {
     "start": "node app.js",
     "test": "node test/*"
   },
+  "contributors": [
+    {
+      "name": "Gabriel Ramirez",
+      "email": "gabriel.ramirez@gsa.gov"
+    },
+    {
+      "name": "Eric Mill",
+      "email": "eric.mill@gsa.gov"
+    }
+  ],
+  "files": [
+    "bin", "test",
+    "analytics.js", "config.js",
+    "reports.json", "package.json",
+    "*.md"
+  ],
+  "engines": {"node": ">=0.10.0"},
+  "os": ["!win32"],
+  "preferGlobal": true,
+  "main": "analytics",
   "bin": {
     "report": "./bin/report",
     "all-reports": "./bin/all-reports"
@@ -17,8 +40,6 @@
   "bugs": {
     "url": "https://github.com/18f/analytics-reporter/issues"
   },
-  "homepage": "https://github.com/18f/analytics-reporter",
-  "license": "CC0",
   "dependencies": {
     "body-parser": "~1.8.1",
     "express": "~4.9.0",
