@@ -18,7 +18,8 @@ var jwt = new googleapis.auth.JWT(
 
 
 // The reports we want to run.
-var reports = JSON.parse(fs.readFileSync(path.join(__dirname, "reports.json"))).reports;
+var reports_path = path.join(__dirname, "reports.json");
+var reports = JSON.parse(fs.readFileSync(reports_path)).reports;
 var by_name = {};
 for (var i=0; i<reports.length; i++)
     by_name[reports[i].name] = reports[i];
