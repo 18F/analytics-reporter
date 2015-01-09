@@ -5,12 +5,12 @@
 A lightweight system for publishing analytics data from Google Analytics profiles.
 
 
-### Setup
+### Installing
 
-* You'll need [Node](http://nodejs.org). Then install Node dependencies:
+* Install through npm:
 
 ```bash
-npm install
+npm install -g analytics-reporter
 ```
 
 * [Create an API service account](https://developers.google.com/accounts/docs/OAuth2ServiceAccount) in the Google developer dashboard.
