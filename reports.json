@@ -37,8 +37,8 @@
         "metrics": ["ga:sessions"],
         "start-date": "7daysAgo",
         "end-date": "yesterday",
+        "filters": ["ga:sessions>50"],
         "sort": "ga:date"
-
       },
       "meta": {
         "names": "Operating Systems",
@@ -122,7 +122,7 @@
       },
       "meta": {
         "name": "Top Sources",
-        "description": "Breakdown of top 50 sources in terms of sessions for the last week",
+        "description": "Breakdown of top 50 sources in terms of sessions for the last week.",
         "documentation": "http://www.usa.gov/performance"
       }
     },
@@ -153,7 +153,7 @@
         "filters": ["ga:browser==Internet Explorer"]
       },
       "meta": {
-        "name": "Internet Explorer"
+        "name": "Internet Explorer",
         "description": "Weekly visits from Internet Explorer users broken down by version for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
