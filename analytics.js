@@ -4,7 +4,8 @@
 
 var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
 var config = require('./config');
 
@@ -17,7 +18,7 @@ var jwt = new googleapis.auth.JWT(
 
 
 // The reports we want to run.
-var reports = JSON.parse(fs.readFileSync("./reports.json")).reports;
+var reports = JSON.parse(fs.readFileSync(path.join(__dirname, "reports.json"))).reports;
 var by_name = {};
 for (var i=0; i<reports.length; i++)
     by_name[reports[i].name] = reports[i];
