@@ -30,8 +30,7 @@
   "preferGlobal": true,
   "main": "analytics",
   "bin": {
-    "report": "./bin/report",
-    "all-reports": "./bin/all-reports"
+    "analytics": "./bin/analytics"
   },
   "repository": {
     "type": "git",
