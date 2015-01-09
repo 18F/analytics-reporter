@@ -45,8 +45,7 @@ var Analytics = {
         if (report.query.filters)
             query.filters = report.query.filters.join(",");
 
-        if (report.query['max-results'])
-            query['max-results'] = report.query['max-results'];
+        query['max-results'] = report.query['max-results'] || 1000;
 
         if (report.query['sort'])
             query['sort'] = report.query['sort'];
