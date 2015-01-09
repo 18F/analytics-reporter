@@ -16,6 +16,7 @@
 var Analytics = require("../analytics"),
     config = require("../config"),
     fs = require("fs"),
+    path = require('path'),
     async = require("async");
 
 
@@ -66,7 +67,7 @@ var run = function(options) {
         if (options.publish)
           publish(report.name, json, options, written);
         else if (options.output && (typeof(options.output) == "string"))
-          fs.writeFile(options.output + "/" + report.name + ".json", json, written);
+          fs.writeFile(path.join(options.output, (report.name + ".json")), json, written);
         else {
           // could be split on \n\n
           console.log(json + "\n");
