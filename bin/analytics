@@ -39,6 +39,8 @@ var publish = function(name, json, options, callback) {
 
 var run = function(options) {
   if (!options) options = {};
+  if (options.debug) options.verbose = options.debug;
+  if (options.verbose) options.debug = options.verbose;
 
   // can be overridden to only do one report
   var names = options.only ? [options.only] : Object.keys(Analytics.reports);
@@ -63,7 +65,7 @@ var run = function(options) {
 
         if (options.publish)
           publish(report.name, json, options, written);
-        else if (options.output)
+        else if (options.output && (typeof(options.output) == "string"))
           fs.writeFile(options.output + "/" + report.name + ".json", json, written);
         else {
           // could be split on \n\n
