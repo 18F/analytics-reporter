@@ -25,17 +25,34 @@ var Analytics = require("../analytics"),
 
 var AWS = require("aws-sdk");
 
-var publish = function(name, json, options, callback) {
+var publish = function(name, data, extension, options, callback) {
   if (options.debug) console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
 
   new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-    Key: config.aws.path + "/" + name + ".json",
-    Body: json,
+    Key: config.aws.path + "/" + name + extension,
+    Body: data,
     ContentType: "application/json",
     ACL: "public-read",
     CacheControl: "max-age=" + (config.aws.cache || 0)
   }, callback);
 };
+
+
+function makeCSV(objArray) {
+    var str = Object.keys(objArray[0]) + '\r\n';
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+            if (line != '') line += ','
+
+            line += '"' + array[i][index] + '"';
+        }
+        str += line + '\r\n';
+    }
+    return str;
+}
 
 
 var run = function(options) {
@@ -55,6 +72,7 @@ var run = function(options) {
 
         if (options.debug) console.log("[" + report.name + "] Saving report data...");
         var json = JSON.stringify(data, null, 2);
+        var csv = makeCSV(data['data']);
 
         var written = function(err) {
           if (err)
@@ -64,10 +82,14 @@ var run = function(options) {
           done();
         };
 
-        if (options.publish)
-          publish(report.name, json, options, written);
-        else if (options.output && (typeof(options.output) == "string"))
+        if (options.publish){
+          publish(report.name, json, '.json', options, written);
+          publish(report.name, csv, '.csv', options, written)
+        }
+        else if (options.output && (typeof(options.output) == "string")){
           fs.writeFile(path.join(options.output, (report.name + ".json")), json, written);
+          fs.writeFile(path.join(options.output, (report.name + ".csv")), csv, written);
+        }
         else {
           // could be split on \n\n
           console.log(json + "\n");
