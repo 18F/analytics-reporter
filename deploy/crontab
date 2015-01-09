@@ -1,0 +1,11 @@
+# Run all reports every day soon after midnight. Server uses UTC.
+
+# Contents of daily.sh:
+
+# #!/bin/bash
+#
+# export PATH=$PATH:/usr/local/bin
+# source $HOME/.bashrc
+# analytics --publish
+
+10 5 * * * /home/analytics/daily.sh > /home/analytics/analytics.log 2>&1

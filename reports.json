@@ -10,6 +10,7 @@
         "sort": "ga:date"
       },
       "meta": {
+        "name": "Users",
         "description": "Weekly visitors by day to all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
@@ -24,6 +25,7 @@
         "sort": "ga:date"
       },
       "meta": {
+        "name": "Devices",
         "description": "Weekly desktop/mobile/tablet visits by day for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
@@ -35,10 +37,11 @@
         "metrics": ["ga:sessions"],
         "start-date": "7daysAgo",
         "end-date": "yesterday",
+        "filters": ["ga:sessions>50"],
         "sort": "ga:date"
-
       },
       "meta": {
+        "names": "Operating Systems",
         "description": "Weekly visits, broken down by operating system and date, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
@@ -54,6 +57,7 @@
         "sort": "ga:date"
       },
       "meta": {
+        "names": "Windows",
         "description": "Weekly visits from Windows users, broken down by operating system version and date, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
@@ -69,6 +73,7 @@
         "max-results": "20"
       },
       "meta": {
+        "name": "Top Pages (7 Days)",
         "description": "Last week's top 20 pages in terms of sessions for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
@@ -84,6 +89,7 @@
         "max-results": "20"
       },
       "meta": {
+        "name": "Top Pages (30 Days)",
         "description": "Last 30 day's top 20 pages in terms of sessions for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
@@ -99,6 +105,7 @@
         "max-results": "20"
       },
       "meta": {
+        "name": "Top Pages (90 Days)",
         "description": "Last 90 day's top 20 pages in terms of sessions for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
@@ -114,7 +121,8 @@
         "max-results": "50"
       },
       "meta": {
-        "description": "Breakdown of top 50 sources in terms of sessions for the last week",
+        "name": "Top Sources",
+        "description": "Breakdown of top 50 sources in terms of sessions for the last week.",
         "documentation": "http://www.usa.gov/performance"
       }
     },
@@ -129,6 +137,7 @@
         "filters": ["ga:sessions>50"]
       },
       "meta": {
+        "name": "Browsers",
         "description": "Weekly visits broken down by browser for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
@@ -144,6 +153,7 @@
         "filters": ["ga:browser==Internet Explorer"]
       },
       "meta": {
+        "name": "Internet Explorer",
         "description": "Weekly visits from Internet Explorer users broken down by version for all .gov sites tracked by the U.S. federal government's Digital Analytics Program.",
         "documentation": "http://www.usa.gov/performance"
       }
