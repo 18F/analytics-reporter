@@ -41,13 +41,15 @@
     "url": "https://github.com/18f/analytics-reporter/issues"
   },
   "dependencies": {
-    "body-parser": "~1.8.1",
-    "express": "~4.9.0",
     "googleapis": "^1.0.21",
-    "mongoose": "^3.8.19",
     "node-schedule": "^0.1.13",
     "minimist": "*",
     "async": "*",
     "aws-sdk": "*"
+  },
+  "devDependencies": {
+    "body-parser": "~1.8.1",
+    "express": "~4.9.0",
+    "mongoose": "^3.8.19"
   }
 }
