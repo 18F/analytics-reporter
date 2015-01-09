@@ -1,6 +1,6 @@
 {
   "name": "analytics-reporter",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A lightweight command line tool for reporting and publishing analytics data from a Google Analytics account.",
   "keywords": ["analytics", "google analytics"],
   "homepage": "https://github.com/18f/analytics-reporter",
@@ -30,8 +30,7 @@
   "preferGlobal": true,
   "main": "analytics",
   "bin": {
-    "report": "./bin/report",
-    "all-reports": "./bin/all-reports"
+    "analytics": "./bin/analytics"
   },
   "repository": {
     "type": "git",

@@ -3,11 +3,14 @@
 /*
  * Run all analytics reports output JSON to disk.
  *
- * Usage: all-reports
+ * Usage: analytics
  *
- * --output: Change output directory. Defaults to CWD.
- * --publish: Instead of writing to disk, publish to an S3 bucket.
+ * Defaults to printing JSON to STDOUT.
+ *
+ * --output: Output to a directory.
+ * --publish: Publish to an S3 bucket.
  * --only: only run one report.
+ * --debug: print debug details on STDOUT
  */
 
 var Analytics = require("../analytics"),
@@ -21,8 +24,8 @@ var Analytics = require("../analytics"),
 
 var AWS = require("aws-sdk");
 
-var publish = function(name, json, callback) {
-  console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
+var publish = function(name, json, options, callback) {
+  if (options.debug) console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
 
   new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
     Key: config.aws.path + "/" + name + ".json",
@@ -36,7 +39,8 @@ var publish = function(name, json, callback) {
 
 var run = function(options) {
   if (!options) options = {};
-  if (!options.output) options.output = ".";
+  if (options.debug) options.verbose = options.debug;
+  if (options.verbose) options.debug = options.verbose;
 
   // can be overridden to only do one report
   var names = options.only ? [options.only] : Object.keys(Analytics.reports);
@@ -44,25 +48,30 @@ var run = function(options) {
   var eachReport = function(name, done) {
     var report = Analytics.reports[name];
 
-    console.log("\n[" + report.name + "] Fetching...");
+    if (options.debug) console.log("\n[" + report.name + "] Fetching...");
     Analytics.query(report, function(err, data) {
         if (err) return console.log("ERROR: " + JSON.stringify(err));
 
-        console.log("[" + report.name + "] Saving report data...");
+        if (options.debug) console.log("[" + report.name + "] Saving report data...");
         var json = JSON.stringify(data, null, 2);
 
         var written = function(err) {
           if (err)
             console.error("ERROR: " + JSON.stringify(err));
-          else
+          else if (options.debug)
             console.log("[" + report.name + "] Done.");
           done();
         };
 
         if (options.publish)
-          publish(report.name, json, written);
-        else
+          publish(report.name, json, options, written);
+        else if (options.output && (typeof(options.output) == "string"))
           fs.writeFile(options.output + "/" + report.name + ".json", json, written);
+        else {
+          // could be split on \n\n
+          console.log(json + "\n");
+          written();
+        }
     });
   };
 
@@ -72,7 +81,7 @@ var run = function(options) {
       process.exit(1);
     }
 
-    console.log("All done.");
+    if (options.debug) console.log("All done.");
   });
 };
 
