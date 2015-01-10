@@ -214,7 +214,7 @@ var Analytics = {
             }
         }
 
-        if (report.name == "ie-version") {
+        if (report.name == "ie") {
             // initialize all cared-about versions to 0
             result.totals.ie_version = {};
             for (var i=0; i<Analytics.ie_versions.length; i++)
