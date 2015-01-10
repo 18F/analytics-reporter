@@ -10,6 +10,8 @@
  * --output: Output to a directory.
  * --publish: Publish to an S3 bucket.
  * --only: only run one report.
+ * --head: Totals only (omit individual data points). Only applies to JSON.
+ * --csv: CSV instead of JSON.
  * --debug: print debug details on STDOUT
  */
 
@@ -68,8 +70,10 @@ var run = function(options) {
         }
 
         // JSON
-        else
+        else {
+          if (options.head) delete data.data;
           writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+        }
     });
   };
 
