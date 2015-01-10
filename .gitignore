@@ -5,4 +5,5 @@
 .python-version
 /.env
 *.json
+*.csv
 /data

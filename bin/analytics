@@ -17,7 +17,8 @@ var Analytics = require("../analytics"),
     config = require("../config"),
     fs = require("fs"),
     path = require('path'),
-    async = require("async");
+    async = require("async")
+    csv = require("fast-csv");
 
 
 // AWS credentials are looked for in env vars or in ~/.aws/config.
@@ -25,13 +26,15 @@ var Analytics = require("../analytics"),
 
 var AWS = require("aws-sdk");
 
-var publish = function(name, json, options, callback) {
+var publish = function(name, data, extension, options, callback) {
   if (options.debug) console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
 
+  var mime = {".json": "application/json", ".csv": "text/csv"};
+
   new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-    Key: config.aws.path + "/" + name + ".json",
-    Body: json,
-    ContentType: "application/json",
+    Key: config.aws.path + "/" + name + extension,
+    Body: data,
+    ContentType: mime[extension],
     ACL: "public-read",
     CacheControl: "max-age=" + (config.aws.cache || 0)
   }, callback);
@@ -54,26 +57,42 @@ var run = function(options) {
         if (err) return console.log("ERROR AFTER QUERYING: " + JSON.stringify(err));
 
         if (options.debug) console.log("[" + report.name + "] Saving report data...");
-        var json = JSON.stringify(data, null, 2);
 
-        var written = function(err) {
-          if (err)
-            console.error("ERROR AFTER WRITING: " + JSON.stringify(err));
-          else if (options.debug)
-            console.log("[" + report.name + "] Done.");
-          done();
-        };
+        // CSV, see https://github.com/C2FO/fast-csv#formatting-functions
+        if (options.csv) {
+          csv.writeToString(data['data'], {headers: true}, function(err, data) {
+            if (err) return console.log("ERROR AFTER CSV: " + JSON.stringify(err));
 
-        if (options.publish)
-          publish(report.name, json, options, written);
-        else if (options.output && (typeof(options.output) == "string"))
-          fs.writeFile(path.join(options.output, (report.name + ".json")), json, written);
-        else {
-          // could be split on \n\n
-          console.log(json + "\n");
-          written();
+            writeReport(name, data, ".csv", done);
+          });
         }
+
+        // JSON
+        else
+          writeReport(name, JSON.stringify(data, null, 2), ".json", done);
     });
+  };
+
+  var writeReport = function(name, output, extension, done) {
+    var written = function(err) {
+      if (err)
+        console.error("ERROR AFTER WRITING: " + JSON.stringify(err));
+      else if (options.debug)
+        console.log("[" + name + "] Done.");
+      done();
+    };
+
+    if (options.publish)
+      publish(name, output, extension, options, written);
+
+    else if (options.output && (typeof(options.output) == "string"))
+      fs.writeFile(path.join(options.output, (name + extension)), output, written);
+
+    else {
+      // could be split on \n\n
+      console.log(output + "\n");
+      written();
+    }
   };
 
   async.eachSeries(names, eachReport, function(err) {
