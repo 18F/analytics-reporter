@@ -45,7 +45,7 @@ var Analytics = {
         if (report.query.filters)
             query.filters = report.query.filters.join(",");
 
-        query['max-results'] = report.query['max-results'] || 1000;
+        query['max-results'] = report.query['max-results'] || 10000;
 
         if (report.query['sort'])
             query['sort'] = report.query['sort'];
@@ -231,6 +231,10 @@ var Analytics = {
                 result.totals.ie_version[version] += parseInt(result.data[i].visits);
             }
         }
+
+        // awkward, but the data *are* the totals here, we don't keep data points
+        if (report.name == "sources")
+            result.totals = data;
 
         // presumably we're organizing these by date
         if (result.data[0].date) {
