@@ -83,7 +83,7 @@ var run = function(options) {
     };
 
     if (options.publish)
-      publish(report.name, output, extension, options, written);
+      publish(name, output, extension, options, written);
 
     else if (options.output && (typeof(options.output) == "string"))
       fs.writeFile(path.join(options.output, (name + extension)), output, written);
