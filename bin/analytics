@@ -12,6 +12,7 @@
  * --only: only run one report.
  * --head: Totals only (omit individual data points). Only applies to JSON.
  * --csv: CSV instead of JSON.
+ * --frequency: Limit to reports with this 'frequency' value.
  * --debug: print debug details on STDOUT
  */
 
@@ -49,14 +50,27 @@ var run = function(options) {
   if (options.verbose) options.debug = options.verbose;
 
   // can be overridden to only do one report
-  var names = options.only ? [options.only] : Object.keys(Analytics.reports);
+  var names;
+  if (options.only)
+    names = [options.only];
+  else if (options.frequency) {
+    names = [];
+    var all = Object.keys(Analytics.reports);
+    for (var i=0; i<all.length; i++) {
+      if (Analytics.reports[all[i]].frequency == options.frequency)
+        names.push(all[i]);
+    }
+  }
+
+  else
+    names = Object.keys(Analytics.reports);
 
   var eachReport = function(name, done) {
     var report = Analytics.reports[name];
 
     if (options.debug) console.log("\n[" + report.name + "] Fetching...");
     Analytics.query(report, function(err, data) {
-        if (err) return console.log("ERROR AFTER QUERYING: " + JSON.stringify(err));
+        if (err) return console.log("ERROR AFTER QUERYING: " + err);
 
         if (options.debug) console.log("[" + report.name + "] Saving report data...");
 

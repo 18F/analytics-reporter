@@ -1,7 +1,19 @@
 {
   "reports": [
     {
+      "name": "realtime",
+      "frequency": "realtime",
+      "query": {
+        "metrics": ["rt:activeUsers"]
+      },
+      "meta": {
+        "name": "Active Users Right Now",
+        "description": "Number of users currently visiting all sites tracked by the U.S. federal government's Digital Analytics Program."
+      }
+    },
+    {
       "name": "devices",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:date" ,"ga:deviceCategory"],
         "metrics": ["ga:sessions"],
@@ -16,6 +28,7 @@
     },
     {
       "name": "os",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:date" ,"ga:operatingSystem"],
         "metrics": ["ga:sessions"],
@@ -31,6 +44,7 @@
     },
     {
       "name": "windows",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
         "metrics": ["ga:sessions"],
@@ -46,6 +60,7 @@
     },
     {
       "name": "browsers",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:date" ,"ga:browser"],
         "metrics": ["ga:sessions"],
@@ -61,6 +76,7 @@
     },
     {
       "name": "ie",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:date","ga:browserVersion"],
         "metrics": ["ga:sessions"],
@@ -76,6 +92,7 @@
     },
     {
       "name": "top-pages-7-days",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -91,6 +108,7 @@
     },
     {
       "name": "top-pages-30-days",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -106,6 +124,7 @@
     },
     {
       "name": "top-pages-90-days",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -121,6 +140,7 @@
     },
     {
       "name": "sources",
+      "frequency": "daily",
       "query": {
         "dimensions": ["ga:source"],
         "metrics": ["ga:sessions"],

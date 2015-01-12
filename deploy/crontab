@@ -1,11 +1,23 @@
 # Run all reports every day soon after midnight. Server uses UTC.
 
+################################
 # Contents of daily.sh:
 
 # #!/bin/bash
 #
 # export PATH=$PATH:/usr/local/bin
 # source $HOME/.bashrc
-# analytics --publish
+# analytics --publish --frequency=daily
+
+#############################
+# Contents of realtime.sh:
+
+# #!/bin/bash
+#
+# export PATH=$PATH:/usr/local/bin
+# source $HOME/.bashrc
+# analytics --publish --frequency=realtime
+
 
 10 5 * * * /home/analytics/daily.sh > /home/analytics/analytics.log 2>&1
+*/1 * * * * /home/analytics/realtime.sh > /home/analytics/analytics-realtime.log 2>&1
