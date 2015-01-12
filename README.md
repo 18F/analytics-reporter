@@ -4,6 +4,7 @@
 
 A lightweight system for publishing analytics data from Google Analytics profiles.
 
+Available reports are named and described in [`reports.json`](reports.json). For now, they're hardcoded into the repository.
 
 ### Installing
 
@@ -56,15 +57,15 @@ export AWS_CACHE_TIME=0
 
 ### Use
 
-Reports are named and described in [`reports.json`](reports.json). You can publish reports in 2 ways:
-
-* **Print a single report to STDOUT** with the `./bin/report` command:
+Reports are created and published using the `analytics` command.
 
 ```bash
-./bin/report devices
+analytics
 ```
 
-It should print something like:
+This will run every report, in sequence, and print out the resulting JSON to STDOUT. There will be two newlines between each report.
+
+A report might look something like this:
 
 ```javascript
 {
@@ -77,39 +78,86 @@ It should print something like:
     "metrics": [
       "ga:sessions"
     ],
-    "start-date": "7daysAgo"
-
+    "start-date": "90daysAgo",
+    "end-date": "yesterday",
+    "sort": "ga:date"
+  },
+  "meta": {
+    "name": "Devices",
+    "description": "Weekly desktop/mobile/tablet visits by day for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+  },
+  "data": [
+    {
+      "date": "2014-10-14",
+      "device": "desktop",
+      "visits": "11495462"
+    },
+    {
+      "date": "2014-10-14",
+      "device": "mobile",
+      "visits": "2499586"
+    },
+    {
+      "date": "2014-10-14",
+      "device": "tablet",
+      "visits": "976396"
+    },
     // ...
+  ],
+  "totals": {
+    "devices": {
+      "mobile": 213920363,
+      "desktop": 755511646,
+      "tablet": 81874189
+    },
+    "start_date": "2014-10-14",
+    "end_date": "2015-01-11"
   }
 }
 ```
 
-* **Save every report to disk** with the `./bin/all-reports` command:
+#### Options
+
+* `--output` - Output to a directory.
 
 ```bash
-./bin/all-reports
+analytics --output /path/to/data
 ```
 
-It will drop a copy of every report (`users.json`, `devices.json`, etc.) to disk in the current working directory. Override the output directory with the `--output` flag.
-
-Use the `--only` flag to limit this to a single report:
+* `--publish` - Publish to an S3 bucket. Requires AWS environment variables set as described above.
 
 ```bash
-./bin/all-reports --only devices
+analytics --publish
 ```
 
-* **Publish every report to S3** by adding `--publish` to `all-reports`:
+* `--only` - only run one report.
 
 ```bash
-./bin/all-reports --publish
+analytics --only devices
 ```
 
-This will put a copy of every report into S3, at the bucket and path you've specified in your environment variables.
-
-You can also limit this to a single report:
+* `--head` - Totals only (omit individual data points). Only applies to JSON.
 
 ```bash
-./bin/all-reports --publish --only devices
+analytics --only devices --head
+```
+
+* `--csv` - Gives you CSV instead of JSON.
+
+```bash
+analytics --csv
+```
+
+* `--frequency` - Limit to reports with this 'frequency' value.
+
+```bash
+analytics --frequency=realtime
+```
+
+* `--debug` - Print debug details on STDOUT.
+
+```bash
+analytics --publish --debug
 ```
 
 ### Public domain
