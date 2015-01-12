@@ -34,12 +34,19 @@ var Analytics = {
 
         // Insert IDs and auth data. Dupe the object so it doesn't
         // modify the report object for later work.
-        var query = {
-            dimensions: report.query.dimensions.join(","),
-            metrics: report.query.metrics.join(","),
-            "start-date": report.query['start-date'],
-            "end-date": report.query['end-date']
-        }
+        var query = {};
+
+        if (report.query.dimensions)
+            query.dimensions = report.query.dimensions.join(",");
+
+        if (report.query.metrics)
+            query.metrics = report.query.metrics.join(",");
+
+        if (report.query['start-date'])
+            query["start-date"] = report.query['start-date'];
+        if (report.query['end-date'])
+            query["end-date"] = report.query['end-date'];
+
 
         // Optional filters.
         if (report.query.filters)
@@ -55,9 +62,16 @@ var Analytics = {
         query.ids = config.account.ids;
         query.auth = jwt;
 
+        var api_call;
+        if (report.frequency == "realtime")
+            api_call = ga.data.realtime.get;
+        else
+            api_call = ga.data.ga.get;
+
         jwt.authorize(function(err, result) {
             if (err) return callback(err, null);
-            ga.data.ga.get(query, function(err, result) {
+
+            api_call(query, function(err, result) {
                 if (err) return callback(err, null);
 
                 if (config.debug)
@@ -76,6 +90,7 @@ var Analytics = {
     mapping: {
         "ga:date": "date",
         "ga:users": "visitors",
+        "rt:activeUsers": "active_visitors",
         "ga:sessions": "visits",
         "ga:deviceCategory": "device",
         "ga:operatingSystem": "os",
@@ -233,8 +248,8 @@ var Analytics = {
         }
 
         // awkward, but the data *are* the totals here, we don't keep data points
-        if (report.name == "sources")
-            result.totals = data;
+        if (report.name == "sources" || report.name == "realtime")
+            result.totals = result.data;
 
         // presumably we're organizing these by date
         if (result.data[0].date) {
