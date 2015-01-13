@@ -12,6 +12,34 @@
       }
     },
     {
+      "name": "today",
+      "frequency": "hourly",
+      "query": {
+        "dimensions": ["ga:date", "ga:hour"],
+        "metrics": ["ga:sessions"],
+        "start-date": "today",
+        "end-date": "today"
+      },
+      "meta": {
+        "name": "Today",
+        "description": "Today's visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+      }
+    },
+    {
+      "name": "yesterday",
+      "frequency": "hourly",
+      "query": {
+        "dimensions": ["ga:date", "ga:hour"],
+        "metrics": ["ga:sessions"],
+        "start-date": "yesterday",
+        "end-date": "yesterday"
+      },
+      "meta": {
+        "name": "Yesterday",
+        "description": "Yesterday's visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+      }
+    },
+    {
       "name": "devices",
       "frequency": "daily",
       "query": {
