@@ -261,6 +261,10 @@ var Analytics = {
             result.totals.start_date = result.data[0].date;
             result.totals.end_date = result.data[result.data.length-1].date;
         }
+
+        // datestamp all reports, will be serialized in JSON as ISO 8601
+        result.taken_at = new Date();
+
         return result;
     }
 
