@@ -89,6 +89,7 @@ var Analytics = {
 
     mapping: {
         "ga:date": "date",
+        "ga:hour": "hour",
         "ga:users": "visitors",
         "rt:activeUsers": "active_visitors",
         "rt:pagePath": "page",
