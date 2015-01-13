@@ -91,6 +91,20 @@
       }
     },
     {
+      "name": "top-pages-realtime",
+      "frequency": "realtime",
+      "query": {
+        "dimensions": ["rt:pagePath", "rt:pageTitle"],
+        "metrics": ["rt:activeUsers"],
+        "sort": "-rt:activeUsers",
+        "max-results": "20"
+      },
+      "meta": {
+        "name": "Top Pages (7 Days)",
+        "description": "Last week's top 20 pages in terms of sessions for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+      }
+    },
+    {
       "name": "top-pages-7-days",
       "frequency": "daily",
       "query": {
