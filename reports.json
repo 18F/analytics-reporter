@@ -137,22 +137,6 @@
         "name": "Top Pages (90 Days)",
         "description": "Last 90 day's top 20 pages in terms of sessions for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
       }
-    },
-    {
-      "name": "sources",
-      "frequency": "daily",
-      "query": {
-        "dimensions": ["ga:source"],
-        "metrics": ["ga:sessions"],
-        "start-date": "90daysAgo",
-        "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "max-results": "50"
-      },
-      "meta": {
-        "name": "Top Sources",
-        "description": "Breakdown of top 50 sources in terms of sessions for the last 90 days."
-      }
     }
   ]
 }
