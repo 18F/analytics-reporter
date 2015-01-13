@@ -91,6 +91,8 @@ var Analytics = {
         "ga:date": "date",
         "ga:users": "visitors",
         "rt:activeUsers": "active_visitors",
+        "rt:pagePath": "page",
+        "rt:pageTitle": "page_title",
         "ga:sessions": "visits",
         "ga:deviceCategory": "device",
         "ga:operatingSystem": "os",
@@ -247,9 +249,12 @@ var Analytics = {
             }
         }
 
-        // awkward, but the data *are* the totals here, we don't keep data points
-        if (report.name == "sources" || report.name == "realtime")
+        // awkward, but the data *are* the totals here, needs to be in --head
+        if (report.name == "sources"
+            || report.name == "realtime"
+            || (report.name.indexOf("top-pages") >= 0)) {
             result.totals = result.data;
+        }
 
         // presumably we're organizing these by date
         if (result.data[0].date) {
