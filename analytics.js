@@ -167,10 +167,10 @@ var Analytics = {
             for (var i=0; i<result.data.length; i++)
                 result.totals.visitors += parseInt(result.data[i].visitors);
         }
-        if ("sessions" in result.data[0]) {
-            result.totals.sessions = 0;
+        if ("visits" in result.data[0]) {
+            result.totals.visits = 0;
             for (var i=0; i<result.data.length; i++)
-                result.totals.sessions += parseInt(result.data[i].sessions);
+                result.totals.visits += parseInt(result.data[i].visits);
         }
 
         if (report.name == "devices") {
