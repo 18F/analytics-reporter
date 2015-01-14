@@ -1,5 +1,5 @@
 // Connect to the database.
-var mongo = require("./config").mongo;
+var mongo = require("../config").mongo;
 require('mongoose').connect('mongodb://' + mongo.host + '/' + mongo.database);
 
 // Define the app, and middleware.
@@ -16,11 +16,35 @@ app.get('/', function (req, res) {
 });
 require('./routes')(app, models);
 
+
 //init model
-data = require("./data");
-data.init_endpoints()
+var async = require("async"),
+    Analytics = require("../analytics"),
+    names = Object.keys(Analytics.reports);
+
+var eachReport = function(name, callback) {
+    var report = Analytics.reports[name];
+        var doc = new models.Analytics({
+            name: name,
+            update_interval: 3600000,
+            last_update: 0,
+            query: report.query
+        });
+    doc.save();
+    console.log("Created endpoint: " + doc.name);
+    callback();
+};
+
+async.eachSeries(names, eachReport, function(err) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    console.log("All done.");
+});
+
 
 // Boot it up!
 var server = app.listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + server.address().port);
+   console.log('Express server listening on port ' + server.address().port);
 });

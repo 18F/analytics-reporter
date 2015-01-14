@@ -1,7 +1,7 @@
 // All routes for the app.
 var models = require('./models'),
-    config = require('./config'),
-    data = require("./data");
+    config = require('../config'),
+    data = require('./data_update');
 
 module.exports = function(app, models) {
 
@@ -9,13 +9,19 @@ module.exports = function(app, models) {
         res.send("API Data!");
     });
 
-    app.get('/data/api/:slug', function(req, res) {
+    app.get('/data/api/:name', function(req, res) {
         models.Analytics.findOne({
-            slug: req.params.slug
+            name: req.params.name
         }, function(err, doc) {
-            data.get_or_update(err, res, doc)
+            data.get_or_update(err, res, doc);
         });
     });
+
+};
+
+
+/*
+
 
     app.get('/data/api/custom/:apicall', function(req, res) {
         models.Analytics.findOne({
@@ -29,5 +35,4 @@ module.exports = function(app, models) {
             }
         });
     });
-
-};
+*/

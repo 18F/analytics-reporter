@@ -26,8 +26,14 @@ module.exports = {
   },
 
   mongo: {
+    host: 'localhost',
+    database: 'analytics_db'
+  }
+/*
+  mongo: {
     host: process.env.MONGO_HOST,
     database: process.env.MONGO_DATABASE
   }
+*/
 
 };
