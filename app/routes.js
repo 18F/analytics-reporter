@@ -20,9 +20,7 @@ module.exports = function(app, models) {
 };
 
 
-/*
-
-
+/*  //functionality for custom api calls
     app.get('/data/api/custom/:apicall', function(req, res) {
         models.Analytics.findOne({
             apicall: req.params.apicall

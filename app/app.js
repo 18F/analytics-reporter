@@ -22,11 +22,13 @@ var async = require("async"),
     Analytics = require("../analytics"),
     names = Object.keys(Analytics.reports);
 
+time_mapper = {'daily': 86400000, 'hourly': 3600000, 'realtime': 10000}
+
 var eachReport = function(name, callback) {
     var report = Analytics.reports[name];
         var doc = new models.Analytics({
             name: name,
-            update_interval: 3600000,
+            update_interval: time_mapper[report.frequency],
             last_update: 0,
             query: report.query
         });
