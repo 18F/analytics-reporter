@@ -89,8 +89,11 @@ var Analytics = {
 
     mapping: {
         "ga:date": "date",
+        "ga:hour": "hour",
         "ga:users": "visitors",
         "rt:activeUsers": "active_visitors",
+        "rt:pagePath": "page",
+        "rt:pageTitle": "page_title",
         "ga:sessions": "visits",
         "ga:deviceCategory": "device",
         "ga:operatingSystem": "os",
@@ -164,10 +167,10 @@ var Analytics = {
             for (var i=0; i<result.data.length; i++)
                 result.totals.visitors += parseInt(result.data[i].visitors);
         }
-        if ("sessions" in result.data[0]) {
-            result.totals.sessions = 0;
+        if ("visits" in result.data[0]) {
+            result.totals.visits = 0;
             for (var i=0; i<result.data.length; i++)
-                result.totals.sessions += parseInt(result.data[i].sessions);
+                result.totals.visits += parseInt(result.data[i].visits);
         }
 
         if (report.name == "devices") {
@@ -247,15 +250,15 @@ var Analytics = {
             }
         }
 
-        // awkward, but the data *are* the totals here, we don't keep data points
-        if (report.name == "sources" || report.name == "realtime")
-            result.totals = result.data;
-
         // presumably we're organizing these by date
         if (result.data[0].date) {
             result.totals.start_date = result.data[0].date;
             result.totals.end_date = result.data[result.data.length-1].date;
         }
+
+        // datestamp all reports, will be serialized in JSON as ISO 8601
+        result.taken_at = new Date();
+
         return result;
     }
 
