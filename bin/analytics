@@ -10,7 +10,8 @@
  * --output: Output to a directory.
  * --publish: Publish to an S3 bucket.
  * --only: only run one report.
- * --head: Totals only (omit individual data points). Only applies to JSON.
+ * --slim: Where supported, use totals only (omit the `data` array).
+ *         Only applies to JSON, and reports where "slim": true.
  * --csv: CSV instead of JSON.
  * --frequency: Limit to reports with this 'frequency' value.
  * --debug: print debug details on STDOUT
@@ -85,7 +86,9 @@ var run = function(options) {
 
         // JSON
         else {
-          if (options.head) delete data.data;
+          // some reports can be slimmed down for direct rendering
+          if (options.slim && report.slim) delete data.data;
+
           writeReport(name, JSON.stringify(data, null, 2), ".json", done);
         }
     });
