@@ -21,8 +21,9 @@ var Analytics = require("../analytics"),
     config = require("../config"),
     fs = require("fs"),
     path = require('path'),
-    async = require("async")
-    csv = require("fast-csv");
+    async = require("async"),
+    csv = require("fast-csv"),
+    zlib = require('zlib');
 
 
 // AWS credentials are looked for in env vars or in ~/.aws/config.
@@ -35,13 +36,18 @@ var publish = function(name, data, extension, options, callback) {
 
   var mime = {".json": "application/json", ".csv": "text/csv"};
 
-  new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-    Key: config.aws.path + "/" + name + extension,
-    Body: data,
-    ContentType: mime[extension],
-    ACL: "public-read",
-    CacheControl: "max-age=" + (config.aws.cache || 0)
-  }, callback);
+  zlib.gzip(data, function(err, compressed) {
+    if (err) return console.log("ERROR AFTER GZIP: " + err);
+
+    new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
+      Key: config.aws.path + "/" + name + extension,
+      Body: compressed,
+      ContentType: mime[extension],
+      ContentEncoding: "gzip",
+      ACL: "public-read",
+      CacheControl: "max-age=" + (config.aws.cache || 0)
+    }, callback);
+  });
 };
 
 
