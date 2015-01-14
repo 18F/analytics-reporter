@@ -136,10 +136,10 @@ analytics --publish
 analytics --only devices
 ```
 
-* `--head` - Totals only (omit individual data points). Only applies to JSON.
+* `--slim` -Where supported, use totals only (omit the `data` array). Only applies to JSON, and reports where `"slim": true`.
 
 ```bash
-analytics --only devices --head
+analytics --only devices --slim
 ```
 
 * `--csv` - Gives you CSV instead of JSON.
