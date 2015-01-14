@@ -251,11 +251,14 @@ var Analytics = {
         }
 
         // awkward, but the data *are* the totals here, needs to be in --head
-        if (report.name == "sources"
-            || report.name == "realtime"
-            || (report.name.indexOf("top-pages") >= 0)) {
-            result.totals = result.data;
-        }
+        if (report.name == "realtime")
+            result.totals = result.data[0];
+
+        // realtime uses pages, multi-day uses domains
+        if (report.name == "top-pages-realtime")
+            result.totals = {pages: result.data}
+        else if (report.name.indexOf("top-pages") >= 0)
+            result.totals = {domains: result.data}
 
         // presumably we're organizing these by date
         if (result.data[0].date) {
