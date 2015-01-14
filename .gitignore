@@ -6,5 +6,6 @@
 /.env
 *.json
 *.csv
+*.gz
 /data
 todo.txt
