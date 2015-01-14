@@ -9,15 +9,6 @@
 # source $HOME/.bashrc
 # $HOME/node_modules/analytics-reporter/bin/analytics --publish --frequency=daily --slim --verbose
 
-################################
-# Contents of hourly.sh:
-
-# #!/bin/bash
-#
-# export PATH=$PATH:/usr/local/bin
-# source $HOME/.bashrc
-# $HOME/node_modules/analytics-reporter/bin/analytics --publish --frequency=hourly --slim --verbose
-
 #############################
 # Contents of realtime.sh:
 
@@ -29,9 +20,6 @@
 
 # most reports
 10 5 * * * /home/analytics/daily.sh > /home/analytics/logs/daily.log 2>&1
-
-# a couple hourly reports
-1 * * * * /home/analytics/hourly.sh > /home/analytics/logs/hourly.log 2>&1
 
 # realtime reports
 */1 * * * * /home/analytics/realtime.sh > /home/analytics/logs/realtime.log 2>&1

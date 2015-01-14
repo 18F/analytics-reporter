@@ -63,7 +63,7 @@ var Analytics = {
         query.auth = jwt;
 
         var api_call;
-        if (report.frequency == "realtime")
+        if (report.realtime)
             api_call = ga.data.realtime.get;
         else
             api_call = ga.data.ga.get;
