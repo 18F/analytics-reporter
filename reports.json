@@ -3,6 +3,7 @@
     {
       "name": "realtime",
       "frequency": "realtime",
+      "realtime": true,
       "query": {
         "metrics": ["rt:activeUsers"]
       },
@@ -13,7 +14,7 @@
     },
     {
       "name": "today",
-      "frequency": "hourly",
+      "frequency": "realtime",
       "query": {
         "dimensions": ["ga:date", "ga:hour"],
         "metrics": ["ga:sessions"],
@@ -23,20 +24,6 @@
       "meta": {
         "name": "Today",
         "description": "Today's visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
-      }
-    },
-    {
-      "name": "yesterday",
-      "frequency": "hourly",
-      "query": {
-        "dimensions": ["ga:date", "ga:hour"],
-        "metrics": ["ga:sessions"],
-        "start-date": "yesterday",
-        "end-date": "yesterday"
-      },
-      "meta": {
-        "name": "Yesterday",
-        "description": "Yesterday's visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
       }
     },
     {
@@ -142,6 +129,7 @@
     {
       "name": "top-pages-realtime",
       "frequency": "realtime",
+      "realtime": true,
       "query": {
         "dimensions": ["rt:pagePath", "rt:pageTitle"],
         "metrics": ["rt:activeUsers"],
