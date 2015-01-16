@@ -250,6 +250,18 @@ var Analytics = {
             }
         }
 
+        // changes the value to 0 if it is less than 10% of the last number
+        if (report.name == "today") {
+            var last_number = 0;
+            for (var i=0; i<result.data.length; i++){
+                current_number = parseInt(result.data[i]['visits']);
+                if (current_number != 0 & last_number*.1 > current_number){
+                    result.data[i]['visits'] = "0";
+                }
+                last_number = current_number
+            }
+        }
+
         // presumably we're organizing these by date
         if (result.data[0].date) {
             result.totals.start_date = result.data[0].date;
