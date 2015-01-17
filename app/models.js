@@ -4,13 +4,13 @@ var Mixed = mongoose.Schema.Types.Mixed;
 module.exports = {
     Analytics: mongoose.model(
         'AnalyticsSchema', new mongoose.Schema({
-            slug: {
+            name: {
                 type: String,
                 required: true,
                 unique: true
             },
-            apicall: {
-                type: String,
+             query: {
+                type: Mixed,
                 required: true,
                 unique: true
             },
