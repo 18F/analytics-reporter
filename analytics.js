@@ -47,6 +47,8 @@ var Analytics = {
         if (report.query['end-date'])
             query["end-date"] = report.query['end-date'];
 
+        // never sample data - this should be fine
+        query['samplingLevel'] = "HIGHER_PRECISION";
 
         // Optional filters.
         if (report.query.filters)
@@ -136,11 +138,14 @@ var Analytics = {
     process: function(report, data) {
         var result = {
             name: report.name,
-            query: report.query,
+            query: data.query,
             meta: report.meta,
             data: [],
             totals: {}
         };
+
+        // this is destructive to the original data, but should be fine
+        delete result.query.ids;
 
         // Calculate each individual data point.
         for (var i=0; i<data.rows.length; i++) {
