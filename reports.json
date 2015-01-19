@@ -142,7 +142,7 @@
       }
     },
     {
-      "name": "top-pages-7-days",
+      "name": "top-domains-7-days",
       "frequency": "daily",
       "query": {
         "dimensions": ["ga:hostname"],
@@ -153,12 +153,12 @@
         "max-results": "20"
       },
       "meta": {
-        "name": "Top Pages (7 Days)",
-        "description": "Last week's top 20 pages, measured by visits, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "name": "Top Domains (7 Days)",
+        "description": "Last week's top 20 domains, measured by visits, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
       }
     },
     {
-      "name": "top-pages-30-days",
+      "name": "top-domains-30-days",
       "frequency": "daily",
       "query": {
         "dimensions": ["ga:hostname"],
@@ -169,24 +169,8 @@
         "max-results": "20"
       },
       "meta": {
-        "name": "Top Pages (30 Days)",
-        "description": "Last 30 days' top 20 pages, measured by visits, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
-      }
-    },
-    {
-      "name": "top-pages-90-days",
-      "frequency": "daily",
-      "query": {
-        "dimensions": ["ga:hostname"],
-        "metrics": ["ga:sessions"],
-        "start-date": "90daysAgo",
-        "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "max-results": "20"
-      },
-      "meta": {
-        "name": "Top Pages (90 Days)",
-        "description": "Last 90 days' top 20 pages, measured by visits, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "name": "Top Domains (30 Days)",
+        "description": "Last 30 days' top 20 domains, measured by visits, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
       }
     }
   ]
