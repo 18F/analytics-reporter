@@ -255,6 +255,16 @@ var Analytics = {
             }
         }
 
+        if (report.name == "today"){
+            var cutoff = (new Date).getHours() - 2;
+            for (var i=0; i<result.data.length; i++){
+                if (parseInt(result.data[i]['hour']) > cutoff){
+                    result.data[i]['visits'] = "0";
+                }
+
+            }
+        }
+
         // presumably we're organizing these by date
         if (result.data[0].date) {
             result.totals.start_date = result.data[0].date;
