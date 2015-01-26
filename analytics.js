@@ -256,7 +256,7 @@ var Analytics = {
         }
 
         if (report.name == "today"){
-            cutoff = (new Date).getHours() - 2;
+            var cutoff = (new Date).getHours() - 2;
             for (var i=0; i<result.data.length; i++){
                 if (parseInt(result.data[i]['hour']) > cutoff){
                     result.data[i]['visits'] = "0";
