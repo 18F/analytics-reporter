@@ -33,6 +33,16 @@ export ANALYTICS_KEY_PATH="/path/to/secret_key.pem"
 ```
 You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv).
 
+To find your Google Analytics view ID:
+
+  1. Sign in to your Analytics account.
+  1. Select the Admin tab.
+  1. Select an account from the dropdown in the ACCOUNT column.
+  1. Select a property from the dropdown in the PROPERTY column.
+  1. Select a view from the dropdown in the VIEW column.
+  1. Click "View Settings"
+  1. Copy the view ID.  You'll need to enter it with `ga:` as a prefix.
+
 * Test your configuration by printing a report to STDOUT:
 
 ```bash
@@ -84,7 +94,7 @@ A report might look something like this:
   },
   "meta": {
     "name": "Devices",
-    "description": "Weekly desktop/mobile/tablet visits by day for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+    "description": "Weekly desktop/mobile/tablet visits by day for all sites."
   },
   "data": [
     {
