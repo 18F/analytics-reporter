@@ -9,10 +9,14 @@ var googleapis = require('googleapis'),
 
 var config = require('./config');
 
+// Pre-load the keyfile from the OS
+// prevents errors when starting JWT
+var key = fs.readFileSync(config.key);
+
 var jwt = new googleapis.auth.JWT(
     config.email,
-    config.key,
     null,
+    key,
     ['https://www.googleapis.com/auth/analytics.readonly']
 );
 
