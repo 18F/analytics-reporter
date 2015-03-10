@@ -107,7 +107,10 @@ var Analytics = {
         "ga:hostname": "domain",
         "ga:browser" : 'browser',
         "ga:browserVersion" : "browser_version",
-        "ga:source": "source"
+        "ga:source": "source",
+        "ga:pagePath": "page",
+        "ga:pageTitle": "page_title",
+        "ga:pageviews": "visits"
     },
 
     // The OSes we care about for the OS breakdown. The rest can be "Other".
