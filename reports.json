@@ -18,6 +18,20 @@
       "query": {
         "dimensions": ["ga:date", "ga:hour"],
         "metrics": ["ga:sessions"],
+        "start-date": "today",
+        "end-date": "today"
+      },
+      "meta": {
+        "name": "Today",
+        "description": "Today's visits for all sites."
+      }
+    },
+    {
+      "name": "last-48-hours",
+      "frequency": "realtime",
+      "query": {
+        "dimensions": ["ga:date", "ga:hour"],
+        "metrics": ["ga:sessions"],
         "start-date": "yesterday",
         "end-date": "today"
       },
@@ -145,7 +159,7 @@
       "name": "top-pages-7-days",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:pagePath", "ga:pageTitle"],
+        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
         "metrics": ["ga:pageviews"],
         "start-date": "7daysAgo",
         "end-date": "yesterday",
@@ -161,7 +175,7 @@
       "name": "top-pages-30-days",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:pagePath", "ga:pageTitle"],
+        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
         "metrics": ["ga:pageviews"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
