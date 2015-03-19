@@ -11,9 +11,6 @@ app.set('port', process.env.PORT || 3000);
 
 // Attach the routes.
 var models = require("./models");
-app.get('/', function (req, res) {
-    res.send("Hello, world!");
-});
 require('./routes')(app, models);
 
 
