@@ -30,7 +30,7 @@
       "name": "users",
       "frequency": "daily",
       "slim": true,
-	  "sessions": true,
+      "sessions": true,
       "query": {
         "dimensions": ["ga:date"],
         "metrics": ["ga:sessions"],
@@ -47,7 +47,7 @@
       "name": "devices",
       "frequency": "daily",
       "slim": true,
-	  "sessions": true,
+      "sessions": true,
       "query": {
         "dimensions": ["ga:date" ,"ga:deviceCategory"],
         "metrics": ["ga:sessions"],
@@ -64,7 +64,7 @@
       "name": "os",
       "frequency": "daily",
       "slim": true,
-	  "sessions": true,
+      "sessions": true,
       "query": {
         "dimensions": ["ga:date" ,"ga:operatingSystem"],
         "metrics": ["ga:sessions"],
@@ -81,7 +81,7 @@
       "name": "windows",
       "frequency": "daily",
       "slim": true,
-	  "sessions": true,
+      "sessions": true,
       "query": {
         "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
         "metrics": ["ga:sessions"],
@@ -99,7 +99,7 @@
       "name": "browsers",
       "frequency": "daily",
       "slim": true,
-	  "sessions": true,
+      "sessions": true,
       "query": {
         "dimensions": ["ga:date" ,"ga:browser"],
         "metrics": ["ga:sessions"],
@@ -116,7 +116,7 @@
       "name": "ie",
       "frequency": "daily",
       "slim": true,
-	  "sessions": true,
+      "sessions": true,
       "query": {
         "dimensions": ["ga:date","ga:browserVersion"],
         "metrics": ["ga:sessions"],
@@ -148,7 +148,7 @@
     {
       "name": "top-domains-7-days",
       "frequency": "daily",
-	  "sessions": true,
+      "sessions": true,
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
@@ -165,7 +165,7 @@
     {
       "name": "top-domains-30-days",
       "frequency": "daily",
-	  "sessions": true,
+      "sessions": true,
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
