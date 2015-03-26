@@ -257,13 +257,14 @@ var Analytics = {
                     result.totals.ie_version[version] += parseInt(result.data[i].visits);
                 }
             }
+			// presumably we're organizing these by date
+			if (result.data[0].date) {
+				result.totals.start_date = result.data[0].date;
+				result.totals.end_date = result.data[result.data.length-1].date;
+			}
         }
 
-        // presumably we're organizing these by date
-        if (result.data[0].date) {
-            result.totals.start_date = result.data[0].date;
-            result.totals.end_date = result.data[result.data.length-1].date;
-        }
+        
 
         // datestamp all reports, will be serialized in JSON as ISO 8601
         result.taken_at = new Date();

@@ -67,7 +67,6 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "filters": ["ga:sessions>1000"],
         "sort": "ga:date"
       },
       "meta": {
@@ -84,7 +83,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "filters": ["ga:operatingSystem==Windows;ga:sessions>1000"],
+        "filters": ["ga:operatingSystem==Windows"],
         "sort": "ga:date"
       },
       "meta": {
@@ -101,8 +100,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "sort": "ga:date,-ga:sessions",
-        "filters": ["ga:sessions>1000"]
+        "sort": "ga:date,-ga:sessions"
       },
       "meta": {
         "name": "Browsers",
@@ -119,7 +117,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
-        "filters": ["ga:browser==Internet Explorer;ga:sessions>1000"]
+        "filters": ["ga:browser==Internet Explorer"]
       },
       "meta": {
         "name": "Internet Explorer",
