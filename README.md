@@ -6,7 +6,7 @@ A lightweight system for publishing analytics data from Google Analytics profile
 
 Available reports are named and described in [`reports.json`](reports.json). For now, they're hardcoded into the repository.
 
-### Installing
+### Setup
 
 * Install through npm:
 
@@ -32,6 +32,8 @@ export ANALYTICS_REPORT_IDS="ga:XXXXXX"
 export ANALYTICS_KEY_PATH="/path/to/secret_key.pem"
 ```
 You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv).
+
+* Make sure your computer or server is syncing its time with the world over NTP. Your computer's time will need to match those on Google's servers for the authentication to work.
 
 * Test your configuration by printing a report to STDOUT:
 
