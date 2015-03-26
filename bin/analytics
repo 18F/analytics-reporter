@@ -71,6 +71,22 @@ var run = function(options) {
 
   else
     names = Object.keys(Analytics.reports);
+	
+	// sessions limit added if specifed in args
+	// only applies to reports with 'sessions' field in report.json
+	if (options.sessions){
+		sessions_threshold = options.sessions;
+		for (var i=0; i<names.length; i++) {
+			if(Analytics.reports[names[i]].sessions){
+				if(Analytics.reports[names[i]]["query"]["filters"]){
+					Analytics.reports[names[i]]["query"]["filters"][0]+=";ga:sessions>".concat(sessions_threshold);
+				}else{
+					Analytics.reports[names[i]]["query"]["filters"]=["ga:sessions>".concat(sessions_threshold)];
+				}
+			}
+		}
+	}
+  
 
   var eachReport = function(name, done) {
     var report = Analytics.reports[name];
