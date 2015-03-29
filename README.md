@@ -6,7 +6,7 @@ A lightweight system for publishing analytics data from Google Analytics profile
 
 Available reports are named and described in [`reports.json`](reports.json). For now, they're hardcoded into the repository.
 
-### Installing
+### Setup
 
 * Install through npm:
 
@@ -42,6 +42,8 @@ To find your Google Analytics view ID:
   1. Select a view from the dropdown in the VIEW column.
   1. Click "View Settings"
   1. Copy the view ID.  You'll need to enter it with `ga:` as a prefix.
+
+* Make sure your computer or server is syncing its time with the world over NTP. Your computer's time will need to match those on Google's servers for the authentication to work.
 
 * Test your configuration by printing a report to STDOUT:
 
