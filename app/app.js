@@ -10,7 +10,6 @@ require('./routes')(app, models);
 
 // Static files
 var config = require('../config');
-console.log(config.static.path);
 app.use(express.static(config.static.path));
 
 //init model
