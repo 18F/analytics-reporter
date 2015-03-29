@@ -14,10 +14,8 @@ var config = require('./config');
 var key;
 if (fs.existsSync(config.key))
     key = fs.readFileSync(config.key);
-else {
-    console.error("Couldn't find key specified by $ANALYTICS_KEY_PATH.");
-    process.exit(1);
-}
+else
+    key = null;
 
 var jwt = new googleapis.auth.JWT(
     config.email,
