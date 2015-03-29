@@ -76,8 +76,8 @@ var Analytics = {
             api_call(query, function(err, result) {
                 if (err) return callback(err, null);
 
-                if (config.debug)
-                    fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
+                // if (config.debug)
+                //     fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
 
                 callback(null, Analytics.process(report, result));
             });
