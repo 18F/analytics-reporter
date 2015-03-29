@@ -158,8 +158,13 @@ var Analytics = {
         // this is destructive to the original data, but should be fine
         delete result.query.ids;
 
-        // Calculate each individual data point.
-        if(data.rows){
+        // datestamp all reports, will be serialized in JSON as ISO 8601
+        result.taken_at = new Date();
+
+        // data.rows is missing if there are no results
+        if (data.totalResults > 0) {
+
+            // Calculate each individual data point.
             for (var i=0; i<data.rows.length; i++) {
                 var row = data.rows[i];
 
@@ -180,11 +185,9 @@ var Analytics = {
 
                 result.data.push(point);
             }
-        }
 
-        // Go through those data points to calculate totals.
-        // Right now, this is totally report-specific.
-        if(result.data.length){
+            // Go through those data points to calculate totals.
+            // Right now, this is totally report-specific.
             if ("visitors" in result.data[0]) {
                 result.totals.visitors = 0;
                 for (var i=0; i<result.data.length; i++)
@@ -272,17 +275,13 @@ var Analytics = {
                     result.totals.ie_version[version] += parseInt(result.data[i].visits);
                 }
             }
-			// presumably we're organizing these by date
-			if (result.data[0].date) {
-				result.totals.start_date = result.data[0].date;
-				result.totals.end_date = result.data[result.data.length-1].date;
-			}
+
+            // presumably we're organizing these by date
+            if (result.data[0].date) {
+                result.totals.start_date = result.data[0].date;
+                result.totals.end_date = result.data[result.data.length-1].date;
+            }
         }
-
-
-
-        // datestamp all reports, will be serialized in JSON as ISO 8601
-        result.taken_at = new Date();
 
         return result;
     }
