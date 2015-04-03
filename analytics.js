@@ -12,11 +12,11 @@ var config = require('./config');
 // Pre-load the keyfile from the OS
 // prevents errors when starting JWT
 var key;
-    if (config.key)
+if (config.key)
     key = config.key;
-    else if (config.key_file && fs.existsSync(config.key_file))
+else if (config.key_file && fs.existsSync(config.key_file))
     key = fs.readFileSync(config.key_file);
-    else key = null;
+else key = null;
 
 var jwt = new googleapis.auth.JWT(
     config.email,
