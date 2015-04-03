@@ -18,7 +18,9 @@ npm install -g analytics-reporter
 
 * Take the generated client email address (ends with `gserviceaccount.com`) and grant it `Read & Analyze` permissions to the Google Analytics profile(s) whose data you wish to publish.
 
-* Download the `.p12` private key file from the dashboard, and transform it into a `.pem` file:
+* Download the `.p12` private key file from the dashboard. Copy the password Google shows you (you will only need it once).
+
+* Transform the `p12` file into a `.pem` file, entering the password when asked:
 
 ```bash
 openssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -nodes
