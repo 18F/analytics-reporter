@@ -26,6 +26,8 @@ npm install -g analytics-reporter
 openssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -nodes
 ```
 
+* Visit the "APIs" section of the Google Developer Dashboard for your project, and enable it for the "Analytics API".
+
 * Set the following environment variables:
 
 ```bash
