@@ -3,7 +3,7 @@
 *.pem
 /node_modules
 .python-version
-/.env
+/*.env
 *.json
 *.csv
 *.gz
