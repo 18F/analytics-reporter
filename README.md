@@ -28,13 +28,13 @@ openssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -node
 
 * Visit the "APIs" section of the Google Developer Dashboard for your project, and enable it for the "Analytics API".
 
-* Set the following environment variables:
+* Set environment variables for your app's generated email address, and for the profile you authorized it to:
 
 ```bash
 export ANALYTICS_REPORT_EMAIL="asdfghjkl@developer.gserviceaccount.com"
 export ANALYTICS_REPORT_IDS="ga:XXXXXX"
-export ANALYTICS_KEY_PATH="/path/to/secret_key.pem"
 ```
+
 You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv).
 
 To find your Google Analytics view ID:
@@ -46,6 +46,26 @@ To find your Google Analytics view ID:
   1. Select a view from the dropdown in the VIEW column.
   1. Click "View Settings"
   1. Copy the view ID.  You'll need to enter it with `ga:` as a prefix.
+
+* You can specify your private key through environment variables either as a file path, or the contents of the key (helpful for Heroku and Heroku-like systems).
+
+To specify a file path:
+
+```
+export ANALYTICS_KEY_PATH="/path/to/secret_key.pem"
+```
+
+To specify the key directly, paste in the contents of the `.pem` **directly and exactly**, in quotes (below example has been sanitized):
+
+```
+export ANALYTICS_KEY="Bag Attributes
+    friendlyName: privatekey
+    localKeyID: [your key id]
+Key Attributes: <No Attributes>
+-----BEGIN PRIVATE KEY-----
+[contents of your key]
+-----END PRIVATE KEY-----"
+```
 
 * Make sure your computer or server is syncing its time with the world over NTP. Your computer's time will need to match those on Google's servers for the authentication to work.
 
