@@ -166,7 +166,7 @@ analytics --output /path/to/data
 analytics --publish
 ```
 
-* `--only` - only run one report.
+* `--only` - only run one or more specific reports. Multiple reports comma separated, encapsulated by quotes.
 
 ```bash
 analytics --only devices
