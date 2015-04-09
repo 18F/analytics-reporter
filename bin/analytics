@@ -58,8 +58,9 @@ var run = function(options) {
 
   // can be overridden to only do one report
   var names;
-  if (options.only)
-    names = [options.only];
+  if (options.only){
+    names = options.only.split(",");
+  }
   else if (options.frequency) {
     names = [];
     var all = Object.keys(Analytics.reports);
