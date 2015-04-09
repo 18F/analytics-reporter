@@ -170,6 +170,7 @@ analytics --publish
 
 ```bash
 analytics --only devices
+analytics --only "devices,today"
 ```
 
 * `--slim` -Where supported, use totals only (omit the `data` array). Only applies to JSON, and reports where `"slim": true`.
