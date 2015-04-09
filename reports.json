@@ -9,7 +9,7 @@
       },
       "meta": {
         "name": "Active Users Right Now",
-        "description": "Number of users currently visiting all sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "Number of users currently visiting all sites."
       }
     },
     {
@@ -23,7 +23,21 @@
       },
       "meta": {
         "name": "Today",
-        "description": "Today's visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "Today's visits for all sites."
+      }
+    },
+    {
+      "name": "last-48-hours",
+      "frequency": "realtime",
+      "query": {
+        "dimensions": ["ga:date", "ga:hour"],
+        "metrics": ["ga:sessions"],
+        "start-date": "yesterday",
+        "end-date": "today"
+      },
+      "meta": {
+        "name": "Today",
+        "description": "Today's visits for all sites."
       }
     },
     {
@@ -39,7 +53,7 @@
       },
       "meta": {
         "name": "Visitors",
-        "description": "90 days of visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "90 days of visits for all sites."
       }
     },
     {
@@ -55,7 +69,7 @@
       },
       "meta": {
         "name": "Devices",
-        "description": "90 days of desktop/mobile/tablet visits for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "90 days of desktop/mobile/tablet visits for all sites."
       }
     },
     {
@@ -72,7 +86,7 @@
       },
       "meta": {
         "names": "Operating Systems",
-        "description": "90 days of visits, broken down by operating system and date, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "90 days of visits, broken down by operating system and date, for all sites."
       }
     },
     {
@@ -89,7 +103,7 @@
       },
       "meta": {
         "names": "Windows",
-        "description": "90 days of visits from Windows users, broken down by operating system version and date, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "90 days of visits from Windows users, broken down by operating system version and date, for all sites."
       }
     },
     {
@@ -106,7 +120,7 @@
       },
       "meta": {
         "name": "Browsers",
-        "description": "90 days of visits broken down by browser for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "90 days of visits broken down by browser for all sites."
       }
     },
     {
@@ -123,7 +137,7 @@
       },
       "meta": {
         "name": "Internet Explorer",
-        "description": "90 days of visits from Internet Explorer users broken down by version for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "90 days of visits from Internet Explorer users broken down by version for all sites."
       }
     },
     {
@@ -138,7 +152,39 @@
       },
       "meta": {
         "name": "Top Pages (Live)",
-        "description": "The top 20 pages, measured by active onsite users, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "The top 20 pages, measured by active onsite users, for all sites."
+      }
+    },
+    {
+      "name": "top-pages-7-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
+        "metrics": ["ga:pageviews"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:pageviews",
+        "max-results": "20"
+      },
+      "meta": {
+        "name": "Top Pages (7 Days)",
+        "description": "Last week's top 20 pages, measured by page views, for all sites."
+      }
+    },
+    {
+      "name": "top-pages-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
+        "metrics": ["ga:pageviews"],
+        "start-date": "30daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:pageviews",
+        "max-results": "20"
+      },
+      "meta": {
+        "name": "Top Pages (30 Days)",
+        "description": "Last 30 days' top 20 pages, measured by page views, for all sites."
       }
     },
     {
@@ -154,7 +200,7 @@
       },
       "meta": {
         "name": "Top Domains (7 Days)",
-        "description": "Last week's top 20 domains, measured by visits, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "Last week's top 20 domains, measured by visits, for all sites."
       }
     },
     {
@@ -170,7 +216,7 @@
       },
       "meta": {
         "name": "Top Domains (30 Days)",
-        "description": "Last 30 days' top 20 domains, measured by visits, for all .gov sites tracked by the U.S. federal government's Digital Analytics Program."
+        "description": "Last 30 days' top 20 domains, measured by visits, for all sites."
       }
     }
   ]
