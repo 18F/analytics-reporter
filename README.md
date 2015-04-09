@@ -166,11 +166,11 @@ analytics --output /path/to/data
 analytics --publish
 ```
 
-* `--only` - only run one or more specific reports. Multiple reports comma separated, encapsulated by quotes.
+* `--only` - only run one or more specific reports. Multiple reports are comma separated.
 
 ```bash
 analytics --only devices
-analytics --only "devices,today"
+analytics --only devices,today
 ```
 
 * `--slim` -Where supported, use totals only (omit the `data` array). Only applies to JSON, and reports where `"slim": true`.
