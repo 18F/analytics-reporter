@@ -9,7 +9,7 @@
  *
  * --output: Output to a directory.
  * --publish: Publish to an S3 bucket.
- * --only: only run one report.
+ * --only: only run one or more named reports.
  * --slim: Where supported, use totals only (omit the `data` array).
  *         Only applies to JSON, and reports where "slim": true.
  * --csv: CSV instead of JSON.
@@ -58,9 +58,9 @@ var run = function(options) {
 
   // can be overridden to only do one report
   var names;
-  if (options.only){
+  if (options.only)
     names = options.only.split(",");
-  }
+
   else if (options.frequency) {
     names = [];
     var all = Object.keys(Analytics.reports);
