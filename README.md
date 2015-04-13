@@ -8,11 +8,13 @@ Available reports are named and described in [`reports.json`](reports.json). For
 
 ### Setup
 
-* Install through npm:
+* To run the utility on your computer, install it through npm:
 
 ```bash
 npm install -g analytics-reporter
 ```
+
+If you're developing locally inside the repo, `npm install` is sufficient.
 
 * [Create an API service account](https://developers.google.com/accounts/docs/OAuth2ServiceAccount) in the Google developer dashboard.
 
@@ -35,7 +37,7 @@ export ANALYTICS_REPORT_EMAIL="YYYYYYY@developer.gserviceaccount.com"
 export ANALYTICS_REPORT_IDS="ga:XXXXXX"
 ```
 
-You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv).
+You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv). If you do, there is an `example.env` file you can copy to `.env` to get started.
 
 To find your Google Analytics view ID:
 
