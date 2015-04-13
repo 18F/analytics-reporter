@@ -31,7 +31,7 @@ openssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -node
 * Set environment variables for your app's generated email address, and for the profile you authorized it to:
 
 ```bash
-export ANALYTICS_REPORT_EMAIL="asdfghjkl@developer.gserviceaccount.com"
+export ANALYTICS_REPORT_EMAIL="YYYYYYY@developer.gserviceaccount.com"
 export ANALYTICS_REPORT_IDS="ga:XXXXXX"
 ```
 
