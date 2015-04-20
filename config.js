@@ -6,6 +6,8 @@ module.exports = {
   key: process.env.ANALYTICS_KEY,
   key_file: process.env.ANALYTICS_KEY_PATH,
 
+  reports_file: process.env.ANALYTICS_REPORTS_PATH,
+
   debug: (process.env.ANALYTICS_DEBUG ? true : false),
 
   /*
