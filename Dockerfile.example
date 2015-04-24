@@ -1,0 +1,50 @@
+##
+# Dockerfile for analytics-reporter.
+# https://github.com/18F/analytics-reporter
+#
+# For information about setting up keys, etc, see README.md.
+# This Dockerfile requires keys, and optional customizations, to be set below.
+##
+
+FROM debian:jessie
+RUN apt-get update && apt-get install -yq \
+  nodejs-legacy \
+  npm
+
+##
+# Install analytics-reporter.
+##
+RUN npm install -g analytics-reporter
+
+##
+# Add pem key. Requires the pem key to be named secret_key.pem and present
+# in the same directory.
+##
+RUN mkdir /opt/analytics
+COPY ./secret_key.pem /opt/analytics/secret_key.pem
+ENV ANALYTICS_KEY_PATH="/opt/analytics/secret_key.pem"
+##
+# These two must be changed!
+##
+ENV ANALYTICS_REPORT_IDS="ga:XXXXXX"
+ENV ANALYTICS_REPORT_EMAIL="YYYYYY@developer.gserviceaccount.com"
+##
+# This can be ignored if using the reports.json file unchanged.
+# To add custom changes to the reports, uncomment this and include a changed
+# reports.json file in the same directory.
+# For common queries:
+# https://developers.google.com/analytics/devguides/reporting/core/v3/common-queries
+##
+#COPY ./reports.json /opt/analytics/reports.json
+#ENV ANALYTICS_REPORTS_PATH="/opt/analytics/reports.json"
+##
+# This until the npm package is updated to use configurable reports path above.
+##
+#COPY ./reports.json /usr/local/lib/node_modules/analytics-reporter/reports.json
+
+##
+# This can be ignored if using the suggested dashboard.
+# Otherwise, uncomment this and direct output to this volume to be stored
+# or shared with another container for visualization.
+##
+#VOLUME ["/reports"]
