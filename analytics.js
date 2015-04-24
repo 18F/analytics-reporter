@@ -100,19 +100,23 @@ var Analytics = {
     },
 
     mapping: {
-        "users": "visitors",
-        "activeUsers": "active_visitors",
-        "pagePath": "page",
-        "pageTitle": "page_title",
-        "sessions": "visits",
-        "deviceCategory": "device",
-        "operatingSystem": "os",
-        "operatingSystemVersion": "os_version",
-        "hostname": "domain",
-        "browserVersion" : "browser_version",
-        "pagePath": "page",
-        "pageTitle": "page_title",
-        "pageviews": "visits"
+        "ga:date": "date",
+        "ga:hour": "hour",
+        "ga:users": "visitors",
+        "rt:activeUsers": "active_visitors",
+        "rt:pagePath": "page",
+        "rt:pageTitle": "page_title",
+        "ga:sessions": "visits",
+        "ga:deviceCategory": "device",
+        "ga:operatingSystem": "os",
+        "ga:operatingSystemVersion": "os_version",
+        "ga:hostname": "domain",
+        "ga:browser" : 'browser',
+        "ga:browserVersion" : "browser_version",
+        "ga:source": "source",
+        "ga:pagePath": "page",
+        "ga:pageTitle": "page_title",
+        "ga:pageviews": "visits"
     },
 
     // The OSes we care about for the OS breakdown. The rest can be "Other".
@@ -168,11 +172,12 @@ var Analytics = {
 
                 var point = {};
                 for (var j=0; j<row.length; j++) {
-                    var field = data.columnHeaders[j].name.substring(3);
 
-                    // Use mapping for clearer field definitions.
-                    if (typeof Analytics.mapping[field] !== 'undefined')
-                        field = Analytics.mapping[field];
+                    var field;
+                    if (typeof Analytics.mapping[data.columnHeaders[j].name] !== 'undefined')
+                        field = Analytics.mapping[data.columnHeaders[j].name];
+                    else
+                        field = data.columnHeaders[j].name;
 
                     var value = row[j];
 
