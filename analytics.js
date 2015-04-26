@@ -173,12 +173,7 @@ var Analytics = {
                 var point = {};
                 for (var j=0; j<row.length; j++) {
 
-                    var field;
-                    if (typeof Analytics.mapping[data.columnHeaders[j].name] !== 'undefined')
-                        field = Analytics.mapping[data.columnHeaders[j].name];
-                    else
-                        field = data.columnHeaders[j].name;
-
+                    var field = Analytics.mapping[data.columnHeaders[j].name] || data.columnHeaders[j].name;
                     var value = row[j];
 
                     if (field == "date")
