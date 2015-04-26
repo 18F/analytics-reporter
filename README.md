@@ -93,6 +93,27 @@ export AWS_BUCKET_PATH=[your-path]
 export AWS_CACHE_TIME=0
 ```
 
+### Other configuration
+
+If you use a **single domain** for all of your analytics data, then your profile is likely set to return relative paths (e.g. `/faq`) and not absolute paths when accessing real-time reports.
+
+You can set a default domain, to be returned as data in all real-time data point:
+
+```
+export ANALYTICS_HOSTNAME=https://konklone.com
+```
+
+This will produce points similar to the following:
+
+```json
+{
+  "page": "/post/why-google-is-hurrying-the-web-to-kill-sha-1",
+  "page_title": "Why Google is Hurrying the Web to Kill SHA-1",
+  "active_visitors": "1",
+  "domain": "https://konklone.com"
+}
+```
+
 ### Use
 
 Reports are created and published using the `analytics` command.

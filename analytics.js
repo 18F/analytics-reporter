@@ -182,9 +182,8 @@ var Analytics = {
                     point[field] = value;
                 }
 
-                if (report.realtime && config.account.hostname) {
+                if (report.realtime && config.account.hostname)
                   point.domain = config.account.hostname;
-                }
 
                 result.data.push(point);
             }
