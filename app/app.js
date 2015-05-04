@@ -1,5 +1,6 @@
 // Define the app, and middleware.
 var express = require('express'),
+    ejs = require('ejs'),
     app = express();
 app.use(require('body-parser').json());
 app.set('port', process.env.PORT || 3000);
@@ -10,8 +11,13 @@ require('./routes')(app, models);
 
 // Static files
 var config = require('../config');
-console.log(config.static.path);
 app.use(express.static(config.static.path));
+
+// Set up templates
+app.set('views', config.static.path);
+app.set('view engine', 'ejs');
+
+app.disable('etag');
 
 //init model
 var async = require("async"),
@@ -27,6 +33,7 @@ var eachReport = function(name, callback) {
         update_interval: time_mapper[report.frequency],
         last_update: 0,
         query: report.query,
+        filters: null,
         realtime: report.realtime
     };
     console.log("Created endpoint: " + doc.name);

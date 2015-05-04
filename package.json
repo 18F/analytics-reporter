@@ -45,10 +45,12 @@
     "minimist": "*",
     "async": "*",
     "aws-sdk": "*",
-    "fast-csv": "*"
+    "fast-csv": "*",
+    "lodash": "*"
   },
   "devDependencies": {
     "body-parser": "~1.8.1",
-    "express": "~4.9.0"
+    "express": "~4.9.0",
+    "ejs": "~2.3.1"
   }
 }

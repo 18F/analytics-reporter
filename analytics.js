@@ -55,8 +55,15 @@ var Analytics = {
         query['samplingLevel'] = "HIGHER_PRECISION";
 
         // Optional filters.
+        var filters = [];
         if (report.query.filters)
-            query.filters = report.query.filters.join(",");
+            filters.push(report.query.filters);
+
+        if (report.filters)
+            filters.push(report.filters);
+
+        if (filters.length > 0)
+            query.filters = filters.join(",");
 
         query['max-results'] = report.query['max-results'] || 10000;
 
@@ -154,6 +161,11 @@ var Analytics = {
         // this is destructive to the original data, but should be fine
         delete result.query.ids;
 
+        // if data is malformed, return empty result object
+        if (!data || !data.rows) {
+          return result;
+        }
+
         // Calculate each individual data point.
         for (var i=0; i<data.rows.length; i++) {
             var row = data.rows[i];
@@ -173,6 +185,11 @@ var Analytics = {
             }
 
             result.data.push(point);
+        }
+
+        // if data is malformed, return empty result object
+        if (result.data.length == 0) {
+          return result;
         }
 
         // Go through those data points to calculate totals.
