@@ -11,7 +11,13 @@ var config = require('./config');
 
 // Pre-load the keyfile from the OS
 // prevents errors when starting JWT
-var key = fs.readFileSync(config.key);
+var key;
+if (config.key)
+    key = config.key;
+else if (config.key_file && fs.existsSync(config.key_file))
+    key = fs.readFileSync(config.key_file);
+else
+  key = null;
 
 var jwt = new googleapis.auth.JWT(
     config.email,
@@ -20,9 +26,16 @@ var jwt = new googleapis.auth.JWT(
     ['https://www.googleapis.com/auth/analytics.readonly']
 );
 
+// add a 'startsWith' primitive to string
+if (typeof String.prototype.startsWith != 'function') {
+    // see below for better implementation!
+    String.prototype.startsWith = function (str){
+        return this.indexOf(str) === 0;
+    };
+}
 
 // The reports we want to run.
-var reports_path = path.join(__dirname, "reports.json");
+var reports_path = config.reports_file || (path.join(__dirname, "reports/reports.json"));
 var reports = JSON.parse(fs.readFileSync(reports_path)).reports;
 var by_name = {};
 for (var i=0; i<reports.length; i++)
@@ -87,8 +100,8 @@ var Analytics = {
             api_call(query, function(err, result) {
                 if (err) return callback(err, null);
 
-                if (config.debug)
-                    fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
+                // if (config.debug)
+                //     fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
 
                 callback(null, Analytics.process(report, result));
             });
@@ -166,130 +179,131 @@ var Analytics = {
           return result;
         }
 
-        // Calculate each individual data point.
-        for (var i=0; i<data.rows.length; i++) {
-            var row = data.rows[i];
-
-            var point = {};
-            for (var j=0; j<row.length; j++) {
-                var field = Analytics.mapping[data.columnHeaders[j].name];
-                var value = row[j];
-
-                if (field == "date")
-                    value = Analytics.date_format(value);
-
-                point[field] = value;
-            }
-            if (report.realtime && config.account.hostname) {
-              point.domain = config.account.hostname;
-            }
-
-            result.data.push(point);
-        }
-
-        // if data is malformed, return empty result object
-        if (result.data.length == 0) {
-          return result;
-        }
-
-        // Go through those data points to calculate totals.
-        // Right now, this is totally report-specific.
-        if ("visitors" in result.data[0]) {
-            result.totals.visitors = 0;
-            for (var i=0; i<result.data.length; i++)
-                result.totals.visitors += parseInt(result.data[i].visitors);
-        }
-        if ("visits" in result.data[0]) {
-            result.totals.visits = 0;
-            for (var i=0; i<result.data.length; i++)
-                result.totals.visits += parseInt(result.data[i].visits);
-        }
-
-        if (report.name == "devices") {
-            result.totals.devices = {mobile: 0, desktop: 0, tablet: 0};
-            for (var i=0; i<result.data.length; i++)
-                result.totals.devices[result.data[i].device] += parseInt(result.data[i].visits);
-        }
-
-        if (report.name == "os") {
-            // initialize all cared-about OSes to 0
-            result.totals.os = {};
-            for (var i=0; i<Analytics.oses.length; i++)
-                result.totals.os[Analytics.oses[i]] = 0;
-            result.totals.os["Other"] = 0;
-
-            for (var i=0; i<result.data.length; i++) {
-                var os = result.data[i].os;
-
-                // Bucket any we don't care about under "Other".
-                if (Analytics.oses.indexOf(os) < 0)
-                    os = "Other";
-
-                result.totals.os[os] += parseInt(result.data[i].visits);
-            }
-        }
-
-        if (report.name == "windows") {
-            // initialize all cared-about versions to 0
-            result.totals.os_version = {};
-            for (var i=0; i<Analytics.windows_versions.length; i++)
-                result.totals.os_version[Analytics.windows_versions[i]] = 0;
-            result.totals.os_version["Other"] = 0;
-
-            for (var i=0; i<result.data.length; i++) {
-                var version = result.data[i].os_version;
-
-                // Bucket any we don't care about under "Other".
-                if (Analytics.windows_versions.indexOf(version) < 0)
-                    version = "Other";
-
-                result.totals.os_version[version] += parseInt(result.data[i].visits);
-            }
-        }
-
-        if (report.name == "browsers") {
-
-            result.totals.browser = {};
-            for (var i=0; i<Analytics.browsers.length; i++)
-                result.totals.browser[Analytics.browsers[i]] = 0;
-            result.totals.browser["Other"] = 0;
-
-            for (var i=0; i<result.data.length; i++) {
-                var browser = result.data[i].browser;
-
-                if (Analytics.browsers.indexOf(browser) < 0)
-                    browser = "Other";
-
-                result.totals.browser[browser] += parseInt(result.data[i].visits);
-            }
-        }
-
-        if (report.name == "ie") {
-            // initialize all cared-about versions to 0
-            result.totals.ie_version = {};
-            for (var i=0; i<Analytics.ie_versions.length; i++)
-                result.totals.ie_version[Analytics.ie_versions[i]] = 0;
-            result.totals.ie_version["Other"] = 0;
-
-            for (var i=0; i<result.data.length; i++) {
-                var version = result.data[i].browser_version;
-
-                // Bucket any we don't care about under "Other".
-                if (Analytics.ie_versions.indexOf(version) < 0)
-                    version = "Other";
-
-                result.totals.ie_version[version] += parseInt(result.data[i].visits);
-            }
-        }
-
-        // presumably we're organizing these by date
-        if (result.data[0].date) {
-            result.totals.start_date = result.data[0].date;
-            result.totals.end_date = result.data[result.data.length-1].date;
-        }
-
         // datestamp all reports, will be serialized in JSON as ISO 8601
         result.taken_at = new Date();
+
+        // data.rows is missing if there are no results
+        if (data.totalResults > 0) {
+
+            // Calculate each individual data point.
+            for (var i=0; i<data.rows.length; i++) {
+                var row = data.rows[i];
+
+                var point = {};
+                for (var j=0; j<row.length; j++) {
+
+                    var field = Analytics.mapping[data.columnHeaders[j].name] || data.columnHeaders[j].name;
+                    var value = row[j];
+
+                    if (field == "date")
+                        value = Analytics.date_format(value);
+
+                    point[field] = value;
+                }
+
+                if (report.realtime && config.account.hostname) {
+                  point.domain = config.account.hostname;
+                }
+
+                result.data.push(point);
+            }
+
+            // Go through those data points to calculate totals.
+            // Right now, this is totally report-specific.
+            if ("visitors" in result.data[0]) {
+                result.totals.visitors = 0;
+                for (var i=0; i<result.data.length; i++)
+                    result.totals.visitors += parseInt(result.data[i].visitors);
+            }
+            if ("visits" in result.data[0]) {
+                result.totals.visits = 0;
+                for (var i=0; i<result.data.length; i++)
+                    result.totals.visits += parseInt(result.data[i].visits);
+            }
+
+            if (report.name.startsWith("devices")) {
+                result.totals.devices = {mobile: 0, desktop: 0, tablet: 0};
+                for (var i=0; i<result.data.length; i++)
+                    result.totals.devices[result.data[i].device] += parseInt(result.data[i].visits);
+            }
+
+            if (report.name.startsWith("os")) {
+                // initialize all cared-about OSes to 0
+                result.totals.os = {};
+                for (var i=0; i<Analytics.oses.length; i++)
+                    result.totals.os[Analytics.oses[i]] = 0;
+                result.totals.os["Other"] = 0;
+
+                for (var i=0; i<result.data.length; i++) {
+                    var os = result.data[i].os;
+
+                    // Bucket any we don't care about under "Other".
+                    if (Analytics.oses.indexOf(os) < 0)
+                        os = "Other";
+
+                    result.totals.os[os] += parseInt(result.data[i].visits);
+                }
+            }
+
+            if (report.name.startsWith("windows")) {
+                // initialize all cared-about versions to 0
+                result.totals.os_version = {};
+                for (var i=0; i<Analytics.windows_versions.length; i++)
+                    result.totals.os_version[Analytics.windows_versions[i]] = 0;
+                result.totals.os_version["Other"] = 0;
+
+                for (var i=0; i<result.data.length; i++) {
+                    var version = result.data[i].os_version;
+
+                    // Bucket any we don't care about under "Other".
+                    if (Analytics.windows_versions.indexOf(version) < 0)
+                        version = "Other";
+
+                    result.totals.os_version[version] += parseInt(result.data[i].visits);
+                }
+            }
+
+            if (report.name.startsWith("browsers")) {
+
+                result.totals.browser = {};
+                for (var i=0; i<Analytics.browsers.length; i++)
+                    result.totals.browser[Analytics.browsers[i]] = 0;
+                result.totals.browser["Other"] = 0;
+
+                for (var i=0; i<result.data.length; i++) {
+                    var browser = result.data[i].browser;
+
+                    if (Analytics.browsers.indexOf(browser) < 0)
+                        browser = "Other";
+
+                    result.totals.browser[browser] += parseInt(result.data[i].visits);
+                }
+            }
+
+            if (report.name == "ie") {
+                // initialize all cared-about versions to 0
+                result.totals.ie_version = {};
+                for (var i=0; i<Analytics.ie_versions.length; i++)
+                    result.totals.ie_version[Analytics.ie_versions[i]] = 0;
+                result.totals.ie_version["Other"] = 0;
+
+                for (var i=0; i<result.data.length; i++) {
+                    var version = result.data[i].browser_version;
+
+                    // Bucket any we don't care about under "Other".
+                    if (Analytics.ie_versions.indexOf(version) < 0)
+                        version = "Other";
+
+                    result.totals.ie_version[version] += parseInt(result.data[i].visits);
+                }
+            }
+
+            // presumably we're organizing these by date
+            if (result.data[0].date) {
+                result.totals.start_date = result.data[0].date;
+                result.totals.end_date = result.data[result.data.length-1].date;
+            }
+        }
 
         return result;
     }

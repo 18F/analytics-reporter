@@ -6,32 +6,38 @@ A lightweight system for publishing analytics data from Google Analytics profile
 
 Available reports are named and described in [`reports.json`](reports.json). For now, they're hardcoded into the repository.
 
-### Installing
+### Setup
 
-* Install through npm:
+* To run the utility on your computer, install it through npm:
 
 ```bash
 npm install -g analytics-reporter
 ```
 
+If you're developing locally inside the repo, `npm install` is sufficient.
+
 * [Create an API service account](https://developers.google.com/accounts/docs/OAuth2ServiceAccount) in the Google developer dashboard.
 
 * Take the generated client email address (ends with `gserviceaccount.com`) and grant it `Read & Analyze` permissions to the Google Analytics profile(s) whose data you wish to publish.
 
-* Download the `.p12` private key file from the dashboard, and transform it into a `.pem` file:
+* Download the `.p12` private key file from the dashboard. Copy the password Google shows you (you will only need it once).
+
+* Transform the `p12` file into a `.pem` file, entering the password when asked:
 
 ```bash
 openssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -nodes
 ```
 
-* Set the following environment variables:
+* Visit the "APIs" section of the Google Developer Dashboard for your project, and enable it for the "Analytics API".
+
+* Set environment variables for your app's generated email address, and for the profile you authorized it to:
 
 ```bash
-export ANALYTICS_REPORT_EMAIL="asdfghjkl@developer.gserviceaccount.com"
+export ANALYTICS_REPORT_EMAIL="YYYYYYY@developer.gserviceaccount.com"
 export ANALYTICS_REPORT_IDS="ga:XXXXXX"
-export ANALYTICS_KEY_PATH="/path/to/secret_key.pem"
 ```
-You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv).
+
+You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv). If you do, there is an `example.env` file you can copy to `.env` to get started.
 
 To find your Google Analytics view ID:
 
@@ -42,6 +48,28 @@ To find your Google Analytics view ID:
   1. Select a view from the dropdown in the VIEW column.
   1. Click "View Settings"
   1. Copy the view ID.  You'll need to enter it with `ga:` as a prefix.
+
+* You can specify your private key through environment variables either as a file path, or the contents of the key (helpful for Heroku and Heroku-like systems).
+
+To specify a file path:
+
+```
+export ANALYTICS_KEY_PATH="/path/to/secret_key.pem"
+```
+
+To specify the key directly, paste in the contents of the `.pem` **directly and exactly**, in quotes (below example has been sanitized):
+
+```
+export ANALYTICS_KEY="Bag Attributes
+    friendlyName: privatekey
+    localKeyID: [your key id]
+Key Attributes: <No Attributes>
+-----BEGIN PRIVATE KEY-----
+[contents of your key]
+-----END PRIVATE KEY-----"
+```
+
+* Make sure your computer or server is syncing its time with the world over NTP. Your computer's time will need to match those on Google's servers for the authentication to work.
 
 * Test your configuration by printing a report to STDOUT:
 
@@ -140,10 +168,11 @@ analytics --output /path/to/data
 analytics --publish
 ```
 
-* `--only` - only run one report.
+* `--only` - only run one or more specific reports. Multiple reports are comma separated.
 
 ```bash
 analytics --only devices
+analytics --only devices,today
 ```
 
 * `--slim` -Where supported, use totals only (omit the `data` array). Only applies to JSON, and reports where `"slim": true`.

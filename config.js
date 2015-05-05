@@ -3,7 +3,10 @@
 module.exports = {
 
   email: process.env.ANALYTICS_REPORT_EMAIL,
-  key: process.env.ANALYTICS_KEY_PATH,
+  key: process.env.ANALYTICS_KEY,
+  key_file: process.env.ANALYTICS_KEY_PATH,
+
+  reports_file: process.env.ANALYTICS_REPORTS_PATH,
 
   debug: (process.env.ANALYTICS_DEBUG ? true : false),
 
