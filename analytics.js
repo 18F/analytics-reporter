@@ -5,7 +5,8 @@
 var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    _ = require('lodash');
 
 var config = require('./config');
 
@@ -25,14 +26,6 @@ var jwt = new googleapis.auth.JWT(
     key,
     ['https://www.googleapis.com/auth/analytics.readonly']
 );
-
-// add a 'startsWith' primitive to string
-if (typeof String.prototype.startsWith != 'function') {
-    // see below for better implementation!
-    String.prototype.startsWith = function (str){
-        return this.indexOf(str) === 0;
-    };
-}
 
 // The reports we want to run.
 var reports_path = config.reports_file || (path.join(__dirname, "reports/reports.json"));
@@ -221,13 +214,13 @@ var Analytics = {
                     result.totals.visits += parseInt(result.data[i].visits);
             }
 
-            if (report.name.startsWith("devices")) {
+            if (_.startsWith(report.name, "devices")) {
                 result.totals.devices = {mobile: 0, desktop: 0, tablet: 0};
                 for (var i=0; i<result.data.length; i++)
                     result.totals.devices[result.data[i].device] += parseInt(result.data[i].visits);
             }
 
-            if (report.name.startsWith("os")) {
+            if (_.startsWith(report.name, "os")) {
                 // initialize all cared-about OSes to 0
                 result.totals.os = {};
                 for (var i=0; i<Analytics.oses.length; i++)
@@ -245,7 +238,7 @@ var Analytics = {
                 }
             }
 
-            if (report.name.startsWith("windows")) {
+            if (_.startsWith(report.name, "windows")) {
                 // initialize all cared-about versions to 0
                 result.totals.os_version = {};
                 for (var i=0; i<Analytics.windows_versions.length; i++)
@@ -263,7 +256,7 @@ var Analytics = {
                 }
             }
 
-            if (report.name.startsWith("browsers")) {
+            if (_.startsWith(report.name, "browsers")) {
 
                 result.totals.browser = {};
                 for (var i=0; i<Analytics.browsers.length; i++)
@@ -280,7 +273,7 @@ var Analytics = {
                 }
             }
 
-            if (report.name == "ie") {
+            if (_.startsWith(report.name, "ie")) {
                 // initialize all cared-about versions to 0
                 result.totals.ie_version = {};
                 for (var i=0; i<Analytics.ie_versions.length; i++)

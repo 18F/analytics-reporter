@@ -6,10 +6,6 @@ var models = require('./models'),
     path = require('path'),
     _ = require('lodash');
 
-String.prototype.endsWith = function (s) {
-    return this.length >= s.length && this.substr(this.length - s.length) == s;
-}
-
 module.exports = function(app, models) {
 
     app.get('/', function (req, res) {
@@ -28,7 +24,7 @@ module.exports = function(app, models) {
 
       var filters = null;
       var name = req.params.name;
-      if (name.endsWith(".json")) {
+      if (_.endsWith(name, ".json")) {
         name = name.substring(0, name.length-5);
       }
       var modelName = name;
