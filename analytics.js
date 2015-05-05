@@ -167,7 +167,8 @@ var Analytics = {
         // this is destructive to the original data, but should be fine
         delete result.query.ids;
 
-        // if data is malformed, return empty result object
+        // If you use a filter that results in no data, you get null
+        // back from google and need to protect against it.
         if (!data || !data.rows) {
           return result;
         }
