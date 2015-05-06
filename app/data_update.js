@@ -5,7 +5,7 @@ var models = require('./models'),
 
 module.exports = {
     get_or_update: function(err, res, doc) {
-        if (doc){
+        if (doc) {
             var current_time = (new Date()).getTime();
             // If the doc needs to be updated
             if (current_time - doc.update_interval > doc.last_update) {
@@ -29,7 +29,7 @@ module.exports = {
             }
         }
         // If it doesn't exist
-        else{
+        else {
             res.status(404).json("The endpoint you attempted to reach does not exist, try a different API call.");
         }
 

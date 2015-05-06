@@ -5,7 +5,8 @@
 var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    _ = require('lodash');
 
 var config = require('./config');
 
@@ -25,7 +26,6 @@ var jwt = new googleapis.auth.JWT(
     key,
     ['https://www.googleapis.com/auth/analytics.readonly']
 );
-
 
 // The reports we want to run.
 var reports_path = config.reports_file || (path.join(__dirname, "reports/reports.json"));
@@ -61,8 +61,15 @@ var Analytics = {
         query['samplingLevel'] = "HIGHER_PRECISION";
 
         // Optional filters.
+        var filters = [];
         if (report.query.filters)
-            query.filters = report.query.filters.join(",");
+            filters.push(report.query.filters);
+
+        if (report.filters)
+            filters.push(report.filters);
+
+        if (filters.length > 0)
+            query.filters = filters.join(",");
 
         query['max-results'] = report.query['max-results'] || 10000;
 
@@ -160,6 +167,12 @@ var Analytics = {
         // this is destructive to the original data, but should be fine
         delete result.query.ids;
 
+        // If you use a filter that results in no data, you get null
+        // back from google and need to protect against it.
+        if (!data || !data.rows) {
+          return result;
+        }
+
         // datestamp all reports, will be serialized in JSON as ISO 8601
         result.taken_at = new Date();
 
@@ -201,13 +214,13 @@ var Analytics = {
                     result.totals.visits += parseInt(result.data[i].visits);
             }
 
-            if (report.name == "devices") {
+            if (_.startsWith(report.name, "devices")) {
                 result.totals.devices = {mobile: 0, desktop: 0, tablet: 0};
                 for (var i=0; i<result.data.length; i++)
                     result.totals.devices[result.data[i].device] += parseInt(result.data[i].visits);
             }
 
-            if (report.name == "os") {
+            if (_.startsWith(report.name, "os")) {
                 // initialize all cared-about OSes to 0
                 result.totals.os = {};
                 for (var i=0; i<Analytics.oses.length; i++)
@@ -225,7 +238,7 @@ var Analytics = {
                 }
             }
 
-            if (report.name == "windows") {
+            if (_.startsWith(report.name, "windows")) {
                 // initialize all cared-about versions to 0
                 result.totals.os_version = {};
                 for (var i=0; i<Analytics.windows_versions.length; i++)
@@ -243,7 +256,7 @@ var Analytics = {
                 }
             }
 
-            if (report.name == "browsers") {
+            if (_.startsWith(report.name, "browsers")) {
 
                 result.totals.browser = {};
                 for (var i=0; i<Analytics.browsers.length; i++)
@@ -260,7 +273,7 @@ var Analytics = {
                 }
             }
 
-            if (report.name == "ie") {
+            if (_.startsWith(report.name, "ie")) {
                 // initialize all cared-about versions to 0
                 result.totals.ie_version = {};
                 for (var i=0; i<Analytics.ie_versions.length; i++)
