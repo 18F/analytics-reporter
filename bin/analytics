@@ -17,6 +17,15 @@
  * --debug: print debug details on STDOUT
  */
 
+if (!process.env.ANALYTICS_REPORT_EMAIL) {
+  try {
+    var env = require('../env.js');
+  }
+  catch (error) {
+    return console.log("No email set nor env.js file: " + error);
+  }
+}
+
 var Analytics = require("../analytics"),
     config = require("../config"),
     fs = require("fs"),
@@ -24,7 +33,6 @@ var Analytics = require("../analytics"),
     async = require("async"),
     csv = require("fast-csv"),
     zlib = require('zlib');
-
 
 // AWS credentials are looked for in env vars or in ~/.aws/config.
 // AWS bucket and path need to be set in env vars mentioned in config.js.

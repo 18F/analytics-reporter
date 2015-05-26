@@ -39,6 +39,8 @@ export ANALYTICS_REPORT_IDS="ga:XXXXXX"
 
 You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv). If you do, there is an `example.env` file you can copy to `.env` to get started.
 
+Alternatively, follow instructions in example.env to create an env.js file.
+
 To find your Google Analytics view ID:
 
   1. Sign in to your Analytics account.
