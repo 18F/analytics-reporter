@@ -74,7 +74,7 @@ Key Attributes: <No Attributes>
 * Test your configuration by printing a report to STDOUT:
 
 ```bash
-./bin/report users
+./bin/analytics users
 ```
 
 If you see a nicely formatted JSON file, you are all set.
