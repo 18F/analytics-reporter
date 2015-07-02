@@ -218,6 +218,24 @@
         "name": "Top Domains (30 Days)",
         "description": "Last 30 days' top 20 domains, measured by visits, for all sites."
       }
+    },
+    {
+      "name": "second-level-domains",
+      "frequency": "daily",
+      "cut": ["ga:sessions"],
+      "query": {
+        "dimensions": ["ga:hostname"],
+        "metrics": ["ga:sessions"],
+        "filters": ["ga:hostname=~^[^\\.]+\\.[^\\.]+$"],
+        "start-date": "14daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:hostname",
+        "max-results": 10000
+      },
+      "meta": {
+        "name": "Participating second-level domains.",
+        "description": "Participating second-level domains over the last 2 weeks."
+      }
     }
   ]
 }
