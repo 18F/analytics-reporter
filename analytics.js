@@ -189,6 +189,10 @@ var Analytics = {
                 var point = {};
                 for (var j=0; j<row.length; j++) {
 
+                    // Some reports may decide to cut fields from the output.
+                    if (report.cut && _.contains(report.cut, data.columnHeaders[j].name))
+                        continue;
+
                     var field = Analytics.mapping[data.columnHeaders[j].name] || data.columnHeaders[j].name;
                     var value = row[j];
 
