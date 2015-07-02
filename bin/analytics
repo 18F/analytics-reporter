@@ -80,7 +80,7 @@ var run = function(options) {
 
     if (options.debug) console.log("\n[" + report.name + "] Fetching...");
     Analytics.query(report, function(err, data) {
-        if (err) return console.log("ERROR AFTER QUERYING: " + JSON.stringify(err));
+        if (err) return console.log("ERROR AFTER QUERYING: " + err);
 
         if (options.debug) console.log("[" + report.name + "] Saving report data...");
 
