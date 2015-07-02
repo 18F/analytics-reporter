@@ -42,6 +42,9 @@ var Analytics = {
 
     query: function(report, callback) {
 
+        // Abort if the report isn't defined.
+        if (!report) return callback();
+
         // Insert IDs and auth data. Dupe the object so it doesn't
         // modify the report object for later work.
         var query = {};
