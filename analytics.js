@@ -66,10 +66,10 @@ var Analytics = {
         // Optional filters.
         var filters = [];
         if (report.query.filters)
-            filters.concat(report.query.filters);
+            filters = filters.concat(report.query.filters);
 
         if (report.filters)
-            filters.concat(report.filters);
+            filters = filters.concat(report.filters);
 
         if (filters.length > 0)
             query.filters = filters.join(";");
