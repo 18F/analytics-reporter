@@ -66,13 +66,13 @@ var Analytics = {
         // Optional filters.
         var filters = [];
         if (report.query.filters)
-            filters.push(report.query.filters);
+            filters.concat(report.query.filters);
 
         if (report.filters)
-            filters.push(report.filters);
+            filters.concat(report.filters);
 
         if (filters.length > 0)
-            query.filters = filters.join(",");
+            query.filters = filters.join(";");
 
         query['max-results'] = report.query['max-results'] || 10000;
 

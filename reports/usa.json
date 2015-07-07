@@ -98,7 +98,10 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "filters": ["ga:operatingSystem==Windows;ga:sessions>1000"],
+        "filters": [
+          "ga:operatingSystem==Windows",
+          "ga:sessions>1000"
+        ],
         "sort": "ga:date"
       },
       "meta": {
@@ -133,7 +136,10 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
-        "filters": ["ga:browser==Internet Explorer;ga:sessions>1000"]
+        "filters": [
+          "ga:browser==Internet Explorer",
+          "ga:sessions>1000"
+        ]
       },
       "meta": {
         "name": "Internet Explorer",
@@ -226,7 +232,9 @@
       "query": {
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
-        "filters": ["ga:hostname=~^[^\\.]+\\.[^\\.]+$"],
+        "filters": [
+          "ga:hostname=~^[^\\.]+\\.[^\\.]+$"
+        ],
         "start-date": "14daysAgo",
         "end-date": "yesterday",
         "sort": "ga:hostname",
