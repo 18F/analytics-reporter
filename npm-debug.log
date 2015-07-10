@@ -1,0 +1,113 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@2.7.4
+3 info using node@v0.12.2
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec { raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/home/eric/18f/analytics-reporter',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /home/eric/.npm/analytics-reporter/0.5.0/package.tgz not in flight; packing
+9 verbose tar pack [ '/home/eric/.npm/analytics-reporter/0.5.0/package.tgz',
+9 verbose tar pack   '/home/eric/18f/analytics-reporter' ]
+10 verbose tarball /home/eric/.npm/analytics-reporter/0.5.0/package.tgz
+11 verbose folder /home/eric/18f/analytics-reporter
+12 info prepublish analytics-reporter@0.5.0
+13 verbose addLocalTarball adding from inside cache /home/eric/.npm/analytics-reporter/0.5.0/package.tgz
+14 silly cache afterAdd analytics-reporter@0.5.0
+15 verbose afterAdd /home/eric/.npm/analytics-reporter/0.5.0/package/package.json not in flight; writing
+16 verbose afterAdd /home/eric/.npm/analytics-reporter/0.5.0/package/package.json written
+17 silly publish { name: 'analytics-reporter',
+17 silly publish   version: '0.5.0',
+17 silly publish   description: 'A lightweight command line tool for reporting and publishing analytics data from a Google Analytics account.',
+17 silly publish   keywords: [ 'analytics', 'google analytics' ],
+17 silly publish   homepage: 'https://github.com/18f/analytics-reporter',
+17 silly publish   license: 'CC0-1.0',
+17 silly publish   scripts: { start: 'node app.js', test: 'node test/*' },
+17 silly publish   contributors:
+17 silly publish    [ { name: 'Gabriel Ramirez', email: 'gabriel.ramirez@gsa.gov' },
+17 silly publish      { name: 'Eric Mill', email: 'eric.mill@gsa.gov' } ],
+17 silly publish   files:
+17 silly publish    [ 'bin',
+17 silly publish      'test',
+17 silly publish      'reports',
+17 silly publish      'analytics.js',
+17 silly publish      'config.js',
+17 silly publish      'package.json',
+17 silly publish      '*.md' ],
+17 silly publish   engines: { node: '>=0.10.0' },
+17 silly publish   os: [ '!win32' ],
+17 silly publish   preferGlobal: true,
+17 silly publish   main: 'analytics',
+17 silly publish   bin: { analytics: './bin/analytics' },
+17 silly publish   repository:
+17 silly publish    { type: 'git',
+17 silly publish      url: 'git://github.com/18f/analytics-reporter.git' },
+17 silly publish   bugs: { url: 'https://github.com/18f/analytics-reporter/issues' },
+17 silly publish   dependencies:
+17 silly publish    { googleapis: '^1.0.21',
+17 silly publish      'node-schedule': '^0.1.13',
+17 silly publish      minimist: '*',
+17 silly publish      async: '*',
+17 silly publish      'aws-sdk': '*',
+17 silly publish      'fast-csv': '*',
+17 silly publish      lodash: '*' },
+17 silly publish   devDependencies: { 'body-parser': '~1.8.1', express: '~4.9.0', ejs: '~2.3.1' },
+17 silly publish   readme: '## Analytics Reporter\n\nA lightweight system for publishing analytics data from Google Analytics profiles.\n\nAvailable reports are named and described in [`reports.json`](reports.json). For now, they\'re hardcoded into the repository.\n\n### Setup\n\n* To run the utility on your computer, install it through npm:\n\n```bash\nnpm install -g analytics-reporter\n```\n\nIf you\'re developing locally inside the repo, `npm install` is sufficient.\n\n* [Create an API service account](https://developers.google.com/accounts/docs/OAuth2ServiceAccount) in the Google developer dashboard.\n\n* Take the generated client email address (ends with `gserviceaccount.com`) and grant it `Read & Analyze` permissions to the Google Analytics profile(s) whose data you wish to publish.\n\n* Download the `.p12` private key file from the dashboard. Copy the password Google shows you (you will only need it once).\n\n* Transform the `p12` file into a `.pem` file, entering the password when asked:\n\n```bash\nopenssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -nodes\n```\n\n* Visit the "APIs" section of the Google Developer Dashboard for your project, and enable it for the "Analytics API".\n\n* Set environment variables for your app\'s generated email address, and for the profile you authorized it to:\n\n```bash\nexport ANALYTICS_REPORT_EMAIL="YYYYYYY@developer.gserviceaccount.com"\nexport ANALYTICS_REPORT_IDS="ga:XXXXXX"\n```\n\nYou may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv). If you do, there is an `example.env` file you can copy to `.env` to get started.\n\nTo find your Google Analytics view ID:\n\n  1. Sign in to your Analytics account.\n  1. Select the Admin tab.\n  1. Select an account from the dropdown in the ACCOUNT column.\n  1. Select a property from the dropdown in the PROPERTY column.\n  1. Select a view from the dropdown in the VIEW column.\n  1. Click "View Settings"\n  1. Copy the view ID.  You\'ll need to enter it with `ga:` as a prefix.\n\n* You can specify your private key through environment variables either as a file path, or the contents of the key (helpful for Heroku and Heroku-like systems).\n\nTo specify a file path:\n\n```\nexport ANALYTICS_KEY_PATH="/path/to/secret_key.pem"\n```\n\nTo specify the key directly, paste in the contents of the `.pem` **directly and exactly**, in quotes (below example has been sanitized):\n\n```\nexport ANALYTICS_KEY="Bag Attributes\n    friendlyName: privatekey\n    localKeyID: [your key id]\nKey Attributes: <No Attributes>\n-----BEGIN PRIVATE KEY-----\n[contents of your key]\n-----END PRIVATE KEY-----"\n```\n\n* Make sure your computer or server is syncing its time with the world over NTP. Your computer\'s time will need to match those on Google\'s servers for the authentication to work.\n\n* Test your configuration by printing a report to STDOUT:\n\n```bash\n./bin/analytics users\n```\n\nIf you see a nicely formatted JSON file, you are all set.\n\n* (Optional) Authorize yourself for S3 publishing.\n\nIf you plan to use this project\'s lightweight S3 publishing system, you\'ll need to add 6 more environment variables:\n\n```\nexport AWS_REGION=us-east-1\nexport AWS_ACCESS_KEY_ID=[your-key]\nexport AWS_SECRET_ACCESS_KEY=[your-secret-key]\n\nexport AWS_BUCKET=[your-bucket]\nexport AWS_BUCKET_PATH=[your-path]\nexport AWS_CACHE_TIME=0\n```\n\n### Other configuration\n\nIf you use a **single domain** for all of your analytics data, then your profile is likely set to return relative paths (e.g. `/faq`) and not absolute paths when accessing real-time reports.\n\nYou can set a default domain, to be returned as data in all real-time data point:\n\n```\nexport ANALYTICS_HOSTNAME=https://konklone.com\n```\n\nThis will produce points similar to the following:\n\n```json\n{\n  "page": "/post/why-google-is-hurrying-the-web-to-kill-sha-1",\n  "page_title": "Why Google is Hurrying the Web to Kill SHA-1",\n  "active_visitors": "1",\n  "domain": "https://konklone.com"\n}\n```\n\n### Use\n\nReports are created and published using the `analytics` command.\n\n```bash\nanalytics\n```\n\nThis will run every report, in sequence, and print out the resulting JSON to STDOUT. There will be two newlines between each report.\n\nA report might look something like this:\n\n```javascript\n{\n  "name": "devices",\n  "query": {\n    "dimensions": [\n      "ga:date",\n      "ga:deviceCategory"\n    ],\n    "metrics": [\n      "ga:sessions"\n    ],\n    "start-date": "90daysAgo",\n    "end-date": "yesterday",\n    "sort": "ga:date"\n  },\n  "meta": {\n    "name": "Devices",\n    "description": "Weekly desktop/mobile/tablet visits by day for all sites."\n  },\n  "data": [\n    {\n      "date": "2014-10-14",\n      "device": "desktop",\n      "visits": "11495462"\n    },\n    {\n      "date": "2014-10-14",\n      "device": "mobile",\n      "visits": "2499586"\n    },\n    {\n      "date": "2014-10-14",\n      "device": "tablet",\n      "visits": "976396"\n    },\n    // ...\n  ],\n  "totals": {\n    "devices": {\n      "mobile": 213920363,\n      "desktop": 755511646,\n      "tablet": 81874189\n    },\n    "start_date": "2014-10-14",\n    "end_date": "2015-01-11"\n  }\n}\n```\n\n#### Options\n\n* `--output` - Output to a directory.\n\n```bash\nanalytics --output /path/to/data\n```\n\n* `--publish` - Publish to an S3 bucket. Requires AWS environment variables set as described above.\n\n```bash\nanalytics --publish\n```\n\n* `--only` - only run one or more specific reports. Multiple reports are comma separated.\n\n```bash\nanalytics --only devices\nanalytics --only devices,today\n```\n\n* `--slim` -Where supported, use totals only (omit the `data` array). Only applies to JSON, and reports where `"slim": true`.\n\n```bash\nanalytics --only devices --slim\n```\n\n* `--csv` - Gives you CSV instead of JSON.\n\n```bash\nanalytics --csv\n```\n\n* `--frequency` - Limit to reports with this \'frequency\' value.\n\n```bash\nanalytics --frequency=realtime\n```\n\n* `--debug` - Print debug details on STDOUT.\n\n```bash\nanalytics --publish --debug\n```\n\n### Public domain\n\nThis project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING](CONTRIBUTING.md):\n\n> This project is in the public domain within the United States, and copyright and related rights in the work worldwide are waived through the [CC0 1.0 Universal public domain dedication](https://creativecommons.org/publicdomain/zero/1.0/).\n>\n> All contributions to this project will be released under the CC0 dedication. By submitting a pull request, you are agreeing to comply with this waiver of copyright interest.\n',
+17 silly publish   readmeFilename: 'README.md',
+17 silly publish   gitHead: '67ba6ae2c2e4bfed6fb9e147a34e52a60eb15122',
+17 silly publish   _id: 'analytics-reporter@0.5.0',
+17 silly publish   _shasum: '600c5c0dcd0ee10d2b2462ce2f1a98d69098105a',
+17 silly publish   _from: '.' }
+18 silly mapToRegistry name analytics-reporter
+19 silly mapToRegistry using default registry
+20 silly mapToRegistry registry https://registry.npmjs.org/
+21 silly mapToRegistry uri https://registry.npmjs.org/analytics-reporter
+22 verbose publish registryBase https://registry.npmjs.org/
+23 silly publish uploading /home/eric/.npm/analytics-reporter/0.5.0/package.tgz
+24 verbose request uri https://registry.npmjs.org/analytics-reporter
+25 verbose request sending authorization for write operation
+26 info attempt registry request try #1 at 11:48:40
+27 verbose request id 7e1d6639ab6409c6
+28 http request PUT https://registry.npmjs.org/analytics-reporter
+29 http 403 https://registry.npmjs.org/analytics-reporter
+30 verbose headers { 'content-type': 'application/json',
+30 verbose headers   'cache-control': 'max-age=60',
+30 verbose headers   'content-length': '95',
+30 verbose headers   'accept-ranges': 'bytes',
+30 verbose headers   date: 'Fri, 10 Jul 2015 15:48:41 GMT',
+30 verbose headers   via: '1.1 varnish',
+30 verbose headers   connection: 'keep-alive',
+30 verbose headers   'x-served-by': 'cache-dfw1822-DFW',
+30 verbose headers   'x-cache': 'MISS',
+30 verbose headers   'x-cache-hits': '0',
+30 verbose headers   'x-timer': 'S1436543320.976957,VS0,VE296' }
+31 verbose request invalidating /home/eric/.npm/registry.npmjs.org/analytics-reporter on PUT
+32 error publish Failed PUT 403
+33 verbose stack Error: "You cannot publish over the previously published version 0.5.0." : analytics-reporter
+33 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:247:14)
+33 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:170:14)
+33 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:344:22)
+33 verbose stack     at Request.emit (events.js:110:17)
+33 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1239:14)
+33 verbose stack     at Request.emit (events.js:129:20)
+33 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1187:12)
+33 verbose stack     at IncomingMessage.emit (events.js:129:20)
+33 verbose stack     at _stream_readable.js:908:16
+33 verbose stack     at process._tickCallback (node.js:355:11)
+34 verbose statusCode 403
+35 verbose pkgid analytics-reporter
+36 verbose cwd /home/eric/18f/analytics-reporter
+37 error Linux 3.16.0-4-amd64
+38 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+39 error node v0.12.2
+40 error npm  v2.7.4
+41 error code E403
+42 error "You cannot publish over the previously published version 0.5.0." : analytics-reporter
+43 error If you need help, you may report this error at:
+43 error     <https://github.com/npm/npm/issues>
+44 verbose exit [ 1, true ]
