@@ -20,9 +20,9 @@
     }
   ],
   "files": [
-    "bin", "test",
+    "bin", "test", "reports",
     "analytics.js", "config.js",
-    "reports.json", "package.json",
+    "package.json",
     "*.md"
   ],
   "engines": {"node": ">=0.10.0"},
