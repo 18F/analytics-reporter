@@ -1,7 +1,5 @@
 ## Analytics Reporter
 
-*This project is still under construction.*
-
 A lightweight system for publishing analytics data from Google Analytics profiles.
 
 Available reports are named and described in [`reports.json`](reports.json). For now, they're hardcoded into the repository.
