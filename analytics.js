@@ -42,6 +42,9 @@ var Analytics = {
 
     query: function(report, callback) {
 
+        // Abort if the report isn't defined.
+        if (!report) return callback();
+
         // Insert IDs and auth data. Dupe the object so it doesn't
         // modify the report object for later work.
         var query = {};
@@ -63,13 +66,13 @@ var Analytics = {
         // Optional filters.
         var filters = [];
         if (report.query.filters)
-            filters.push(report.query.filters);
+            filters = filters.concat(report.query.filters);
 
         if (report.filters)
-            filters.push(report.filters);
+            filters = filters.concat(report.filters);
 
         if (filters.length > 0)
-            query.filters = filters.join(",");
+            query.filters = filters.join(";");
 
         query['max-results'] = report.query['max-results'] || 10000;
 
@@ -185,6 +188,10 @@ var Analytics = {
 
                 var point = {};
                 for (var j=0; j<row.length; j++) {
+
+                    // Some reports may decide to cut fields from the output.
+                    if (report.cut && _.contains(report.cut, data.columnHeaders[j].name))
+                        continue;
 
                     var field = Analytics.mapping[data.columnHeaders[j].name] || data.columnHeaders[j].name;
                     var value = row[j];

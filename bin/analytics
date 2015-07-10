@@ -76,9 +76,11 @@ var run = function(options) {
   var eachReport = function(name, done) {
     var report = Analytics.reports[name];
 
+    if (!report) return done('Report not defined.');
+
     if (options.debug) console.log("\n[" + report.name + "] Fetching...");
     Analytics.query(report, function(err, data) {
-        if (err) return console.log("ERROR AFTER QUERYING: " + JSON.stringify(err));
+        if (err) return console.log("ERROR AFTER QUERYING: " + err);
 
         if (options.debug) console.log("[" + report.name + "] Saving report data...");
 
@@ -117,7 +119,7 @@ var run = function(options) {
       fs.writeFile(path.join(options.output, (name + extension)), output, written);
 
     else {
-      // could be split on \n\n
+      // allows users to pretty reliably split on \n\n
       console.log(output + "\n");
       written();
     }
