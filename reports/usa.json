@@ -247,20 +247,82 @@
       }
     },
     {
+      "name": "top-downloads-realtime",
+      "frequency": "realtime",
+      "realtime": true,
+      "query": {
+        "dimensions": ["rt:pageTitle", "rt:eventLabel", "rt:pagePath"],
+        "metrics": ["rt:totalEvents"],
+        "filters": ["rt:eventCategory=~ownload"],
+        "sort": "-rt:totalEvents",
+        "max-results": "100"
+      },
+      "meta": {
+        "name": "Top Downloads (Live)",
+        "description": "Top downloads for active onsite users"
+      }
+    },
+    {
+      "name": "top-downloads-7-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
+        "metrics": ["ga:totalEvents"],
+        "filters": ["ga:eventCategory=~ownload"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:totalEvents",
+        "max-results": "100"
+      },
+      "meta": {
+        "name": "Top Downloads (7 Days)",
+        "description": "Top downloads in the last 7 days."
+      }
+    },
+    {
       "name": "top-downloads-30-days",
       "frequency": "daily",
       "query": {
         "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
-        "metrics": ["ga:uniqueEvents"],
+        "metrics": ["ga:totalEvents"],
         "filters": ["ga:eventCategory=~ownload"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:uniqueEvents",
+        "sort": "-ga:totalEvents",
         "max-results": "100"
       },
       "meta": {
         "name": "Top Downloads (30 Days)",
         "description": "Top downloads in the last 30 days."
+      }
+    },
+    {
+      "name": "top-cities-realtime",
+      "frequency": "realtime",
+      "realtime": true,
+      "query": {
+        "dimensions": ["rt:city"],
+        "metrics": ["rt:activeUsers"],
+        "sort": "-rt:activeUsers"
+      },
+      "meta": {
+        "name": "Top Cities (Live)",
+        "description": "Top cities for active onsite users."
+      }
+    },
+    {
+      "name": "top-cities-7-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:city"],
+        "metrics": ["ga:pageviews"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:pageviews"
+      },
+      "meta": {
+        "name": "Top Cities (7 Days)",
+        "description": "Top cities in the last 7 days."
       }
     },
     {
@@ -276,6 +338,35 @@
       "meta": {
         "name": "Top Cities (30 Days)",
         "description": "Top cities in the last 30 days."
+      }
+    },
+    {
+      "name": "top-countries-realtime",
+      "frequency": "realtime",
+      "realtime": true,
+      "query": {
+        "dimensions": ["rt:country"],
+        "metrics": ["rt:activeUsers"],
+        "sort": "-rt:activeUsers"
+      },
+      "meta": {
+        "name": "Top Cities",
+        "description": "Top countries for active onsite users."
+      }
+    },
+    {
+      "name": "top-countries-7-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:country"],
+        "metrics": ["ga:pageviews"],
+        "start-date": "7daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:pageviews"
+      },
+      "meta": {
+        "name": "Top Cities (7 Days)",
+        "description": "Top countries in the last 7 days."
       }
     },
     {
