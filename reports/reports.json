@@ -242,8 +242,7 @@
         "metrics": ["ga:pageviews"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:pageviews",
-        "max-results": "100"
+        "sort": "-ga:pageviews"
       },
       "meta": {
         "name": "Top Cities (30 Days)",
@@ -258,8 +257,7 @@
         "metrics": ["ga:pageviews"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:pageviews",
-        "max-results": "100"
+        "sort": "-ga:pageviews"
       },
       "meta": {
         "name": "Top Cities (30 Days)",
