@@ -126,7 +126,11 @@ var Analytics = {
         "ga:source": "source",
         "ga:pagePath": "page",
         "ga:pageTitle": "page_title",
-        "ga:pageviews": "visits"
+        "ga:pageviews": "visits",
+        "ga:country": "country",
+        "ga:city": 'city',
+        "ga:eventLabel": "event_label",
+        "ga:uniqueEvents": "event_occurrence"
     },
 
     // The OSes we care about for the OS breakdown. The rest can be "Other".
