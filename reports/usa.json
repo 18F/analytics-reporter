@@ -245,6 +245,55 @@
         "name": "Participating second-level domains.",
         "description": "Participating second-level domains over the last 2 weeks."
       }
+    },
+    {
+      "name": "top-downloads-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
+        "metrics": ["ga:uniqueEvents"],
+        "filters": ["ga:eventCategory=~ownload"],
+        "start-date": "30daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:uniqueEvents",
+        "max-results": "100"
+      },
+      "meta": {
+        "name": "Top Downloads (30 Days)",
+        "description": "Top downloads in the last 30 days."
+      }
+    },
+    {
+      "name": "top-cities-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:city"],
+        "metrics": ["ga:pageviews"],
+        "start-date": "30daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:pageviews",
+        "max-results": "100"
+      },
+      "meta": {
+        "name": "Top Cities (30 Days)",
+        "description": "Top cities in the last 30 days."
+      }
+    },
+    {
+      "name": "top-countries-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:country"],
+        "metrics": ["ga:pageviews"],
+        "start-date": "30daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:pageviews",
+        "max-results": "100"
+      },
+      "meta": {
+        "name": "Top Cities (30 Days)",
+        "description": "Top countries in the last 30 days."
+      }
     }
   ]
 }
