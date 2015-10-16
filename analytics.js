@@ -15,8 +15,11 @@ var config = require('./config');
 var key;
 if (config.key)
     key = config.key;
-else if (config.key_file && fs.existsSync(config.key_file))
+else if (config.key_file && fs.existsSync(config.key_file)) {
     key = fs.readFileSync(config.key_file);
+    if (config.key_file.search(".json$"))
+        key = JSON.parse(key).private_key;
+}
 else
   key = null;
 

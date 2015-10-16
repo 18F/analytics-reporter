@@ -3,7 +3,7 @@
   "version": "0.5.1",
   "description": "A lightweight command line tool for reporting and publishing analytics data from a Google Analytics account.",
   "keywords": ["analytics", "google analytics"],
-  "homepage": "https://github.com/18f/analytics-reporter",
+  "homepage": "https://github.com/18F/analytics-reporter",
   "license": "CC0-1.0",
   "scripts": {
     "start": "node app.js",
@@ -34,13 +34,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/18f/analytics-reporter.git"
+    "url": "git://github.com/18F/analytics-reporter.git"
   },
   "bugs": {
-    "url": "https://github.com/18f/analytics-reporter/issues"
+    "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "googleapis": "^1.0.21",
+    "googleapis": "^2.1.5",
     "node-schedule": "^0.1.13",
     "minimist": "*",
     "async": "*",

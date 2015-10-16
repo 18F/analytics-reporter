@@ -16,17 +16,11 @@ If you're developing locally inside the repo, `npm install` is sufficient.
 
 * [Create an API service account](https://developers.google.com/accounts/docs/OAuth2ServiceAccount) in the Google developer dashboard.
 
-* Take the generated client email address (ends with `gserviceaccount.com`) and grant it `Read & Analyze` permissions to the Google Analytics profile(s) whose data you wish to publish.
-
-* Download the `.p12` private key file from the dashboard. Copy the password Google shows you (you will only need it once).
-
-* Transform the `p12` file into a `.pem` file, entering the password when asked:
-
-```bash
-openssl pkcs12 -in <name of your p12 key>.p12 -out secret_key.pem -nocerts -nodes
-```
-
 * Visit the "APIs" section of the Google Developer Dashboard for your project, and enable it for the "Analytics API".
+
+* Go to the "Credentials" section and generate "service account" credentials, and download the **JSON** private key file it gives you.
+
+* Take the generated client email address (ends with `gserviceaccount.com`) and grant it `Read, Analyze & Collaborate` permissions on the Google Analytics profile(s) whose data you wish to publish.
 
 * Set environment variables for your app's generated email address, and for the profile you authorized it to:
 
@@ -52,19 +46,16 @@ To find your Google Analytics view ID:
 To specify a file path:
 
 ```
-export ANALYTICS_KEY_PATH="/path/to/secret_key.pem"
+export ANALYTICS_KEY_PATH="/path/to/secret_key.json"
 ```
 
-To specify the key directly, paste in the contents of the `.pem` **directly and exactly**, in quotes (below example has been sanitized):
+To specify the key directly, paste in the contents of the JSON file's `private_key` field **directly and exactly**, in quotes, and **rendering actual line breaks** (not `\n`'s) (below example has been sanitized):
 
 ```
-export ANALYTICS_KEY="Bag Attributes
-    friendlyName: privatekey
-    localKeyID: [your key id]
-Key Attributes: <No Attributes>
------BEGIN PRIVATE KEY-----
-[contents of your key]
------END PRIVATE KEY-----"
+export ANALYTICS_KEY="-----BEGIN PRIVATE KEY-----
+[contents of key]
+-----END PRIVATE KEY-----
+"
 ```
 
 * Make sure your computer or server is syncing its time with the world over NTP. Your computer's time will need to match those on Google's servers for the authentication to work.
