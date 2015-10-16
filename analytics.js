@@ -129,7 +129,15 @@ var Analytics = {
         "ga:source": "source",
         "ga:pagePath": "page",
         "ga:pageTitle": "page_title",
-        "ga:pageviews": "visits"
+        "ga:pageviews": "visits",
+        "ga:country": "country",
+        "ga:city": 'city',
+        "ga:eventLabel": "event_label",
+        "ga:totalEvents": "total_events",
+        "rt:country": "country",
+        "rt:city": "city",
+        "rt:totalEvents": "total_events",
+        "rt:eventLabel": "event_label"
     },
 
     // The OSes we care about for the OS breakdown. The rest can be "Other".
@@ -299,6 +307,15 @@ var Analytics = {
 
                     result.totals.ie_version[version] += parseInt(result.data[i].visits);
                 }
+            }
+            if (_.startsWith(report.name, "top-countries")) {
+                // Extract the total visits from the `United States`
+                for (var i=0; i < result.data.length; i++) {
+                    if (result.data[i].country === "United States") {
+                        result.totals.us_visits = result.data[i].visits;
+                    }
+                }
+
             }
 
             // presumably we're organizing these by date
