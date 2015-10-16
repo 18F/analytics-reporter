@@ -1,6 +1,6 @@
 {
   "name": "analytics-reporter",
-  "version": "0.5.1",
+  "version": "1.0.0",
   "description": "A lightweight command line tool for reporting and publishing analytics data from a Google Analytics account.",
   "keywords": ["analytics", "google analytics"],
   "homepage": "https://github.com/18F/analytics-reporter",
@@ -17,6 +17,10 @@
     {
       "name": "Eric Mill",
       "email": "eric.mill@gsa.gov"
+    },
+    {
+      "name": "Lauren Ancona",
+      "email": "lauren.ancona@phila.gov"
     }
   ],
   "files": [
