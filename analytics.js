@@ -308,16 +308,7 @@ var Analytics = {
                     result.totals.ie_version[version] += parseInt(result.data[i].visits);
                 }
             }
-            if (_.startsWith(report.name, "top-countries")) {
-                // Extract the total visits from the `United States`
-                for (var i=0; i < result.data.length; i++) {
-                    if (result.data[i].country === "United States") {
-                        result.totals.us_visits = result.data[i].visits;
-                    }
-                }
-
-            }
-
+            
             // presumably we're organizing these by date
             if (result.data[0].date) {
                 result.totals.start_date = result.data[0].date;
