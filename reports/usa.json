@@ -450,23 +450,7 @@
         "description": "Pages, measured by active onsite users, for all sites."
       }
     },
-    {
-      "name": "all-pages-30-days",
-      "frequency": "daily",
-      "query": {
-        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
-        "metrics": ["ga:pageviews"],
-        "start-date": "30daysAgo",
-        "end-date": "yesterday",
-        "sort": "-ga:pageviews",
-        "max-results": "10000",
-        "filters": ["ga:pageviews>=1000"]
-      },
-      "meta": {
-        "name": "All Pages (30 Days)",
-        "description": "Last 30 days' pages, measured by page views, for all sites."
-      }
-    },
+
     {
       "name": "all-domains-30-days",
       "frequency": "daily",
