@@ -150,13 +150,13 @@ var Analytics = {
     // The versions of Windows we care about for the Windows version breakdown.
     // The rest can be "Other". These are the exact strings used by Google Analytics.
     windows_versions: [
-        "XP", "Vista", "7", "8", "8.1"
+        "XP", "Vista", "7", "8", "8.1", "10"
     ],
 
     // The browsers we care about for the browser report. The rest are "Other"
     //  These are the exact strings used by Google Analytics.
     browsers: [
-        "Internet Explorer", "Chrome", "Safari", "Firefox", "Android Browser",
+        "Internet Explorer", "Edge", "Chrome", "Safari", "Firefox", "Android Browser",
         "Safari (in-app)", "Amazon Silk", "Opera", "Opera Mini",
         "IE with Chrome Frame", "BlackBerry", "UC Browser"
     ],
