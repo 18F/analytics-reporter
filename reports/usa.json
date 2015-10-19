@@ -341,6 +341,21 @@
       }
     },
     {
+      "name": "top-cities-90-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:city"],
+        "metrics": ["ga:pageviews"],
+        "start-date": "90daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:pageviews"
+      },
+      "meta": {
+        "name": "Top Cities (90 Days)",
+        "description": "Top cities in the last 90 days."
+      }
+    },
+    {
       "name": "top-countries-realtime",
       "frequency": "realtime",
       "realtime": true,
@@ -383,6 +398,38 @@
         "name": "Top Cities (30 Days)",
         "description": "Top countries in the last 30 days."
       }
-    }
+    },
+    {
+      "name": "top-countries-90-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:country"],
+        "metrics": ["ga:pageviews"],
+        "start-date": "90daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:pageviews"
+      },
+      "meta": {
+        "name": "Top Countries (90 Days)",
+        "description": "Top countries in the last 90 days."
+      }
+    },
+    {
+      "name": "international-visits-90-days",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": ["ga:country"],
+        "metrics": ["ga:sessions"],
+        "start-date": "90daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions",
+        "filters": ["ga:country!=United States"]
+      },
+      "meta": {
+        "name": "Non-US countries in the last 90 days.",
+        "description": "90 days of visits from non-US countries broken down by country for all sites."
+      }
+    } 
   ]
 }
