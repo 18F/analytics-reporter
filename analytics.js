@@ -195,7 +195,7 @@ var Analytics = {
 
             // get indices of column headers, for reference in client-side thresholds
             var columnIndices = {};
-            for (var c=0; c<data.columnHeaders.length; c++)
+            for (var c = 0; c < data.columnHeaders.length; c++)
                 columnIndices[data.columnHeaders[c].name] = c;
 
             // Calculate each individual data point.
