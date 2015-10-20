@@ -423,7 +423,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "sort": "ga:date,-ga:sessions",
+        "sort": "-ga:sessions",
         "filters": ["ga:country!=United States"]
       },
       "meta": {
