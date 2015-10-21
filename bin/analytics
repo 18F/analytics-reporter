@@ -17,7 +17,7 @@
  * --debug: print debug details on STDOUT
  */
 
-var Analytics = require("../analytics"),
+var Analytics = require("../src/analytics"),
     config = require("../config"),
     fs = require("fs"),
     path = require('path'),
@@ -26,6 +26,7 @@ var Analytics = require("../analytics"),
     zlib = require('zlib');
 
 
+var analytics = new Analytics();
 // AWS credentials are looked for in env vars or in ~/.aws/config.
 // AWS bucket and path need to be set in env vars mentioned in config.js.
 
@@ -63,23 +64,23 @@ var run = function(options) {
 
   else if (options.frequency) {
     names = [];
-    var all = Object.keys(Analytics.reports);
+    var all = Object.keys(analytics.reports);
     for (var i=0; i<all.length; i++) {
-      if (Analytics.reports[all[i]].frequency == options.frequency)
+      if (analytics.reports[all[i]].frequency == options.frequency)
         names.push(all[i]);
     }
   }
 
   else
-    names = Object.keys(Analytics.reports);
+    names = Object.keys(analytics.reports);
 
   var eachReport = function(name, done) {
-    var report = Analytics.reports[name];
+    var report = analytics.reports[name];
 
     if (!report) return done('Report not defined.');
 
     if (options.debug) console.log("\n[" + report.name + "] Fetching...");
-    Analytics.query(report, function(err, data) {
+    analytics.query(report, function(err, data) {
         if (err) return console.log("ERROR AFTER QUERYING: " + err);
 
         if (options.debug) console.log("[" + report.name + "] Saving report data...");

@@ -3,16 +3,17 @@ var GoogleAnalyticsApi = require("./ga_api.js"),
     path = require('path'),
     config = require('./config');
 
-function Analytics(api, reports_path) {
+function Analytics(reports_path) {
     /* Function constructor for the main Analytics object.
     This constructor initalizes the reports path and the the API client to
     Google analytics*/
-    this.api = new api();
+    this.api = new GoogleAnalyticsApi();
     reports_path = config.reports_file || (path.join(__dirname, reports_path));
     var reports = JSON.parse(fs.readFileSync(reports_path)).reports;
-    this.by_name = {};
-    for (var i=0; i<reports.length; i++)
-        this.by_name[reports[i].name] = reports[i];
+    var by_name = {};
+    for (var i=0; i< reports.length; i++)
+        by_name[reports[i].name] = reports[i];
+    this.reports = by_name;
 }
 
 
@@ -59,17 +60,9 @@ Analytics.prototype.query = function (report, callback) {
   if (report.realtime)
     query.realtime = true;
 
-  analytics.api.fetchData(query, report, callback);
+  this.api.fetchData(query, report, callback);
 
 };
 
 
-var analytics = new Analytics(GoogleAnalyticsApi, "../reports/reports.json");
-
-analytics.query(analytics.by_name['top-cities-30-days'], function(err, data) {
-  console.log(err, data);
-});
-
-analytics.query(analytics.by_name['realtime'], function(err, data) {
-  console.log(err, data);
-});
+module.exports = Analytics;
