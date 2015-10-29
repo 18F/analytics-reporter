@@ -55,7 +55,7 @@
         "sort": "ga:date"
       },
       "meta": {
-        "names": "Operating Systems",
+        "name": "Operating Systems",
         "description": "90 days of visits, broken down by operating system and date, for all sites."
       }
     },
@@ -75,7 +75,7 @@
         "sort": "ga:date"
       },
       "meta": {
-        "names": "Windows",
+        "name": "Windows",
         "description": "90 days of visits from Windows users, broken down by operating system version and date, for all sites."
       }
     },
