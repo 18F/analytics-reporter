@@ -144,7 +144,10 @@ var Analytics = {
     // These are the extract strings used by Google Analytics.
     oses: [
         "Android", "BlackBerry",  "Windows Phone", "iOS",
-        "Linux", "Macintosh", "Windows"
+        "Linux", "Macintosh", "Windows", "(not set)", "Chrome OS",
+        "Nokia", "Samsung", "SymbianOS", "Xbox", "Firefox OS",
+        "Nintendo Wii", "Playstation 3", "FreeBSD", "Playstation Vita",
+        "Google TV", "SunOS", "LG", "Nintendo 3DS"
     ],
 
     // The versions of Windows we care about for the Windows version breakdown.
@@ -158,10 +161,12 @@ var Analytics = {
     browsers: [
         "Internet Explorer", "Edge", "Chrome", "Safari", "Firefox", "Android Browser",
         "Safari (in-app)", "Amazon Silk", "Opera", "Opera Mini",
-        "IE with Chrome Frame", "BlackBerry", "UC Browser"
+        "IE with Chrome Frame", "BlackBerry", "UC Browser", "YaBrowser",
+        "Maxthon", "Coc Coc"
     ],
 
     // The versions of IE we care about for the IE version breakdown.
+    // "Edge" is considered a separate browser in Google Analytics, appears above.
     // The rest can be "Other". These are the exact strings used by Google Analytics.
     ie_versions: [
         "11.0", "10.0", "9.0", "8.0", "7.0", "6.0"
