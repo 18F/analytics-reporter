@@ -27,22 +27,6 @@
       }
     },
     {
-      "name": "users",
-      "frequency": "daily",
-      "slim": true,
-      "query": {
-        "dimensions": ["ga:date"],
-        "metrics": ["ga:sessions"],
-        "start-date": "90daysAgo",
-        "end-date": "yesterday",
-        "sort": "ga:date"
-      },
-      "meta": {
-        "name": "Visitors",
-        "description": "90 days of visits for all sites."
-      }
-    },
-    {
       "name": "devices",
       "frequency": "daily",
       "slim": true,
