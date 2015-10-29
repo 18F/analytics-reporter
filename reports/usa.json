@@ -148,38 +148,6 @@
       }
     },
     {
-      "name": "top-pages-7-days",
-      "frequency": "daily",
-      "query": {
-        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
-        "metrics": ["ga:pageviews"],
-        "start-date": "7daysAgo",
-        "end-date": "yesterday",
-        "sort": "-ga:pageviews",
-        "max-results": "20"
-      },
-      "meta": {
-        "name": "Top Pages (7 Days)",
-        "description": "Last week's top 20 pages, measured by page views, for all sites."
-      }
-    },
-    {
-      "name": "top-pages-30-days",
-      "frequency": "daily",
-      "query": {
-        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
-        "metrics": ["ga:pageviews"],
-        "start-date": "30daysAgo",
-        "end-date": "yesterday",
-        "sort": "-ga:pageviews",
-        "max-results": "20"
-      },
-      "meta": {
-        "name": "Top Pages (30 Days)",
-        "description": "Last 30 days' top 20 pages, measured by page views, for all sites."
-      }
-    },
-    {
       "name": "top-domains-7-days",
       "frequency": "daily",
       "query": {
