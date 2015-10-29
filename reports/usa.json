@@ -14,7 +14,7 @@
     },
     {
       "name": "today",
-      "frequency": "realtime",
+      "frequency": "hourly",
       "query": {
         "dimensions": ["ga:date", "ga:hour"],
         "metrics": ["ga:sessions"],
