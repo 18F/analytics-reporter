@@ -190,7 +190,7 @@
       "query": {
         "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
         "metrics": ["ga:totalEvents"],
-        "filters": ["ga:eventCategory=~ownload"],
+        "filters": ["ga:eventCategory=~ownload", "ga:eventLabel!~swf$"],
         "start-date": "7daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:totalEvents",
