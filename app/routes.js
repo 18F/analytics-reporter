@@ -21,6 +21,7 @@ module.exports = function(app, models) {
       res.header("Cache-Control", "no-cache, no-store, must-revalidate");
       res.header("Pragma", "no-cache");
       res.header("Expires", 0);
+      res.header("Content-Type", "application/json; charset=utf-8");
 
       var filters = null;
       var name = req.params.name;
