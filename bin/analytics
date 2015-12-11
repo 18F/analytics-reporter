@@ -13,6 +13,7 @@
  * --slim: Where supported, use totals only (omit the `data` array).
  *         Only applies to JSON, and reports where "slim": true.
  * --csv: CSV instead of JSON.
+ * --json: export JSON report, if run with --csv will export both CSV and JSON
  * --frequency: Limit to reports with this 'frequency' value.
  * --debug: print debug details on STDOUT
  */
@@ -84,22 +85,24 @@ var run = function(options) {
 
         if (options.debug) console.log("[" + report.name + "] Saving report data...");
 
-        // CSV, see https://github.com/C2FO/fast-csv#formatting-functions
-        if (options.csv) {
-          csv.writeToString(data['data'], {headers: true}, function(err, data) {
-            if (err) return console.log("ERROR AFTER CSV: " + JSON.stringify(err));
-
-            writeReport(name, data, ".csv", done);
-          });
-        }
-
-        // JSON
-        else {
+        var exportJSON = function () {
           // some reports can be slimmed down for direct rendering
           if (options.slim && report.slim) delete data.data;
-
           writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+        };
+        // CSV, see https://github.com/C2FO/fast-csv#formatting-functions
+        if (options.csv) {
+          csv.writeToString(data.data, {headers: true}, function(err, data) {
+            if (err) return console.log("ERROR AFTER CSV: " + JSON.stringify(err));
+            writeReport(name, data, ".csv", function() {
+              // Check if JSON report should be exported along with CSV
+              if (options.json) exportJSON();
+              else done();
+            });
+          });
         }
+        else
+          exportJSON();
     });
   };
 
