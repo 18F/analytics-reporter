@@ -1,4 +1,4 @@
-
+/* This script contains all the processing code for the json data from the GA api. */
 var  config = require('./config'),
 _ = require('lodash');
 
