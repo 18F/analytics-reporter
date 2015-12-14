@@ -37,7 +37,6 @@ function Analytics(key, email, account_ids, reports_path, aws, debug) {
     this.debug = debug;
     // Init the report api func
     this.api = new GoogleAnalyticsApi(key, email);
-
 }
 
  /* The query prototype method injests a report and prepares a query
