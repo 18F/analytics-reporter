@@ -17,123 +17,17 @@
  * --debug: print debug details on STDOUT
  */
 
-var Analytics = require("../src/analytics"),
-    config = require("../config"),
-    fs = require("fs"),
-    path = require('path'),
-    async = require("async"),
-    csv = require("fast-csv"),
-    zlib = require('zlib');
-
-
-var analytics = new Analytics();
-// AWS credentials are looked for in env vars or in ~/.aws/config.
-// AWS bucket and path need to be set in env vars mentioned in config.js.
-
-var AWS = require("aws-sdk");
-
-var publish = function(name, data, extension, options, callback) {
-  if (options.debug) console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
-
-  var mime = {".json": "application/json", ".csv": "text/csv"};
-
-  zlib.gzip(data, function(err, compressed) {
-    if (err) return console.log("ERROR AFTER GZIP: " + err);
-
-    new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-      Key: config.aws.path + "/" + name + extension,
-      Body: compressed,
-      ContentType: mime[extension],
-      ContentEncoding: "gzip",
-      ACL: "public-read",
-      CacheControl: "max-age=" + (config.aws.cache || 0)
-    }, callback);
-  });
-};
-
+var Analytics = require("../src/analytics");
 
 var run = function(options) {
   if (!options) options = {};
-  if (options.debug) options.verbose = options.debug;
-  if (options.verbose) options.debug = options.verbose;
-
-  // can be overridden to only do one report
-  var names;
-  if (options.only)
-    names = options.only.split(",");
-
-  else if (options.frequency) {
-    names = [];
-    var all = Object.keys(analytics.reports);
-    for (var i=0; i<all.length; i++) {
-      if (analytics.reports[all[i]].frequency == options.frequency)
-        names.push(all[i]);
-    }
-  }
-
-  else
-    names = Object.keys(analytics.reports);
-
-  var eachReport = function(name, done) {
-    var report = analytics.reports[name];
-
-    if (!report) return done('Report not defined.');
-
-    if (options.debug) console.log("\n[" + report.name + "] Fetching...");
-    analytics.query(report, function(err, data) {
-        if (err) return console.log("ERROR AFTER QUERYING: " + err);
-
-        if (options.debug) console.log("[" + report.name + "] Saving report data...");
-
-        // CSV, see https://github.com/C2FO/fast-csv#formatting-functions
-        if (options.csv) {
-          csv.writeToString(data['data'], {headers: true}, function(err, data) {
-            if (err) return console.log("ERROR AFTER CSV: " + JSON.stringify(err));
-
-            writeReport(name, data, ".csv", done);
-          });
-        }
-
-        // JSON
-        else {
-          // some reports can be slimmed down for direct rendering
-          if (options.slim && report.slim) delete data.data;
-
-          writeReport(name, JSON.stringify(data, null, 2), ".json", done);
-        }
-    });
-  };
-
-  var writeReport = function(name, output, extension, done) {
-    var written = function(err) {
-      if (err)
-        console.error("ERROR AFTER WRITING: " + JSON.stringify(err));
-      else if (options.debug)
-        console.log("[" + name + "] Done.");
-      done();
-    };
-
-    if (options.publish)
-      publish(name, output, extension, options, written);
-
-    else if (options.output && (typeof(options.output) == "string"))
-      fs.writeFile(path.join(options.output, (name + extension)), output, written);
-
-    else {
-      // allows users to pretty reliably split on \n\n
-      console.log(output + "\n");
-      written();
-    }
-  };
-
-  async.eachSeries(names, eachReport, function(err) {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-    }
-
-    if (options.debug) console.log("All done.");
-  });
+  // Init a new analytics object
+  var analytics = new Analytics();
+  // Set the debug
+  if (options.debug || options.verbose)
+    analytics.debug = true;
+  // Star the reports
+  analytics.run(options);
 };
 
 run(require('minimist')(process.argv.slice(2)));
