@@ -10,8 +10,8 @@ var GoogleAnalyticsApi = require("./ga_api.js"),
 
 /* Analytics is the function constructor for the main Analytics object.
 This constructor initalizes the reports path and the the API client to
-Google analytics*/
-function Analytics(key, email, account_ids, reports_path, debug) {
+Google analytics */
+function Analytics(key, email, account_ids, reports_path, aws, debug) {
 
     // Load Key
     key = key || config.key;
@@ -20,10 +20,8 @@ function Analytics(key, email, account_ids, reports_path, debug) {
      	if (config.key_file.search(".json$"))
           key = JSON.parse(key).private_key;
     }
-
     // Load email
     email = email || process.env.ANALYTICS_REPORT_EMAIL;
-
     // Load Reports
     reports_path = reports_path || process.env.ANALYTICS_REPORTS_PATH;
     var reports = JSON.parse(fs.readFileSync(reports_path)).reports;
@@ -31,19 +29,18 @@ function Analytics(key, email, account_ids, reports_path, debug) {
     for (var i=0; i< reports.length; i++)
         by_name[reports[i].name] = reports[i];
     this.reports = by_name;
-
     // Set the query ID
     this.account_ids = account_ids || config.account.ids;
-
+    // Set AWS configurations
+    this.aws = config.aws;
     // Set the debug flag
     this.debug = debug;
-
     // Init the report api func
     this.api = new GoogleAnalyticsApi(key, email);
 
 }
 
- /* the query prototype method injests a report and prepares a query
+ /* The query prototype method injests a report and prepares a query
  object used to fetch data from the api */
 Analytics.prototype.query = function (report, callback) {
 
@@ -92,6 +89,7 @@ Analytics.prototype.query = function (report, callback) {
 
 // Given reports name or frequncy choose the reports that will be run
 Analytics.prototype.select_reports = function(report_names, frequency) {
+
   var reports_to_run;
   if (report_names)
     reports_to_run = report_names.split(",");
@@ -113,27 +111,22 @@ Analytics.prototype.select_reports = function(report_names, frequency) {
 // Allows reports to be published
 Analytics.prototype.publish =  function(name, data, extension, callback) {
 
-    if (this.debug) console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
-
+    if (this.debug) console.log("[" + name + "] Publishing to " + this.aws.bucket + "...");
     var mime = {".json": "application/json", ".csv": "text/csv"};
-
     zlib.gzip(data, function(err, compressed) {
-
       if (err) return console.log("ERROR AFTER GZIP: " + err);
-
-      new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-        Key: config.aws.path + "/" + name + extension,
+      new AWS.S3({params: {Bucket: this.aws.bucket}}).upload({
+        Key: this.aws.path + "/" + name + extension,
         Body: compressed,
         ContentType: mime[extension],
         ContentEncoding: "gzip",
         ACL: "public-read",
-        CacheControl: "max-age=" + (config.aws.cache || 0)
+        CacheControl: "max-age=" + (this.aws.cache || 0)
       }, callback);
-
     });
   };
 
-//slim, csv, json, frequncy, report_names, output
+// Run a series of reports
 Analytics.prototype.run = function(options) {
   // Avoid `this` bug by setting this to self
   var self = this;
@@ -194,6 +187,7 @@ Analytics.prototype.run = function(options) {
       written();
     }
   };
+
    // Start async loop
    var reports_to_run = self.select_reports(options.only, options.frequency);
    async.eachSeries(reports_to_run, eachReport, function(err) {
@@ -203,7 +197,6 @@ Analytics.prototype.run = function(options) {
     }
     if (this.debug) console.log("All done.");
   });
-
 };
 
 module.exports = Analytics;

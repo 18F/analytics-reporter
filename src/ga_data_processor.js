@@ -153,7 +153,7 @@ var GoogleAnalyticsProcessor = {
                 result.totals.os = {};
                 for (var i=0; i<GoogleAnalyticsProcessor.oses.length; i++)
                     result.totals.os[GoogleAnalyticsProcessor.oses[i]] = 0;
-                result.totals.os["Other"] = 0;
+                result.totals.os.Other = 0;
 
                 for (var i=0; i<result.data.length; i++) {
                     var os = result.data[i].os;
@@ -171,7 +171,7 @@ var GoogleAnalyticsProcessor = {
                 result.totals.os_version = {};
                 for (var i=0; i<GoogleAnalyticsProcessor.windows_versions.length; i++)
                     result.totals.os_version[GoogleAnalyticsProcessor.windows_versions[i]] = 0;
-                result.totals.os_version["Other"] = 0;
+                result.totals.os_version.Other = 0;
 
                 for (var i=0; i<result.data.length; i++) {
                     var version = result.data[i].os_version;
@@ -189,7 +189,7 @@ var GoogleAnalyticsProcessor = {
                 result.totals.browser = {};
                 for (var i=0; i<GoogleAnalyticsProcessor.browsers.length; i++)
                     result.totals.browser[GoogleAnalyticsProcessor.browsers[i]] = 0;
-                result.totals.browser["Other"] = 0;
+                result.totals.browser.Other = 0;
 
                 for (var i=0; i<result.data.length; i++) {
                     var browser = result.data[i].browser;
@@ -206,7 +206,7 @@ var GoogleAnalyticsProcessor = {
                 result.totals.ie_version = {};
                 for (var i=0; i<GoogleAnalyticsProcessor.ie_versions.length; i++)
                     result.totals.ie_version[GoogleAnalyticsProcessor.ie_versions[i]] = 0;
-                result.totals.ie_version["Other"] = 0;
+                result.totals.ie_version.Other = 0;
 
                 for (var i=0; i<result.data.length; i++) {
                     var version = result.data[i].browser_version;
@@ -225,7 +225,6 @@ var GoogleAnalyticsProcessor = {
                         result.totals.us_visits = result.data[i].visits;
                     }
                 }
-
             }
 
             // presumably we're organizing these by date
