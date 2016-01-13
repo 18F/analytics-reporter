@@ -63,7 +63,7 @@ export ANALYTICS_KEY="-----BEGIN PRIVATE KEY-----
 * Test your configuration by printing a report to STDOUT:
 
 ```bash
-./bin/analytics users
+./bin/analytics --only users
 ```
 
 If you see a nicely formatted JSON file, you are all set.
