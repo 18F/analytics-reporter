@@ -25,14 +25,14 @@
   ],
   "files": [
     "bin", "test", "reports",
-    "analytics.js", "config.js",
+    "src", "config.js",
     "package.json",
     "*.md"
   ],
   "engines": {"node": ">=0.10.0"},
   "os": ["!win32"],
   "preferGlobal": true,
-  "main": "analytics",
+  "main": "src/analytics",
   "bin": {
     "analytics": "./bin/analytics"
   },
