@@ -23,4 +23,4 @@
 10 5 * * * /home/analytics/daily.sh > /home/analytics/logs/daily.log 2>&1
 
 # realtime reports
-*/1 * * * * /home/analytics/realtime.sh > /home/analytics/logs/realtime.log 2>&1
+*/2 * * * * /home/analytics/realtime.sh > /home/analytics/logs/realtime.log 2>&1
