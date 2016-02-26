@@ -219,6 +219,23 @@
       }
     },
     {
+      "name": "top-downloads-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
+        "metrics": ["ga:totalEvents"],
+        "filters": ["ga:eventCategory=~ownload", "ga:eventLabel!~swf$"],
+        "start-date": "30daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:totalEvents",
+        "max-results": "100"
+      },
+      "meta": {
+        "name": "Top Downloads (30 Days)",
+        "description": "Top downloads in the last 30 days."
+      }
+    },      
+    {
       "name": "top-cities-realtime",
       "frequency": "realtime",
       "realtime": true,
