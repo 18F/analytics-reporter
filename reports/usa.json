@@ -185,6 +185,23 @@
       }
     },
     {
+      "name": "top-downloads-yesterday",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
+        "metrics": ["ga:totalEvents"],
+        "filters": ["ga:eventCategory=~ownload"],
+        "start-date": "yesterday",
+        "end-date": "yesterday",
+        "sort": "-ga:totalEvents",
+        "max-results": "100"
+      },
+      "meta": {
+        "name": "Top Downloads Yesterday",
+        "description": "Top downloads yesterday"
+      }
+    },
+    {
       "name": "top-downloads-7-days",
       "frequency": "daily",
       "query": {
@@ -248,7 +265,6 @@
         "description": "Pages, measured by active onsite users, for all sites."
       }
     },
-
     {
       "name": "all-domains-30-days",
       "frequency": "daily",
