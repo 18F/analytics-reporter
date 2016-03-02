@@ -2,7 +2,7 @@
 
 A lightweight system for publishing analytics data from Google Analytics profiles.
 
-Available reports are named and described in [`reports.json`](reports.json). For now, they're hardcoded into the repository.
+Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
 
 ### Setup
 
@@ -63,7 +63,7 @@ export ANALYTICS_KEY="-----BEGIN PRIVATE KEY-----
 * Test your configuration by printing a report to STDOUT:
 
 ```bash
-./bin/analytics users
+./bin/analytics --only users
 ```
 
 If you see a nicely formatted JSON file, you are all set.

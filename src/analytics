@@ -32,7 +32,11 @@ function Analytics(key, email, account_ids, reports_path, aws, debug) {
   // Set the query ID
   this.account_ids = account_ids || config.account.ids;
   // Set AWS configurations
-  this.aws = config.aws;
+  if (aws) {
+   this.aws = aws;
+  } else {
+   this.aws = config.aws;
+  }
   // Set the debug flag
   this.debug = debug;
   // Init the report api func
