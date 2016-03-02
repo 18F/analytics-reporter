@@ -111,7 +111,7 @@ var GoogleAnalyticsProcessor = {
         for (var j = 0; j < row.length; j++) {
 
           // Some reports may decide to cut fields from the output.
-          if (report.cut && _.contains(report.cut, data.columnHeaders[j].name))
+          if (report.cut && _.includes(report.cut, data.columnHeaders[j].name))
             continue;
 
           var field = GoogleAnalyticsProcessor.mapping[data.columnHeaders[j].name] || data.columnHeaders[j].name;
