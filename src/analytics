@@ -112,8 +112,9 @@ Analytics.prototype.select_reports = function(report_names, frequency) {
 
 // Allows reports to be published
 Analytics.prototype.publish = function(name, data, extension, callback) {
-
-  if (this.debug) console.log("[" + name + "] Publishing to " + this.aws.bucket + "...");
+  // Preventing JS this error
+  var self = this
+  if (self.debug) console.log("[" + name + "] Publishing to " + self.aws.bucket + "...");
   var mime = {
     ".json": "application/json",
     ".csv": "text/csv"
@@ -122,15 +123,15 @@ Analytics.prototype.publish = function(name, data, extension, callback) {
     if (err) return console.log("ERROR AFTER GZIP: " + err);
     new AWS.S3({
       params: {
-        Bucket: this.aws.bucket
+        Bucket: self.aws.bucket
       }
     }).upload({
-      Key: this.aws.path + "/" + name + extension,
+      Key: self.aws.path + "/" + name + extension,
       Body: compressed,
       ContentType: mime[extension],
       ContentEncoding: "gzip",
       ACL: "public-read",
-      CacheControl: "max-age=" + (this.aws.cache || 0)
+      CacheControl: "max-age=" + (self.aws.cache || 0)
     }, callback);
   });
 };
