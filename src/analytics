@@ -137,7 +137,7 @@ Analytics.prototype.publish = function(name, data, extension, callback) {
 };
 
 // Run a series of reports
-Analytics.prototype.run = function(options) {
+Analytics.prototype.run = function(options, doneAllReports) {
   // Avoid `this` bug by setting this to self
   var self = this;
   // Function for running each report
@@ -207,6 +207,7 @@ Analytics.prototype.run = function(options) {
       process.exit(1);
     }
     if (this.debug) console.log("All done.");
+    doneAllReports();
   });
 };
 
