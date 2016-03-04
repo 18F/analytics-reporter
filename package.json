@@ -2,7 +2,10 @@
   "name": "analytics-reporter",
   "version": "1.1.1",
   "description": "A lightweight command line tool for reporting and publishing analytics data from a Google Analytics account.",
-  "keywords": ["analytics", "google analytics"],
+  "keywords": [
+    "analytics",
+    "google analytics"
+  ],
   "homepage": "https://github.com/18F/analytics-reporter",
   "license": "CC0-1.0",
   "scripts": {
@@ -25,14 +28,18 @@
   ],
   "files": [
     "bin", "test", "reports",
-    "analytics.js", "config.js",
+    "src", "config.js",
     "package.json",
     "*.md"
   ],
-  "engines": {"node": ">=0.10.0"},
-  "os": ["!win32"],
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "os": [
+    "!win32"
+  ],
   "preferGlobal": true,
-  "main": "analytics",
+  "main": "src/analytics",
   "bin": {
     "analytics": "./bin/analytics"
   },
@@ -44,13 +51,13 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "googleapis": "^2.1.5",
-    "node-schedule": "^0.1.13",
-    "minimist": "*",
     "async": "*",
     "aws-sdk": "*",
     "fast-csv": "*",
-    "lodash": "*"
+    "googleapis": "^2.1.5",
+    "lodash": "^4.5.1",
+    "minimist": "*",
+    "node-schedule": "^0.1.13"
   },
   "devDependencies": {
     "body-parser": "~1.8.1",

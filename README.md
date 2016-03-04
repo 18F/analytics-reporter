@@ -103,7 +103,7 @@ This will produce points similar to the following:
 }
 ```
 
-### Use
+### Using the CLI
 
 Reports are created and published using the `analytics` command.
 
@@ -207,6 +207,39 @@ analytics --frequency=realtime
 
 ```bash
 analytics --publish --debug
+```
+
+### Using the node module
+Analytics reporter can also be imported
+Quick start example
+```
+var Analytics = require("analytics-reporter"),
+    key = "our private_key",
+    email = "Your client_email"
+    account_ids = "Your account id ex ga:23323423",
+    reports_path = "\\ Path of reports.json",
+    aws = {
+      bucket: "AWS Bucket",
+      path: "Path in Bucket",
+      cache: 0 // HTTP cache time in seconds. Defaults to 0.
+    },
+    debug = false; \\ debug settings
+
+// Init analytics-reporter object
+var analyticsReporter = new Analytics(
+	key,
+	email,
+	account_ids,
+	reports_path,
+	aws,
+	debug, \\ debug settings
+);
+
+options = {'csv': true, 'json': true}; // See Options section from before
+analytics.run(options, function() {
+	console.log('Reports Finished')
+});
+
 ```
 
 ### Public domain
