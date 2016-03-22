@@ -30,7 +30,6 @@
     "*.md"
   ],
   "engines": {"node": ">=0.10.0"},
-  "os": ["!win32"],
   "preferGlobal": true,
   "main": "analytics",
   "bin": {
