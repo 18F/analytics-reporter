@@ -7,4 +7,3 @@ sudo: false
 
 os:
 - linux
-- windows
