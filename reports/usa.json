@@ -193,7 +193,7 @@
         "filters": [
           "ga:eventCategory=~ownload", 
           "ga:eventLabel!~swf$",
-          "ga:pagePath!~.*\/(zip|doc).*"
+          "ga:pagePath!~(usps.com).*\/(zip|doc).*"
         ],
         "start-date": "7daysAgo",
         "end-date": "yesterday",
