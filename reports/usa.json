@@ -207,7 +207,11 @@
       "query": {
         "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
         "metrics": ["ga:totalEvents"],
-        "filters": ["ga:eventCategory=~ownload", "ga:eventLabel!~swf$"],
+        "filters": [
+          "ga:eventCategory=~ownload", 
+          "ga:eventLabel!~swf$",
+          "ga:pagePath!~(usps.com).*\/(zip|doc).*"
+        ],
         "start-date": "7daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:totalEvents",
@@ -282,5 +286,6 @@
         "description": "Last 30 days' domains, measured by visits, for all sites."
       }
     }
+
   ]
 }

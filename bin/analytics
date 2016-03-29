@@ -52,6 +52,7 @@ var publish = function(name, data, extension, options, callback) {
 
 
 var run = function(options) {
+  
   if (!options) options = {};
   if (options.debug) options.verbose = options.debug;
   if (options.verbose) options.debug = options.verbose;
