@@ -31,7 +31,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date" ,"ga:deviceCategory"],
+        "dimensions": ["ga:date" ,"ga:deviceCategory", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -47,7 +47,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date" ,"ga:operatingSystem"],
+        "dimensions": ["ga:date" ,"ga:operatingSystem", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -64,7 +64,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
+        "dimensions": ["ga:date" ,"ga:operatingSystemVersion", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -84,7 +84,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date" ,"ga:browser"],
+        "dimensions": ["ga:date" ,"ga:browser", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -101,7 +101,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date","ga:browserVersion"],
+        "dimensions": ["ga:date","ga:browserVersion", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -151,8 +151,8 @@
       "name": "top-domains-30-days",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:hostname"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["ga:hostname", "ga:landingPagePath", "ga:exitPagePath", "ga:source", "ga:hasSocialSourceReferral", "ga:referralPath"],
+        "metrics": ["ga:sessions", "ga:pageviews", "ga:users", "ga:pageviewsPerSession", "ga:avgSessionDuration", "ga:exits"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:sessions",
@@ -276,8 +276,8 @@
       "name": "all-domains-30-days",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:hostname"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["ga:hostname", "ga:landingPagePath", "ga:exitPagePath", "ga:source", "ga:hasSocialSourceReferral", "ga:referralPath"],
+        "metrics": ["ga:sessions", "ga:pageviews", "ga:users", "ga:pageviewsPerSession", "ga:avgSessionDuration", "ga:exits"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:sessions",
