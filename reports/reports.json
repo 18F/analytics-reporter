@@ -173,8 +173,14 @@
       "name": "top-pages-30-days",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
-        "metrics": ["ga:pageviews"],
+        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle", "ga:landingPagePath", "ga:exitPagePath"],
+        "metrics": [
+          "ga:pageviews", 
+          "ga:users", 
+          "ga:sessions", 
+          "ga:pageviews", 
+          "ga:pageviewsPerSession"
+        ],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:pageviews",
@@ -205,7 +211,7 @@
       "name": "top-domains-30-days",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:hostname"],
+        "dimensions": ["ga:hostname", "ga:landingPagePath", "ga:exitPagePath"],
         "metrics": ["ga:sessions"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
