@@ -192,8 +192,8 @@
         "metrics": ["ga:totalEvents"],
         "filters": [
           "ga:eventCategory=~ownload",
-          "ga:pagePath!~(usps.com).*\/([z-zZ-Z]ip|[d-dD-D]oc).*",
-          "ga:eventLabel!~(usps.com).*\/([z-zZ-Z]ip|[d-dD-D]oc).*"
+          "ga:pagePath!~(usps.com).*\/([zZ]ip|[dD]oc).*",
+          "ga:eventLabel!~(usps.com).*\/([zZ]ip|[dD]oc).*"
         ],
         "start-date": "yesterday",
         "end-date": "yesterday",
@@ -214,8 +214,8 @@
         "filters": [
           "ga:eventCategory=~ownload", 
           "ga:eventLabel!~swf$",
-          "ga:pagePath!~(usps.com).*\/([z-zZ-Z]ip|[d-dD-D]oc).*",
-          "ga:eventLabel!~(usps.com).*\/([z-zZ-Z]ip|[d-dD-D]oc).*"
+          "ga:pagePath!~(usps.com).*\/([zZ]ip|[dD]oc).*",
+          "ga:eventLabel!~(usps.com).*\/([zZ]ip|[dD]oc).*"
         ],
         "start-date": "7daysAgo",
         "end-date": "yesterday",
