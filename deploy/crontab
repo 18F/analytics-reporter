@@ -1,26 +1,10 @@
 # Run all reports every day soon after midnight. Server uses UTC.
 
-################################
-# Contents of daily.sh:
+################################# most reports
+10 8 * * * /home/analytics/daily.sh > /home/analytics/logs/daily.log 2>&1
 
-# #!/bin/bash
-#
-# export PATH=$PATH:/usr/local/bin
-# source $HOME/.bashrc
-# $HOME/node_modules/analytics-reporter/bin/analytics --publish --frequency=daily --slim --verbose
-# $HOME/node_modules/analytics-reporter/bin/analytics --publish --frequency=daily --slim --verbose --csv
-
-#############################
-# Contents of realtime.sh:
-
-# #!/bin/bash
-#
-# export PATH=$PATH:/usr/local/bin
-# source $HOME/.bashrc
-# $HOME/node_modules/analytics-reporter/bin/analytics --publish --frequency=realtime --slim --verbose
-
-# most reports
-10 5 * * * /home/analytics/daily.sh > /home/analytics/logs/daily.log 2>&1
+# one 'today' report
+0 */1 * * * /home/analytics/hourly.sh > /home/analytics/logs/hourly.log 2>&1
 
 # realtime reports
 */2 * * * * /home/analytics/realtime.sh > /home/analytics/logs/realtime.log 2>&1
