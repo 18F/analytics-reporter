@@ -359,7 +359,6 @@ var Analytics = {
                           .insert(result)
                           .run(conn, function(err, res) {
                             if(err) throw err;
-                            console.log(res);
                             // Wrap things up.
                             conn.close();
                     });
