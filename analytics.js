@@ -347,12 +347,12 @@ var Analytics = {
         // Store result in DB. 
         // Reports stored on a DAILY granularity, 
         // where each entry is one 24 hour period.
-        if(report.name == 'today') {
+        if(report.name == 'today' && config.db.host.length > 1) {
             // cache today's report.
-            r.connect({ host: 'localhost', port: 28015 }, function(err, conn){
+            r.connect({ host: config.db.host, port: config.db.port }, function(err, conn){
                 if(err) throw err;
 
-                r.db('test').tableCreate('reports').indexCreate('timestamp').run(conn, function(err,res) {
+                r.db(config.db.name).tableCreate('reports').indexCreate('date').run(conn, function(err,res) {
 
                     // Insert if table exists.
                     r.table('reports')
@@ -360,8 +360,9 @@ var Analytics = {
                           .run(conn, function(err, res) {
                             if(err) throw err;
                             console.log(res);
+                            // Wrap things up.
+                            conn.close();
                     });
-
                 });
             });
         }

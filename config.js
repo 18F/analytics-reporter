@@ -10,6 +10,12 @@ module.exports = {
 
   debug: (process.env.ANALYTICS_DEBUG ? true : false),
 
+  db: {
+    host: process.env.DB_HOST || "",
+    port: process.env.DB_PORT || "",
+    name: process.env.DB_NAME || ""
+  },
+
   /*
     AWS S3 information.
 

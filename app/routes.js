@@ -25,10 +25,10 @@ module.exports = function(app, models) {
         var results = null;
         var agency = req.params.agency;
 
-        r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
+        r.connect( {host: config.db.host, port: config.db.port}, function(err, conn) {
             if (err) throw err;
 
-            r.db('test').table('reports')
+            r.db(config.db.name).table('reports')
               .filter({gahost:agency})
               .filter(r.row['date'] < r.now())
               .run(conn, function(err, cursor){
