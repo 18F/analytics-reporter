@@ -48,7 +48,7 @@ async.eachSeries(names, eachReport, function(err) {
     }
     console.log("All done.");
 });
-
+console.log("dasas");
 
 // Boot it up!
 var server = app.listen(app.get('port'), function () {

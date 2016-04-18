@@ -4,12 +4,50 @@ var models = require('./models'),
     config = require('../config'),
     fs = require('fs'),
     path = require('path'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    r = require('rethinkdb');
 
 module.exports = function(app, models) {
 
+
     app.get('/', function (req, res) {
       res.render('index', { });
+    });
+
+    app.get('/api/v1.0/:agency', function(req, res) {
+
+        // Disable caching for requests.
+        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.header("Pragma", "no-cache");
+        res.header("Expires", 0);
+        res.header("Content-Type", "application/json; charset=utf-8");
+        var filters = null;
+        var results = null;
+        var agency = req.params.agency;
+
+        r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
+            if (err) throw err;
+
+            r.db('test').table('reports')
+              .filter({gahost:agency})
+              .filter(r.row['date'] < r.now())
+              .run(conn, function(err, cursor){
+
+                if (err) {
+                  res.status(500);
+                  res.send({'error':'500', 'status':'Error accessing database.'})
+                  throw err;
+                }
+
+                cursor.toArray(function(err, result) {
+                    if (err) throw err;
+                    results = JSON.stringify(result, null, 2);
+                    res.send(results);
+                });
+              });
+
+        });
+
     });
 
     app.get('/data/live/', function(req, res) {

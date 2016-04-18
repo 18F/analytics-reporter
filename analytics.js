@@ -10,6 +10,8 @@ var googleapis = require('googleapis'),
 
 var config = require('./config');
 
+var r = require('rethinkdb');
+
 // Pre-load the keyfile from the OS
 // prevents errors when starting JWT
 var key;
@@ -112,6 +114,10 @@ var Analytics = {
         return [in_date.substr(0,4), in_date.substr(4, 2), in_date.substr(6, 2)].join("-")
     },
 
+    agencyMapping: {
+        'https://www.commerce.gov':'doc',
+    },
+
     mapping: {
         "ga:date": "date",
         "ga:hour": "hour",
@@ -175,7 +181,12 @@ var Analytics = {
 
     // Given a report and a raw google response, transform it into our schema.
     process: function(report, data) {
+        // TODO: urlencode or strip url unsafe chars from hostname -> re^('/\:')
+        var gahost = Analytics.agencyMapping[config.account.hostname] || config.account.hostname;
+
         var result = {
+            gahost: gahost,
+            date: new Date(),
             name: report.name,
             query: data.query,
             meta: report.meta,
@@ -331,6 +342,28 @@ var Analytics = {
                 result.totals.start_date = result.data[0].date;
                 result.totals.end_date = result.data[result.data.length-1].date;
             }
+        }
+
+        // Store result in DB. 
+        // Reports stored on a DAILY granularity, 
+        // where each entry is one 24 hour period.
+        if(report.name == 'today') {
+            // cache today's report.
+            r.connect({ host: 'localhost', port: 28015 }, function(err, conn){
+                if(err) throw err;
+
+                r.db('test').tableCreate('reports').indexCreate('timestamp').run(conn, function(err,res) {
+
+                    // Insert if table exists.
+                    r.table('reports')
+                          .insert(result)
+                          .run(conn, function(err, res) {
+                            if(err) throw err;
+                            console.log(res);
+                    });
+
+                });
+            });
         }
 
         return result;
