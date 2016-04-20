@@ -230,7 +230,7 @@
       },
       "meta": {
         "name": "Top Landing Pages (30 Days)",
-        "description": "Last 30 days', measured by visits, for all sites."
+        "description": "Last 30 days' Landing Pages, measured by visits, for all sites."
       }
     },
 
@@ -247,7 +247,7 @@
       },
       "meta": {
         "name": "Top Traffic Sources (30 Days)",
-        "description": "Last 30 days', measured by visits, for all sites."
+        "description": "Last 30 days' Traffic Sources, measured by visits, for all sites."
       }
     },
 
@@ -264,7 +264,7 @@
       },
       "meta": {
         "name": "Top Exit Pages (30 Days)",
-        "description": "Last 30 days', measured by visits, for all sites."
+        "description": "Last 30 days' Exit page paths, measured by visits, for all sites."
       }
     },
     {
