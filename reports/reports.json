@@ -45,7 +45,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date"],
+        "dimensions": ["ga:date", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -61,7 +61,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date" ,"ga:deviceCategory"],
+        "dimensions": ["ga:date" ,"ga:deviceCategory", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -77,7 +77,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date" ,"ga:operatingSystem"],
+        "dimensions": ["ga:date" ,"ga:operatingSystem", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -93,7 +93,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
+        "dimensions": ["ga:date" ,"ga:operatingSystemVersion", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -110,7 +110,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date" ,"ga:browser"],
+        "dimensions": ["ga:date" ,"ga:browser", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -126,7 +126,7 @@
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": ["ga:date","ga:browserVersion"],
+        "dimensions": ["ga:date","ga:browserVersion", "ga:language", "ga:screenResolution", "ga:mobileDeviceModel"],
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
@@ -173,8 +173,24 @@
       "name": "top-pages-30-days",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:hostname", "ga:pagePath", "ga:pageTitle"],
-        "metrics": ["ga:pageviews"],
+        "dimensions": [
+          "ga:hostname", 
+          "ga:pagePath", 
+          "ga:pageTitle", 
+          "ga:landingPagePath", 
+          "ga:exitPagePath", 
+          "ga:source", 
+          "ga:hasSocialSourceReferral", 
+          "ga:referralPath"
+        ],
+        "metrics": [
+          "ga:pageviews", 
+          "ga:sessions", 
+          "ga:users", 
+          "ga:pageviewsPerSession", 
+          "ga:avgSessionDuration", 
+          "ga:exits"
+        ],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:pageviews",
@@ -205,8 +221,8 @@
       "name": "top-domains-30-days",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:hostname"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["ga:hostname", "ga:landingPagePath", "ga:exitPagePath", "ga:source", "ga:hasSocialSourceReferral", "ga:referralPath"],
+        "metrics": ["ga:sessions", "ga:users", "ga:pageviews", "ga:pageviewsPerSession", "ga:avgSessionDuration","ga:exits"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:sessions",
