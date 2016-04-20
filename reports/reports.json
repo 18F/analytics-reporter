@@ -224,12 +224,7 @@
         "dimensions": [
           "ga:hostname", 
           "ga:pagePath", 
-          "ga:pageTitle", 
-          "ga:landingPagePath", 
-          "ga:exitPagePath", 
-          "ga:source", 
-          "ga:hasSocialSourceReferral", 
-          "ga:referralPath"
+          "ga:pageTitle"
         ],
         "metrics": [
           "ga:pageviews", 
@@ -331,7 +326,7 @@
         "name": "Top Exit Pages (30 Days)",
         "description": "Last 30 days' Exit page paths, measured by visits, for all sites."
       }
-    },
+    }
 
   ]
 }
