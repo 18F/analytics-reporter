@@ -115,10 +115,6 @@ var Analytics = {
         return [in_date.substr(0,4), in_date.substr(4, 2), in_date.substr(6, 2)].join("-")
     },
 
-    agencyMapping: {
-        'https://www.commerce.gov':'doc',
-    },
-
     mapping: {
         "ga:date": "date",
         "ga:hour": "hour",
