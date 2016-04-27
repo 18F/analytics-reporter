@@ -30,7 +30,7 @@ module.exports = function(app, models) {
         var queryParms = req.query;
         var startDate, endDate;
 
-        // ISO format:  YYYY-MM-DD
+        // Format:  YYYY-MM-DD
         if(queryParms.start_date) {
           startDate = new Date(queryParms.start_date);
         } else {
