@@ -95,7 +95,7 @@ export DB_NAME=[rethinkdb-db-name]
 
 There is also a quick setup for a rethinkdb database. 
 ```bash
-analytics --setupdb --db_name "your-db-name" --db_host "your-db-host-name" --db_port "your-db-port-number"
+analytics --setupdb --db_name "name-of-db-to-create" --db_host "your-db-host-name" --db_port "your-db-port-number"
 ```
 
 Then, just set the DB_NAME environment variable in your .env file after you create the database.
