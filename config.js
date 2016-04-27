@@ -13,7 +13,8 @@ module.exports = {
   db: {
     host: process.env.DB_HOST || "",
     port: process.env.DB_PORT || "",
-    name: process.env.DB_NAME || ""
+    name: process.env.DB_NAME || "",
+    table: process.env.TABLE_NAME || null
   },
 
   /*

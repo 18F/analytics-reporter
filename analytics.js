@@ -11,6 +11,7 @@ var googleapis = require('googleapis'),
 var config = require('./config');
 
 var r = require('rethinkdb');
+var agencyName = config.db.table;
 
 // Pre-load the keyfile from the OS
 // prevents errors when starting JWT
@@ -38,6 +39,16 @@ var reports = JSON.parse(fs.readFileSync(reports_path)).reports;
 var by_name = {};
 for (var i=0; i<reports.length; i++)
     by_name[reports[i].name] = reports[i];
+
+var getData = function(conn, gahost) {
+    var result;
+    r.table('reports').get(gahost).run(conn).then(function(cursor) {
+        return cursor.toArray();
+    }).then(function(result) {
+        result = JSON.stringify(result);
+    });
+
+}
 
 // Google Analytics data fetching and transformation utilities.
 // This should really move to its own analytics.js file.
@@ -194,11 +205,10 @@ var Analytics = {
 
     // Given a report and a raw google response, transform it into our schema.
     process: function(report, data) {
-        // TODO: urlencode or strip url unsafe chars from hostname -> re^('/\:')
-        var gahost = Analytics.agencyMapping[config.account.hostname] || config.account.hostname;
 
+        var agencyReport, mergedData;
         var result = {
-            gahost: gahost,
+            agencyName: agencyName,
             date: new Date(),
             name: report.name,
             query: data.query,
@@ -357,25 +367,61 @@ var Analytics = {
             }
         }
 
-        // Store result in DB. 
-        // Reports stored on a DAILY granularity, 
-        // where each entry is one 24 hour period.
-        if(report.name == 'today' && config.db.host.length > 1) {
-            // cache today's report.
+        // Store result in DB (if db config provided).
+        if(config.db.host.length > 1 && agencyName != null ) {
+
             r.connect({ host: config.db.host, port: config.db.port }, function(err, conn){
                 if(err) throw err;
 
-                r.db(config.db.name).tableCreate('reports').indexCreate('date').run(conn, function(err,res) {
+                r.table(agencyName)
+                 // Insert default row if it does not exist.
+                 .insert({ 'id':report.name, 'data':[] })
+                 .run(conn)
+                 .then(function() {
+                    // Get existing data.
+                    r.table(agencyName)
+                     .get(report.name)
+                     .run(conn)
+                     .then(function(cursor) {
+                            return cursor;
+                     })
+                     // Merge Existing data with new data.
+                     .then(function(res) {
 
-                    // Insert if table exists.
-                    r.table('reports')
-                          .insert(result)
-                          .run(conn, function(err, res) {
+                        // subdoc is read into memory, and merged with new data.
+                        agencyReport = res;
+                        reportData = agencyReport.data;
+                        mergedData = result.data;
+
+                        if(typeof(report.query.dimensions) != "undefined") {
+                            // If the data is datestamped, merge. Otherwise, replace.
+                            if(report.query.dimensions.indexOf("ga:date") != -1) {
+                                
+                                mergedData = _(result.data)
+                                                .merge(reportData) // Merge new data in.
+                                                .map(function(d){
+                                                    // Convert Datestrings, into dates
+                                                    d.date = new Date(d.date);
+                                                    return d;
+                                                }).value();
+                            }
+                        }
+
+                        // Update data for report.
+                        r.table(agencyName)
+                         .get(report.name)
+                         .update({
+                            data: mergedData
+                         })
+                         .run(conn, function(err, res) {
                             if(err) throw err;
                             // Wrap things up.
                             conn.close();
+                         });
+
                     });
                 });
+
             });
         }
 
