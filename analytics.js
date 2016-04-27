@@ -40,16 +40,6 @@ var by_name = {};
 for (var i=0; i<reports.length; i++)
     by_name[reports[i].name] = reports[i];
 
-var getData = function(conn, gahost) {
-    var result;
-    r.table('reports').get(gahost).run(conn).then(function(cursor) {
-        return cursor.toArray();
-    }).then(function(result) {
-        result = JSON.stringify(result);
-    });
-
-}
-
 // Google Analytics data fetching and transformation utilities.
 // This should really move to its own analytics.js file.
 var Analytics = {
