@@ -72,7 +72,7 @@ module.exports = {
                     });
             });
     },
-    
+
     /**
     * save(report, result)
     * 
@@ -138,6 +138,14 @@ module.exports = {
         });
     },
 
+    /**
+    * setupDB(db_name, db_host, db_port)
+    *
+    * @param String db_name 
+    * @param String db_host
+    * @param String db_port
+    *
+    */
     setupDB: function(db_name, db_host, db_port) {
 
         // Create a DB.
