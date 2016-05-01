@@ -5,7 +5,8 @@ var models = require('./models'),
     fs = require('fs'),
     path = require('path'),
     _ = require('lodash'),
-    r = require('rethinkdb');
+    r = require('rethinkdb'),
+    db = require('./db');;
 
 module.exports = function(app, models) {
 
@@ -27,58 +28,16 @@ module.exports = function(app, models) {
         var results = null;
         var agency = req.params.agency;
         var report = req.params.report;
-        var queryParms = req.query;
+        var queryParams = req.query;
         var startDate, endDate;
-
-        // Format:  YYYY-MM-DD
-        if(queryParms.start_date) {
-          startDate = new Date(queryParms.start_date);
-        } else {
-          startDate = new Date();
-          // Default date CurrentDate - 1 year.
-          startDate.setMonth(startDate.getMonth() - 12);
-        }
-        
-        // Default End Date = Today.
-        endDate = (queryParms.end_date) ? new Date(queryParms.end_date) : new Date();
 
         if(config.db.host.length < 1){
           res.send({'error':'503', 'status':'DB not configured for this endpoint.'});
           return;
         }
 
-        r.connect( {host: config.db.host, port: config.db.port}, function(err, conn) {
-            if (err) throw err;
+        db.get(res, report, queryParams);
 
-            r.db(config.db.name).table(agency)
-             .get(report)('data')
-             .hasFields(['date'])
-             // If the data has dates, filter by date. 
-             // Otherwise, return unfiltered result.
-             .do(function(data){
-                return r.branch(
-                          data.isEmpty(),
-                          r.table(agency).get(report)('data'),
-                          data.filter(function(dataItem){
-                            return dataItem('date').during(startDate, endDate) 
-                          })
-                        )
-            })
-
-            .run(conn, function(err, cursor){
-              if (err) {
-                res.status(500);
-                res.send({'error':'500', 'status':'Error accessing database.'})
-                throw err;
-              }
-
-              cursor.toArray(function(err, result) {
-                  if (err) throw err;
-                  results = JSON.stringify(result, null, 2);
-                  res.send(results);
-              });
-            });
-        });
 
     });
 

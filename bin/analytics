@@ -23,8 +23,9 @@ var Analytics = require("../analytics"),
     path = require('path'),
     async = require("async"),
     csv = require("fast-csv"),
-    zlib = require('zlib');
-var r = require('rethinkdb');
+    zlib = require('zlib'),
+    db; // DB class loading is deferred to ensure db parameters are set.
+
 var agencyName = config.db.table;
 
 // AWS credentials are looked for in env vars or in ~/.aws/config.
@@ -51,13 +52,15 @@ var publish = function(name, data, extension, options, callback) {
   });
 };
 
-// Just Creates a RethinkDB Database.
-// usage:
-//   analytics --setupdb --db_name [string]
-// options: 
-//   --db_name string [required]
-//   --db_host string [optional]
-//   --db_port string [optional]
+/**
+* Command to Create a Database.
+* usage:
+*   analytics --setupdb --db_name [string]
+* options: 
+*   --db_name string [required]
+*   --db_host string [optional]
+*   --db_port string [optional]
+*/
 var setupdb = function(options) {
 
   var db_host = config.db.host;
@@ -72,18 +75,7 @@ var setupdb = function(options) {
     return;
   }
   if(options.db_name.length > 1) {
-    // Create a DB.
-    r.connect({ host: db_host, port: db_port }, function(err, conn) {
-      if(err) {
-        console.log("Issue connecting to RethinkDB on HOST: " + db_host + " | PORT: " + db_port);
-        throw err;
-      }
-      r.dbCreate(options.db_name).run(conn, function(){
-        console.log('RethinkDB Database: ' + options.db_name + " Created!");
-        conn.close();
-      });
-
-    });
+    db.setupdb(db_name, db_host, db_port);
   } else {
     console.log("Value for db_name required.");
   }
@@ -178,27 +170,11 @@ var run = function(options) {
   });
 };
 
-if(config.db.host.length > 1 && agencyName != null) {
 
-  r.connect({ host: config.db.host, port: config.db.port }, function(err, conn) {
-    if(err) throw err;
-    // Create DB Table if it does not exist.
-    // Then, run Reports, store the data, and close any connections.
-    r.db(config.db.name)
-     .tableList()
-     .contains(agencyName)
-     .do(function(tableExists){
-      return r.branch(
-        tableExists,
-        null,
-        r.tableCreate(agencyName)
-      );
-     })
-     .run(conn)
-     .then(function(){
-      run(require('minimist')(process.argv.slice(2)));
-      conn.close();
-    });
+if(config.db.host.length > 1) {
+  db = require('../app/db');
+  db.setupTable().then(function() {
+    run(require('minimist')(process.argv.slice(2)));
   });
 
 } else {

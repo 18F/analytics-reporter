@@ -6,11 +6,10 @@ var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
     fs = require('fs'),
     path = require('path'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    db; // DB class loading is deferred to ensure db parameters are set.
 
 var config = require('./config');
-
-var r = require('rethinkdb');
 var agencyName = config.db.table;
 
 // Pre-load the keyfile from the OS
@@ -354,61 +353,9 @@ var Analytics = {
         }
 
         // Store result in DB (if db config provided).
-        if(config.db.host.length > 1 && agencyName != null ) {
-
-            r.connect({ host: config.db.host, port: config.db.port }, function(err, conn){
-                if(err) throw err;
-
-                r.table(agencyName)
-                 // Insert default row if it does not exist.
-                 .insert({ 'id':report.name, 'data':[] })
-                 .run(conn)
-                 .then(function() {
-                    // Get existing data.
-                    r.table(agencyName)
-                     .get(report.name)
-                     .run(conn)
-                     .then(function(cursor) {
-                            return cursor;
-                     })
-                     // Merge Existing data with new data.
-                     .then(function(res) {
-
-                        // subdoc is read into memory, and merged with new data.
-                        agencyReport = res;
-                        reportData = agencyReport.data;
-                        mergedData = result.data;
-
-                        if(typeof(report.query.dimensions) != "undefined") {
-                            // If the data is datestamped, merge. Otherwise, replace.
-                            if(report.query.dimensions.indexOf("ga:date") != -1) {
-                                
-                                mergedData = _(result.data)
-                                                .merge(reportData) // Merge new data in.
-                                                .map(function(d){
-                                                    // Convert Datestrings, into dates
-                                                    d.date = new Date(d.date);
-                                                    return d;
-                                                }).value();
-                            }
-                        }
-
-                        // Update data for report.
-                        r.table(agencyName)
-                         .get(report.name)
-                         .update({
-                            data: mergedData
-                         })
-                         .run(conn, function(err, res) {
-                            if(err) throw err;
-                            // Wrap things up.
-                            conn.close();
-                         });
-
-                    });
-                });
-
-            });
+        if(config.db.host.length > 1) {
+            db = require('./app/db');
+            db.save(report, result);
         }
 
         return result;
