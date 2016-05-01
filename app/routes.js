@@ -5,8 +5,7 @@ var models = require('./models'),
     fs = require('fs'),
     path = require('path'),
     _ = require('lodash'),
-    r = require('rethinkdb'),
-    db = require('./db');;
+    db; // DB class loading is deferred to ensure db parameters are set.
 
 module.exports = function(app, models) {
 
@@ -35,6 +34,9 @@ module.exports = function(app, models) {
           res.send({'error':'503', 'status':'DB not configured for this endpoint.'});
           return;
         }
+
+        // Load DB module.
+        db = require('./db');
 
         db.get(res, report, queryParams);
 
