@@ -75,6 +75,7 @@ var setupdb = function(options) {
     return;
   }
   if(options.db_name.length > 1) {
+    db = require('../app/db');
     db.setupdb(db_name, db_host, db_port);
   } else {
     console.log("Value for db_name required.");
