@@ -57,7 +57,9 @@
     "googleapis": "^2.1.5",
     "lodash": "^3.10.1",
     "minimist": "*",
+    "mongodb": "^2.1.18",
     "node-schedule": "^0.1.13",
+    "q": "^1.4.1",
     "rethinkdb": "^2.3.0"
   },
   "devDependencies": {

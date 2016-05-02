@@ -24,6 +24,7 @@ var Analytics = require("../analytics"),
     async = require("async"),
     csv = require("fast-csv"),
     zlib = require('zlib'),
+    Q = require('q'),
     db; // DB class loading is deferred to ensure db parameters are set.
 
 var agencyName = config.db.table;
@@ -60,6 +61,7 @@ var publish = function(name, data, extension, options, callback) {
 *   --db_name string [required]
 *   --db_host string [optional]
 *   --db_port string [optional]
+*   --db_driver string [optional]
 */
 var setupdb = function(options) {
 
@@ -69,14 +71,16 @@ var setupdb = function(options) {
   if (!options) options = {};
   if (options.db_host) db_host = options.db_host;
   if (options.db_port) db_port = options.db_port;
+  if (options.db_driver) db_driver = options.db_driver;
 
   if(typeof(options['db_name']) == "undefined") {
     console.log("Value for db_name required.");
     return;
   }
+
   if(options.db_name.length > 1) {
     db = require('../app/db');
-    db.setupdb(db_name, db_host, db_port);
+    db.setupdb(db_name, db_host, db_port, db_driver);
   } else {
     console.log("Value for db_name required.");
   }
@@ -85,6 +89,7 @@ var setupdb = function(options) {
 
 
 var run = function(options) {
+  var deferred = Q.defer();
   
   if (!options) options = {};
   if (options.debug) options.verbose = options.debug;
@@ -108,6 +113,8 @@ var run = function(options) {
     names = Object.keys(Analytics.reports);
 
   var eachReport = function(name, done) {
+
+
     var report = Analytics.reports[name];
 
     if (!report) return done('Report not defined.');
@@ -168,19 +175,27 @@ var run = function(options) {
     }
 
     if (options.debug) console.log("All done.");
+    deferred.resolve(true);
   });
+
+
+  return deferred.promise;
 };
 
 
 if(config.db.host.length > 1) {
   db = require('../app/db');
-  db.setupTable().then(function() {
-    run(require('minimist')(process.argv.slice(2)));
+
+  db.setupTable().then(function(){
+    run(require('minimist')(process.argv.slice(2))).then(function(){
+      db.closeConnection();
+    });
   });
 
 } else {
-  // No RethinkDB config specified.
+  // No DB config specified.
   // Don't store data in DB, only write to files.
+  console.log("Running Reports without DB support.");
   run(require('minimist')(process.argv.slice(2)));
 }
 

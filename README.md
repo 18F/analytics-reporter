@@ -91,11 +91,12 @@ export TABLE_NAME=[db-table-to-store-reports-in]
 export DB_HOST=[rethinkdb-host-addr]
 export DB_PORT=[rethinkdb-db-host-port]
 export DB_NAME=[rethinkdb-db-name]
+export DB_DRIVER=[mongodb OR rethinkdb]
 ```
 
-There is also a quick setup for a rethinkdb database. 
+There is also a quick setup for a database. 
 ```bash
-analytics --setupdb --db_name "name-of-db-to-create" --db_host "your-db-host-name" --db_port "your-db-port-number"
+analytics --setupdb --db_name "name-of-db-to-create" --db_host "your-db-host-name" --db_port "your-db-port-number" --db_driver "mongodb or rethinkdb"
 ```
 
 Then, just set the DB_NAME environment variable in your .env file after you create the database.

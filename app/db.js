@@ -1,6 +1,8 @@
 var _ = require('lodash');
 var config = require('../config');
-var r = require('rethinkdb');
+var availableDBDrivers = ['mongodb', 'rethinkdb'];
+var defaultDriver = './' + config.db.driver + '_driver';
+var supportedDrivers = ['rethinkdb','mongodb'];
 
 /**
 * Module to handle all RethikDB interaction.
@@ -8,13 +10,48 @@ var r = require('rethinkdb');
 module.exports = {
 
     /**
-    * query(callback)
-    * 
-    * @param Function callback
+    * @var String driver_name Private
     */
-    query: function(callback) {
+    driver_name: config.db.driver || 'rethinkdb',
 
-        return r.connect({host: config.db.host, port: config.db.port}, callback);
+    /**
+    * @var Mixed driver Private
+    */
+    driver: require(defaultDriver) || require('./rethinkdb_driver'),
+
+    /**
+    * getDriver()
+    *
+    * @return String
+    */
+    getDriver: function() {
+        return this.driver;
+    },
+
+    /**
+    * setDriver(driver)
+    *
+    * Set's the which DB to use for the application.
+    *
+    * @param String driver
+    *
+    */
+    setDriver: function(driver) {
+        if(supportedDrivers.indexOf(driver) > -1) {
+            this.driver = require('./' + driver + '_driver');
+        } else {
+            throw "Unsupported Database."; 
+        }
+    },
+
+    /**
+    * closeConnection()
+    *
+    * Closes a DB connection.
+    *
+    */
+    closeConnection: function() {
+        this.driver.closeConnection();
     },
 
     /**
@@ -28,49 +65,7 @@ module.exports = {
     * @return rethinkdb Promise
     */
     get: function(res, report, queryParams) {
-
-        var agencyName = config.db.table;
-        // Format:  YYYY-MM-DD
-        if(queryParams.start_date) {
-          startDate = new Date(queryParams.start_date);
-        } else {
-          startDate = new Date();
-          // Default date CurrentDate - 1 year.
-          startDate.setMonth(startDate.getMonth() - 12);
-        }
-        
-        // Default End Date = Today.
-        endDate = (queryParams.end_date) ? new Date(queryParams.end_date) : new Date();
-
-        return this.query(function(err, conn) {
-                r.db(config.db.name).table(agencyName)
-                     .get(report)('data')
-                     .hasFields(['date'])
-                     // If the data has dates, filter by date. 
-                     // Otherwise, return unfiltered result.
-                     .do(function(data){
-                        return r.branch(
-                                  data.isEmpty(),
-                                  r.table(agencyName).get(report)('data'),
-                                  data.filter(function(dataItem){
-                                    return dataItem('date').during(startDate, endDate) 
-                                  })
-                                )
-                    })
-                    .run(conn, function(err, cursor){
-                      if (err) {
-                        res.status(500);
-                        res.send({'error':'500', 'status':'Error accessing database.'})
-                        throw err;
-                      }
-
-                      cursor.toArray(function(err, result) {
-                          if (err) throw err;
-                          results = JSON.stringify(result, null, 2);
-                          res.send(results);
-                      });
-                    });
-            });
+        return this.driver.get(res, report, queryParams);
     },
 
     /**
@@ -84,58 +79,7 @@ module.exports = {
     save: function(report, result) {
 
         var agencyName = config.db.table;
-
-        this.query(function(err, conn) {
-            if(err) throw err;
-
-            r.table(agencyName)
-             // Insert default row if it does not exist.
-             .insert({ 'id':report.name, 'data':[] })
-             .run(conn)
-             .then(function() {
-                // Get existing data.
-                r.table(agencyName)
-                 .get(report.name)
-                 .run(conn)
-                 .then(function(cursor) {
-                        return cursor;
-                 })
-                 // Merge Existing data with new data.
-                 .then(function(res) {
-
-                    // subdoc is read into memory, and merged with new data.
-                    var reportData = res.data;
-                    var mergedData = result.data;
-
-                    if(typeof(report.query.dimensions) != "undefined") {
-                        // If the data is datestamped, merge. Otherwise, replace.
-                        if(report.query.dimensions.indexOf("ga:date") != -1) {
-                            
-                            mergedData = _(result.data)
-                                            .merge(reportData) // Merge new data in.
-                                            .map(function(d){
-                                                // Convert Datestrings, into dates
-                                                d.date = new Date(d.date);
-                                                return d;
-                                            }).value();
-                        }
-                    }
-
-                    // Update data for report.
-                    r.table(agencyName)
-                     .get(report.name)
-                     .update({
-                        data: mergedData
-                     })
-                     .run(conn, function(err, res) {
-                        if(err) throw err;
-                        // Wrap things up.
-                        conn.close();
-                     });
-
-                });
-            });
-        });
+        return this.driver.save(report, result);
     },
 
     /**
@@ -146,20 +90,11 @@ module.exports = {
     * @param String db_port
     *
     */
-    setupDB: function(db_name, db_host, db_port) {
+    setupDB: function(db_name, db_host, db_port, db_driver) {
+        // Set Driver if supplied.
+        if(db_driver) this.setDriver(db_driver);
 
-        // Create a DB.
-        this.query(function(err, conn) {
-          if(err) {
-            console.log("Issue connecting to RethinkDB on HOST: " + db_host + " | PORT: " + db_port);
-            throw err;
-          }
-          r.dbCreate(db_name).run(conn, function(){
-            console.log('RethinkDB Database: ' + options.db_name + " Created!");
-            conn.close();
-          });
-
-        });
+        this.driver.setupDB(db_name, db_host, db_port);
     },
 
     /**
@@ -169,27 +104,7 @@ module.exports = {
     * @return Promise
     */
     setupTable: function() {
-
-        var agencyName = config.db.table;
-        return this.query( 
-            function(err, conn) {
-                if(err) throw err;
-                // Create DB Table if it does not exist.
-                // Then, run Reports, store the data, and close any connections.
-                r.db(config.db.name)
-                 .tableList()
-                 .contains(agencyName)
-                 .do(function(tableExists){
-                  return r.branch(
-                    tableExists,
-                    null,
-                    r.tableCreate(agencyName)
-                  );
-                 })
-                 .run(conn)
-                 .then(function(){
-                  conn.close();
-                });
-        });
+        return this.driver.setupTable();
     }
 };
+
