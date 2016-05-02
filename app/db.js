@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var config = require('../config');
-var availableDBDrivers = ['mongodb', 'rethinkdb'];
 var defaultDriver = './' + config.db.driver + '_driver';
 var supportedDrivers = ['rethinkdb','mongodb'];
 
