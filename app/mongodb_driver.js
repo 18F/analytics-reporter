@@ -104,7 +104,6 @@ module.exports = {
                 results = JSON.stringify(doc, null, 2);
                 res.send(results);
               } else {
-                console.log("shit");
                 // Else, filter with dates.
                 collection = db.collection(agencyName);
 
@@ -153,9 +152,7 @@ module.exports = {
           var cursor = collection.findOne({_id: report.name}, function(err, doc) {
               var mergedData = result.data;
 
-              //assert.equal(err, null);
               if (doc != null) {
-                console.log(doc.data);
                 // Update doc.
                 var reportData = doc.data;
                 
