@@ -187,6 +187,22 @@
       }
     },
     {
+      "name": "browser-os",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": ["ga:date" ,"ga:browser", "ga:operatingSystem"],
+        "metrics": ["ga:sessions"],
+        "start-date": "90daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions"
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "90 days of visits broken down by browser for all sites."
+      }
+    },
+    {
       "name": "top-pages-realtime",
       "frequency": "realtime",
       "realtime": true,
@@ -222,16 +238,16 @@
       "frequency": "daily",
       "query": {
         "dimensions": [
-          "ga:hostname", 
-          "ga:pagePath", 
+          "ga:hostname",
+          "ga:pagePath",
           "ga:pageTitle"
         ],
         "metrics": [
-          "ga:pageviews", 
-          "ga:sessions", 
-          "ga:users", 
-          "ga:pageviewsPerSession", 
-          "ga:avgSessionDuration", 
+          "ga:pageviews",
+          "ga:sessions",
+          "ga:users",
+          "ga:pageviewsPerSession",
+          "ga:avgSessionDuration",
           "ga:exits"
         ],
         "start-date": "30daysAgo",
