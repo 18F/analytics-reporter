@@ -10,3 +10,4 @@
 /data
 todo.txt
 npm-debug.log
+*.swp
