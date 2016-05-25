@@ -69,11 +69,12 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "sort": "ga:date"
+        "sort": "ga:date",
+        "filters": ["ga:sessions>1000"]
       },
       "meta": {
         "name": "Browser Language",
-        "description": "90 days of visits by browser language for all sites."
+        "description": "90 days of visits by browser language for all sites. (>1000 sessions)"
       }
     },
 
@@ -87,11 +88,12 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "sort": "ga:date"
+        "sort": "ga:date",
+        "filters": ["ga:sessions>1000"]
       },
       "meta": {
         "name": "Device Model",
-        "description": "90 days of visits by Device Model for all sites."
+        "description": "90 days of visits by Device Model for all sites. (>1000 sessions)"
       }
     },
 
