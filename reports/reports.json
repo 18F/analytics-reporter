@@ -88,7 +88,7 @@
         "description": "90 days of visits, broken down by operating system and date, for all sites."
       }
     },
-        {
+    {
       "name": "screen-size",
       "frequency": "daily",
       "slim": true,
