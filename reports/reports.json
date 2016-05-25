@@ -113,12 +113,11 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "sort": "ga:date",
-        "filters": ["ga:sessions>1000"]
+        "sort": "ga:date"
       },
       "meta": {
         "name": "Browser Language",
-        "description": "90 days of visits by browser language for all sites. (>1000 sessions)"
+        "description": "90 days of visits by browser language for all sites."
       }
     },
     {
@@ -130,12 +129,11 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "sort": "ga:date",
-        "filters": ["ga:sessions>1000"]
+        "sort": "ga:date"
       },
       "meta": {
         "name": "Device Model",
-        "description": "90 days of visits by Device Model for all sites. (>1000 sessions)"
+        "description": "90 days of visits by Device Model for all sites."
       }
     },
     {
@@ -224,16 +222,16 @@
       "frequency": "daily",
       "query": {
         "dimensions": [
-          "ga:hostname", 
-          "ga:pagePath", 
+          "ga:hostname",
+          "ga:pagePath",
           "ga:pageTitle"
         ],
         "metrics": [
-          "ga:pageviews", 
-          "ga:sessions", 
-          "ga:users", 
-          "ga:pageviewsPerSession", 
-          "ga:avgSessionDuration", 
+          "ga:pageviews",
+          "ga:sessions",
+          "ga:users",
+          "ga:pageviewsPerSession",
+          "ga:avgSessionDuration",
           "ga:exits"
         ],
         "start-date": "30daysAgo",
