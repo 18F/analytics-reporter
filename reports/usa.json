@@ -70,7 +70,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date",
-        "filters": ["ga:sessions>1000"],
+        "filters": ["ga:sessions>1000"]
       },
       "meta": {
         "name": "Browser Language",
@@ -88,7 +88,8 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "sort": "ga:date"
+        "sort": "ga:date",
+        "filters": ["ga:sessions>1000"]
       },
       "meta": {
         "name": "Device Model",

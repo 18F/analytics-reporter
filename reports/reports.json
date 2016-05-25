@@ -88,7 +88,7 @@
         "description": "90 days of visits, broken down by operating system and date, for all sites."
       }
     },
-        {
+    {
       "name": "screen-size",
       "frequency": "daily",
       "slim": true,
@@ -114,7 +114,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date",
-        "filters": ["ga:sessions>1000"],
+        "filters": ["ga:sessions>1000"]
       },
       "meta": {
         "name": "Browser Language",
@@ -131,7 +131,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date",
-        "filters": ["ga:sessions>1000"],
+        "filters": ["ga:sessions>1000"]
       },
       "meta": {
         "name": "Device Model",

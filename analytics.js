@@ -262,11 +262,11 @@ var Analytics = {
                     result.totals.visits += parseInt(result.data[i].visits);
             }
 
-            if (_.startsWith(report.name, "device_models")) {
+            if (_.startsWith(report.name, "device_model")) {
                 result.totals.device_models = {};
                 for (var i=0; i<result.data.length; i++) {
                     if(typeof result.totals.device_models[result.data[i].mobile_device] == "undefined") {
-                        result.totals.device_models[result.data[i].mobile_device] = result.data[i].visits;
+                        result.totals.device_models[result.data[i].mobile_device] = parseInt(result.data[i].visits);
                     } else {
                         result.totals.device_models[result.data[i].mobile_device] += parseInt(result.data[i].visits);
                     }
@@ -277,7 +277,7 @@ var Analytics = {
                 result.totals.languages = {};
                 for (var i=0; i<result.data.length; i++) {
                     if(typeof result.totals.languages[result.data[i].language] == "undefined") {
-                        result.totals.languages[result.data[i].language] = result.data[i].visits;
+                        result.totals.languages[result.data[i].language] = parseInt(result.data[i].visits);
                     } else {
                         result.totals.languages[result.data[i].language] += parseInt(result.data[i].visits);
                     }
