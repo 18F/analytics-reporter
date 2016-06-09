@@ -159,3 +159,10 @@ source $HOME/envs/ssa.env
 $HOME/analytics-reporter/bin/analytics --publish --frequency=realtime --slim --verbose
 $HOME/analytics-reporter/bin/analytics --publish --only=all-pages-realtime --slim --verbose --csv
 
+
+# US Postal Service
+source $HOME/envs/projects/dap-2.env
+source $HOME/envs/postal-service.env
+$HOME/analytics-reporter/bin/analytics --publish --frequency=realtime --slim --verbose
+$HOME/analytics-reporter/bin/analytics --publish --only=all-pages-realtime --slim --verbose --csv
+

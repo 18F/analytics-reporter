@@ -132,3 +132,7 @@ source $HOME/envs/projects/dap-2.env
 source $HOME/envs/ssa.env
 $HOME/analytics-reporter/bin/analytics --publish --frequency=hourly --slim --verbose
 
+# US Postal Service
+source $HOME/envs/projects/dap-2.env
+source $HOME/envs/postal-service.env
+$HOME/analytics-reporter/bin/analytics --publish --frequency=hourly --slim --verbose
