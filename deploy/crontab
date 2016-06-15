@@ -4,7 +4,7 @@
 10 8 * * * /home/analytics/daily.sh > /home/analytics/logs/daily.log 2>&1
 
 # one 'today' report
-0 */1 * * * /home/analytics/hourly.sh > /home/analytics/logs/hourly.log 2>&1
+0 * * * * /home/analytics/hourly.sh > /home/analytics/logs/hourly.log 2>&1
 
 # realtime reports
-*/2 * * * * /home/analytics/realtime.sh > /home/analytics/logs/realtime.log 2>&1
+*/3 * * * * /home/analytics/realtime.sh > /home/analytics/logs/realtime.log 2>&1
