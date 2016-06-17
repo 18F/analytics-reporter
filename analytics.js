@@ -109,6 +109,10 @@ var Analytics = {
 
     // translate 20141228 -> 2014-12-28
     date_format: function(in_date) {
+        // This happens in screen-size for some reason.
+        // Return original string.
+        if (in_date == "(other)") return in_date;
+
         return [in_date.substr(0,4), in_date.substr(4, 2), in_date.substr(6, 2)].join("-")
     },
 
@@ -258,7 +262,20 @@ var Analytics = {
                     result.totals.devices[result.data[i].device] += parseInt(result.data[i].visits);
             }
 
+            if (report.name == "screen-size") {
+                result.totals.screen_resolution = {};
+
+                for (var i=0; i<result.data.length; i++) {
+                    var screen_resolution = result.data[i].screen_resolution;
+                    var visits = parseInt(result.data[i].visits);
+
+                    if (!result.totals.screen_resolution[screen_resolution]) result.totals.screen_resolution[screen_resolution] = 0;
+                    result.totals.screen_resolution[screen_resolution] += visits;
+                }
+            }
+
             if (report.name == "os") {
+
                 result.totals.os = {};
 
                 for (var i=0; i<result.data.length; i++) {
@@ -305,8 +322,6 @@ var Analytics = {
                     result.totals.ie_version[version] += parseInt(result.data[i].visits);
                 }
             }
-
-            // For the combo reports, don't group by "Other", aim for completeness.
 
             if (report.name == "os-browsers") {
 
@@ -375,7 +390,14 @@ var Analytics = {
 
             // presumably we're organizing these by date
             if ((result.data.length > 0) && (result.data[0].date)) {
-                result.totals.start_date = result.data[0].date;
+
+                // At least one report (screen-size) gives back a bogus
+                // first entry, for unknown reasons.
+                if (result.data[0].date == "(other)")
+                    result.totals.start_date = result.data[1].date;
+                else
+                    result.totals.start_date = result.data[0].date;
+
                 result.totals.end_date = result.data[result.data.length-1].date;
             }
         }
