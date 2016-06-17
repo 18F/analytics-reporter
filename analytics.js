@@ -386,6 +386,28 @@ var Analytics = {
                 }
             }
 
+            if (report.name == "windows-ie") {
+
+                // Two two-level hashes.
+                result.totals.by_windows = {};
+                result.totals.by_ie = {};
+
+                for (var i=0; i<result.data.length; i++) {
+                    var windows = result.data[i].os_version;
+                    var ie = result.data[i].browser_version;
+                    var visits = parseInt(result.data[i].visits)
+
+                    if (!result.totals.by_windows[windows]) result.totals.by_windows[windows] = {};
+                    if (!result.totals.by_windows[windows][ie]) result.totals.by_windows[windows][ie] = 0;
+
+                    if (!result.totals.by_ie[ie]) result.totals.by_ie[ie] = {};
+                    if (!result.totals.by_ie[ie][windows]) result.totals.by_ie[ie][windows] = 0;
+
+                    result.totals.by_windows[windows][ie] += visits;
+                    result.totals.by_ie[ie][windows] += visits;
+                }
+            }
+
             if (report.name == "windows-browsers") {
 
                 result.totals.by_windows = {};
