@@ -52,7 +52,8 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "sort": "ga:date"
+        "sort": "ga:date",
+        "filters": ["ga:sessions>5000"]
       },
       "meta": {
         "name": "Screen Resolution",
@@ -317,7 +318,7 @@
         "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
         "metrics": ["ga:totalEvents"],
         "filters": [
-          "ga:eventCategory=~ownload", 
+          "ga:eventCategory=~ownload",
           "ga:eventLabel!~swf$",
           "ga:pagePath!~(usps.com).*\/(?i)(zip|doc).*"
         ],
