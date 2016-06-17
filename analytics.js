@@ -292,72 +292,49 @@ var Analytics = {
             }
 
             if (report.name == "os") {
-                // initialize all cared-about OSes to 0
                 result.totals.os = {};
-                for (var i=0; i<Analytics.oses.length; i++)
-                    result.totals.os[Analytics.oses[i]] = 0;
-                result.totals.os["Other"] = 0;
 
                 for (var i=0; i<result.data.length; i++) {
                     var os = result.data[i].os;
+                    var visits = parseInt(result.data[i].visits);
 
-                    // Bucket any we don't care about under "Other".
-                    if (Analytics.oses.indexOf(os) < 0)
-                        os = "Other";
-
-                    result.totals.os[os] += parseInt(result.data[i].visits);
+                    if (!result.totals.os[os]) result.totals.os[os] = 0;
+                    result.totals.os[os] += visits;
                 }
             }
 
             if (report.name == "windows") {
-                // initialize all cared-about versions to 0
                 result.totals.os_version = {};
-                for (var i=0; i<Analytics.windows_versions.length; i++)
-                    result.totals.os_version[Analytics.windows_versions[i]] = 0;
-                result.totals.os_version["Other"] = 0;
 
                 for (var i=0; i<result.data.length; i++) {
                     var version = result.data[i].os_version;
+                    var visits = parseInt(result.data[i].visits);
 
-                    // Bucket any we don't care about under "Other".
-                    if (Analytics.windows_versions.indexOf(version) < 0)
-                        version = "Other";
-
-                    result.totals.os_version[version] += parseInt(result.data[i].visits);
+                    if (!result.totals.os_version[version]) result.totals.os_version[version] = 0;
+                    result.totals.os_version[version] += visits;
                 }
             }
 
             if (report.name == "browsers") {
-
                 result.totals.browser = {};
-                for (var i=0; i<Analytics.browsers.length; i++)
-                    result.totals.browser[Analytics.browsers[i]] = 0;
-                result.totals.browser["Other"] = 0;
 
                 for (var i=0; i<result.data.length; i++) {
                     var browser = result.data[i].browser;
+                    var visits = parseInt(result.data[i].visits);
 
-                    if (Analytics.browsers.indexOf(browser) < 0)
-                        browser = "Other";
-
-                    result.totals.browser[browser] += parseInt(result.data[i].visits);
+                    if (!result.totals.browser[browser]) result.totals.browser[browser] = 0;
+                    result.totals.browser[browser] += visits;
                 }
             }
 
             if (report.name == "ie") {
-                // initialize all cared-about versions to 0
                 result.totals.ie_version = {};
-                for (var i=0; i<Analytics.ie_versions.length; i++)
-                    result.totals.ie_version[Analytics.ie_versions[i]] = 0;
-                result.totals.ie_version["Other"] = 0;
 
                 for (var i=0; i<result.data.length; i++) {
                     var version = result.data[i].browser_version;
+                    var visits = parseInt(result.data[i].visits);
 
-                    // Bucket any we don't care about under "Other".
-                    if (Analytics.ie_versions.indexOf(version) < 0)
-                        version = "Other";
-
+                    if (!result.totals.ie_version[version]) result.totals.ie_version[version] = 0;
                     result.totals.ie_version[version] += parseInt(result.data[i].visits);
                 }
             }
