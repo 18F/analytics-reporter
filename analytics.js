@@ -295,6 +295,18 @@ var Analytics = {
                     result.totals.devices[result.data[i].device] += parseInt(result.data[i].visits);
             }
 
+            if (report.name == "screen-size") {
+                result.totals.screen_resolution = {};
+
+                for (var i=0; i<result.data.length; i++) {
+                    var screen_resolution = result.data[i].screen_resolution;
+                    var visits = parseInt(result.data[i].visits);
+
+                    if (!result.totals.screen_resolution[screen_resolution]) result.totals.screen_resolution[screen_resolution] = 0;
+                    result.totals.screen_resolution[screen_resolution] += visits;
+                }
+            }
+
             if (_.startsWith(report.name, "os")) {
                 // initialize all cared-about OSes to 0
                 result.totals.os = {};
