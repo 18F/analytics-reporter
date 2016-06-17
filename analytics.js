@@ -153,39 +153,6 @@ var Analytics = {
         "rt:eventLabel": "event_label"
     },
 
-    // The OSes we care about for the OS breakdown. The rest can be "Other".
-    // These are the extract strings used by Google Analytics.
-    oses: [
-        "Android", "BlackBerry", "Windows Phone", "iOS",
-        "Linux", "Macintosh", "Windows", "(not set)", "Chrome OS",
-        "Nokia", "Samsung", "SymbianOS", "Xbox", "Firefox OS",
-        "Nintendo Wii", "Playstation 3", "FreeBSD", "Playstation Vita",
-        "Google TV", "SunOS", "LG", "Nintendo 3DS"
-    ],
-
-    // The versions of Windows we care about for the Windows version breakdown.
-    // The rest can be "Other". These are the exact strings used by Google Analytics.
-    windows_versions: [
-        "XP", "Vista", "7", "8", "8.1", "10"
-    ],
-
-    // The browsers we care about for the browser report. The rest are "Other"
-    //  These are the exact strings used by Google Analytics.
-    browsers: [
-        "Internet Explorer", "Edge", "Chrome", "Safari", "Firefox", "Android Browser",
-        "Safari (in-app)", "Amazon Silk", "Opera", "Opera Mini",
-        "IE with Chrome Frame", "BlackBerry", "UC Browser", "YaBrowser",
-        "Maxthon", "Coc Coc"
-    ],
-
-    // The versions of IE we care about for the IE version breakdown.
-    // "Edge" is considered a separate browser in Google Analytics, appears above.
-    // The rest can be "Other". These are the exact strings used by Google Analytics.
-    ie_versions: [
-        "11.0", "10.0", "9.0", "8.0", "7.0", "6.0"
-    ],
-
-
     // Given a report and a raw google response, transform it into our schema.
     process: function(report, data) {
         var result = {
