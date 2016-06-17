@@ -301,7 +301,7 @@
         "filters": [
           "ga:sessions>0"
         ],
-        "start-date": "30daysAgo",
+        "start-date": "14daysAgo",
         "end-date": "yesterday",
         "sort": "ga:hostname",
         "max-results": 10000
