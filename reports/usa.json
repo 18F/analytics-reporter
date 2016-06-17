@@ -107,7 +107,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "filters": ["ga:sessions>1000"],
+        "filters": ["ga:sessions>100"],
         "sort": "ga:date"
       },
       "meta": {
@@ -126,7 +126,7 @@
         "end-date": "yesterday",
         "filters": [
           "ga:operatingSystem==Windows",
-          "ga:sessions>1000"
+          "ga:sessions>100"
         ],
         "sort": "ga:date"
       },
@@ -145,7 +145,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
-        "filters": ["ga:sessions>1000"]
+        "filters": ["ga:sessions>100"]
       },
       "meta": {
         "name": "Browsers",
@@ -164,12 +164,70 @@
         "sort": "ga:date,-ga:sessions",
         "filters": [
           "ga:browser==Internet Explorer",
-          "ga:sessions>1000"
+          "ga:sessions>100"
         ]
       },
       "meta": {
         "name": "Internet Explorer",
         "description": "90 days of visits from Internet Explorer users broken down by version for all sites."
+      }
+    },
+    {
+      "name": "os-browsers",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": ["ga:date" ,"ga:browser", "ga:operatingSystem"],
+        "metrics": ["ga:sessions"],
+        "start-date": "90daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions",
+        "filters": ["ga:sessions>100"]
+      },
+      "meta": {
+        "name": "OS-browser combinations",
+        "description": "90 days of visits broken down by browser and OS for all sites."
+      }
+    },
+    {
+      "name": "windows-browsers",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": ["ga:date" ,"ga:browser", "ga:operatingSystemVersion"],
+        "metrics": ["ga:sessions"],
+        "start-date": "90daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions",
+        "filters": [
+          "ga:sessions>100",
+          "ga:operatingSystem==Windows"
+        ]
+      },
+      "meta": {
+        "name": "Windows-browser combinations",
+        "description": "90 days of visits broken down by Windows versions and browser for all sites."
+      }
+    },
+    {
+      "name": "windows-ie",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": ["ga:date","ga:browserVersion", "ga:operatingSystemVersion"],
+        "metrics": ["ga:sessions"],
+        "start-date": "90daysAgo",
+        "end-date": "yesterday",
+        "sort": "ga:date,-ga:sessions",
+        "filters": [
+          "ga:sessions>100",
+          "ga:browser==Internet Explorer",
+          "ga:operatingSystem==Windows"
+        ]
+      },
+      "meta": {
+        "name": "IE on Windows",
+        "description": "90 days of visits from IE on Windows broken down by IE and Windows versions for all sites."
       }
     },
     {
