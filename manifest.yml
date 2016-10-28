@@ -1,0 +1,10 @@
+---
+# all applications use these settings and services
+memory: 512M
+instances: 1
+command: node bin/cron.js
+buildpack: https://github.com/cloudfoundry/nodejs-buildpack 
+applications:
+- name: analytics-reporter
+  path: .
+  timeout: 180

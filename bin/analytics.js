@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
  * Run all analytics reports output JSON to disk.
  *
@@ -40,7 +38,7 @@ var publish = function(name, data, extension, options, callback) {
     if (err) return console.log("ERROR AFTER GZIP: " + err);
 
     new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-      Key: config.aws.path + "/" + name + extension,
+      Key: name + ".json", //try with name + extension eventually this is currently broken but we are under a deadline,
       Body: compressed,
       ContentType: mime[extension],
       ContentEncoding: "gzip",
@@ -52,7 +50,6 @@ var publish = function(name, data, extension, options, callback) {
 
 
 var run = function(options) {
-  
   if (!options) options = {};
   if (options.debug) options.verbose = options.debug;
   if (options.verbose) options.debug = options.verbose;
@@ -136,3 +133,6 @@ var run = function(options) {
   });
 };
 
+module.exports = {};
+module.exports.run = run;
+module.exports.publish = publish;
