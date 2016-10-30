@@ -27,7 +27,3 @@ var options = {};
 //run everything 3 minutes
 }, 1000 * 60 * 3);
 
-var options = {};
-options.publish=true;
-options.debug=true;
-analytics.run(options);

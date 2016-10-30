@@ -21,6 +21,10 @@
     {
       "name": "Lauren Ancona",
       "email": "lauren.ancona@phila.gov"
+    },
+    {
+	"name": "Eric Schles",
+	"email":"eric.schles@gsa.gov"
     }
   ],
   "files": [
@@ -57,3 +61,5 @@
     "ejs": "~2.3.1"
   }
 }
+
+   
