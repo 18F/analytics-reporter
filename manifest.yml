@@ -2,7 +2,7 @@
 # all applications use these settings and services
 memory: 512M
 instances: 1
-command: node bin/cron.js
+command: node deploy-GovCloud/cron.js
 no-route: true
 health-check-type: none
 buildpack: https://github.com/cloudfoundry/nodejs-buildpack 

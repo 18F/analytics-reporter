@@ -3,7 +3,6 @@
 export PATH=$PATH:/usr/local/bin
 source $HOME/.bashrc
 
-
 # JSON and CSV versions
 source $HOME/Documents/projects/analytics-reporter/dap-1.env
 $HOME/Documents/projects/analytics-reporter/bin/analytics --publish --frequency=daily --slim --verbose

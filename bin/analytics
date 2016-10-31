@@ -35,14 +35,12 @@ var publish = function(name, data, extension, options, callback) {
   if (options.debug) console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
 
   var mime = {".json": "application/json", ".csv": "text/csv"};
-
+  //console.log(data);
   zlib.gzip(data, function(err, compressed) {
     if (err) return console.log("ERROR AFTER GZIP: " + err);
         
-    var key = "/data/live/"+ name +".json"
-    console.log(key);
     new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-      Key: key,
+      Key: config.aws.path + "/" + name + extension,
       Body: compressed,
       ContentType: mime[extension],
       ContentEncoding: "gzip",
