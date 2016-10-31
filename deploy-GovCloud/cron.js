@@ -47,6 +47,7 @@ console.log("starting cron.js!");
 daily_run();
 hourly_run();
 realtime_run();
+console.log("starting cron.js!");
 //daily
 setInterval(daily_run,1000 * 60 * 60 * 24);
 //hourly
