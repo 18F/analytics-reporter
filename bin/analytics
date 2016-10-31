@@ -38,8 +38,9 @@ var publish = function(name, data, extension, options, callback) {
 
   zlib.gzip(data, function(err, compressed) {
     if (err) return console.log("ERROR AFTER GZIP: " + err);
-    console.log(config.aws.path + "/" + name + extension);    
-    var key = name+".json"
+        
+    var key = "/data/live/"+ name +".json"
+    console.log(key);
     new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
       Key: key,
       Body: compressed,
