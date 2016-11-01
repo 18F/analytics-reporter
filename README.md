@@ -209,6 +209,35 @@ analytics --frequency=realtime
 analytics --publish --debug
 ```
 
+### Deploying to GovCloud
+
+The analytics reporter runs on :cloud:.gov. Please refer to the `manifest.yml`
+file at the root of the repository for application information.
+
+Ensure you're targeting the proper `org` and `space`.
+
+```shell
+cf target
+```
+
+Deploy the application with the following command.
+
+```shell
+cf push -f manifest.yml
+```
+
+Set the environmental variables based on local `.env` file.
+
+```shell
+APP_NAME=analytics-reporter ./cg-toolkit/generate-env.sh
+```
+
+Restage the application to use the environment variables.
+
+```shell
+cf restage analytics-reporter
+```
+
 ### Public domain
 
 This project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING](CONTRIBUTING.md):
