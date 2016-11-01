@@ -1,12 +1,29 @@
----
-# all applications use these settings and services
-memory: 512M
-instances: 1
-command: node deploy-GovCloud/cron.js
-no-route: true
-health-check-type: none
-buildpack: https://github.com/cloudfoundry/nodejs-buildpack 
 applications:
 - name: analytics-reporter
-  path: .
+  instances: 1
+  memory: 512M
+  disk_quota: 1024M
+  no-route: true
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+  command: node deploy-GovCloud/cron.js
+  # These are examples. These variables are set via `cg-toolkit/generate-env.sh`
+  # using the `.env` file referenced in README.md.
+  # env:
+  #   ANALYTICS_KEY_PATH: <ANALYTICS_KEY_PATH>
+  #   ANALYTICS_REPORT_EMAIL: <ANALYTICS_REPORT_EMAIL>
+  #   ANALYTICS_REPORT_IDS: <ANALYTICS_REPORT_IDS>
+  #   ANALYTICS_REPORTS_PATH: <ANALYTICS_REPORTS_PATH>
+  #   AWS_ACCESS_KEY_ID: <AWS_ACCESS_KEY_ID>
+  #   AWS_BUCKET: <AWS_BUCKET>
+  #   AWS_BUCKET_PATH: <AWS_BUCKET_PATH>
+  #   AWS_CACHE_TIME: <AWS_CACHE_TIME>
+  #   AWS_DEFAULT_REGION: <AWS_DEFAULT_REGION>
+  #   AWS_REGION: <AWS_REGION>
+  #   AWS_SECRET_ACCESS_KEY: <AWS_SECRET_ACCESS_KEY>
+  #   BUCKET_NAME: <BUCKET_NAME>
+  services:
+  - analytics-s3
+  - analytics-env
+  stack: cflinuxfs2
   timeout: 180
+  path: .
