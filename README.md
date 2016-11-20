@@ -14,13 +14,17 @@ npm install -g analytics-reporter
 
 If you're developing locally inside the repo, `npm install` is sufficient.
 
-* [Create an API service account](https://developers.google.com/accounts/docs/OAuth2ServiceAccount) in the Google developer dashboard.
+* Create an API service account in the [Google developer dashboard](https://console.developers.google.com/apis/).
 
 * Visit the "APIs" section of the Google Developer Dashboard for your project, and enable it for the "Analytics API".
 
-* Go to the "Credentials" section and generate "service account" credentials, and download the **JSON** private key file it gives you.
+* Go to the "Credentials" section and generate "service account" credentials using a new service account.
 
-* Take the generated client email address (ends with `gserviceaccount.com`) and grant it `Read, Analyze & Collaborate` permissions on the Google Analytics profile(s) whose data you wish to publish.
+* Download the **JSON** private key file it gives you.
+
+* Grab the generated client email address (ends with `gserviceaccount.com`) from the contents of the .json file.
+
+* Grant that email address `Read, Analyze & Collaborate` permissions on the Google Analytics profile(s) whose data you wish to publish.
 
 * Set environment variables for your app's generated email address, and for the profile you authorized it to:
 
@@ -43,13 +47,13 @@ To find your Google Analytics view ID:
 
 * You can specify your private key through environment variables either as a file path, or the contents of the key (helpful for Heroku and Heroku-like systems).
 
-To specify a file path:
+To specify a file path (useful in development or Linux server environments):
 
 ```
 export ANALYTICS_KEY_PATH="/path/to/secret_key.json"
 ```
 
-To specify the key directly, paste in the contents of the JSON file's `private_key` field **directly and exactly**, in quotes, and **rendering actual line breaks** (not `\n`'s) (below example has been sanitized):
+Alternatively, to specify the key directly (useful in a PaaS environment), paste in the contents of the JSON file's `private_key` field **directly and exactly**, in quotes, and **rendering actual line breaks** (not `\n`'s) (below example has been sanitized):
 
 ```
 export ANALYTICS_KEY="-----BEGIN PRIVATE KEY-----
