@@ -10,7 +10,7 @@ var daily_run = function(){
 		console.log("number of lines in daily.log:");
 		execSync("wc -l daily.log");
 		console.log(`${stdout}`);
-		console.log(`stderr: ${stderr}`); 
+		console.log(`stderr: ${stderr}`);
 	});
 }
 
@@ -24,8 +24,8 @@ var hourly_run = function(){
 		console.log("number of lines in hourly.log:");
 		execSync("wc -l hourly.log");
 		console.log(`${stdout}`);
-		console.log(`stderr: ${stderr}`); 
-	});	
+		console.log(`stderr: ${stderr}`);
+	});
 }
 
 var realtime_run = function(){
@@ -47,7 +47,6 @@ console.log("starting cron.js!");
 daily_run();
 hourly_run();
 realtime_run();
-console.log("starting cron.js!");
 //daily
 setInterval(daily_run,1000 * 60 * 60 * 24);
 //hourly
