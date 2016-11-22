@@ -86,6 +86,26 @@ export AWS_BUCKET_PATH=[your-path]
 export AWS_CACHE_TIME=0
 ```
 
+* (Optional) Archiving Report results.
+
+If you plan on caching the report's and providing API access, you must add the following environment variables.
+```
+export TABLE_NAME=[db-table-to-store-reports-in]
+
+export DB_HOST=[rethinkdb-host-addr]
+export DB_PORT=[rethinkdb-db-host-port]
+export DB_NAME=[rethinkdb-db-name]
+export DB_DRIVER=[mongodb OR rethinkdb]
+```
+
+There is also a quick setup for a database. 
+```bash
+analytics --setupdb --db_name "name-of-db-to-create" --db_host "your-db-host-name" --db_port "your-db-port-number" --db_driver "mongodb or rethinkdb"
+```
+
+Then, just set the DB_NAME environment variable in your .env file after you create the database.
+
+
 ### Other configuration
 
 If you use a **single domain** for all of your analytics data, then your profile is likely set to return relative paths (e.g. `/faq`) and not absolute paths when accessing real-time reports.

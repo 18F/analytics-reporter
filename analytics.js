@@ -6,9 +6,11 @@ var googleapis = require('googleapis'),
     ga = googleapis.analytics('v3'),
     fs = require('fs'),
     path = require('path'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    db; // DB class loading is deferred to ensure db parameters are set.
 
 var config = require('./config');
+var agencyName = config.db.table;
 
 // Pre-load the keyfile from the OS
 // prevents errors when starting JWT
@@ -159,7 +161,11 @@ var Analytics = {
 
     // Given a report and a raw google response, transform it into our schema.
     process: function(report, data) {
+
+        var agencyReport, mergedData;
         var result = {
+            agencyName: agencyName,
+            date: new Date(),
             name: report.name,
             query: data.query,
             meta: report.meta,
@@ -400,6 +406,12 @@ var Analytics = {
 
                 result.totals.end_date = result.data[result.data.length-1].date;
             }
+        }
+
+        // Store result in DB (if db config provided).
+        if(config.db.host.length > 1) {
+            db = require('./app/db');
+            db.save(report, result);
         }
 
         return result;

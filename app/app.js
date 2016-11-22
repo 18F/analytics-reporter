@@ -49,7 +49,6 @@ async.eachSeries(names, eachReport, function(err) {
     console.log("All done.");
 });
 
-
 // Boot it up!
 var server = app.listen(app.get('port'), function () {
    console.log('Express server listening on port ' + server.address().port);

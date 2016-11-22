@@ -10,6 +10,16 @@ module.exports = {
 
   debug: (process.env.ANALYTICS_DEBUG ? true : false),
 
+  db: {
+    host: process.env.DB_HOST || "",
+    port: process.env.DB_PORT || "",
+    username:process.env.DB_USERNAME || "",
+    password:process.env.DB_PASSWORD || "",
+    name: process.env.DB_NAME || "analytics-default",
+    table: process.env.TABLE_NAME || "analytics-default",
+    driver:process.env.DB_DRIVER || "mongodb",
+  },
+
   /*
     AWS S3 information.
 

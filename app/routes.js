@@ -4,12 +4,43 @@ var models = require('./models'),
     config = require('../config'),
     fs = require('fs'),
     path = require('path'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    db; // DB class loading is deferred to ensure db parameters are set.
 
 module.exports = function(app, models) {
 
+
     app.get('/', function (req, res) {
       res.render('index', { });
+    });
+
+    /**
+    * API to fetch stored reports from ReDB.
+    */
+    app.get('/api/v1.0/:agency/:report', function(req, res) {
+        // Disable caching for requests.
+        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.header("Pragma", "no-cache");
+        res.header("Expires", 0);
+        res.header("Content-Type", "application/json; charset=utf-8");
+        var filters = null;
+        var results = null;
+        var agency = req.params.agency;
+        var report = req.params.report;
+        var queryParams = req.query;
+        var startDate, endDate;
+
+        if(config.db.host.length < 1){
+          res.send({'error':'503', 'status':'DB not configured for this endpoint.'});
+          return;
+        }
+
+        // Load DB module.
+        db = require('./db');
+
+        db.get(res, report, queryParams);
+
+
     });
 
     app.get('/data/live/', function(req, res) {
