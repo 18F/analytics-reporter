@@ -4,7 +4,7 @@
 
 A lightweight system for publishing analytics data from Google Analytics profiles. Uses the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/) and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/).
 
-This is used in combination with [18F/analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics hub, [analytics.usa.gov](https://analytics.usa.gov).  
+This is used in combination with [18F/analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics hub, [analytics.usa.gov](https://analytics.usa.gov).
 
 Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
 
@@ -237,7 +237,9 @@ cf push -f manifest.yml
 Set the environmental variables based on local `.env` file.
 
 ```shell
-APP_NAME=analytics-reporter ./cg-toolkit/generate-env.sh
+cf set-env analytics-reporter AWS_ACCESS_KEY_ID 123abc
+cf set-env analytics-reporter AWS_SECRET_ACCESS_KEY 456def
+# ...
 ```
 
 Restage the application to use the environment variables.
