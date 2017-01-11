@@ -40,7 +40,7 @@ var publish = function(name, data, extension, options, callback) {
     if (err) return console.log("ERROR AFTER GZIP: " + err);
         
     new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-      Key: config.aws.path + "/" + name + extension,
+      Key: config.aws.path + "/" + options.output + name + extension,
       Body: compressed,
       ContentType: mime[extension],
       ContentEncoding: "gzip",
@@ -69,9 +69,13 @@ var run = function(options) {
         names.push(all[i]);
     }
   }
-
   else
     names = Object.keys(Analytics.reports);
+    
+  // Confirm that --output option is valid, 
+  // otherwise convert output to empty string
+  if (!options.output || (typeof(options.output) != "string")) 
+    options.output = '';
 
   var eachReport = function(name, done) {
     var report = Analytics.reports[name];
@@ -115,7 +119,7 @@ var run = function(options) {
     if (options.publish)
       publish(name, output, extension, options, written);
 
-    else if (options.output && (typeof(options.output) == "string"))
+    else if (options.output)
       fs.writeFile(path.join(options.output, (name + extension)), output, written);
 
     else {
