@@ -159,10 +159,14 @@ source $HOME/app/deploy/envs/ssa.env
 $HOME/app/bin/analytics --publish --frequency=realtime --slim --verbose
 $HOME/app/bin/analytics --publish --only=all-pages-realtime --slim --verbose --csv
 
-
 # US Postal Service
 source $HOME/app/dap-2.env
 source $HOME/app/deploy/envs/postal-service.env
 $HOME/app/bin/analytics --publish --frequency=realtime --slim --verbose
 $HOME/app/bin/analytics --publish --only=all-pages-realtime --slim --verbose --csv
 
+# Executive Office of the President
+source $HOME/app/dap-2.env
+source $HOME/app/deploy/envs/eop.env
+$HOME/app/bin/analytics --publish --frequency=realtime --slim --verbose
+$HOME/app/bin/analytics --publish --only=all-pages-realtime --slim --verbose --csv
