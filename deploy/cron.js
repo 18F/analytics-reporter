@@ -1,14 +1,15 @@
 const exec = require("child_process").exec;
+const execSync = require("child_process").execSync;
 
 var daily_run = function(){
 	console.log("about to run daily.sh");
-	exec("./daily.sh > ../logs/daily.log 2>&1", (error,stdout,stderr) => {
+	exec("./deploy/daily.sh > ../logs/daily.log 2>&1", (error,stdout,stderr) => {
 		if (error){
 			console.error(`exec error: ${error}`);
 			return;
 		}
 		console.log("number of lines in daily.log:");
-		execSync("wc -l daily.log");
+		execSync("wc -l ../logs/daily.log");
 		console.log(`${stdout}`);
 		console.log(`stderr: ${stderr}`);
 	});
@@ -16,13 +17,13 @@ var daily_run = function(){
 
 var hourly_run = function(){
 	console.log("about to run hourly.sh");
-	exec("./hourly.sh > ../logs/hourly.log 2>&1", (error,stdout,stderr) => {
+	exec("./deploy/hourly.sh > ../logs/hourly.log 2>&1", (error,stdout,stderr) => {
 		if (error){
 			console.error(`exec error: ${error}`);
 			return;
 		}
 		console.log("number of lines in hourly.log:");
-		execSync("wc -l hourly.log");
+		execSync("wc -l ../logs/hourly.log");
 		console.log(`${stdout}`);
 		console.log(`stderr: ${stderr}`);
 	});
@@ -30,13 +31,13 @@ var hourly_run = function(){
 
 var realtime_run = function(){
 	console.log("realtime.sh is about to run");
-	exec("./realtime.sh > ../logs/realtime.log 2>&1", (error,stdout,stderr) => {
+	exec("./deploy/realtime.sh > ../logs/realtime.log 2>&1", (error,stdout,stderr) => {
 		if (error){
 			console.error(`exec error: ${error}`);
 			return;
 		}
 		console.log("number of lines in realtime.log:");
-		execSync("wc -l realtime.log");
+		execSync("wc -l ../logs/realtime.log");
 		console.log(`${stdout}`);
 		console.log(`stderr: ${stderr}`);
 	});
