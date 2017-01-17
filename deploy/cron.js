@@ -9,7 +9,7 @@ var daily_run = function(){
 			return;
 		}
 		console.log("number of lines in daily.log:");
-		execSync("wc -l ../logs/daily.log");
+		console.log(execSync("wc -l ../logs/daily.log").toString());
 		console.log(`${stdout}`);
 		console.log(`stderr: ${stderr}`);
 	});
@@ -23,7 +23,7 @@ var hourly_run = function(){
 			return;
 		}
 		console.log("number of lines in hourly.log:");
-		execSync("wc -l ../logs/hourly.log");
+		console.log(execSync("wc -l ../logs/hourly.log").toString());
 		console.log(`${stdout}`);
 		console.log(`stderr: ${stderr}`);
 	});
@@ -37,7 +37,7 @@ var realtime_run = function(){
 			return;
 		}
 		console.log("number of lines in realtime.log:");
-		execSync("wc -l ../logs/realtime.log");
+		console.log(execSync("wc -l ../logs/realtime.log").toString());
 		console.log(`${stdout}`);
 		console.log(`stderr: ${stderr}`);
 	});
