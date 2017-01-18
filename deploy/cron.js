@@ -1,46 +1,49 @@
-const exec = require("child_process").exec;
+const spawn = require("child_process").exec;
 const execSync = require("child_process").execSync;
 
-var daily_run = function(){
+var daily_run = function() {
 	console.log("about to run daily.sh");
-	exec("./deploy/daily.sh > ../logs/daily.log 2>&1", (error,stdout,stderr) => {
-		if (error){
-			console.error(`exec error: ${error}`);
-			return;
-		}
-		console.log("number of lines in daily.log:");
-		execSync("wc -l ../logs/daily.log");
-		console.log(`${stdout}`);
-		console.log(`stderr: ${stderr}`);
-	});
+
+	var daily = spawn("./deploy/daily.sh")
+	daily.stdout.on("data", (data) => {
+		console.log("[daily.sh] " + data)
+	})
+	daily.stderr.on("data", (data) => {
+		console.error("[daily.sh] " + data)
+	})
+	daily.on("exit", (code) => {
+		console.log("daily.sh exitted with code: " + code)
+	})
 }
 
 var hourly_run = function(){
 	console.log("about to run hourly.sh");
-	exec("./deploy/hourly.sh > ../logs/hourly.log 2>&1", (error,stdout,stderr) => {
-		if (error){
-			console.error(`exec error: ${error}`);
-			return;
-		}
-		console.log("number of lines in hourly.log:");
-		execSync("wc -l ../logs/hourly.log");
-		console.log(`${stdout}`);
-		console.log(`stderr: ${stderr}`);
-	});
+
+	var hourly = spawn("./deploy/hourly.sh")
+	hourly.stdout.on("data", (data) => {
+		console.log("[hourly.sh] " + data)
+	})
+	hourly.stderr.on("data", (data) => {
+		console.error("[hourly.sh] " + data)
+	})
+	hourly.on("exit", (code) => {
+		console.log("hourly.sh exitted with code: " + code)
+	})
 }
 
 var realtime_run = function(){
-	console.log("realtime.sh is about to run");
-	exec("./deploy/realtime.sh > ../logs/realtime.log 2>&1", (error,stdout,stderr) => {
-		if (error){
-			console.error(`exec error: ${error}`);
-			return;
-		}
-		console.log("number of lines in realtime.log:");
-		execSync("wc -l ../logs/realtime.log");
-		console.log(`${stdout}`);
-		console.log(`stderr: ${stderr}`);
-	});
+	console.log("about to run realtime.sh");
+
+	var realtime = spawn("./deploy/realtime.sh")
+	realtime.stdout.on("data", (data) => {
+		console.log("[realtime.sh] " + data)
+	})
+	realtime.stderr.on("data", (data) => {
+		console.error("[realtime.sh] " + data)
+	})
+	realtime.on("exit", (code) => {
+		console.log("realtime.sh exitted with code: " + code)
+	})
 }
 
 
