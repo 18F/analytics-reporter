@@ -56,4 +56,4 @@ setInterval(daily_run,1000 * 60 * 60 * 24);
 //hourly
 setInterval(hourly_run,1000 * 60 * 60);
 //realtime
-setInterval(realtime_run,1000 * 60 * 10);
+setInterval(realtime_run,1000 * 60 * 5);
