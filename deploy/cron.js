@@ -1,3 +1,8 @@
+if (process.env.NODE_ENV === "production") {
+	console.log("Starting New Relic")
+	require("newrelic")
+}
+
 const spawn = require("child_process").exec;
 const execSync = require("child_process").execSync;
 
