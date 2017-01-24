@@ -57,17 +57,18 @@
   "dependencies": {
     "async": "*",
     "aws-sdk": "*",
-    "cfenv": "^1.0.3",
     "fast-csv": "*",
     "googleapis": "^2.1.5",
     "lodash": "^3.10.1",
     "minimist": "*",
-    "newrelic": "^1.36.1",
     "node-schedule": "^0.1.13"
   },
   "devDependencies": {
     "body-parser": "~1.8.1",
     "express": "~4.9.0",
     "ejs": "~2.3.1"
+  },
+  "optionalDependencies": {
+    "newrelic": "^1.36.1"
   }
 }

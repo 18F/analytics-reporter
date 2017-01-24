@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV === "production") {
+if (process.env.NEW_RELIC_APP_NAME) {
 	console.log("Starting New Relic")
 	require("newrelic")
 }
