@@ -31,7 +31,7 @@ var jwt = new googleapis.auth.JWT(
 );
 
 // The reports we want to run.
-var reports_path = config.reports_file || (path.join(__dirname, "reports/reports.json"));
+var reports_path = config.reports_file || (path.join(process.cwd(), "reports/reports.json"));
 var reports = JSON.parse(fs.readFileSync(reports_path)).reports;
 var by_name = {};
 for (var i=0; i<reports.length; i++)

@@ -1,5 +1,5 @@
-var Analytics = require("../analytics"),
-    config = require("../config"),
+var Analytics = require("./src/analytics"),
+    config = require("./src/config"),
     fs = require("fs"),
     path = require('path'),
     async = require("async"),

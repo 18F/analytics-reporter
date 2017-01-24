@@ -34,7 +34,7 @@
     "bin",
     "test",
     "reports",
-    "analytics.js",
+    "index.js",
     "config.js",
     "package.json",
     "*.md"
