@@ -1,20 +1,3 @@
-/*
- * Run all analytics reports output JSON to disk.
- *
- * Usage: analytics
- *
- * Defaults to printing JSON to STDOUT.
- *
- * --output: Output to a directory.
- * --publish: Publish to an S3 bucket.
- * --only: only run one or more named reports.
- * --slim: Where supported, use totals only (omit the `data` array).
- *         Only applies to JSON, and reports where "slim": true.
- * --csv: CSV instead of JSON.
- * --frequency: Limit to reports with this 'frequency' value.
- * --debug: print debug details on STDOUT
- */
-
 var Analytics = require("../analytics"),
     config = require("../config"),
     fs = require("fs"),
@@ -33,12 +16,12 @@ var publish = function(name, data, extension, options, callback) {
   if (options.debug) console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
 
   var mime = {".json": "application/json", ".csv": "text/csv"};
-
+  //console.log(data);
   zlib.gzip(data, function(err, compressed) {
     if (err) return console.log("ERROR AFTER GZIP: " + err);
 
     new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-      Key: name + ".json", //try with name + extension eventually this is currently broken but we are under a deadline,
+      Key: config.aws.path + "/" + name + extension,
       Body: compressed,
       ContentType: mime[extension],
       ContentEncoding: "gzip",
@@ -47,7 +30,6 @@ var publish = function(name, data, extension, options, callback) {
     }, callback);
   });
 };
-
 
 var run = function(options) {
   if (!options) options = {};
@@ -133,6 +115,4 @@ var run = function(options) {
   });
 };
 
-module.exports = {};
-module.exports.run = run;
-module.exports.publish = publish;
+module.exports = { run, publish };
