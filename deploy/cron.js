@@ -1,3 +1,8 @@
+if (process.env.NEW_RELIC_APP_NAME) {
+	console.log("Starting New Relic")
+	require("newrelic")
+}
+
 const spawn = require("child_process").exec;
 const execSync = require("child_process").execSync;
 
