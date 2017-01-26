@@ -34,13 +34,13 @@
     "bin",
     "test",
     "reports",
-    "analytics.js",
+    "index.js",
     "config.js",
     "package.json",
     "*.md"
   ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=7.0.0"
   },
   "preferGlobal": true,
   "main": "analytics",
