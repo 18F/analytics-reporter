@@ -4,6 +4,7 @@ applications:
   memory: 512M
   disk_quota: 1024M
   no-route: true
+  health-check-type: process
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack
   command: node deploy/cron.js
   # These are examples. These variables are set via `cg-toolkit/generate-env.sh`
