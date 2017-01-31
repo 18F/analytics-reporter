@@ -95,12 +95,12 @@ describe("processGoogleAnalyticsData(report, data)", () => {
   })
 
   describe("computing totals", () => {
-    it("should compute totals for visitors", () => {
+    it("should compute totals for users", () => {
       data.columnHeaders = [{ name: "ga:users" }]
       data.rows = [["10"], ["15"], ["20"]]
 
       const result = processGoogleAnalyticsData(report, data)
-      expect(result.totals.visitors).to.equal(10 + 15 + 20)
+      expect(result.totals.users).to.equal(10 + 15 + 20)
     })
 
     it("should compute totals for visits", () => {

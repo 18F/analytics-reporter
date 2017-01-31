@@ -65,10 +65,10 @@ const processGoogleAnalyticsData = (report, data) => {
 
       // Go through those data points to calculate totals.
       // Right now, this is totally report-specific.
-      if ((result.data.length > 0) && ("visitors" in result.data[0])) {
-          result.totals.visitors = 0;
+      if ((result.data.length > 0) && ("users" in result.data[0])) {
+          result.totals.users = 0;
           for (var i=0; i<result.data.length; i++)
-              result.totals.visitors += parseInt(result.data[i].visitors);
+              result.totals.users += parseInt(result.data[i].users);
       }
       if ((result.data.length > 0) && ("visits" in result.data[0])) {
           result.totals.visits = 0;
@@ -259,7 +259,6 @@ const _date_format = (in_date) => {
 const _mapping = {
   "ga:date": "date",
   "ga:hour": "hour",
-  "ga:users": "visitors",
   "rt:activeUsers": "active_visitors",
   "rt:pagePath": "page",
   "rt:pageTitle": "page_title",
