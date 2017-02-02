@@ -10,7 +10,7 @@
   "license": "CC0-1.0",
   "scripts": {
     "start": "node app.js",
-    "test": "node test/*"
+    "test": "`npm bin`/mocha test/*test.js"
   },
   "contributors": [
     {
@@ -64,9 +64,9 @@
     "node-schedule": "^0.1.13"
   },
   "devDependencies": {
-    "body-parser": "~1.8.1",
-    "express": "~4.9.0",
-    "ejs": "~2.3.1"
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "proxyquire": "^1.7.11"
   },
   "optionalDependencies": {
     "newrelic": "^1.36.1"
