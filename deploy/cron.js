@@ -57,7 +57,17 @@ daily_run();
 hourly_run();
 realtime_run();
 //daily
-setInterval(daily_run,1000 * 60 * 60 * 24);
+const currentTime = new Date();
+const nextRunTime = new Date(
+	currentTime.getFullYear(),
+	currentTime.getMonth(),
+	currentTime.getDate() + 1,
+	10 - currentTime.getTimezoneOffset() / 60
+);
+setInterval(() => {
+	daily_run();
+	setInterval(daily_run, 1000 * 60 * 60 * 24);
+}, nextRunTime - currentTime);
 //hourly
 setInterval(hourly_run,1000 * 60 * 60);
 //realtime
