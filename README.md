@@ -1,4 +1,4 @@
-[![Dependency Status](https://gemnasium.com/badges/github.com/18F/analytics-reporter.svg)](https://gemnasium.com/github.com/18F/analytics-reporter)
+[![Build Status](https://travis-ci.org/18F/analytics-reporter.png)](https://travis-ci.org/18F/analytics-reporter)  [![Dependency Status](https://gemnasium.com/badges/github.com/18F/analytics-reporter.svg)](https://gemnasium.com/github.com/18F/analytics-reporter)
 
 ## Analytics Reporter
 
