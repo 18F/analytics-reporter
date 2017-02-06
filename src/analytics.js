@@ -9,6 +9,7 @@ var googleapis = require('googleapis'),
     _ = require('lodash');
 
 var config = require('./config');
+const buildGoogleAnalyticsQuery = require("./build-ga-query")
 const processGoogleAnalyticsData = require("./process-ga-data")
 
 // Pre-load the keyfile from the OS
@@ -49,43 +50,7 @@ var Analytics = {
         // Abort if the report isn't defined.
         if (!report) return callback();
 
-        // Insert IDs and auth data. Dupe the object so it doesn't
-        // modify the report object for later work.
-        var query = {};
-
-        if (report.query.dimensions)
-            query.dimensions = report.query.dimensions.join(",");
-
-        if (report.query.metrics)
-            query.metrics = report.query.metrics.join(",");
-
-        if (report.query['start-date'])
-            query["start-date"] = report.query['start-date'];
-        if (report.query['end-date'])
-            query["end-date"] = report.query['end-date'];
-
-        // never sample data - this should be fine
-        query['samplingLevel'] = "HIGHER_PRECISION";
-
-        // Optional filters.
-        var filters = [];
-        if (report.query.filters)
-            filters = filters.concat(report.query.filters);
-
-        if (report.filters)
-            filters = filters.concat(report.filters);
-
-        if (filters.length > 0)
-            query.filters = filters.join(";");
-
-        query['max-results'] = report.query['max-results'] || 10000;
-
-        if (report.query['sort'])
-            query['sort'] = report.query['sort'];
-
-
-        // Specify the account, and auth token.
-        query.ids = config.account.ids;
+        var query = buildGoogleAnalyticsQuery(report)
         query.auth = jwt;
 
         var api_call;
