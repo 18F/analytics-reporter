@@ -1,6 +1,6 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
-const googleAPIsMock = require("./mocks/googleapis")
+const googleAPIsMock = require("./mocks/googleapis-analytics")
 
 proxyquire.noCallThru()
 

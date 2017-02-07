@@ -1,36 +1,12 @@
-/*
- * Workhorse module for Google Analytics interaction.
- */
+const fs = require("fs")
+const path = require('path')
 
-var googleapis = require('googleapis'),
-    fs = require('fs'),
-    path = require('path');
+const config = require('./config');
 
-var config = require('./config');
-
+const authorizeGoogleAnalyticsQuery = require("./authorize-ga-query")
 const buildGoogleAnalyticsQuery = require("./build-ga-query")
 const fetchGoogleAnalyticsData = require("./fetch-ga-data")
 const processGoogleAnalyticsData = require("./process-ga-data")
-
-// Pre-load the keyfile from the OS
-// prevents errors when starting JWT
-var key;
-if (config.key)
-    key = config.key;
-else if (config.key_file && fs.existsSync(config.key_file)) {
-    key = fs.readFileSync(config.key_file);
-    if (config.key_file.search(".json$"))
-        key = JSON.parse(key).private_key;
-}
-else
-  key = null;
-
-var jwt = new googleapis.auth.JWT(
-    config.email,
-    null,
-    key,
-    ['https://www.googleapis.com/auth/analytics.readonly']
-);
 
 // The reports we want to run.
 var reports_path = config.reports_file || (path.join(process.cwd(), "reports/reports.json"));
@@ -51,17 +27,12 @@ var Analytics = {
         }
 
         const query = buildGoogleAnalyticsQuery(report)
-        query.auth = jwt;
-        jwt.authorize(function(err, result) {
-            if (err){
-                return callback(err, null)
-            } else {
-                fetchGoogleAnalyticsData(query, { realtime: report.realtime }).then(result => {
-                    const processedData = processGoogleAnalyticsData(report, result)
-                	callback(null, processedData)
-                }).catch(callback)
-            }
-        })
+        authorizeGoogleAnalyticsQuery(query).then(query => {
+            return fetchGoogleAnalyticsData(query, { realtime: report.realtime })
+        }).then(data => {
+            const processedData = processGoogleAnalyticsData(report, data)
+            callback(null, processedData)
+        }).catch(callback)
     },
 };
 
