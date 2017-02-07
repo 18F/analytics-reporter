@@ -1,6 +1,6 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
-const reportFixture = require("./fixtures/report.js")
+const reportFixture = require("./fixtures/report")
 
 proxyquire.noCallThru()
 

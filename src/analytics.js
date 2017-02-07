@@ -3,13 +3,13 @@
  */
 
 var googleapis = require('googleapis'),
-    ga = googleapis.analytics('v3'),
     fs = require('fs'),
-    path = require('path'),
-    _ = require('lodash');
+    path = require('path');
 
 var config = require('./config');
+
 const buildGoogleAnalyticsQuery = require("./build-ga-query")
+const fetchGoogleAnalyticsData = require("./fetch-ga-data")
 const processGoogleAnalyticsData = require("./process-ga-data")
 
 // Pre-load the keyfile from the OS
@@ -46,31 +46,22 @@ var Analytics = {
     reports: by_name,
 
     query: function(report, callback) {
+        if (!report) {
+            return callback()
+        }
 
-        // Abort if the report isn't defined.
-        if (!report) return callback();
-
-        var query = buildGoogleAnalyticsQuery(report)
+        const query = buildGoogleAnalyticsQuery(report)
         query.auth = jwt;
-
-        var api_call;
-        if (report.realtime)
-            api_call = ga.data.realtime.get;
-        else
-            api_call = ga.data.ga.get;
-
         jwt.authorize(function(err, result) {
-            if (err) return callback(err, null);
-
-            api_call(query, function(err, result) {
-                if (err) return callback(err, null);
-
-                // if (config.debug)
-                //     fs.writeFileSync("data/google/" + report.name + ".json", JSON.stringify(result, null, 2));
-
-                callback(null, processGoogleAnalyticsData(report, result));
-            });
-        });
+            if (err){
+                return callback(err, null)
+            } else {
+                fetchGoogleAnalyticsData(query, { realtime: report.realtime }).then(result => {
+                    const processedData = processGoogleAnalyticsData(report, result)
+                	callback(null, processedData)
+                }).catch(callback)
+            }
+        })
     },
 };
 
