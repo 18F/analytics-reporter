@@ -56,7 +56,7 @@ describe(".authorizeGoogleAnalyticsQuery(query)", () => {
     config.key_file = "./test/fixtures/secret_key.pem"
 
     authorizeGoogleAnalyticsQuery({}).then(query => {
-      expect(query.auth.initArguments[2]).to.equal("pem-key-file-secret-key")
+      expect(query.auth.initArguments[2]).to.equal("pem-key-file-not-actually-a-secret-key")
       done()
     }).catch(done)
   })
@@ -66,7 +66,7 @@ describe(".authorizeGoogleAnalyticsQuery(query)", () => {
     config.key_file = "./test/fixtures/secret_key.json"
 
     authorizeGoogleAnalyticsQuery({}).then(query => {
-      expect(query.auth.initArguments[2]).to.equal("json-key-file-secret-key")
+      expect(query.auth.initArguments[2]).to.equal("json-key-file-not-actually-a-secret-key")
       done()
     }).catch(done)
   })
