@@ -1,10 +1,12 @@
 const googleapis = require('googleapis')
 const fs = require('fs')
-const config = require('./config');
+const config = require('./config')
+const loadGoogleAnalyticsCredentials = require("./load-ga-credentials")
 
 const authorizeGoogleAnalyticsQuery = (query) => {
-  const email = config.email
-  const key = getKey()
+  const credentials = _getCredentials()
+  const email = credentials.email
+  const key = credentials.key
   const scopes = ['https://www.googleapis.com/auth/analytics.readonly']
   const jwt = new googleapis.auth.JWT(email, null, key, scopes);
 
@@ -21,26 +23,32 @@ const authorizeGoogleAnalyticsQuery = (query) => {
   })
 }
 
-const getKey = () => {
+const _getCredentials = () => {
   if (config.key) {
-    return config.key
+    return { key: config.key, email: config.email }
   } else if (config.key_file) {
-    return loadKeyFromKeyfile(config.key_file)
+    return _loadCredentialsFromKeyfile(config.key_file)
+  } else if (config.analytics_credentials) {
+    return loadGoogleAnalyticsCredentials()
   } else {
     throw new Error("No key or key file specified in config")
   }
 }
 
-const loadKeyFromKeyfile = (keyfile) => {
+const _loadCredentialsFromKeyfile = (keyfile) => {
   if (!fs.existsSync(keyfile)) {
     throw new Error(`No such key file: ${keyfile}`)
   }
 
   let key = fs.readFileSync(keyfile).toString().trim()
+  let email = config.email
+
   if (keyfile.match(/\.json$/)) {
-    key = JSON.parse(key).private_key
+    const json = JSON.parse(key)
+    key = json.private_key
+    email = json.client_email
   }
-  return key
+  return { key, email }
 }
 
 module.exports = authorizeGoogleAnalyticsQuery
