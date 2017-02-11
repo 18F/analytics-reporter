@@ -66,6 +66,21 @@ export ANALYTICS_KEY="-----BEGIN PRIVATE KEY-----
 "
 ```
 
+If you have multiple accounts for a profile, you can set the `ANALYTICS_CREDENTIALS` variable with a JSON encoded array of those credentials and they'll be used to authorize API requests in a round-robin style.
+
+```
+export ANALYTICS_CREDENTIALS='[
+  {
+    "key": "-----BEGIN PRIVATE KEY-----\n[contents of key]\n-----END PRIVATE KEY-----",
+    "email": "email_1@example.com"
+  },
+  {
+    "key": "-----BEGIN PRIVATE KEY-----\n[contents of key]\n-----END PRIVATE KEY-----",
+    "email": "email_2@example.com"
+  }
+]'
+```
+
 * Make sure your computer or server is syncing its time with the world over NTP. Your computer's time will need to match those on Google's servers for the authentication to work.
 
 * Test your configuration by printing a report to STDOUT:

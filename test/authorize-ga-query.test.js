@@ -6,9 +6,14 @@ proxyquire.noCallThru()
 
 const config = {}
 const googleapis = {}
+const loadGoogleAnalyticsCredentials = () => ({
+  email: "next_email@example.com",
+  key: "Shhh, this is the next secret",
+})
 
 const authorizeGoogleAnalyticsQuery = proxyquire("../src/authorize-ga-query", {
   "./config": config,
+  "./load-ga-credentials": loadGoogleAnalyticsCredentials,
   googleapis,
 })
 
@@ -33,29 +38,24 @@ describe(".authorizeGoogleAnalyticsQuery(query)", () => {
     }).catch(done)
   })
 
-  it("should create a JWT with the email in the config", done => {
+  it("should create a JWT with the key and email in the config if one exists", done => {
     config.email = "test@example.com"
-
-    authorizeGoogleAnalyticsQuery({}).then(query => {
-      expect(query.auth.initArguments[0]).to.equal("test@example.com")
-      done()
-    }).catch(done)
-  })
-
-  it("should create a JWT with the key in the config if one exists", done => {
     config.key = "Shh, this is a secret"
 
     authorizeGoogleAnalyticsQuery({}).then(query => {
+      expect(query.auth.initArguments[0]).to.equal("test@example.com")
       expect(query.auth.initArguments[2]).to.equal("Shh, this is a secret")
       done()
     }).catch(done)
   })
 
-  it("should create a JWT from the keyfile in the config if one exists", done => {
+  it("should create a JWT from the keyfile and the email in the config if one exists", done => {
+    config.email = "test@example.com"
     config.key = undefined
     config.key_file = "./test/fixtures/secret_key.pem"
 
     authorizeGoogleAnalyticsQuery({}).then(query => {
+      expect(query.auth.initArguments[0]).to.equal("test@example.com")
       expect(query.auth.initArguments[2]).to.equal("pem-key-file-not-actually-a-secret-key")
       done()
     }).catch(done)
@@ -66,7 +66,19 @@ describe(".authorizeGoogleAnalyticsQuery(query)", () => {
     config.key_file = "./test/fixtures/secret_key.json"
 
     authorizeGoogleAnalyticsQuery({}).then(query => {
+      expect(query.auth.initArguments[0]).to.equal("json_test_email@example.com")
       expect(query.auth.initArguments[2]).to.equal("json-key-file-not-actually-a-secret-key")
+      done()
+    }).catch(done)
+  })
+
+  it("should create a JWT with credentials from calling loadGoogleAnalyticsCredentials() for analytics credentials in the config", done => {
+    config.key = undefined
+    config.analytics_credentials = "[{}]" // overriden by proxyquire
+
+    authorizeGoogleAnalyticsQuery({}).then(query => {
+      expect(query.auth.initArguments[0]).to.equal("next_email@example.com")
+      expect(query.auth.initArguments[2]).to.equal("Shhh, this is the next secret")
       done()
     }).catch(done)
   })
