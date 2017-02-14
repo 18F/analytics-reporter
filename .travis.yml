@@ -4,6 +4,12 @@ node_js:
 sudo: false
 os:
 - linux
+services:
+  - postgresql
+addons:
+  postgresql: "9.4"
+before_script:
+- "createdb travis_ci_test"
 deploy:
   edge: true
   provider: cloudfoundry

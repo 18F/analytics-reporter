@@ -6,6 +6,8 @@ var Analytics = require("./src/analytics"),
     csv = require("fast-csv"),
     zlib = require('zlib');
 
+const writeResultsToDatabase = require("./src/write-results-to-db")
+
 
 // AWS credentials are looked for in env vars or in ~/.aws/config.
 // AWS bucket and path need to be set in env vars mentioned in config.js.
@@ -78,9 +80,16 @@ var run = function(options) {
         // JSON
         else {
           // some reports can be slimmed down for direct rendering
-          if (options.slim && report.slim) delete data.data;
-
-          writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+          if (options.slim && report.slim) {
+            delete data.data;
+            writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+          } else if (options["write-to-database"]) {
+            writeResultsToDatabase(data, { realtime: report.realtime }).then(() => {
+              writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+            }).catch(err => done(err))
+          } else {
+            writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+          }
         }
     });
   };
