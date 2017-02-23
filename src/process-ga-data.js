@@ -83,7 +83,7 @@ const _processRow = ({ row, data, report }) => {
     point[field] = value
   })
 
-  if (config.account.hostname) {
+  if (config.account.hostname && !('domain' in point)) {
     point.domain = config.account.hostname
   }
 
