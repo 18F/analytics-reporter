@@ -1,4 +1,5 @@
 const knex = require("knex")
+const moment = require("moment-timezone")
 const config = require("./config")
 
 const writeResultsToDatabase = (results, { realtime } = {}) => {
@@ -17,7 +18,7 @@ const _dataForDataPoint = (dataPoint, { realtime } = {}) => {
   const data = Object.assign({}, dataPoint)
   let dateTime
   if (realtime) {
-    dateTime = new Date()
+    dateTime = (new Date()).toISOString()
   } else {
     dateTime = _dateTimeForDataPoint(dataPoint)
   }
@@ -34,9 +35,11 @@ const _dateTimeForDataPoint = (dataPoint) => {
   let dateString = dataPoint.date
   if (dataPoint.hour) {
     dateString = `${dateString}T${dataPoint.hour}:00:00`
+  } else {
+    dateString = `${dateString}T00:00:00`
   }
   if (!isNaN(Date.parse(dateString))) {
-    return new Date(dateString)
+    return moment.tz(dateString, config.timezone).toISOString()
   }
 }
 

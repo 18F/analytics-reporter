@@ -1,13 +1,19 @@
 const expect = require("chai").expect
 const knex = require("knex")
+const moment = require("moment-timezone")
 const proxyquire = require("proxyquire")
 const database = require("./support/database")
 const resultsFixture = require("./fixtures/results")
 
 proxyquire.noCallThru()
 
+const config = {
+  postgres: database.connection,
+  timezone: "US/Eastern",
+}
+
 const writeResultsToDatabase = proxyquire("../src/write-results-to-db", {
-  "./config": { postgres: database.connection },
+  "./config": config,
 })
 
 const databaseClient = knex({ client: "pg", connection: database.connection })
@@ -38,15 +44,17 @@ describe(".writeResultsToDatabase(results)", () => {
       ]
 
       writeResultsToDatabase(results).then(() => {
-        return databaseClient.select().table("analytics_data")
+        return databaseClient("analytics_data").orderBy("date_time", "asc").select()
       }).then(rows => {
         expect(rows).to.have.length(2)
         rows.forEach((row, index) => {
           const data = results.data[index]
           expect(row.report_name).to.equal("report-name")
-          expect(row.date_time.getTime()).to.equal((new Date(data.date)).getTime())
           expect(row.data.name).to.equal(data.name)
           expect(row.data.date).to.be.undefined
+
+          const date = moment.tz(data.date, config.timezone).toDate()
+          expect(row.date_time.getTime()).to.equal(date.getTime())
         })
         done()
       }).catch(done)
@@ -57,7 +65,7 @@ describe(".writeResultsToDatabase(results)", () => {
         date: "2017-02-15",
         hour: "12",
       }]
-      const date = new Date("2017-02-15T12:00:00")
+      const date = moment.tz("2017-02-15T12:00:00", config.timezone).toDate()
 
       writeResultsToDatabase(results).then(() => {
         return databaseClient.select().table("analytics_data")
