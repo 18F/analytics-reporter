@@ -2,6 +2,7 @@ const expect = require("chai").expect
 const proxyquire = require("proxyquire")
 const reportFixture = require("./fixtures/report")
 const dataFixture = require("./fixtures/data")
+const dataWithHostnameFixture = require("./fixtures/data_with_hostname")
 
 proxyquire.noCallThru()
 
@@ -92,6 +93,16 @@ describe("processGoogleAnalyticsData(report, data)", () => {
 
     const result = processGoogleAnalyticsData(report, data)
     expect(result.data[0].domain).to.equal("www.example.gov")
+  })
+
+  it("should not overwrite the domain with a hostname from the config", () => {
+    let dataWithHostname
+    dataWithHostname = Object.assign({}, dataWithHostnameFixture)
+    report.realtime = true
+    config.account.hostname = "www.example.gov"
+
+    const result = processGoogleAnalyticsData(report, dataWithHostname)
+    expect(result.data[0].domain).to.equal("www.example0.com")
   })
 
   it("should set use calculateTotals to calculate the totals", () => {
