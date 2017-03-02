@@ -27,13 +27,14 @@ module.exports = {
 
   account: {
     ids: process.env.ANALYTICS_REPORT_IDS,
+    agency_name: process.env.AGENCY_NAME,
     // needed for realtime reports which don't include hostname
     // leave blank if your view includes hostnames
-    hostname: process.env.ANALYTICS_HOSTNAME || ""
+    hostname: process.env.ANALYTICS_HOSTNAME || "",
   },
 
   static: {
     path: '../analytics.usa.gov/'
-  }
+  },
 
 };

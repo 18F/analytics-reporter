@@ -64,6 +64,8 @@ var run = function(options) {
 
         if (options.debug) console.log("[" + report.name + "] Saving report data...");
 
+        if (config.account.agency_name) data.agency = config.account.agency_name;
+
         // CSV, see https://github.com/C2FO/fast-csv#formatting-functions
         if (options.csv) {
           csv.writeToString(data['data'], {headers: true}, function(err, data) {
