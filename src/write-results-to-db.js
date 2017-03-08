@@ -43,24 +43,38 @@ const _dateTimeForDataPoint = (dataPoint) => {
   }
 }
 
+const _queryForExistingRow = ({ db, row }) => {
+  query = db("analytics_data")
+
+  Object.keys(row).forEach(key => {
+    if (row[key] === undefined) {
+      return
+    } else if (key === "data") {
+      const dataQuery = Object.assign({}, row.data)
+      delete dataQuery.visits
+      delete dataQuery.users
+      Object.keys(dataQuery).forEach(dataKey => {
+        query = query.whereRaw(`data->>'${dataKey}' = ?`, [dataQuery[dataKey]])
+      })
+    } else {
+      query = query.where({ [key]: row[key] })
+    }
+  })
+
+  return query.select()
+}
+
+const _handleExistingRow = ({ db, existingRow, newRow }) => {
+  if (existingRow.data.visits != newRow.data.visits || existingRow.data.users != newRow.data.users) {
+    return db("analytics_data").where({ id: existingRow.id }).update(newRow)
+  }
+}
+
 const _rowForDataPoint = ({ results, dataPoint, realtime }) => {
   const row = _dataForDataPoint(dataPoint, { realtime })
   row.report_name = results.name
   row.report_agency = results.agency
   return row
-}
-
-const _rowWasAlreadyInserted = ({ db, row }) => {
-  const query = Object.assign({}, row)
-  Object.keys(query).forEach(key => {
-    if (query[key] === undefined) {
-      delete query[key]
-    }
-  })
-  return db("analytics_data").where(query).count().then(result => {
-    const count = parseInt(result[0].count)
-    return count > 0
-  })
 }
 
 const _writeRealtimeResults = ({ db, results }) => {
@@ -75,19 +89,21 @@ const _writeRegularResults = ({ db, results }) => {
     return _rowForDataPoint({ results, dataPoint })
   })
 
+  const rowsToInsert = []
   const rowPromises = rows.map(row => {
-    return _rowWasAlreadyInserted({ db, row }).then(inserted => {
-      if (!inserted) {
-        return row
+    return _queryForExistingRow({ db, row }).then(results => {
+      if (row.date_time === undefined) {
+        return
+      } else if (results.length === 0) {
+        rowsToInsert.push(row)
+      } else if (results.length === 1) {
+        return _handleExistingRow({ db, existingRow: results[0], newRow: row })
       }
     })
   })
 
-  return Promise.all(rowPromises).then(rows => {
-    rows = rows.filter(row => {
-      return row !== undefined && row.date_time !== undefined
-    })
-    return db("analytics_data").insert(rows)
+  return Promise.all(rowPromises).then(() => {
+    return db("analytics_data").insert(rowsToInsert)
   })
 }
 
