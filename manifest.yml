@@ -25,6 +25,7 @@ applications:
   services:
   - analytics-s3
   - analytics-env
+  - analytics-reporter-database
   stack: cflinuxfs2
   timeout: 180
   path: .
