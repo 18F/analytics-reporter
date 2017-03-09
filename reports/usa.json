@@ -57,7 +57,7 @@
       },
       "meta": {
         "name": "Screen Resolution",
-        "description": "90 days of Screen Resolution visits for all sites."
+        "description": "90 days of Screen Resolution visits for all sites. (>5000 sessions)"
       }
     },
 
@@ -112,7 +112,7 @@
       },
       "meta": {
         "name": "Operating Systems",
-        "description": "90 days of visits, broken down by operating system and date, for all sites."
+        "description": "90 days of visits, broken down by operating system and date, for all sites. (>100 sessions)"
       }
     },
     {
@@ -132,7 +132,7 @@
       },
       "meta": {
         "name": "Windows",
-        "description": "90 days of visits from Windows users, broken down by operating system version and date, for all sites."
+        "description": "90 days of visits from Windows users, broken down by operating system version and date, for all sites. (>100 sessions)"
       }
     },
     {
@@ -149,7 +149,7 @@
       },
       "meta": {
         "name": "Browsers",
-        "description": "90 days of visits broken down by browser for all sites."
+        "description": "90 days of visits broken down by browser for all sites. (>100 sessions)"
       }
     },
     {
@@ -169,7 +169,7 @@
       },
       "meta": {
         "name": "Internet Explorer",
-        "description": "90 days of visits from Internet Explorer users broken down by version for all sites."
+        "description": "90 days of visits from Internet Explorer users broken down by version for all sites. (>100 sessions)"
       }
     },
     {
@@ -186,7 +186,7 @@
       },
       "meta": {
         "name": "OS-browser combinations",
-        "description": "90 days of visits broken down by browser and OS for all sites."
+        "description": "90 days of visits broken down by browser and OS for all sites. (>100 sessions)"
       }
     },
     {
@@ -206,7 +206,7 @@
       },
       "meta": {
         "name": "Windows-browser combinations",
-        "description": "90 days of visits broken down by Windows versions and browser for all sites."
+        "description": "90 days of visits broken down by Windows versions and browser for all sites. (>100 sessions)"
       }
     },
     {
@@ -227,7 +227,7 @@
       },
       "meta": {
         "name": "IE on Windows",
-        "description": "90 days of visits from IE on Windows broken down by IE and Windows versions for all sites."
+        "description": "90 days of visits from IE on Windows broken down by IE and Windows versions for all sites. (>100 sessions)"
       }
     },
     {
@@ -357,7 +357,7 @@
         "dimensions": ["ga:hostname"],
         "metrics": ["ga:sessions"],
         "filters": [
-          "ga:sessions>0"
+          "ga:sessions>9"
         ],
         "start-date": "14daysAgo",
         "end-date": "yesterday",
@@ -366,7 +366,7 @@
       },
       "meta": {
         "name": "Participating hostnames.",
-        "description": "Participating hostnames over the last 30 days with at least 1 visit."
+        "description": "Participating hostnames over the last 14 days with at least 10 visits."
       }
     },
     {
