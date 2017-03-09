@@ -366,7 +366,7 @@
       },
       "meta": {
         "name": "Participating hostnames.",
-        "description": "Participating hostnames over the last 30 days with at least 1 visit."
+        "description": "Participating hostnames over the last 14 days with at least 1 visit."
       }
     },
     {
