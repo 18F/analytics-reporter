@@ -370,7 +370,7 @@
       }
     },
     {
-      "name": "sites_extended",
+      "name": "sites-extended",
       "frequency": "daily",
       "cut": ["ga:sessions"],
       "query": {
