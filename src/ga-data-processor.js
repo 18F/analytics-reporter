@@ -1,7 +1,7 @@
 const config = require("./config")
 const ResultTotalsCalculator = require("./result-totals-calculator")
 
-const processGoogleAnalyticsData = (report, data) => {
+const processData = (report, data) => {
   let result = _initializeResult({ report, data })
 
   // If you use a filter that results in no data, you get null
@@ -144,4 +144,4 @@ const _mapping = {
   "rt:eventLabel": "event_label"
 }
 
-module.exports = processGoogleAnalyticsData
+module.exports = { processData }
