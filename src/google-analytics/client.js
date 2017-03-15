@@ -1,6 +1,6 @@
 const google = require("googleapis")
 
-const fetchGoogleAnalyticsData = (query, { realtime } = {}) => {
+const fetchData = (query, { realtime } = {}) => {
   return new Promise((resolve, reject) => {
     get(realtime)(query, (err, data) => {
       if (err) {
@@ -21,4 +21,4 @@ const get = (realtime) => {
   }
 }
 
-module.exports = fetchGoogleAnalyticsData
+module.exports = { fetchData }

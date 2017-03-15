@@ -6,7 +6,7 @@ var Analytics = require("./src/analytics"),
     csv = require("fast-csv"),
     zlib = require('zlib');
 
-const writeResultsToDatabase = require("./src/write-results-to-db")
+const PostgresPublisher = require("./src/publish/postgres")
 
 
 // AWS credentials are looked for in env vars or in ~/.aws/config.
@@ -71,7 +71,7 @@ var run = function(options) {
         let writeToDatabasePromise;
         if (options["write-to-database"]) {
           if (options.debug) console.log("[" + report.name + "] Preparing to write to database...")
-          writeToDatabasePromise = writeResultsToDatabase(data, { realtime: report.realtime });
+          writeToDatabasePromise = PostgresPublisher.publish(data, { realtime: report.realtime });
         } else {
           writeToDatabasePromise = Promise.resolve();
         }

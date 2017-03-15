@@ -1,6 +1,6 @@
-const config = require('./config')
+const config = require('../config')
 
-const buildGoogleAnalyticsQuery = (report) => {
+const buildQuery = (report) => {
   let query = Object.assign({}, report.query)
   query = buildQueryArrays(query)
   query.samplingLevel = "HIGHER_PRECISION";
@@ -23,4 +23,4 @@ const buildQueryArrays = (query) => {
   return query
 }
 
-module.exports = buildGoogleAnalyticsQuery
+module.exports = { buildQuery }
