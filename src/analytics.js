@@ -3,9 +3,9 @@ const path = require('path')
 
 const config = require('./config');
 
-const fetchGoogleAnalyticsData = require("./fetch-ga-data")
 const GoogleAnalyticsQueryAuthorizer = require("./ga-query-authorizer")
 const GoogleAnalyticsQueryBuilder = require("./ga-query-builder")
+const GoogleAnalyticsClient = require("./ga-client")
 const processGoogleAnalyticsData = require("./process-ga-data")
 
 // The reports we want to run.
@@ -28,7 +28,7 @@ var Analytics = {
 
         const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
         return GoogleAnalyticsQueryAuthorizer.authorizeQuery(query).then(query => {
-            return fetchGoogleAnalyticsData(query, { realtime: report.realtime })
+            return GoogleAnalyticsClient.fetchData(query, { realtime: report.realtime })
         }).then(data => {
             const processedData = processGoogleAnalyticsData(report, data)
             callback(null, processedData)
