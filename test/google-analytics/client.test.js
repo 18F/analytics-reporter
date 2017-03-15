@@ -1,12 +1,12 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
-const googleAPIsMock = require("./mocks/googleapis-analytics")
+const googleAPIsMock = require("../support/mocks/googleapis-analytics")
 
 proxyquire.noCallThru()
 
 const googleapis = {}
 
-const GoogleAnalyticsClient = proxyquire("../src/ga-client", {
+const GoogleAnalyticsClient = proxyquire("../../src/google-analytics/client", {
   googleapis,
 })
 

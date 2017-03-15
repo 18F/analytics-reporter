@@ -1,7 +1,7 @@
 const googleapis = require('googleapis')
 const fs = require('fs')
-const config = require('./config')
-const GoogleAnalyticsCredentialLoader = require("./ga-credential-loader")
+const config = require('../config')
+const GoogleAnalyticsCredentialLoader = require("./credential-loader")
 
 const authorizeQuery = (query) => {
   const credentials = _getCredentials()

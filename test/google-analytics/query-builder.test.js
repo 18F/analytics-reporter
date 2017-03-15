@@ -1,13 +1,13 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
-const reportFixture = require("./fixtures/report")
+const reportFixture = require("../support/fixtures/report")
 
 proxyquire.noCallThru()
 
 const config = {}
 
-const GoogleAnalyticsQueryBuilder = proxyquire("../src/ga-query-builder", {
-  "./config": config,
+const GoogleAnalyticsQueryBuilder = proxyquire("../../src/google-analytics/query-builder", {
+  "../config": config,
 })
 
 describe("GoogleAnalyticsQueryBuilder", () => {

@@ -6,7 +6,7 @@ var Analytics = require("./src/analytics"),
     csv = require("fast-csv"),
     zlib = require('zlib');
 
-const PostgresPublisher = require("./src/postgres-publisher")
+const PostgresPublisher = require("./src/publish/postgres")
 
 
 // AWS credentials are looked for in env vars or in ~/.aws/config.

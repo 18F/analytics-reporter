@@ -1,4 +1,4 @@
-const config = require("./config")
+const config = require("../config")
 const ResultTotalsCalculator = require("./result-totals-calculator")
 
 const processData = (report, data) => {

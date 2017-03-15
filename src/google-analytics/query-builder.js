@@ -1,4 +1,4 @@
-const config = require('./config')
+const config = require('../config')
 
 const buildQuery = (report) => {
   let query = Object.assign({}, report.query)

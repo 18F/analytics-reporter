@@ -1,15 +1,15 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
-const reportFixture = require("./fixtures/report")
-const dataFixture = require("./fixtures/data")
-const dataWithHostnameFixture = require("./fixtures/data_with_hostname")
+const reportFixture = require("../support/fixtures/report")
+const dataFixture = require("../support/fixtures/data")
+const dataWithHostnameFixture = require("../support/fixtures/data_with_hostname")
 
 proxyquire.noCallThru()
 
 const config = {}
 
-const GoogleAnalyticsDataProcessor = proxyquire("../src/ga-data-processor", {
-  "./config": config,
+const GoogleAnalyticsDataProcessor = proxyquire("../../src/process-results/ga-data-processor", {
+  "../config": config,
 })
 
 describe("GoogleAnalyticsDataProcessor", () => {
@@ -112,7 +112,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
         expect(result.data).to.be.an("array")
         return { "visits": 1234 }
       }
-      const GoogleAnalyticsDataProcessor = proxyquire("../src/ga-data-processor", {
+      const GoogleAnalyticsDataProcessor = proxyquire("../../src/process-results/ga-data-processor", {
         "./config": config,
         "./result-totals-calculator": { calculateTotals },
       })

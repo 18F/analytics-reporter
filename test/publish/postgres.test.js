@@ -4,8 +4,8 @@ const expect = require("chai").expect
 const knex = require("knex")
 const moment = require("moment-timezone")
 const proxyquire = require("proxyquire")
-const database = require("./support/database")
-const resultsFixture = require("./fixtures/results")
+const database = require("../support/database")
+const resultsFixture = require("../support/fixtures/results")
 
 proxyquire.noCallThru()
 
@@ -14,8 +14,8 @@ const config = {
   timezone: "US/Eastern",
 }
 
-const PostgresPublisher = proxyquire("../src/postgres-publisher", {
-  "./config": config,
+const PostgresPublisher = proxyquire("../../src/publish/postgres", {
+  "../config": config,
 })
 
 const databaseClient = knex({ client: "pg", connection: database.connection })

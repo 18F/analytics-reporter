@@ -3,10 +3,10 @@ const path = require('path')
 
 const config = require('./config');
 
-const GoogleAnalyticsClient = require("./ga-client")
-const GoogleAnalyticsDataProcessor = require("./ga-data-processor")
-const GoogleAnalyticsQueryAuthorizer = require("./ga-query-authorizer")
-const GoogleAnalyticsQueryBuilder = require("./ga-query-builder")
+const GoogleAnalyticsClient = require("./google-analytics/client")
+const GoogleAnalyticsDataProcessor = require("./process-results/ga-data-processor")
+const GoogleAnalyticsQueryAuthorizer = require("./google-analytics/query-authorizer")
+const GoogleAnalyticsQueryBuilder = require("./google-analytics/query-builder")
 
 // The reports we want to run.
 var reports_path = config.reports_file || (path.join(process.cwd(), "reports/reports.json"));

@@ -2,7 +2,7 @@ const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
 
 const knex = require("knex")
 const moment = require("moment-timezone")
-const config = require("./config")
+const config = require("../config")
 
 const publish = (results, { realtime } = {}) => {
   const db = knex({ client: "pg", connection: config.postgres })

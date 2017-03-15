@@ -1,6 +1,6 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
-const googleAPIsMock = require("./mocks/googleapis-auth")
+const googleAPIsMock = require("../support/mocks/googleapis-auth")
 
 proxyquire.noCallThru()
 
@@ -13,9 +13,9 @@ const GoogleAnalyticsCredentialLoader = {
   })
 }
 
-const GoogleAnalyticsQueryAuthorizer = proxyquire("../src/ga-query-authorizer", {
-  "./config": config,
-  "./ga-credential-loader": GoogleAnalyticsCredentialLoader,
+const GoogleAnalyticsQueryAuthorizer = proxyquire("../../src/google-analytics/query-authorizer", {
+  "../config": config,
+  "./credential-loader": GoogleAnalyticsCredentialLoader,
   googleapis,
 })
 
@@ -55,7 +55,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
     it("should create a JWT from the keyfile and the email in the config if one exists", done => {
       config.email = "test@example.com"
       config.key = undefined
-      config.key_file = "./test/fixtures/secret_key.pem"
+      config.key_file = "./test/support/fixtures/secret_key.pem"
 
       GoogleAnalyticsQueryAuthorizer.authorizeQuery({}).then(query => {
         expect(query.auth.initArguments[0]).to.equal("test@example.com")
@@ -66,7 +66,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
 
     it("should create a JWT from the JSON keyfile in the config if one exists", done => {
       config.key = undefined
-      config.key_file = "./test/fixtures/secret_key.json"
+      config.key_file = "./test/support/fixtures/secret_key.json"
 
       GoogleAnalyticsQueryAuthorizer.authorizeQuery({}).then(query => {
         expect(query.auth.initArguments[0]).to.equal("json_test_email@example.com")

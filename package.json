@@ -10,7 +10,7 @@
   "license": "CC0-1.0",
   "scripts": {
     "start": "node app.js",
-    "test": "`npm bin`/mocha test/*test.js"
+    "test": "`npm bin`/mocha test/**/*.test.js"
   },
   "contributors": [
     {

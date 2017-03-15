@@ -1,13 +1,13 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
-const reportFixture = require("./fixtures/report")
-const dataFixture = require("./fixtures/data")
-const ResultTotalsCalculator = require("../src/result-totals-calculator")
+const reportFixture = require("../support/fixtures/report")
+const dataFixture = require("../support/fixtures/data")
+const ResultTotalsCalculator = require("../../src/process-results/result-totals-calculator")
 
 proxyquire.noCallThru()
 
-const GoogleAnalyticsDataProcessor = proxyquire("../src/ga-data-processor", {
-  "./config": { account: { hostname: "" } },
+const GoogleAnalyticsDataProcessor = proxyquire("../../src/process-results/ga-data-processor", {
+  "../config": { account: { hostname: "" } },
 })
 
 describe("ResultTotalsCalculator", () => {

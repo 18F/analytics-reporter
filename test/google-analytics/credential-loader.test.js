@@ -5,8 +5,8 @@ proxyquire.noCallThru()
 
 const config = {}
 
-const GoogleAnalyticsCredentialLoader = proxyquire("../src/ga-credential-loader", {
-  "./config": config,
+const GoogleAnalyticsCredentialLoader = proxyquire("../../src/google-analytics/credential-loader", {
+  "../config": config,
 })
 
 describe("GoogleAnalyticsCredentialLoader", () => {
