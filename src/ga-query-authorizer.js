@@ -3,7 +3,7 @@ const fs = require('fs')
 const config = require('./config')
 const loadGoogleAnalyticsCredentials = require("./load-ga-credentials")
 
-const authorizeGoogleAnalyticsQuery = (query) => {
+const authorizeQuery = (query) => {
   const credentials = _getCredentials()
   const email = credentials.email
   const key = credentials.key
@@ -51,4 +51,4 @@ const _loadCredentialsFromKeyfile = (keyfile) => {
   return { key, email }
 }
 
-module.exports = authorizeGoogleAnalyticsQuery
+module.exports = { authorizeQuery }
