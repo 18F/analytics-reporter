@@ -201,6 +201,8 @@ analytics --output /path/to/data
 analytics --publish
 ```
 
+* `--write-to-database` - write data to a database. Requires a postgres configuration to be set in environment variables as described below.
+
 * `--only` - only run one or more specific reports. Multiple reports are comma separated.
 
 ```bash
@@ -231,6 +233,25 @@ analytics --frequency=realtime
 ```bash
 analytics --publish --debug
 ```
+
+### Saving data to postgres
+
+The analytics reporter can write data is pulls from Google Analytics to a
+Postgres database. The postgres configuration can be set using environment
+variables:
+
+```bash
+export POSTGRES_HOST = "my.db.host.com"
+export POSTGRES_USER = "postgres"
+export POSTGRES_PASSWORD = "123abc"
+export POSTGRES_DATABASE = "analytics"
+```
+
+The database expects a particular schema which will be described in the API
+server that consumes this data.
+
+To write reports to a database, use the `--write-to-database` option when
+starting the reporter.
 
 ### Deploying to GovCloud
 

@@ -61,6 +61,7 @@
     "googleapis": "^2.1.5",
     "lodash": "^3.10.1",
     "minimist": "*",
+    "moment-timezone": "^0.5.11",
     "node-schedule": "^0.1.13"
   },
   "devDependencies": {
@@ -69,6 +70,8 @@
     "proxyquire": "^1.7.11"
   },
   "optionalDependencies": {
-    "newrelic": "^1.36.1"
+    "knex": "^0.12.6",
+    "newrelic": "^1.36.1",
+    "pg": "^6.1.2"
   }
 }

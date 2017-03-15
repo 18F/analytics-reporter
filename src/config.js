@@ -33,8 +33,16 @@ module.exports = {
     hostname: process.env.ANALYTICS_HOSTNAME || "",
   },
 
-  static: {
-    path: '../analytics.usa.gov/'
+  postgres: {
+    host : process.env.POSTGRES_HOST,
+    user : process.env.POSTGRES_USER,
+    password : process.env.POSTGRES_PASSWORD,
+    database : process.env.POSTGRES_DATABASE || "analytics-reporter",
   },
 
+  static: {
+    path: '../analytics.usa.gov/',
+  },
+
+  timezone: process.env.ANALYTICS_TIMEZONE || "US/Eastern",
 };
