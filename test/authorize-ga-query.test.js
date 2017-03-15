@@ -6,14 +6,16 @@ proxyquire.noCallThru()
 
 const config = {}
 const googleapis = {}
-const loadGoogleAnalyticsCredentials = () => ({
-  email: "next_email@example.com",
-  key: "Shhh, this is the next secret",
-})
+const GoogleAnalyticsCredentialLoader = {
+  loadCredentials: () => ({
+    email: "next_email@example.com",
+    key: "Shhh, this is the next secret",
+  })
+}
 
 const GoogleAnalyticsQueryAuthorizer = proxyquire("../src/ga-query-authorizer", {
   "./config": config,
-  "./load-ga-credentials": loadGoogleAnalyticsCredentials,
+  "./ga-credential-loader": GoogleAnalyticsCredentialLoader,
   googleapis,
 })
 
@@ -73,7 +75,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       }).catch(done)
     })
 
-    it("should create a JWT with credentials from calling loadGoogleAnalyticsCredentials() for analytics credentials in the config", done => {
+    it("should create a JWT with credentials from calling GoogleAnalyticsCredentialLoader for analytics credentials in the config", done => {
       config.key = undefined
       config.analytics_credentials = "[{}]" // overriden by proxyquire
 

@@ -1,7 +1,7 @@
 const googleapis = require('googleapis')
 const fs = require('fs')
 const config = require('./config')
-const loadGoogleAnalyticsCredentials = require("./load-ga-credentials")
+const GoogleAnalyticsCredentialLoader = require("./ga-credential-loader")
 
 const authorizeQuery = (query) => {
   const credentials = _getCredentials()
@@ -29,7 +29,7 @@ const _getCredentials = () => {
   } else if (config.key_file) {
     return _loadCredentialsFromKeyfile(config.key_file)
   } else if (config.analytics_credentials) {
-    return loadGoogleAnalyticsCredentials()
+    return GoogleAnalyticsCredentialLoader.loadCredentials()
   } else {
     throw new Error("No key or key file specified in config")
   }
