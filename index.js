@@ -68,29 +68,35 @@ var run = function(options) {
 
         if (config.account.agency_name) data.agency = config.account.agency_name;
 
-        // CSV, see https://github.com/C2FO/fast-csv#formatting-functions
-        if (options.csv) {
-          csv.writeToString(data['data'], {headers: true}, function(err, data) {
-            if (err) return console.log("ERROR AFTER CSV: " + JSON.stringify(err));
-
-            writeReport(name, data, ".csv", done);
-          });
+        let writeToDatabasePromise;
+        if (options["write-to-database"]) {
+          if (options.debug) console.log("[" + report.name + "] Preparing to write to database...")
+          writeToDatabasePromise = writeResultsToDatabase(data, { realtime: report.realtime });
+        } else {
+          writeToDatabasePromise = Promise.resolve();
         }
 
-        // JSON
-        else {
-          // some reports can be slimmed down for direct rendering
-          if (options.slim && report.slim) {
-            delete data.data;
-            writeReport(name, JSON.stringify(data, null, 2), ".json", done);
-          } else if (options["write-to-database"]) {
-            writeResultsToDatabase(data, { realtime: report.realtime }).then(() => {
-              writeReport(name, JSON.stringify(data, null, 2), ".json", done);
-            }).catch(err => done(err))
-          } else {
-            writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+        writeToDatabasePromise.then(() => {
+          // CSV, see https://github.com/C2FO/fast-csv#formatting-functions
+          if (options.csv) {
+            csv.writeToString(data['data'], {headers: true}, function(err, data) {
+              if (err) return console.log("ERROR AFTER CSV: " + JSON.stringify(err));
+
+              writeReport(name, data, ".csv", done);
+            });
           }
-        }
+
+          // JSON
+          else {
+            // some reports can be slimmed down for direct rendering
+            if (options.slim && report.slim) {
+              delete data.data;
+              writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+            } else {
+              writeReport(name, JSON.stringify(data, null, 2), ".json", done);
+            }
+          }
+        }).catch(done);
     });
   };
 
