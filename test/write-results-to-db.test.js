@@ -1,3 +1,5 @@
+const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
+
 const expect = require("chai").expect
 const knex = require("knex")
 const moment = require("moment-timezone")
@@ -44,7 +46,7 @@ describe(".writeResultsToDatabase(results)", () => {
       ]
 
       writeResultsToDatabase(results).then(() => {
-        return databaseClient("analytics_data").orderBy("date_time", "asc").select()
+        return databaseClient(ANALYTICS_DATA_TABLE_NAME).orderBy("date_time", "asc").select()
       }).then(rows => {
         expect(rows).to.have.length(2)
         rows.forEach((row, index) => {
@@ -68,7 +70,7 @@ describe(".writeResultsToDatabase(results)", () => {
       const date = moment.tz("2017-02-15T12:00:00", config.timezone).toDate()
 
       writeResultsToDatabase(results).then(() => {
-        return databaseClient.select().table("analytics_data")
+        return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
       }).then(rows => {
         const row = rows[0]
         expect(row.date_time.getTime()).to.equal(date.getTime())
@@ -80,7 +82,7 @@ describe(".writeResultsToDatabase(results)", () => {
       results.query = { dimensions: "ga:something,ga:somethingElse" }
 
       writeResultsToDatabase(results).then(() => {
-        return databaseClient.select().table("analytics_data")
+        return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
       }).then(rows => {
         expect(rows).to.have.length(0)
         done()
@@ -119,7 +121,7 @@ describe(".writeResultsToDatabase(results)", () => {
       writeResultsToDatabase(firstResults).then(() => {
         return writeResultsToDatabase(secondResults)
       }).then(() => {
-        return databaseClient.select().table("analytics_data")
+        return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
       }).then(rows => {
         expect(rows).to.have.length(3)
         done()
@@ -148,7 +150,7 @@ describe(".writeResultsToDatabase(results)", () => {
       writeResultsToDatabase(firstResults).then(() => {
         return writeResultsToDatabase(secondResults)
       }).then(() => {
-        return databaseClient.select().table("analytics_data")
+        return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
       }).then(rows => {
         expect(rows).to.have.length(1)
         expect(rows[0].data.visits).to.equal("200")
@@ -169,7 +171,7 @@ describe(".writeResultsToDatabase(results)", () => {
       ]
 
       writeResultsToDatabase(results).then(() => {
-        return databaseClient.select().table("analytics_data")
+        return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
       }).then(rows => {
         expect(rows).to.have.length(1)
         expect(rows[0].data.visits).to.equal("456")
@@ -195,7 +197,7 @@ describe(".writeResultsToDatabase(results)", () => {
       ]
 
       writeResultsToDatabase(results, { realtime: true }).then(() => {
-        return databaseClient.select().table("analytics_data")
+        return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
       }).then(rows => {
         expect(rows).to.have.length(2)
         rows.forEach((row, index) => {

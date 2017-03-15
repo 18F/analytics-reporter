@@ -81,20 +81,14 @@ var run = function(options) {
           if (options.csv) {
             csv.writeToString(data['data'], {headers: true}, function(err, data) {
               if (err) return console.log("ERROR AFTER CSV: " + JSON.stringify(err));
-
               writeReport(name, data, ".csv", done);
             });
           }
-
           // JSON
           else {
             // some reports can be slimmed down for direct rendering
-            if (options.slim && report.slim) {
-              delete data.data;
-              writeReport(name, JSON.stringify(data, null, 2), ".json", done);
-            } else {
-              writeReport(name, JSON.stringify(data, null, 2), ".json", done);
-            }
+            if (options.slim && report.slim) delete data.data;
+            writeReport(name, JSON.stringify(data, null, 2), ".json", done);
           }
         }).catch(done);
     });

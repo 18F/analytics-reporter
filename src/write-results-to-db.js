@@ -1,3 +1,5 @@
+const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
+
 const knex = require("knex")
 const moment = require("moment-timezone")
 const config = require("./config")
@@ -44,7 +46,7 @@ const _dateTimeForDataPoint = (dataPoint) => {
 }
 
 const _queryForExistingRow = ({ db, row }) => {
-  query = db("analytics_data")
+  query = db(ANALYTICS_DATA_TABLE_NAME)
 
   Object.keys(row).forEach(key => {
     if (row[key] === undefined) {
@@ -66,7 +68,7 @@ const _queryForExistingRow = ({ db, row }) => {
 
 const _handleExistingRow = ({ db, existingRow, newRow }) => {
   if (existingRow.data.visits != newRow.data.visits || existingRow.data.users != newRow.data.users) {
-    return db("analytics_data").where({ id: existingRow.id }).update(newRow)
+    return db(ANALYTICS_DATA_TABLE_NAME).where({ id: existingRow.id }).update(newRow)
   }
 }
 
@@ -81,7 +83,7 @@ const _writeRealtimeResults = ({ db, results }) => {
   const rows = results.data.map(dataPoint => {
     return _rowForDataPoint({ results, dataPoint, realtime: true })
   })
-  return db("analytics_data").insert(rows)
+  return db(ANALYTICS_DATA_TABLE_NAME).insert(rows)
 }
 
 const _writeRegularResults = ({ db, results }) => {
@@ -103,7 +105,7 @@ const _writeRegularResults = ({ db, results }) => {
   })
 
   return Promise.all(rowPromises).then(() => {
-    return db("analytics_data").insert(rowsToInsert)
+    return db(ANALYTICS_DATA_TABLE_NAME).insert(rowsToInsert)
   })
 }
 

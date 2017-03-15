@@ -1,3 +1,5 @@
+const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
+
 const knex = require("knex")
 
 const connection = {
@@ -7,8 +9,8 @@ const connection = {
 
 const resetSchema = () => {
   const db = knex({ client: "pg", connection })
-  return db.schema.dropTableIfExists("analytics_data").then(() => {
-    return db.schema.createTable("analytics_data", (table) => {
+  return db.schema.dropTableIfExists(ANALYTICS_DATA_TABLE_NAME).then(() => {
+    return db.schema.createTable(ANALYTICS_DATA_TABLE_NAME, (table) => {
       table.increments("id")
       table.string("report_name")
       table.string("report_agency")
