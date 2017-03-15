@@ -105,7 +105,7 @@ describe("processGoogleAnalyticsData(report, data)", () => {
     expect(result.data[0].domain).to.equal("www.example0.com")
   })
 
-  it("should set use calculateTotals to calculate the totals", () => {
+  it("should set use ResultTotalsCalculator to calculate the totals", () => {
     const calculateTotals = (result) => {
       expect(result.name).to.equal(report.name)
       expect(result.data).to.be.an("array")
@@ -113,7 +113,7 @@ describe("processGoogleAnalyticsData(report, data)", () => {
     }
     const processGoogleAnalyticsData = proxyquire("../src/process-ga-data", {
       "./config": config,
-      "./calculate-totals": calculateTotals,
+      "./result-totals-calculator": { calculateTotals },
     })
 
     const result = processGoogleAnalyticsData(report, data)

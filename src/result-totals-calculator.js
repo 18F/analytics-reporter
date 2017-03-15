@@ -145,4 +145,4 @@ const _sumVisitsByCategoryWithDimension = ({ result, column, dimension }) => {
   }, {})
 }
 
-module.exports = calculateTotals
+module.exports = { calculateTotals }
