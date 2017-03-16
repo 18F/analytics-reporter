@@ -1,4 +1,4 @@
-const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
+const { ANALYTICS_DATA_TABLE_NAME } = require("../../src/publish/postgres")
 
 const expect = require("chai").expect
 const knex = require("knex")

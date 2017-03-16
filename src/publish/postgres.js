@@ -109,4 +109,4 @@ const _writeRegularResults = ({ db, results }) => {
   })
 }
 
-module.exports = { publish }
+module.exports = { publish, ANALYTICS_DATA_TABLE_NAME }
