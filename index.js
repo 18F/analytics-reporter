@@ -7,7 +7,7 @@ var Analytics = require("./src/analytics"),
     zlib = require('zlib');
 
 const PostgresPublisher = require("./src/publish/postgres")
-
+const ResultFormatter = require("./src/process-results/result-formatter")
 
 // AWS credentials are looked for in env vars or in ~/.aws/config.
 // AWS bucket and path need to be set in env vars mentioned in config.js.
@@ -76,21 +76,16 @@ var run = function(options) {
           writeToDatabasePromise = Promise.resolve();
         }
 
+        let format = "json"
+        if (options.csv) {
+          format = "csv"
+        }
+
         writeToDatabasePromise.then(() => {
-          // CSV, see https://github.com/C2FO/fast-csv#formatting-functions
-          if (options.csv) {
-            csv.writeToString(data['data'], {headers: true}, function(err, data) {
-              if (err) return console.log("ERROR AFTER CSV: " + JSON.stringify(err));
-              writeReport(name, data, ".csv", done);
-            });
-          }
-          // JSON
-          else {
-            // some reports can be slimmed down for direct rendering
-            if (options.slim && report.slim) delete data.data;
-            writeReport(name, JSON.stringify(data, null, 2), ".json", done);
-          }
-        }).catch(done);
+          return ResultFormatter.formatResult(data, format, options)
+        }).then(formattedResult => {
+          return writeReport(name, formattedResult, `.${format}`, done)
+        }).catch(done)
     });
   };
 
