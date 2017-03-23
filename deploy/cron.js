@@ -1,58 +1,62 @@
+const winston = require("winston-color")
+
 if (process.env.NEW_RELIC_APP_NAME) {
-	console.log("Starting New Relic")
+	winston.info("Starting New Relic")
 	require("newrelic")
+} else {
+	winston.warn("Skipping New Relic Activation")
 }
 
 const spawn = require("child_process").exec;
 const execSync = require("child_process").execSync;
 
 var daily_run = function() {
-	console.log("about to run daily.sh");
+	winston.info("about to run daily.sh");
 
 	var daily = spawn("./deploy/daily.sh")
 	daily.stdout.on("data", (data) => {
-		console.log("[daily.sh] " + data)
+		winston.info("[daily.sh]", data)
 	})
 	daily.stderr.on("data", (data) => {
-		console.error("[daily.sh] " + data)
+		winston.info("[daily.sh]", data)
 	})
 	daily.on("exit", (code) => {
-		console.log("daily.sh exitted with code: " + code)
+		winston.info("daily.sh exitted with code:", code)
 	})
 }
 
 var hourly_run = function(){
-	console.log("about to run hourly.sh");
+	winston.info("about to run hourly.sh");
 
 	var hourly = spawn("./deploy/hourly.sh")
 	hourly.stdout.on("data", (data) => {
-		console.log("[hourly.sh] " + data)
+		winston.info("[hourly.sh]", data)
 	})
 	hourly.stderr.on("data", (data) => {
-		console.error("[hourly.sh] " + data)
+		winston.info("[hourly.sh]", data)
 	})
 	hourly.on("exit", (code) => {
-		console.log("hourly.sh exitted with code: " + code)
+		winston.info("hourly.sh exitted with code:", code)
 	})
 }
 
 var realtime_run = function(){
-	console.log("about to run realtime.sh");
+	winston.info("about to run realtime.sh");
 
 	var realtime = spawn("./deploy/realtime.sh")
 	realtime.stdout.on("data", (data) => {
-		console.log("[realtime.sh] " + data)
+		winston.info("[realtime.sh]", data)
 	})
 	realtime.stderr.on("data", (data) => {
-		console.error("[realtime.sh] " + data)
+		winston.info("[realtime.sh]", data)
 	})
 	realtime.on("exit", (code) => {
-		console.log("realtime.sh exitted with code: " + code)
+		winston.info("realtime.sh exitted with code:", code)
 	})
 }
 
 
-console.log("starting cron.js!");
+winston.info("starting cron.js!");
 daily_run();
 hourly_run();
 realtime_run();

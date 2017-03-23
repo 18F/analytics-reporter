@@ -6,6 +6,7 @@ var Analytics = require("./src/analytics"),
     csv = require("fast-csv"),
     zlib = require('zlib');
 
+const winston = require("winston-color")
 const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 
@@ -15,12 +16,11 @@ const ResultFormatter = require("./src/process-results/result-formatter")
 var AWS = require("aws-sdk");
 
 var publish = function(name, data, extension, options, callback) {
-  if (options.debug) console.log("[" + name + "] Publishing to " + config.aws.bucket + "...");
+  winston.debug("[" + name + "] Publishing to " + config.aws.bucket + "...")
 
   var mime = {".json": "application/json", ".csv": "text/csv"};
-  //console.log(data);
   zlib.gzip(data, function(err, compressed) {
-    if (err) return console.log("ERROR AFTER GZIP: " + err);
+    if (err) winston.error("ERROR AFTER GZIP:", err);
 
     new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
       Key: config.aws.path + "/" + name + extension,
@@ -35,8 +35,10 @@ var publish = function(name, data, extension, options, callback) {
 
 var run = function(options) {
   if (!options) options = {};
-  if (options.debug) options.verbose = options.debug;
-  if (options.verbose) options.debug = options.verbose;
+
+  if (options.debug || options.verbose) {
+    winston.level = "debug"
+  }
 
   // can be overridden to only do one report
   var names;
@@ -61,12 +63,10 @@ var run = function(options) {
 
     if (!report) return done('Report not defined.');
 
-    if (options.debug) console.log("\n[" + report.name + "] Fetching...");
+    winston.debug("[" + report.name + "] Fetching...");
 
     return Analytics.query(report).then(data => {
-      if (options.debug) {
-        console.log("[" + report.name + "] Saving report data...")
-      }
+      winston.debug("[" + report.name + "] Saving report data...")
 
       if (config.account.agency_name) {
         data.agency = config.account.agency_name
@@ -82,7 +82,7 @@ var run = function(options) {
     }).then(formattedResult => {
       return writeReport(name, formattedResult, `.${reportOptions.format}`, done)
     }).catch(err => {
-      console.log("UNEXEPECTED ERROR: ", err)
+      winston.error("UNEXEPECTED ERROR:", err)
       done(err)
     })
   };
@@ -96,9 +96,9 @@ var run = function(options) {
   var writeReport = function(name, output, extension, done) {
     var written = function(err) {
       if (err)
-        console.error("ERROR AFTER WRITING: " + JSON.stringify(err));
+        winston.error("ERROR AFTER WRITING:", err);
       else if (options.debug)
-        console.log("[" + name + "] Done.");
+        winston.debug("[" + name + "] Done.");
       done();
     };
 
@@ -117,11 +117,11 @@ var run = function(options) {
 
   async.eachSeries(names, eachReport, function(err) {
     if (err) {
-      console.error(err);
+      winston.error(err);
       process.exit(1);
     }
 
-    if (options.debug) console.log("All done.");
+    winston.debug("All done.");
   });
 };
 
