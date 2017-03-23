@@ -11,24 +11,22 @@ var reports_path = config.reports_file || (path.join(process.cwd(), "reports/rep
 var reports = JSON.parse(fs.readFileSync(reports_path)).reports;
 var by_name = {};
 for (var i=0; i<reports.length; i++)
-    by_name[reports[i].name] = reports[i];
+  by_name[reports[i].name] = reports[i];
 
 // Google Analytics data fetching and transformation utilities.
 // This should really move to its own analytics.js file.
 var Analytics = {
+  reports: by_name,
 
-    reports: by_name,
+  query: function(report) {
+    if (!report) {
+      return Promise.reject("Analytics.query missing required argument `report`")
+    }
 
-    query: function(report, callback) {
-        if (!report) {
-            return callback()
-        }
-
-        return GoogleAnalyticsClient.fetchData(report).then(data => {
-            const processedData = GoogleAnalyticsDataProcessor.processData(report, data)
-            callback(null, processedData)
-        }).catch(callback)
-    },
+    return GoogleAnalyticsClient.fetchData(report).then(data => {
+      return GoogleAnalyticsDataProcessor.processData(report, data)
+    })
+  },
 };
 
 module.exports = Analytics;

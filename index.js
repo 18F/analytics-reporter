@@ -61,34 +61,38 @@ var run = function(options) {
     if (!report) return done('Report not defined.');
 
     if (options.debug) console.log("\n[" + report.name + "] Fetching...");
-    Analytics.query(report, function(err, data) {
-        if (err) return console.log("ERROR AFTER QUERYING: " + err);
 
-        if (options.debug) console.log("[" + report.name + "] Saving report data...");
+    let format = "json"
+    if (options.csv) {
+      format = "csv"
+    }
 
-        if (config.account.agency_name) data.agency = config.account.agency_name;
+    return Analytics.query(report).then(data => {
+      if (options.debug) {
+        console.log("[" + report.name + "] Saving report data...")
+      }
 
-        let writeToDatabasePromise;
-        if (options["write-to-database"]) {
-          if (options.debug) console.log("[" + report.name + "] Preparing to write to database...")
-          writeToDatabasePromise = PostgresPublisher.publish(data, { realtime: report.realtime });
-        } else {
-          writeToDatabasePromise = Promise.resolve();
-        }
+      if (config.account.agency_name) {
+        data.agency = config.account.agency_name
+      }
 
-        let format = "json"
-        if (options.csv) {
-          format = "csv"
-        }
-
-        writeToDatabasePromise.then(() => {
-          return ResultFormatter.formatResult(data, format, {
-            slim: options.slim && report.slim
-          })
-        }).then(formattedResult => {
-          return writeReport(name, formattedResult, `.${format}`, done)
-        }).catch(done)
-    });
+      if (options["write-to-database"]) {
+        return Prostgres.publish(data, {
+          realtime: report.realtime
+        }).then(() => data)
+      } else {
+        return Promise.resolve(data)
+      }
+    }).then(data => {
+      return ResultFormatter.formatResult(data, format, {
+        slim: options.slim && report.slim
+      })
+    }).then(formattedResult => {
+      return writeReport(name, formattedResult, `.${format}`, done)
+    }).catch(err => {
+      console.log("UNEXEPECTED ERROR: ", err)
+      done(err)
+    })
   };
 
   var writeReport = function(name, output, extension, done) {
