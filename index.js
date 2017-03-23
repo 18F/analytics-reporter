@@ -57,15 +57,11 @@ var run = function(options) {
 
   var eachReport = function(name, done) {
     var report = Analytics.reports[name];
+    var reportOptions = optionsForReport(report, options)
 
     if (!report) return done('Report not defined.');
 
     if (options.debug) console.log("\n[" + report.name + "] Fetching...");
-
-    let format = "json"
-    if (options.csv) {
-      format = "csv"
-    }
 
     return Analytics.query(report).then(data => {
       if (options.debug) {
@@ -77,23 +73,25 @@ var run = function(options) {
       }
 
       if (options["write-to-database"]) {
-        return Prostgres.publish(data, {
-          realtime: report.realtime
-        }).then(() => data)
+        return Prostgres.publish(data, reportOptions).then(() => data)
       } else {
         return Promise.resolve(data)
       }
     }).then(data => {
-      return ResultFormatter.formatResult(data, format, {
-        slim: options.slim && report.slim
-      })
+      return ResultFormatter.formatResult(data, reportOptions)
     }).then(formattedResult => {
-      return writeReport(name, formattedResult, `.${format}`, done)
+      return writeReport(name, formattedResult, `.${reportOptions.format}`, done)
     }).catch(err => {
       console.log("UNEXEPECTED ERROR: ", err)
       done(err)
     })
   };
+
+  var optionsForReport = (report, options) => ({
+    format: options.csv ? "csv" : "json",
+    slim: options.slim && report.slim,
+    realtime: report.realtime,
+  })
 
   var writeReport = function(name, output, extension, done) {
     var written = function(err) {

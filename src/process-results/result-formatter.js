@@ -1,6 +1,6 @@
 const csv = require("fast-csv")
 
-const formatResult = (result, format, { slim = false } = {}) => {
+const formatResult = (result, { format = "json", slim = false } = {}) => {
   result = Object.assign({}, result)
 
   switch(format) {
