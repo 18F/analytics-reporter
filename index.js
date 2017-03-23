@@ -82,7 +82,9 @@ var run = function(options) {
         }
 
         writeToDatabasePromise.then(() => {
-          return ResultFormatter.formatResult(data, format, options)
+          return ResultFormatter.formatResult(data, format, {
+            slim: options.slim && report.slim
+          })
         }).then(formattedResult => {
           return writeReport(name, formattedResult, `.${format}`, done)
         }).catch(done)
