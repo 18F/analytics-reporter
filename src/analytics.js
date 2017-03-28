@@ -1,32 +1,28 @@
-const fs = require("fs")
-const path = require('path')
-
-const config = require('./config');
-
+const path = require("path")
+const config = require('./config')
 const GoogleAnalyticsClient = require("./google-analytics/client")
 const GoogleAnalyticsDataProcessor = require("./process-results/ga-data-processor")
 
-// The reports we want to run.
-var reports_path = config.reports_file || (path.join(process.cwd(), "reports/reports.json"));
-var reports = JSON.parse(fs.readFileSync(reports_path)).reports;
-var by_name = {};
-for (var i=0; i<reports.length; i++)
-  by_name[reports[i].name] = reports[i];
+const query = (report) => {
+  if (!report) {
+    return Promise.reject(new Error("Analytics.query missing required argument `report`"))
+  }
 
-// Google Analytics data fetching and transformation utilities.
-// This should really move to its own analytics.js file.
-var Analytics = {
-  reports: by_name,
+  return GoogleAnalyticsClient.fetchData(report).then(data => {
+    return GoogleAnalyticsDataProcessor.processData(report, data)
+  })
+}
 
-  query: function(report) {
-    if (!report) {
-      return Promise.reject("Analytics.query missing required argument `report`")
-    }
+const _loadReports = () => {
+  const reports = {}
+  const _reportFilePath = path.resolve(process.cwd(), config.reports_file || "reports/reports.json")
+  require(_reportFilePath).reports.forEach(report => {
+    reports[report.name] = report
+  })
+  return reports
+}
 
-    return GoogleAnalyticsClient.fetchData(report).then(data => {
-      return GoogleAnalyticsDataProcessor.processData(report, data)
-    })
-  },
-};
-
-module.exports = Analytics;
+module.exports = {
+  query,
+  reports: _loadReports(),
+}
