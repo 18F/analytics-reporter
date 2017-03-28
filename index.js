@@ -73,7 +73,7 @@ var run = function(options) {
       }
 
       if (options["write-to-database"]) {
-        return Prostgres.publish(data, reportOptions).then(() => data)
+        return PostgresPublisher.publish(data, reportOptions).then(() => data)
       } else {
         return Promise.resolve(data)
       }
