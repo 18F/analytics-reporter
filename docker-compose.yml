@@ -1,0 +1,24 @@
+version: "3.0"
+services:
+  reporter:
+    command: node ./deploy/cron.js
+    environment:
+      - ANALYTICS_ROOT_PATH=/usr/src/reporter
+      - ANALYTICS_CREDENTIALS=${ANALYTICS_CREDENTIALS}
+      - ANALYTICS_REPORTS_PATH=${ANALYTICS_REPORTS_PATH}
+      - ANALYTICS_REPORT_IDS=${ANALYTICS_REPORT_IDS}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_BUCKET=${AWS_BUCKET}
+      - AWS_BUCKET_PATH=${AWS_BUCKET_PATH}
+      - AWS_CACHE_TIME=${AWS_CACHE_TIME}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - BUCKET_NAME=${BUCKET_NAME}
+    image: node:7.7
+    volumes:
+      - .:/usr/src/reporter
+      - node_modules:/usr/src/reporter/node_modules
+    working_dir: /usr/src/reporter
+volumes:
+  node_modules:

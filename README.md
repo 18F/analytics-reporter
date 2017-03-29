@@ -322,6 +322,30 @@ Restage the application to use the environment variables.
 cf restage analytics-reporter
 ```
 
+### Developing with Docker
+
+This repo contains a [Docker Compose](https://docs.docker.com/compose/)
+configuration. The reporter is configured to run in the container as if it were
+running in GovCloud. This is helpful for seeing how the reporter will behave
+when deployed without pushing it to cloud.gov
+
+To start the reporter, first run the `docker-update` script to install the
+necessary dependencies:
+
+```shell
+./bin/docker-update
+```
+
+Note that this script will need to be run again when new dependencies are added
+to update the Docker volumes where the dependencies are stored.
+
+After the dependencies are installed, the reporter can be started using Docker
+Compose:
+
+```shell
+docker-compose up
+```
+
 ### Public domain
 
 This project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING](CONTRIBUTING.md):
