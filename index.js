@@ -9,29 +9,7 @@ var Analytics = require("./src/analytics"),
 const winston = require("winston-color")
 const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
-
-// AWS credentials are looked for in env vars or in ~/.aws/config.
-// AWS bucket and path need to be set in env vars mentioned in config.js.
-
-var AWS = require("aws-sdk");
-
-var publish = function(name, data, extension, options, callback) {
-  winston.debug("[" + name + "] Publishing to " + config.aws.bucket + "...")
-
-  var mime = {".json": "application/json", ".csv": "text/csv"};
-  zlib.gzip(data, function(err, compressed) {
-    if (err) winston.error("ERROR AFTER GZIP:", err);
-
-    new AWS.S3({params: {Bucket: config.aws.bucket}}).upload({
-      Key: config.aws.path + "/" + name + extension,
-      Body: compressed,
-      ContentType: mime[extension],
-      ContentEncoding: "gzip",
-      ACL: "public-read",
-      CacheControl: "max-age=" + (config.aws.cache || 0)
-    }, callback);
-  });
-};
+const S3Publisher = require("./src/publish/s3")
 
 var run = function(options) {
   if (!options) options = {};
@@ -103,7 +81,7 @@ var run = function(options) {
     };
 
     if (options.publish)
-      publish(name, output, extension, options, written);
+      S3Publisher.publish(output, { format: extension.slice(1) })
 
     else if (options.output && (typeof(options.output) == "string"))
       fs.writeFile(path.join(options.output, (name + extension)), output, written);
@@ -125,4 +103,4 @@ var run = function(options) {
   });
 };
 
-module.exports = { run, publish };
+module.exports = { run };
