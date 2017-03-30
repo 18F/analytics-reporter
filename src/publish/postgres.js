@@ -4,12 +4,10 @@ const knex = require("knex")
 const moment = require("moment-timezone")
 const config = require("../config")
 
-const publish = (results, { realtime } = {}) => {
+const publish = (results) => {
   const db = knex({ client: "pg", connection: config.postgres })
 
-  if (realtime) {
-    return _writeRealtimeResults({ db, results }).then(() => db.destroy())
-  } else if (results.query.dimensions.match(/ga:date/)) {
+  if (results.query.dimensions.match(/ga:date/)) {
     return _writeRegularResults({ db, results }).then(() => db.destroy())
   } else {
     return Promise.resolve()
@@ -79,13 +77,6 @@ const _rowForDataPoint = ({ results, dataPoint, realtime }) => {
   return row
 }
 
-const _writeRealtimeResults = ({ db, results }) => {
-  const rows = results.data.map(dataPoint => {
-    return _rowForDataPoint({ results, dataPoint, realtime: true })
-  })
-  return db(ANALYTICS_DATA_TABLE_NAME).insert(rows)
-}
-
 const _writeRegularResults = ({ db, results }) => {
   const rows = results.data.map(dataPoint => {
     return _rowForDataPoint({ results, dataPoint })
@@ -106,6 +97,8 @@ const _writeRegularResults = ({ db, results }) => {
 
   return Promise.all(rowPromises).then(() => {
     return db(ANALYTICS_DATA_TABLE_NAME).insert(rowsToInsert)
+  }).then(() => {
+    return db.destroy()
   })
 }
 

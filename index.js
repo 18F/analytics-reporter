@@ -72,7 +72,7 @@ var run = function(options) {
         data.agency = config.account.agency_name
       }
 
-      if (options["write-to-database"]) {
+      if (options["write-to-database"] && !report.realtime) {
         return PostgresPublisher.publish(data, reportOptions).then(() => data)
       } else {
         return Promise.resolve(data)
