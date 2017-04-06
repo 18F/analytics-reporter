@@ -55,7 +55,7 @@ describe("S3Publisher", () => {
       cb(null, "compressed data")
     }
 
-    S3Publisher.publish(results, { format: "json" }).then(() => {
+    S3Publisher.publish(results.name, `${results}`, { format: "json" }).then(() => {
       expect(s3PutObjectCalled).to.equal(true)
       expect(gzipCalled).to.equal(true)
       done()
@@ -86,7 +86,7 @@ describe("S3Publisher", () => {
       cb(null, "compressed data")
     }
 
-    S3Publisher.publish(results, { format: "csv" }).then(() => {
+    S3Publisher.publish(results.name, `${results}`, { format: "csv" }).then(() => {
       expect(s3PutObjectCalled).to.equal(true)
       expect(gzipCalled).to.equal(true)
       done()
@@ -98,7 +98,7 @@ describe("S3Publisher", () => {
       promise: () => Promise.reject(new Error("test s3 error"))
     })
 
-    S3Publisher.publish(results, { format: "json" }).catch(err => {
+    S3Publisher.publish(results.name, `${results}`, { format: "json" }).catch(err => {
       expect(err.message).to.equal("test s3 error")
       done()
     }).catch(done)
@@ -107,7 +107,7 @@ describe("S3Publisher", () => {
   it("should reject if there is an error compressing the data", done => {
     zlibMock.gzip = (data, cb) => cb(new Error("test zlib error"))
 
-    S3Publisher.publish(results, { format: "json" }).catch(err => {
+    S3Publisher.publish(results.name, `${results}`, { format: "json" }).catch(err => {
       expect(err.message).to.equal("test zlib error")
       done()
     }).catch(done)

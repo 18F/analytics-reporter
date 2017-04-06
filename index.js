@@ -81,8 +81,9 @@ var run = function(options) {
     };
 
     if (options.publish)
-      S3Publisher.publish(output, { format: extension.slice(1) })
-
+      S3Publisher.publish(name, output, { format: extension.slice(1) }).then(() => {
+        written()
+      }).catch(written)
     else if (options.output && (typeof(options.output) == "string"))
       fs.writeFile(path.join(options.output, (name + extension)), output, written);
 
