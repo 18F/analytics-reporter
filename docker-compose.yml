@@ -1,5 +1,12 @@
 version: "3.0"
 services:
+  db:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_DB=analytics-reporter
+      - POSTGRES_USER=analytics
+    volumes:
+       - pgdata:/var/lib/postgresql/data/
   reporter:
     command: node ./deploy/cron.js
     environment:
@@ -15,10 +22,16 @@ services:
       - AWS_REGION=${AWS_REGION}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - BUCKET_NAME=${BUCKET_NAME}
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=analytics
+      - POSTGRES_DATABASE=analytics-reporter
     image: node:7.7
+    links:
+      - db
     volumes:
       - .:/usr/src/reporter
       - node_modules:/usr/src/reporter/node_modules
     working_dir: /usr/src/reporter
 volumes:
   node_modules:
+  pgdata:

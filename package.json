@@ -9,6 +9,8 @@
   "homepage": "https://github.com/18F/analytics-reporter",
   "license": "CC0-1.0",
   "scripts": {
+    "migrate": "`npm bin`/knex migrate:latest",
+    "pretest": "NODE_ENV=test npm run migrate",
     "start": "node app.js",
     "test": "`npm bin`/mocha test/*.test.js test/**/*.test.js"
   },

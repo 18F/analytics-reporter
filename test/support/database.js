@@ -10,16 +10,7 @@ const connection = {
 
 const resetSchema = () => {
   const db = knex({ client: "pg", connection })
-  return db.schema.dropTableIfExists(ANALYTICS_DATA_TABLE_NAME).then(() => {
-    return db.schema.createTable(ANALYTICS_DATA_TABLE_NAME, (table) => {
-      table.increments("id")
-      table.string("report_name")
-      table.string("report_agency")
-      table.date("date")
-      table.jsonb("data")
-      table.timestamps(true, true)
-    })
-  })
+  return db("analytics_data").delete()
 }
 
 module.exports = { connection, resetSchema }
