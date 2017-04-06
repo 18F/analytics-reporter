@@ -23,16 +23,18 @@ const S3Publisher = proxyquire("../../src/publish/s3", {
 })
 
 describe("S3Publisher", () => {
+  let report
   let results
 
   beforeEach(() => {
     results = Object.assign({}, resultsFixture)
+    report = { name: results.name }
     S3Mock.mockedPutObject = () => ({ promise: () => Promise.resolve() })
     zlibMock.gzip = (data, cb) => cb(null, data)
   })
 
   it("should publish compressed JSON results to the S3 bucket", done => {
-    results.name = "test-report"
+    report.name = "test-report"
 
     let s3PutObjectCalled = false
     let gzipCalled = false
@@ -55,7 +57,7 @@ describe("S3Publisher", () => {
       cb(null, "compressed data")
     }
 
-    S3Publisher.publish(results.name, `${results}`, { format: "json" }).then(() => {
+    S3Publisher.publish(report, `${results}`, { format: "json" }).then(() => {
       expect(s3PutObjectCalled).to.equal(true)
       expect(gzipCalled).to.equal(true)
       done()
@@ -63,7 +65,7 @@ describe("S3Publisher", () => {
   })
 
   it("should publish compressed CSV results to the S3 bucket", done => {
-    results.name = "test-report"
+    report.name = "test-report"
 
     let s3PutObjectCalled = false
     let gzipCalled = false
@@ -86,7 +88,7 @@ describe("S3Publisher", () => {
       cb(null, "compressed data")
     }
 
-    S3Publisher.publish(results.name, `${results}`, { format: "csv" }).then(() => {
+    S3Publisher.publish(report, `${results}`, { format: "csv" }).then(() => {
       expect(s3PutObjectCalled).to.equal(true)
       expect(gzipCalled).to.equal(true)
       done()
@@ -98,7 +100,7 @@ describe("S3Publisher", () => {
       promise: () => Promise.reject(new Error("test s3 error"))
     })
 
-    S3Publisher.publish(results.name, `${results}`, { format: "json" }).catch(err => {
+    S3Publisher.publish(report, `${results}`, { format: "json" }).catch(err => {
       expect(err.message).to.equal("test s3 error")
       done()
     }).catch(done)
@@ -107,7 +109,7 @@ describe("S3Publisher", () => {
   it("should reject if there is an error compressing the data", done => {
     zlibMock.gzip = (data, cb) => cb(new Error("test zlib error"))
 
-    S3Publisher.publish(results.name, `${results}`, { format: "json" }).catch(err => {
+    S3Publisher.publish(report.name, `${results}`, { format: "json" }).catch(err => {
       expect(err.message).to.equal("test zlib error")
       done()
     }).catch(done)

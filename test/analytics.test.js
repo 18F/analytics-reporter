@@ -54,7 +54,7 @@ describe("Analytics", () => {
 
   describe(".reports", () => {
     it("should load reports", () => {
-      expect(Analytics.reports).to.be.an("object")
+      expect(Analytics.reports).to.be.an("array")
     })
   })
 })

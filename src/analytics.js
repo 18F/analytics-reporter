@@ -14,12 +14,8 @@ const query = (report) => {
 }
 
 const _loadReports = () => {
-  const reports = {}
   const _reportFilePath = path.resolve(process.cwd(), config.reports_file || "reports/reports.json")
-  require(_reportFilePath).reports.forEach(report => {
-    reports[report.name] = report
-  })
-  return reports
+  return require(_reportFilePath).reports
 }
 
 module.exports = {

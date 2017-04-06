@@ -5,13 +5,13 @@ const config = require("../config")
 
 const S3 = new AWS.S3()
 
-const publish = (name, results, { format }) => {
-  winston.debug("[" + name + "] Publishing to " + config.aws.bucket + "...")
+const publish = (report, results, { format }) => {
+  winston.debug("[" + report.name + "] Publishing to " + config.aws.bucket + "...")
 
   return _compress(results).then(compressed => {
     return S3.putObject({
       Bucket: config.aws.bucket,
-      Key: config.aws.path + "/" + name + "." + format,
+      Key: config.aws.path + "/" + report.name + "." + format,
       Body: compressed,
       ContentType: _mime(format),
       ContentEncoding: "gzip",
