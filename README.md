@@ -11,9 +11,9 @@ Available reports are named and described in [`reports.json`](reports/reports.js
 
 ### Installation
 
-### Docker 
+### Docker
 
-* To build the docker image on your computer, run:
+* To build the docker image on your computer, just run:
 
 ````bash
 export NODE_ENV=development # just needed when developing against the image
@@ -24,7 +24,15 @@ docker build --build-arg NODE_ENV=${NODE_ENV} -t analytics-reporter .
 Then you can create an alias in order to have the analytics command available:
 
 ```bash
-alias analytics="docker run analytics-reporter"
+alias analytics="docker run -t -v ${HOME}:${HOME} -e ANALYTICS_REPORT_EMAIL -e ANALYTICS_REPORT_IDS -e ANALYTICS_KEY analytics-reporter"
+```
+
+To make this command working as expected you should export the env vars as follows:
+
+```bash
+export ANALYTICS_REPORT_EMAIL=  "your-report-email"
+export ANALYTICS_REPORT_IDS="your-report-ids"
+export ANALYTICS_KEY="your-key"
 ```
 
 ### NPM
@@ -37,7 +45,7 @@ npm install -g analytics-reporter
 
 If you're developing locally inside the repo, `npm install` is sufficient.
 
-### Setup 
+### Setup
 
 * Create an API service account in the [Google developer dashboard](https://console.developers.google.com/apis/).
 
@@ -215,6 +223,8 @@ A report might look something like this:
 ```bash
 analytics --output /path/to/data
 ```
+
+*Note that when using the docker image you have to use the absolute path, for example "/home/youruser/path/to/data"*
 
 * `--publish` - Publish to an S3 bucket. Requires AWS environment variables set as described above.
 
