@@ -13,11 +13,13 @@ addons:
 before_script:
 - "createdb travis_ci_test"
 
-#install:
-#  - docker build -t analytics-reporter --pull=true .
+install:
+  - npm install
+  - docker build -t analytics-reporter --pull=true .
 
-#scripts:
-#  - docker run --entrypoint npm analytics-reporter test
+scripts:
+  - docker run -d -e POSTGRES_DB=travis_ci_test --name postgres postgres:9.4 && sleep 10
+  - docker run --entrypoint npm --link postgres:postgres -e PG_HOST=postgres -e PG_USER=postgres analytics-reporter test
 
 deploy:
   edge: true
