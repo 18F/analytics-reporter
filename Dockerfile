@@ -13,4 +13,4 @@ RUN npm install && \
 COPY . /usr/src/app
 RUN npm link
 
-CMD ["analytics"]
+ENTRYPOINT ["analytics"]

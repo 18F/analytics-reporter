@@ -6,10 +6,18 @@ os:
 - linux
 services:
   - postgresql
+  - docker
 addons:
   postgresql: "9.4"
+
 before_script:
 - "createdb travis_ci_test"
+
+install:
+  - docker build -t analytics-reporter --pull=true .
+scripts:
+  - docker run -t analytics-reporter | grep "No key or key file specified"
+
 deploy:
   edge: true
   provider: cloudfoundry
@@ -22,3 +30,4 @@ deploy:
   space: analytics-dev
   on:
     branch: master
+
