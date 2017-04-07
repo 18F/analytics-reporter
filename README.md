@@ -13,7 +13,7 @@ Available reports are named and described in [`reports.json`](reports/reports.js
 
 ### Docker 
 
-* To build the docker image on your computer, just run:
+* To build the docker image on your computer, run:
 
 ````bash
 export NODE_ENV=development # just needed when developing against the image
