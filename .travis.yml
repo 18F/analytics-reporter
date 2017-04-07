@@ -13,10 +13,11 @@ addons:
 before_script:
 - "createdb travis_ci_test"
 
-install:
-  - docker build -t analytics-reporter --pull=true .
-scripts:
-  - docker run -t analytics-reporter | grep "No key or key file specified"
+#install:
+#  - docker build -t analytics-reporter --pull=true .
+
+#scripts:
+#  - docker run --entrypoint npm analytics-reporter test
 
 deploy:
   edge: true
