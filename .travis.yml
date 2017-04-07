@@ -20,7 +20,7 @@ install:
 
 script:
   - npm test
-  - docker run --entrypoint npm --link postgres:postgres -e PG_HOST=postgres -e PG_USER=postgres analytics-reporter test
+  - docker run --entrypoint npm --link postgres:postgres -e PG_HOST=postgres -e PG_USER=postgres -e TRAVIS=true analytics-reporter test
 
 deploy:
   edge: true
