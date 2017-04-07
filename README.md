@@ -8,7 +8,26 @@ This is used in combination with [18F/analytics.usa.gov](https://github.com/18F/
 
 Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
 
-### Setup
+
+### Installation
+
+### Docker 
+
+* To build the docker image on your computer, just run:
+
+````bash
+export NODE_ENV=development # just needed when developing against the image
+export NODE_ENV=production # to build an image for production
+docker build --build-arg NODE_ENV=${NODE_ENV} -t analytics-reporter .
+````
+
+Then you can create an alias in order to have the analytics command available:
+
+```bash
+alias analytics="docker run analytics-reporter"
+```
+
+### NPM
 
 * To run the utility on your computer, install it through npm:
 
@@ -17,6 +36,8 @@ npm install -g analytics-reporter
 ```
 
 If you're developing locally inside the repo, `npm install` is sufficient.
+
+### Setup 
 
 * Create an API service account in the [Google developer dashboard](https://console.developers.google.com/apis/).
 
