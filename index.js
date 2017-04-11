@@ -5,6 +5,7 @@ const winston = require("winston-color")
 
 const config = require("./src/config")
 const Analytics = require("./src/analytics")
+const DiskPublisher = require("./src/publish/disk")
 const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 const S3Publisher = require("./src/publish/s3")
@@ -45,7 +46,7 @@ const _publishReport = (report, formattedResult, options) => {
   if (options.publish) {
     return S3Publisher.publish(report, formattedResult, options)
   } else if (options.output && typeof(options.output) === "string") {
-    return _writeReportToDisk(report, formattedResult, options)
+    return DiskPublisher.publish(report, formattedResult, options)
   } else {
     console.log(formattedResult)
   }
@@ -76,18 +77,6 @@ const _writeReportToDatabase = (report, result, options) => {
   } else {
     return Promise.resolve(result)
   }
-}
-
-const _writeReportToDisk = (report, formattedResult, options) => {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(path.join(options.output, `${report.name}.${options.format}`), formattedResult, err => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve()
-      }
-    })
-  })
 }
 
 module.exports = { run };

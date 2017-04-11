@@ -12,10 +12,11 @@ describe("main", () => {
     const config = {}
 
     let Analytics
-    let result
+    let DiskPublisher
     let PostgresPublisher
     let ResultFormatter
     let S3Publisher
+    let result
     let main
 
     beforeEach(() => {
@@ -24,6 +25,7 @@ describe("main", () => {
         reports: [{ name: "a" }, { name: "b" }, { name: "c" }],
         query: (report) => Promise.resolve(Object.assign(result, { name: report.name })),
       }
+      DiskPublisher = {}
       PostgresPublisher = {}
       ResultFormatter = {
         formatResult: (result) => Promise.resolve(JSON.stringify(result))
@@ -33,6 +35,7 @@ describe("main", () => {
       main = proxyquire("../index.js", {
         "./src/config": config,
         "./src/analytics": Analytics,
+        "./src/publish/disk": DiskPublisher,
         "./src/publish/postgres": PostgresPublisher,
         "./src/process-results/result-formatter": ResultFormatter,
         "./src/publish/s3": S3Publisher,
@@ -90,7 +93,22 @@ describe("main", () => {
     })
 
     context("with --output option", () => {
-      xit("should write the results to the given path folder")
+      it("should write the results to the given path folder", done => {
+        ResultFormatter.formatResult = () => Promise.resolve("I'm the result")
+
+        const writtenReportNames = []
+        DiskPublisher.publish = (report, formattedResult, options) => {
+          expect(options.format).to.equal("json")
+          expect(options.output).to.equal("path/to/output")
+          expect(formattedResult).to.equal("I'm the result")
+          writtenReportNames.push(report.name)
+        }
+
+        main.run({ output: "path/to/output" }).then(() => {
+          expect(writtenReportNames).to.include.members(["a", "b", "c"])
+          done()
+        }).catch(done)
+      })
     })
 
     context("with --publish option", () => {
