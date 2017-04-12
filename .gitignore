@@ -12,3 +12,7 @@ key_file.txt
 todo.txt
 npm-debug.log
 *.swp
+
+# Track selected JSON files
+!package.json
+!reports/*.json
