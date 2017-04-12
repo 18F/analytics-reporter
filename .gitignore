@@ -2,9 +2,9 @@
 *.p12
 *.pem
 key_file.txt
-/node_modules
+node_modules
 .python-version
-/*.env
+*.env
 *.json
 *.csv
 *.gz
@@ -12,6 +12,7 @@ key_file.txt
 todo.txt
 npm-debug.log
 *.swp
+.git
 
 # Track selected JSON files
 !package.json
