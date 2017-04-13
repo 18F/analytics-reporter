@@ -53,7 +53,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date",
-        "filters": ["ga:sessions>5000"]
+        "filters": ["ga:sessions>1000"]
       },
       "meta": {
         "name": "Screen Resolution",
@@ -71,7 +71,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date",
-        "filters": ["ga:sessions>1000"]
+        "filters": ["ga:sessions>10"]
       },
       "meta": {
         "name": "Browser Language",
@@ -90,7 +90,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date",
-        "filters": ["ga:sessions>1000"]
+        "filters": ["ga:sessions>100"]
       },
       "meta": {
         "name": "Device Model",
@@ -107,7 +107,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "90daysAgo",
         "end-date": "yesterday",
-        "filters": ["ga:sessions>100"],
+        "filters": ["ga:sessions>10"],
         "sort": "ga:date"
       },
       "meta": {
@@ -126,7 +126,7 @@
         "end-date": "yesterday",
         "filters": [
           "ga:operatingSystem==Windows",
-          "ga:sessions>100"
+          "ga:sessions>10"
         ],
         "sort": "ga:date"
       },
@@ -145,7 +145,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "filters": ["ga:sessions>10"]
       },
       "meta": {
         "name": "Browsers",
@@ -164,7 +164,7 @@
         "sort": "ga:date,-ga:sessions",
         "filters": [
           "ga:browser==Internet Explorer",
-          "ga:sessions>100"
+          "ga:sessions>10"
         ]
       },
       "meta": {
@@ -182,7 +182,7 @@
         "start-date": "90daysAgo",
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "filters": ["ga:sessions>10"]
       },
       "meta": {
         "name": "OS-browser combinations",
@@ -200,7 +200,7 @@
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
         "filters": [
-          "ga:sessions>100",
+          "ga:sessions>10",
           "ga:operatingSystem==Windows"
         ]
       },
@@ -220,7 +220,7 @@
         "end-date": "yesterday",
         "sort": "ga:date,-ga:sessions",
         "filters": [
-          "ga:sessions>100",
+          "ga:sessions>10",
           "ga:browser==Internet Explorer",
           "ga:operatingSystem==Windows"
         ]
@@ -487,7 +487,7 @@
         "end-date": "yesterday",
         "sort": "-ga:sessions",
         "max-results": "10000",
-        "filters": ["ga:sessions>=1000"]
+        "filters": ["ga:sessions>=10"]
       },
       "meta": {
         "name": "All Domains (30 Days)",
