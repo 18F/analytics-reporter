@@ -10,7 +10,7 @@ if (config.aws.endpoint) {
   conf = {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    endpoint: (config.aws.endpoint ? config.aws.endpoint : ''),
+    endpoint: config.aws.endpoint,
     s3ForcePathStyle: 'true',
     signatureVersion: 'v4'
   }
