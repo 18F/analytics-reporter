@@ -3,17 +3,13 @@ const winston = require("winston-color")
 const zlib = require("zlib")
 const config = require("../config")
 
-let conf = {}
-
 // This is the case where using custom s3 api-like services like minio.
-if (config.aws.endpoint) {
-  conf = {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    endpoint: config.aws.endpoint,
-    s3ForcePathStyle: 'true',
-    signatureVersion: 'v4'
-  }
+let conf = {
+  accessKeyId: config.aws.accessKeyId,
+  secretAccessKey: config.aws.secretAccessKey,
+  endpoint: config.aws.endpoint,
+  s3ForcePathStyle: config.aws.s3ForcePathStyle,
+  signatureVersion: config.aws.signatureVersion
 }
 
 const S3 = new AWS.S3(conf)
