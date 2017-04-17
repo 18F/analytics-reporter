@@ -10,6 +10,21 @@ if (process.env.NEW_RELIC_APP_NAME) {
 const spawn = require("child_process").exec;
 const execSync = require("child_process").execSync;
 
+var api_run = function() {
+	winston.info("about to run api.sh");
+
+	var api = spawn("./deploy/api.sh")
+	api.stdout.on("data", (data) => {
+		winston.info("[api.sh]", data)
+	})
+	api.stderr.on("data", (data) => {
+		winston.info("[api.sh]", data)
+	})
+	api.on("exit", (code) => {
+		winston.info("api.sh exitted with code:", code)
+	})
+}
+
 var daily_run = function() {
 	winston.info("about to run daily.sh");
 
@@ -57,9 +72,12 @@ var realtime_run = function(){
 
 
 winston.info("starting cron.js!");
+api_run();
 daily_run();
 hourly_run();
 realtime_run();
+//api
+setInterval(api_run,1000 * 60 * 24)
 //daily
 const currentTime = new Date();
 const nextRunTime = new Date(
