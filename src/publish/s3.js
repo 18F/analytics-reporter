@@ -4,7 +4,7 @@ const zlib = require("zlib")
 const config = require("../config")
 
 // This is the case where using custom s3 api-like services like minio.
-let conf = {
+const conf = {
   accessKeyId: config.aws.accessKeyId,
   secretAccessKey: config.aws.secretAccessKey,
   endpoint: config.aws.endpoint,
