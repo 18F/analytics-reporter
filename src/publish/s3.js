@@ -3,9 +3,18 @@ const winston = require("winston-color")
 const zlib = require("zlib")
 const config = require("../config")
 
-const S3 = new AWS.S3()
+// This is the case where using custom s3 api-like services like minio.
+const conf = {
+  accessKeyId: config.aws.accessKeyId,
+  secretAccessKey: config.aws.secretAccessKey,
+  endpoint: config.aws.endpoint,
+  s3ForcePathStyle: config.aws.s3ForcePathStyle,
+  signatureVersion: config.aws.signatureVersion
+}
 
+const S3 = new AWS.S3(conf)
 const publish = (report, results, { format }) => {
+
   winston.debug("[" + report.name + "] Publishing to " + config.aws.bucket + "...")
 
   return _compress(results).then(compressed => {

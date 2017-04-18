@@ -134,6 +134,13 @@ export AWS_BUCKET_PATH=[your-path]
 export AWS_CACHE_TIME=0
 ```
 
+There are cases where you want to use a custom  object storage server compatible with Amazon S3 APIs, like [minio](https://github.com/minio/minio), in that specific case you should set an extra env variable:
+
+```
+export AWS_S3_ENDPOINT=http://your-storage-server:port
+```
+
+
 ### Other configuration
 
 If you use a **single domain** for all of your analytics data, then your profile is likely set to return relative paths (e.g. `/faq`) and not absolute paths when accessing real-time reports.
