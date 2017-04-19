@@ -77,7 +77,7 @@ daily_run();
 hourly_run();
 realtime_run();
 //api
-setInterval(api_run,1000 * 60 * 24)
+setInterval(api_run,1000 * 60 * 60 * 24)
 //daily
 const currentTime = new Date();
 const nextRunTime = new Date(
