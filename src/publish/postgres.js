@@ -2,6 +2,7 @@ const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
 
 const knex = require("knex")
 const moment = require("moment-timezone")
+const Promise = require("bluebird")
 const config = require("../config")
 
 const publish = (results) => {
@@ -83,7 +84,7 @@ const _writeRegularResults = ({ db, results }) => {
   })
 
   const rowsToInsert = []
-  const rowPromises = rows.map(row => {
+  return Promise.each(rows, row => {
     return _queryForExistingRow({ db, row }).then(results => {
       if (row.date_time === undefined) {
         return
@@ -93,9 +94,7 @@ const _writeRegularResults = ({ db, results }) => {
         return _handleExistingRow({ db, existingRow: results[0], newRow: row })
       }
     })
-  })
-
-  return Promise.all(rowPromises).then(() => {
+  }).then(() => {
     return db(ANALYTICS_DATA_TABLE_NAME).insert(rowsToInsert)
   }).then(() => {
     return db.destroy()
