@@ -8,6 +8,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": ["ga:sessions>100"]
       },
       "meta": {
@@ -16,22 +17,6 @@
       }
     },
     {
-      "name": "screen-size",
-      "frequency": "daily",
-      "query": {
-        "dimensions": ["ga:date" ,"ga:screenResolution"],
-        "metrics": ["ga:sessions"],
-        "start-date": "3daysAgo",
-        "end-date": "yesterday",
-        "filters": ["ga:sessions>100"]
-      },
-      "meta": {
-        "name": "Screen Resolutions",
-        "description": "Screen Resolutions of visiting devices"
-      }
-    },
-
-    {
       "name": "language",
       "frequency": "daily",
       "query": {
@@ -39,15 +24,16 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "filters": ["ga:sessions>100"]
+        "sort": "-ga:sessions",
+        "filters": [
+          "ga:sessions>100"
+        ]
       },
       "meta": {
         "name": "Browser Languages",
         "description": "Browser languages of visiting browsers"
       }
     },
-
-
     {
       "name": "device-model",
       "frequency": "daily",
@@ -56,6 +42,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": ["ga:sessions>100"]
       },
       "meta": {
@@ -71,6 +58,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": ["ga:sessions>100"]
       },
       "meta": {
@@ -86,6 +74,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": [
           "ga:operatingSystem==Windows",
           "ga:sessions>100"
@@ -104,6 +93,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": ["ga:sessions>100"]
       },
       "meta": {
@@ -119,6 +109,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": [
           "ga:browser==Internet Explorer",
           "ga:sessions>100"
@@ -137,6 +128,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": ["ga:sessions>100"]
       },
       "meta": {
@@ -152,6 +144,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": [
           "ga:sessions>100",
           "ga:operatingSystem==Windows"
@@ -170,6 +163,7 @@
         "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": [
           "ga:sessions>100",
           "ga:browser==Internet Explorer",
@@ -186,9 +180,10 @@
       "frequency": "daily",
       "query": {
         "dimensions": ["ga:date", "ga:hostname"],
-        "metrics": ["ga:sessions", "ga:pageviews", "ga:users", "ga:pageviewsPerSession", "ga:avgSessionDuration", "ga:exits"],
+        "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": ["ga:sessions>100"]
       },
       "meta": {
@@ -197,50 +192,19 @@
       }
     },
     {
-      "name": "landing-page",
-      "frequency": "daily",
-      "query": {
-        "dimensions": ["ga:date", "ga:landingPagePath"],
-        "metrics": ["ga:sessions", "ga:pageviews", "ga:users", "ga:pageviewsPerSession", "ga:avgSessionDuration", "ga:exits"],
-        "start-date": "3daysAgo",
-        "end-date": "yesterday",
-        "filters": ["ga:sessions>100"]
-      },
-      "meta": {
-        "name": "Landing Pages",
-        "description": "Number of visitors to a given landing page path"
-      }
-    },
-
-    {
       "name": "traffic-source",
       "frequency": "daily",
       "query": {
         "dimensions": ["ga:date", "ga:source", "ga:hasSocialSourceReferral"],
-        "metrics": ["ga:sessions", "ga:pageviews", "ga:users", "ga:pageviewsPerSession", "ga:avgSessionDuration", "ga:exits"],
+        "metrics": ["ga:sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
+        "sort": "-ga:sessions",
         "filters": ["ga:sessions>100"]
       },
       "meta": {
         "name": "Top Traffic Sources",
         "description": "Visitors for a given traffic source"
-      }
-    },
-
-    {
-      "name": "exit-page",
-      "frequency": "daily",
-      "query": {
-        "dimensions": ["ga:date", "ga:exitPagePath"],
-        "metrics": ["ga:sessions", "ga:pageviews", "ga:users", "ga:pageviewsPerSession", "ga:avgSessionDuration", "ga:exits"],
-        "start-date": "3daysAgo",
-        "end-date": "yesterday",
-        "filters": ["ga:sessions>100"]
-      },
-      "meta": {
-        "name": "Exit Page",
-        "description": "Number of sessions for a given exit page"
       }
     },
     {
@@ -249,6 +213,7 @@
       "query": {
         "dimensions": ["ga:date", "ga:hostname"],
         "metrics": ["ga:sessions"],
+        "sort": "-ga:sessions",
         "filters": [
           "ga:sessions>100",
           "ga:hostname=~^[^\\.]+\\.[^\\.]+$"
@@ -269,6 +234,7 @@
         "metrics": ["ga:sessions"],
         "filters": ["ga:sessions>100"],
         "start-date": "3daysAgo",
+        "sort": "-ga:sessions",
         "end-date": "yesterday"
       },
       "meta": {
@@ -285,9 +251,10 @@
         "filters": [
           "ga:eventCategory=~ownload",
           "ga:pagePath!~(usps.com).*\/(?i)(zip|doc).*",
-          "ga:totalEvents>10"
+          "ga:totalEvents>100"
         ],
         "start-date": "3daysAgo",
+        "sort": "-ga:totalEvents",
         "end-date": "yesterday"
       },
       "meta": {
