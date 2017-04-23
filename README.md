@@ -20,13 +20,19 @@ Available reports are named and described in [`reports.json`](reports/reports.js
 ````bash
 export NODE_ENV=development # just needed when developing against the image
 export NODE_ENV=production # to build an image for production
-docker build --build-arg NODE_ENV=${NODE_ENV} -t analytics-reporter .
+docker build --build-arg NODE_ENV=${NODE_ENV} -t 18fgsa/analytics-reporter .
 ````
+
+Or you can use the docker hub built image:
+
+```bash
+docker pull 18fgsa/analytics-reporter
+```
 
 Then you can create an alias in order to have the analytics command available:
 
 ```bash
-alias analytics="docker run -t -v ${HOME}:${HOME} -e ANALYTICS_REPORT_EMAIL -e ANALYTICS_REPORT_IDS -e ANALYTICS_KEY analytics-reporter"
+alias analytics="docker run -t -v ${HOME}:${HOME} -e ANALYTICS_REPORT_EMAIL -e ANALYTICS_REPORT_IDS -e ANALYTICS_KEY 18fgsa/analytics-reporter"
 ```
 
 To make this command working as expected you should export the env vars as follows:
