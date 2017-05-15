@@ -62,6 +62,27 @@ describe("PostgresPublisher", () => {
       }).catch(done)
     })
 
+    it("should coerce certain values into numbers", done => {
+      results.name = "report-name"
+      results.data = [{
+        date: "2017-05-15",
+        name: "abc",
+        visits: "123",
+        total_events: "456",
+      }]
+
+      PostgresPublisher.publish(results).then(() => {
+        return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
+      }).then(rows => {
+        const row = rows[0]
+        expect(row.data.visits).to.be.a("number")
+        expect(row.data.visits).to.equal(123)
+        expect(row.data.total_events).to.be.a("number")
+        expect(row.data.total_events).to.equal(456)
+        done()
+      }).catch(done)
+    })
+
     it("should use the ga:hour dimension in the date if it is present", done => {
       results.data = [{
         date: "2017-02-15",
@@ -138,12 +159,22 @@ describe("PostgresPublisher", () => {
           visits: "100",
           browser: "Safari",
         },
+        {
+          date: "2017-02-11",
+          total_events: "300",
+          title: "IRS Form 123",
+        },
       ]
       secondResults.data = [
         {
           date: "2017-02-11",
           visits: "200",
           browser: "Safari",
+        },
+        {
+          date: "2017-02-11",
+          total_events: "400",
+          title: "IRS Form 123",
         },
       ]
 
@@ -152,8 +183,14 @@ describe("PostgresPublisher", () => {
       }).then(() => {
         return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
       }).then(rows => {
-        expect(rows).to.have.length(1)
-        expect(rows[0].data.visits).to.equal("200")
+        expect(rows).to.have.length(2)
+        rows.forEach(row => {
+          if (row.data.visits) {
+            expect(row.data.visits).to.equal(200)
+          } else {
+            expect(row.data.total_events).to.equal(400)
+          }
+        })
         done()
       }).catch(done)
     })
@@ -174,7 +211,7 @@ describe("PostgresPublisher", () => {
         return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
       }).then(rows => {
         expect(rows).to.have.length(1)
-        expect(rows[0].data.visits).to.equal("456")
+        expect(rows[0].data.visits).to.equal(456)
         done()
       }).catch(done)
     })

@@ -15,8 +15,22 @@ const publish = (results) => {
   }
 }
 
+const _convertDataAttributesToNumbers = (data) => {
+  const transformedData = Object.assign({}, data)
+
+  const numbericalAttributes = ["visits", "total_events", "users"]
+  numbericalAttributes.forEach(attributeName => {
+    if (transformedData[attributeName]) {
+      transformedData[attributeName] = Number(transformedData[attributeName])
+    }
+  })
+
+  return transformedData
+}
+
 const _dataForDataPoint = (dataPoint, { realtime } = {}) => {
-  const data = Object.assign({}, dataPoint)
+  const data = _convertDataAttributesToNumbers(dataPoint)
+
   let dateTime
   if (realtime) {
     dateTime = (new Date()).toISOString()
@@ -54,6 +68,7 @@ const _queryForExistingRow = ({ db, row }) => {
       const dataQuery = Object.assign({}, row.data)
       delete dataQuery.visits
       delete dataQuery.users
+      delete dataQuery.total_events
       Object.keys(dataQuery).forEach(dataKey => {
         query = query.whereRaw(`data->>'${dataKey}' = ?`, [dataQuery[dataKey]])
       })
@@ -66,7 +81,10 @@ const _queryForExistingRow = ({ db, row }) => {
 }
 
 const _handleExistingRow = ({ db, existingRow, newRow }) => {
-  if (existingRow.data.visits != newRow.data.visits || existingRow.data.users != newRow.data.users) {
+  if (existingRow.data.visits != newRow.data.visits ||
+      existingRow.data.users != newRow.data.users ||
+      existingRow.data.total_events != newRow.data.total_events
+  ) {
     return db(ANALYTICS_DATA_TABLE_NAME).where({ id: existingRow.id }).update(newRow)
   }
 }
