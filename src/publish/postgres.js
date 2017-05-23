@@ -1,7 +1,6 @@
 const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
 
 const knex = require("knex")
-const moment = require("moment-timezone")
 const Promise = require("bluebird")
 const config = require("../config")
 
@@ -28,33 +27,23 @@ const _convertDataAttributesToNumbers = (data) => {
   return transformedData
 }
 
-const _dataForDataPoint = (dataPoint, { realtime } = {}) => {
+const _dataForDataPoint = (dataPoint) => {
   const data = _convertDataAttributesToNumbers(dataPoint)
 
-  let dateTime
-  if (realtime) {
-    dateTime = (new Date()).toISOString()
-  } else {
-    dateTime = _dateTimeForDataPoint(dataPoint)
-  }
+  const date = _dateTimeForDataPoint(dataPoint)
+
   delete data.date
   delete data.hour
 
   return {
-    date_time: dateTime,
-    data: data,
+    date,
+    data,
   }
 }
 
 const _dateTimeForDataPoint = (dataPoint) => {
-  let dateString = dataPoint.date
-  if (dataPoint.hour) {
-    dateString = `${dateString}T${dataPoint.hour}:00:00`
-  } else {
-    dateString = `${dateString}T00:00:00`
-  }
-  if (!isNaN(Date.parse(dateString))) {
-    return moment.tz(dateString, config.timezone).toISOString()
+  if (!isNaN(Date.parse(dataPoint.date))) {
+    return dataPoint.date
   }
 }
 
@@ -89,8 +78,8 @@ const _handleExistingRow = ({ db, existingRow, newRow }) => {
   }
 }
 
-const _rowForDataPoint = ({ results, dataPoint, realtime }) => {
-  const row = _dataForDataPoint(dataPoint, { realtime })
+const _rowForDataPoint = ({ results, dataPoint }) => {
+  const row = _dataForDataPoint(dataPoint)
   row.report_name = results.name
   row.report_agency = results.agency
   return row
@@ -104,7 +93,7 @@ const _writeRegularResults = ({ db, results }) => {
   const rowsToInsert = []
   return Promise.each(rows, row => {
     return _queryForExistingRow({ db, row }).then(results => {
-      if (row.date_time === undefined) {
+      if (row.date === undefined) {
         return
       } else if (results.length === 0) {
         rowsToInsert.push(row)

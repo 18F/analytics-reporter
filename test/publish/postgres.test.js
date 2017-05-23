@@ -2,7 +2,6 @@ const { ANALYTICS_DATA_TABLE_NAME } = require("../../src/publish/postgres")
 
 const expect = require("chai").expect
 const knex = require("knex")
-const moment = require("moment-timezone")
 const proxyquire = require("proxyquire")
 const database = require("../support/database")
 const resultsFixture = require("../support/fixtures/results")
@@ -46,17 +45,14 @@ describe("PostgresPublisher", () => {
       ]
 
       PostgresPublisher.publish(results).then(() => {
-        return databaseClient(ANALYTICS_DATA_TABLE_NAME).orderBy("date_time", "asc").select()
+        return databaseClient(ANALYTICS_DATA_TABLE_NAME).orderBy("date", "asc").select()
       }).then(rows => {
         expect(rows).to.have.length(2)
         rows.forEach((row, index) => {
           const data = results.data[index]
           expect(row.report_name).to.equal("report-name")
           expect(row.data.name).to.equal(data.name)
-          expect(row.data.date).to.be.undefined
-
-          const date = moment.tz(data.date, config.timezone).toDate()
-          expect(row.date_time.getTime()).to.equal(date.getTime())
+          expect(row.date.toISOString()).to.match(RegExp(`^${data.date}`))
         })
         done()
       }).catch(done)
@@ -79,22 +75,6 @@ describe("PostgresPublisher", () => {
         expect(row.data.visits).to.equal(123)
         expect(row.data.total_events).to.be.a("number")
         expect(row.data.total_events).to.equal(456)
-        done()
-      }).catch(done)
-    })
-
-    it("should use the ga:hour dimension in the date if it is present", done => {
-      results.data = [{
-        date: "2017-02-15",
-        hour: "12",
-      }]
-      const date = moment.tz("2017-02-15T12:00:00", config.timezone).toDate()
-
-      PostgresPublisher.publish(results).then(() => {
-        return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)
-      }).then(rows => {
-        const row = rows[0]
-        expect(row.date_time.getTime()).to.equal(date.getTime())
         done()
       }).catch(done)
     })

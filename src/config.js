@@ -48,6 +48,4 @@ module.exports = {
   static: {
     path: '../analytics.usa.gov/',
   },
-
-  timezone: process.env.ANALYTICS_TIMEZONE || "US/Eastern",
 };

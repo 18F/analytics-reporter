@@ -62,7 +62,6 @@
     "googleapis": "^2.1.5",
     "lodash": "^3.10.1",
     "minimist": "*",
-    "moment-timezone": "^0.5.11",
     "node-schedule": "^0.1.13",
     "winston-color": "^1.0.0"
   },
