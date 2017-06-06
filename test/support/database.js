@@ -4,7 +4,7 @@ const knex = require("knex")
 
 const connection = {
   host: process.env.PG_HOST ? process.env.PG_HOST : "localhost",
-  database: process.env.TRAVIS ? "travis_ci_test" : "analytics_reporter_test",
+  database: process.env.CIRCLECI ? "circle_test" : "analytics_reporter_test",
   user : process.env.PG_USER ? process.env.PG_USER : 'postgres'
 }
 
