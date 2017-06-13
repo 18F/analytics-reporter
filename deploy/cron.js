@@ -1,3 +1,4 @@
+const spawn = require("child_process").spawn;
 const winston = require("winston-color")
 
 if (process.env.NEW_RELIC_APP_NAME) {
@@ -7,12 +8,12 @@ if (process.env.NEW_RELIC_APP_NAME) {
 	winston.warn("Skipping New Relic Activation")
 }
 
-const spawn = require("child_process").spawn;
+const scriptRootPath = `${process.env.ANALYTICS_ROOT_PATH}/deploy`
 
 var api_run = function() {
 	winston.info("about to run api.sh");
 
-	var api = spawn("./deploy/api.sh")
+	var api = spawn(`${scriptRootPath}/api.sh`)
 	api.stdout.on("data", (data) => {
 		winston.info("[api.sh]", data.toString().trim())
 	})
@@ -27,7 +28,7 @@ var api_run = function() {
 var daily_run = function() {
 	winston.info("about to run daily.sh");
 
-	var daily = spawn("./deploy/daily.sh")
+	var daily = spawn(`${scriptRootPath}/daily.sh`)
 	daily.stdout.on("data", (data) => {
 		winston.info("[daily.sh]", data.toString().trim())
 	})
@@ -42,7 +43,7 @@ var daily_run = function() {
 var hourly_run = function(){
 	winston.info("about to run hourly.sh");
 
-	var hourly = spawn("./deploy/hourly.sh")
+	var hourly = spawn(`${scriptRootPath}/hourly.sh`)
 	hourly.stdout.on("data", (data) => {
 		winston.info("[hourly.sh]", data.toString().trim())
 	})
@@ -57,7 +58,7 @@ var hourly_run = function(){
 var realtime_run = function(){
 	winston.info("about to run realtime.sh");
 
-	var realtime = spawn("./deploy/realtime.sh")
+	var realtime = spawn(`${scriptRootPath}/realtime.sh`)
 	realtime.stdout.on("data", (data) => {
 		winston.info("[realtime.sh]", data.toString().trim())
 	})

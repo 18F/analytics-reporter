@@ -8,9 +8,11 @@ services:
     volumes:
        - pgdata:/var/lib/postgresql/data/
   reporter:
-    command: node ./deploy/cron.js
+    image: node:7.8
+    entrypoint: ""
+    command: "node ./deploy/cron.js"
     environment:
-      - ANALYTICS_ROOT_PATH=/usr/src/reporter
+      - ANALYTICS_ROOT_PATH=/usr/src/app
       - ANALYTICS_CREDENTIALS=${ANALYTICS_CREDENTIALS}
       - ANALYTICS_REPORTS_PATH=${ANALYTICS_REPORTS_PATH}
       - ANALYTICS_REPORT_IDS=${ANALYTICS_REPORT_IDS}
@@ -25,13 +27,12 @@ services:
       - POSTGRES_HOST=db
       - POSTGRES_USER=analytics
       - POSTGRES_DATABASE=analytics-reporter
-    image: node:7.7
     links:
       - db
+    working_dir: /usr/src/app
     volumes:
-      - .:/usr/src/reporter
-      - node_modules:/usr/src/reporter/node_modules
-    working_dir: /usr/src/reporter
+      - .:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
 volumes:
   node_modules:
   pgdata:

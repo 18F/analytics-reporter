@@ -327,7 +327,7 @@ cf restage analytics-reporter
 This repo contains a [Docker Compose](https://docs.docker.com/compose/)
 configuration. The reporter is configured to run in the container as if it were
 running in GovCloud. This is helpful for seeing how the reporter will behave
-when deployed without pushing it to cloud.gov
+when deployed without pushing it to cloud.gov.
 
 To start the reporter, first run the `docker-update` script to install the
 necessary dependencies:
