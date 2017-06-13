@@ -12,6 +12,7 @@ const S3Publisher = require("./src/publish/s3")
 
 winston.transports.console.level = "info"
 winston.transports.console.prettyPrint = true
+winston.transports.console.label = config.account.agency_name || "live"
 
 const run = function(options = {}) {
   if (options.debug || options.verbose) {
