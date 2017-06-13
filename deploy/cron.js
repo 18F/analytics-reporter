@@ -7,18 +7,17 @@ if (process.env.NEW_RELIC_APP_NAME) {
 	winston.warn("Skipping New Relic Activation")
 }
 
-const spawn = require("child_process").exec;
-const execSync = require("child_process").execSync;
+const spawn = require("child_process").spawn;
 
 var api_run = function() {
 	winston.info("about to run api.sh");
 
 	var api = spawn("./deploy/api.sh")
 	api.stdout.on("data", (data) => {
-		winston.info("[api.sh]", data)
+		winston.info("[api.sh]", data.toString().trim())
 	})
 	api.stderr.on("data", (data) => {
-		winston.info("[api.sh]", data)
+		winston.info("[api.sh]", data.toString().trim())
 	})
 	api.on("exit", (code) => {
 		winston.info("api.sh exitted with code:", code)
@@ -30,10 +29,10 @@ var daily_run = function() {
 
 	var daily = spawn("./deploy/daily.sh")
 	daily.stdout.on("data", (data) => {
-		winston.info("[daily.sh]", data)
+		winston.info("[daily.sh]", data.toString().trim())
 	})
 	daily.stderr.on("data", (data) => {
-		winston.info("[daily.sh]", data)
+		winston.info("[daily.sh]", data.toString().trim())
 	})
 	daily.on("exit", (code) => {
 		winston.info("daily.sh exitted with code:", code)
@@ -45,10 +44,10 @@ var hourly_run = function(){
 
 	var hourly = spawn("./deploy/hourly.sh")
 	hourly.stdout.on("data", (data) => {
-		winston.info("[hourly.sh]", data)
+		winston.info("[hourly.sh]", data.toString().trim())
 	})
 	hourly.stderr.on("data", (data) => {
-		winston.info("[hourly.sh]", data)
+		winston.info("[hourly.sh]", data.toString().trim())
 	})
 	hourly.on("exit", (code) => {
 		winston.info("hourly.sh exitted with code:", code)
@@ -60,10 +59,10 @@ var realtime_run = function(){
 
 	var realtime = spawn("./deploy/realtime.sh")
 	realtime.stdout.on("data", (data) => {
-		winston.info("[realtime.sh]", data)
+		winston.info("[realtime.sh]", data.toString().trim())
 	})
 	realtime.stderr.on("data", (data) => {
-		winston.info("[realtime.sh]", data)
+		winston.info("[realtime.sh]", data.toString().trim())
 	})
 	realtime.on("exit", (code) => {
 		winston.info("realtime.sh exitted with code:", code)
