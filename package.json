@@ -58,13 +58,10 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "async": "*",
     "aws-sdk": "*",
     "fast-csv": "*",
     "googleapis": "^19.0.0",
-    "lodash": "^3.10.1",
     "minimist": "*",
-    "node-schedule": "^0.1.13",
     "winston-color": "^1.0.0"
   },
   "devDependencies": {
