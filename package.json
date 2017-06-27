@@ -61,7 +61,7 @@
     "async": "*",
     "aws-sdk": "*",
     "fast-csv": "*",
-    "googleapis": "^2.1.5",
+    "googleapis": "^19.0.0",
     "lodash": "^3.10.1",
     "minimist": "*",
     "node-schedule": "^0.1.13",
