@@ -58,22 +58,19 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "async": "*",
-    "aws-sdk": "*",
-    "fast-csv": "*",
-    "googleapis": "^2.1.5",
-    "lodash": "^3.10.1",
-    "minimist": "*",
-    "node-schedule": "^0.1.13",
+    "aws-sdk": "2.58.0",
+    "fast-csv": "^2.4.0",
+    "googleapis": "^19.0.0",
+    "minimist": "^1.2.0",
     "winston-color": "^1.0.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.2",
     "mocha": "^3.2.0",
     "proxyquire": "^1.7.11"
   },
   "optionalDependencies": {
-    "knex": "^0.12.6",
+    "knex": "^0.13.0",
     "newrelic": "^1.36.1",
     "pg": "^6.1.2"
   }
