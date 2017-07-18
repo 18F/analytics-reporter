@@ -5,9 +5,8 @@ const Promise = require("bluebird")
 const config = require("../config")
 
 const publish = (results) => {
-  const db = knex({ client: "pg", connection: config.postgres })
-
   if (results.query.dimensions.match(/ga:date/)) {
+    const db = knex({ client: "pg", connection: config.postgres })
     return _writeRegularResults({ db, results }).then(() => db.destroy())
   } else {
     return Promise.resolve()
