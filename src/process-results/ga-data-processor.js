@@ -59,6 +59,11 @@ const _formatDate = (date) => {
 
 const _initializeResult = ({ report, data }) => ({
   name: report.name,
+  sampling: {
+    containsSampledData: data.containsSampledData,
+    sampleSize: data.sampleSize,
+    sampleSpace: data.sampleSpace
+  },
   query: ((query) => {
     query = Object.assign({}, query)
     delete query.ids
