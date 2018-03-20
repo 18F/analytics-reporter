@@ -1,8 +1,0 @@
-machine:
-  node:
-    version: 7
-deployment:
-  master:
-    branch: master
-    commands:
-      - bin/deploy-ci.sh

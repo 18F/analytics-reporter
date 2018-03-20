@@ -8,7 +8,8 @@ module.exports = {
   test: {
     client: 'postgresql',
     connection: {
-      database: process.env.CIRCLECI ? "circle_test" : "analytics_reporter_test",
+      database: "analytics_reporter_test",
+      user: process.env.CIRCLECI ? "postgres" : config.postgres.user
     },
     migrations: {
       tableName: 'knex_migrations',
