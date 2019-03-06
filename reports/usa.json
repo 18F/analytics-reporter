@@ -240,7 +240,7 @@
         "sort": "-rt:activeUsers",
         "max-results": "20",
         "filters":[
-          "ga:hostname!~^ncbi.nlm.nih.gov.*"
+          "ga:hostname!~^ncbi\.nlm\.nih\.gov.*"
         ]
       },
       "meta": {
