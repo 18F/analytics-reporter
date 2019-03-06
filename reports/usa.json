@@ -238,7 +238,10 @@
         "dimensions": ["rt:pagePath", "rt:pageTitle"],
         "metrics": ["rt:activeUsers"],
         "sort": "-rt:activeUsers",
-        "max-results": "20"
+        "max-results": "20",
+        "filters":[
+          "ga:hostname!=ncbi.nlm.nih.gov"
+        ]
       },
       "meta": {
         "name": "Top Pages (Live)",
