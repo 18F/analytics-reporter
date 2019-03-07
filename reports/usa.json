@@ -240,7 +240,7 @@
         "sort": "-rt:activeUsers",
         "max-results": "20",
         "filters":[
-          "rt:pagePath!~^ncbi\\.nlm\\.nih\\.gov.*"
+          "rt:pagePath!~^ncbi\\.nlm\\.nih\\.gov/ncbi_.*"
         ]
       },
       "meta": {
