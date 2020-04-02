@@ -399,7 +399,7 @@
         "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
         "metrics": ["ga:totalEvents"],
         "filters": [
-          "ga:eventCategory=~ownload",
+          "ga:eventCategory=~^(download|downloads|(outbound downloads))$",
           "ga:pagePath!~(usps.com).*\/(?i)(zip|doc).*"
         ],
         "start-date": "yesterday",
@@ -419,7 +419,7 @@
         "dimensions": ["ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
         "metrics": ["ga:totalEvents"],
         "filters": [
-          "ga:eventCategory=~ownload",
+          "ga:eventCategory=~^(download|downloads|(outbound downloads))$",
           "ga:eventLabel!~swf$",
           "ga:pagePath!~(usps.com).*\/(?i)(zip|doc).*"
         ],
