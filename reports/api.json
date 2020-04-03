@@ -249,7 +249,7 @@
         "dimensions": ["ga:date", "ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
         "metrics": ["ga:totalEvents"],
         "filters": [
-          "ga:eventCategory=~ownload",
+          "ga:eventCategory=~^(download|downloads|(outbound downloads))$",
           "ga:pagePath!~(usps.com).*\/(?i)(zip|doc).*",
           "ga:totalEvents>100"
         ],
