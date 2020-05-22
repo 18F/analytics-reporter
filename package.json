@@ -71,7 +71,7 @@
   },
   "optionalDependencies": {
     "knex": "^0.13.0",
-    "newrelic": "^1.36.1",
+    "newrelic": "^6.8.0",
     "pg": "^6.1.2"
   }
 }
