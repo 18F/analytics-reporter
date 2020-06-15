@@ -43,7 +43,7 @@
     "*.md"
   ],
   "engines": {
-    "node": ">=7.0.0"
+    "node": "12.x.x"
   },
   "preferGlobal": true,
   "main": "index",
