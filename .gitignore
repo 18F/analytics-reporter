@@ -16,4 +16,5 @@ npm-debug.log
 
 # Track selected JSON files
 !package.json
+!package-lock.json
 !reports/*.json
