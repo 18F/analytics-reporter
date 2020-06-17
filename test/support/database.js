@@ -8,8 +8,7 @@ const connection = {
   user : process.env.PG_USER ? process.env.PG_USER : 'postgres'
 }
 
-const resetSchema = () => {
-  const db = knex({ client: "pg", connection })
+const resetSchema = (db) => {
   return db("analytics_data").delete()
 }
 
