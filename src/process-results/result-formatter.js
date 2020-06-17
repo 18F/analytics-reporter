@@ -23,15 +23,7 @@ const _formatJSON = (result, { slim }) => {
 }
 
 const _formatCSV = (result) => {
-  return new Promise((resolve, reject) => {
-    csv.writeToString(result.data, {headers: true}, (err, data) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
+  return csv.writeToString(result.data, {headers: true})
 }
 
 module.exports = { formatResult }

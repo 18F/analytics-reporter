@@ -1,4 +1,3 @@
-const csv = require("fast-csv")
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
 const reportFixture = require("../support/fixtures/report")
@@ -39,18 +38,18 @@ describe("ResultFormatter", () => {
       }).catch(done)
     })
 
-    it("should format results into CSV if the format is 'csv'", done => {
+    it("should format results into CSV if the format is 'csv'", () => {
       const result = GoogleAnalyticsDataProcessor.processData(report, data)
 
-      ResultFormatter.formatResult(result, { format: "csv", slim: true }).then(formattedResult => {
-        csv.fromString(formattedResult, { strictColumnHandling: true }, { headers: true })
-          .on("invalid-data", (data) => {
-            done(new Error("Invalid CSV data: " + data))
-          })
-          .on("finish", () => {
-            done()
-          })
-      }).catch(done)
+      return ResultFormatter.formatResult(result, { format: "csv", slim: true }).then(formattedResult => {
+        const lines = formattedResult.split("\n");
+        const [header, ...rows] = lines
+        expect(header).to.equal("date,hour,visits")
+        rows.forEach(row => {
+          // Each CSV row should match 2017-01-30,00,100
+          expect(row).to.match(/[0-9]{4}-[0-9]{2}-[0-9]{2},[0-9]{2},100/)
+        });
+      })
     })
   })
 })
