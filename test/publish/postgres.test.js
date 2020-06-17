@@ -17,20 +17,26 @@ const PostgresPublisher = proxyquire("../../src/publish/postgres", {
   "../config": config,
 })
 
-const databaseClient = knex({ client: "pg", connection: database.connection })
-
 describe("PostgresPublisher", () => {
+  let databaseClient, results
+
+  before(() => {
+    // Setup the database client
+    databaseClient = knex({ client: "pg", connection: database.connection })
+  });
+
+
+  after(() => {
+    // Clean up the database client
+    return databaseClient.destroy();
+  });
+
+  beforeEach(() => {
+    results = Object.assign({}, resultsFixture)
+    return database.resetSchema(databaseClient)
+  })
+
   describe(".publish(results)", () => {
-    let results
-
-    beforeEach(done => {
-      results = Object.assign({}, resultsFixture)
-
-      database.resetSchema().then(() => {
-        done()
-      }).catch(done)
-    })
-
     it("should insert a record for each results.data element", done => {
       results.name = "report-name"
       results.data = [
