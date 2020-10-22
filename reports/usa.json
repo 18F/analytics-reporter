@@ -21,7 +21,8 @@
         "start-date": "30daysAgo",
         "end-date": "yesterday",
         "sort": "-ga:date",
-        "max-results": "30"
+        "max-results": "30",
+        "start-index": "1",
       },
       "meta": {
         "name": "Traffic Sources (30 Days)",
