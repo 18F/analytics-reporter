@@ -20,7 +20,8 @@
         "metrics": ["ga:sessions"],
         "start-date": "30daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:date"
+        "sort": "-ga:date",
+        "max-results": "30"
       },
       "meta": {
         "name": "Traffic Sources (30 Days)",
