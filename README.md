@@ -47,7 +47,7 @@ If you're developing locally inside the repo, `npm install` is sufficient.
 
 ### Setup
 
-* Create an API service account in the [Google developer dashboard](https://console.developers.google.com/apis/).
+* Create a service account for API access in the [Google developer dashboard](https://console.cloud.google.com/iam-admin/serviceaccounts).
 
 * Visit the "APIs" section of the Google Developer Dashboard for your project, and enable it for the "Analytics API".
 
