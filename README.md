@@ -47,13 +47,11 @@ If you're developing locally inside the repo, `npm install` is sufficient.
 
 ### Setup
 
-* Create a service account for API access in the [Google developer dashboard](https://console.cloud.google.com/iam-admin/serviceaccounts).
-
 * Enable [Google Analytics API](https://console.cloud.google.com/apis/library/analytics.googleapis.com) for your project in the Google developer dashboard.
 
-* Go to the "Credentials" section and generate "service account" credentials using a new service account.
+* Create a service account for API access in the [Google developer dashboard](https://console.cloud.google.com/iam-admin/serviceaccounts).
 
-* Download the **JSON** private key file it gives you.
+* Go to the "KEYS" tab for your service account, create new key using "ADD KEY" button, and download the **JSON** private key file it gives you.
 
 * Grab the generated client email address (ends with `gserviceaccount.com`) from the contents of the .json file.
 
