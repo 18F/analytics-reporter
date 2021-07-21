@@ -57,7 +57,7 @@ If you're developing locally inside the repo, `npm install` is sufficient.
 
 * Grant that email address `Read, Analyze & Collaborate` permissions on the Google Analytics profile(s) whose data you wish to publish.
 
-* Set environment variables for your app's generated email address, and for the profile you authorized it to:
+* Set environment variables for `analytics-reporter`. It needs email address of service account, and view ID in the profile you authorized it to:
 
 ```bash
 export ANALYTICS_REPORT_EMAIL="YYYYYYY@developer.gserviceaccount.com"
