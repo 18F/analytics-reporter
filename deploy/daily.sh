@@ -138,3 +138,8 @@ $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=daily --slim --verbose 
 source $ANALYTICS_ROOT_PATH/deploy/envs/executive-office-president.env
 $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=daily --slim --verbose
 $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=daily --slim --verbose --csv
+
+# Consumer Financial Protection Bureau
+source $ANALYTICS_ROOT_PATH/deploy/envs/cfpb.env
+$ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=daily --slim --verbose
+$ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=daily --slim --verbose --csv

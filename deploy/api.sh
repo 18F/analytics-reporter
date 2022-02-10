@@ -112,3 +112,7 @@ $ANALYTICS_ROOT_PATH/bin/analytics --verbose --write-to-database --output /tmp
 # Executive Office of the President
 source $ANALYTICS_ROOT_PATH/deploy/envs/executive-office-president.env
 $ANALYTICS_ROOT_PATH/bin/analytics --verbose --write-to-database --output /tmp
+
+# Consumer Financial Protection Bureau
+source $ANALYTICS_ROOT_PATH/deploy/envs/cfpb.env
+$ANALYTICS_ROOT_PATH/bin/analytics --verbose --write-to-database --output /tmp
