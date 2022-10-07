@@ -1,0 +1,16 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - newrelic > https-proxy-agent > debug:
+        patched: '2022-10-07T15:16:50.205Z'
+  'npm:extend:20180424':
+    - newrelic > https-proxy-agent > extend:
+        patched: '2022-10-07T15:16:50.205Z'
+  SNYK-JS-LODASH-567746:
+    - knex > lodash:
+        patched: '2022-10-07T15:16:50.205Z'
+    - googleapis > async > lodash:
+        patched: '2022-10-07T15:16:50.205Z'
