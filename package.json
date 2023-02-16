@@ -60,7 +60,7 @@
   "dependencies": {
     "aws-sdk": "^2.1316.0",
     "fast-csv": "^4.3.6",
-    "googleapis": "^111.0.0",
+    "googleapis": "^19.0.0",
     "minimist": "^1.2.8",
     "winston-color": "^1.0.0"
   },
