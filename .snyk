@@ -1,0 +1,11 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - newrelic > https-proxy-agent > debug:
+        patched: '2023-03-18T11:01:30.337Z'
+  'npm:extend:20180424':
+    - newrelic > https-proxy-agent > extend:
+        patched: '2023-03-18T11:01:30.337Z'

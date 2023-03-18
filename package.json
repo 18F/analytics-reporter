@@ -12,7 +12,9 @@
     "migrate": "`npm bin`/knex migrate:latest",
     "pretest": "NODE_ENV=test npm run migrate",
     "start": "node app.js",
-    "test": "`npm bin`/mocha test/*.test.js test/**/*.test.js"
+    "test": "`npm bin`/mocha test/*.test.js test/**/*.test.js",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "contributors": [
     {
@@ -62,7 +64,8 @@
     "fast-csv": "^4.3.6",
     "googleapis": "^19.0.0",
     "minimist": "^1.2.8",
-    "winston-color": "^1.0.0"
+    "winston-color": "^1.0.0",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "chai": "^4.3.7",
@@ -73,5 +76,6 @@
     "knex": "^0.19.5",
     "newrelic": "^1.40.0",
     "pg": "^8.9.0"
-  }
+  },
+  "snyk": true
 }
