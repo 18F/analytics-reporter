@@ -47,19 +47,17 @@ If you're developing locally inside the repo, `npm install` is sufficient.
 
 ### Setup
 
-* Create an API service account in the [Google developer dashboard](https://console.developers.google.com/apis/).
+* Enable [Google Analytics API](https://console.cloud.google.com/apis/library/analytics.googleapis.com) for your project in the Google developer dashboard.
 
-* Visit the "APIs" section of the Google Developer Dashboard for your project, and enable it for the "Analytics API".
+* Create a service account for API access in the [Google developer dashboard](https://console.cloud.google.com/iam-admin/serviceaccounts).
 
-* Go to the "Credentials" section and generate "service account" credentials using a new service account.
-
-* Download the **JSON** private key file it gives you.
+* Go to the "KEYS" tab for your service account, create new key using "ADD KEY" button, and download the **JSON** private key file it gives you.
 
 * Grab the generated client email address (ends with `gserviceaccount.com`) from the contents of the .json file.
 
 * Grant that email address `Read, Analyze & Collaborate` permissions on the Google Analytics profile(s) whose data you wish to publish.
 
-* Set environment variables for your app's generated email address, and for the profile you authorized it to:
+* Set environment variables for `analytics-reporter`. It needs email address of service account, and view ID in the profile you authorized it to:
 
 ```bash
 export ANALYTICS_REPORT_EMAIL="YYYYYYY@developer.gserviceaccount.com"
