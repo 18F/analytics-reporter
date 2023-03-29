@@ -101,7 +101,9 @@ const _writeRegularResults = ({ db, results }) => {
       }
     })
   }).then(() => {
-    return db(ANALYTICS_DATA_TABLE_NAME).insert(rowsToInsert)
+    if(rowsToInsert.length > 0) {
+      return db(ANALYTICS_DATA_TABLE_NAME).insert(rowsToInsert)
+    }
   }).then(() => {
     return db.destroy()
   })
