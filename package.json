@@ -60,13 +60,12 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "aws-sdk": "^2.1345.0",
-    "bluebird": "^3.7.2",
+    "aws-sdk": "^2.1346.0",
     "fast-csv": "^4.3.6",
-    "googleapis": "^114.0.0",
+    "googleapis": "^50.0.0",
     "minimist": "^1.2.8",
     "winston-color": "^1.0.0",
-    "@snyk/protect": "latest"
+    "@snyk/protect": "^1.1130.0"
   },
   "devDependencies": {
     "chai": "^4.3.7",

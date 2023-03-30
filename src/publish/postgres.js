@@ -1,8 +1,11 @@
 const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
 
 const knex = require("knex")
-const Promise = require("bluebird")
 const config = require("../config")
+
+Promise.each = async function (arr, fn) {
+  for (const item of arr) await fn(item);
+}
 
 const publish = (results) => {
   if (results.query.dimensions.match(/ga:date/)) {

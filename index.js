@@ -1,6 +1,5 @@
 const fs = require("fs")
 const path = require('path')
-const Promise = require("bluebird")
 const winston = require("winston-color")
 
 const config = require("./src/config")
@@ -9,6 +8,10 @@ const DiskPublisher = require("./src/publish/disk")
 const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 const S3Publisher = require("./src/publish/s3")
+
+Promise.each = async function (arr, fn) {
+  for (const item of arr) await fn(item);
+}
 
 winston.transports.console.level = "info"
 winston.transports.console.prettyPrint = true
