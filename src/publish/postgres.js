@@ -3,7 +3,7 @@ const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
 const knex = require("knex")
 const config = require("../config")
 
-Promise.each = async function (arr, fn) { // take an array and a function
+Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
 }
 

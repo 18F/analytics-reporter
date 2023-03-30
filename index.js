@@ -9,7 +9,7 @@ const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 const S3Publisher = require("./src/publish/s3")
 
-Promise.each = async function (arr, fn) { // take an array and a function
+Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
 }
 
