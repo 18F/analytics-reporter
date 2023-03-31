@@ -58,6 +58,7 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
+    "async": "^3.2.4",
     "aws-sdk": "^2.1316.0",
     "bluebird": "^3.7.2",
     "fast-csv": "^4.3.6",
