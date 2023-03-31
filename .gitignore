@@ -2,17 +2,18 @@
 *.p12
 *.pem
 key_file.txt
-node_modules
 .python-version
 *.env
 *.json
 *.csv
 *.gz
-/data
 todo.txt
 npm-debug.log
 *.swp
 .git
+/data
+/node_modules
+/tmp
 
 # Track selected JSON files
 !package.json
