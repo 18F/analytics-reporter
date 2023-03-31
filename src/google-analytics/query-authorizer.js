@@ -1,4 +1,4 @@
-const googleapis = require('googleapis')
+const { google } = require('googleapis')
 const fs = require('fs')
 const config = require('../config')
 const GoogleAnalyticsCredentialLoader = require("./credential-loader")
@@ -8,7 +8,7 @@ const authorizeQuery = (query) => {
   const email = credentials.email
   const key = credentials.key
   const scopes = ['https://www.googleapis.com/auth/analytics.readonly']
-  const jwt = new googleapis.auth.JWT(email, null, key, scopes);
+  const jwt = new google.auth.JWT(email, null, key, scopes);
 
   query = Object.assign({}, query, { auth: jwt })
 

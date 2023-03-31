@@ -14,7 +14,7 @@ let GoogleAnalyticsClient
 describe("GoogleAnalyticsClient", () => {
   describe(".fetchData(query, options)", () => {
     beforeEach(() => {
-      googleapis = googleAPIsMock()
+      googleapis = {google: googleAPIsMock()}
       GoogleAnalyticsQueryAuthorizer = { authorizeQuery: (query) => Promise.resolve(query) }
       GoogleAnalyticsQueryBuilder = { buildQuery: () => ({}) }
 
@@ -44,7 +44,7 @@ describe("GoogleAnalyticsClient", () => {
       }
 
       let googleAPICalled = false
-      googleapis.ga.get = (params, cb) => {
+      googleapis.google.ga.get = (params, cb) => {
         googleAPICalled = true
         expect(params).to.deep.equal({ query: true, authorized: true })
         cb(null, {})
@@ -59,7 +59,7 @@ describe("GoogleAnalyticsClient", () => {
     })
 
     it("should return a promise for Google Analytics data", done => {
-      googleapis.ga.get = (params, cb) => {
+      googleapis.google.ga.get = (params, cb) => {
         cb(null, { data: "that's me" })
       }
 
@@ -70,7 +70,7 @@ describe("GoogleAnalyticsClient", () => {
     })
 
     it("should reject if there is a problem fetching data", done => {
-      googleapis.ga.get = (params, cb) => {
+      googleapis.google.ga.get = (params, cb) => {
         const error = new Error("i'm an error")
         cb(error)
       }
@@ -83,7 +83,7 @@ describe("GoogleAnalyticsClient", () => {
 
     it("should use the data function if the report is not realtime", done => {
       let dataFunctionCalled = false
-      googleapis.ga.get = (query, cb) => {
+      googleapis.google.ga.get = (query, cb) => {
         dataFunctionCalled = true
         cb(null, {})
       }
@@ -96,7 +96,7 @@ describe("GoogleAnalyticsClient", () => {
 
     it("should use the realtime function if the report is not realtime", done => {
       let realtimeFunctionCalled = false
-      googleapis.realtime.get = (query, cb) => {
+      googleapis.google.realtime.get = (query, cb) => {
         realtimeFunctionCalled = true
         cb(null, {})
       }

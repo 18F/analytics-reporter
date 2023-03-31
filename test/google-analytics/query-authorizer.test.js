@@ -5,7 +5,7 @@ const googleAPIsMock = require("../support/mocks/googleapis-auth")
 proxyquire.noCallThru()
 
 const config = {}
-const googleapis = {}
+const googleapis = {google: googleAPIsMock()}
 const GoogleAnalyticsCredentialLoader = {
   loadCredentials: () => ({
     email: "next_email@example.com",
@@ -22,7 +22,7 @@ const GoogleAnalyticsQueryAuthorizer = proxyquire("../../src/google-analytics/qu
 describe("GoogleAnalyticsQueryAuthorizer", () => {
   describe(".authorizeQuery(query)", () => {
     beforeEach(() => {
-      Object.assign(googleapis, googleAPIsMock())
+      // Object.assign(googleapis)
       config.email = "hello@example.com"
       config.key = "123abc"
       config.key_file = undefined
@@ -36,7 +36,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       GoogleAnalyticsQueryAuthorizer.authorizeQuery(query).then(query => {
         expect(query.abc).to.equal(123)
         expect(query.auth).to.not.be.undefined
-        expect(query.auth).to.be.an.instanceof(googleapis.auth.JWT)
+        expect(query.auth).to.be.an.instanceof(googleapis.google.auth.JWT)
         done()
       }).catch(done)
     })
@@ -97,7 +97,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
 
     it("should authorize the JWT and resolve if it is valid", done => {
       let jwtAuthorized = false
-      googleapis.auth.JWT.prototype.authorize = (callback) => {
+      googleapis.google.auth.JWT.prototype.authorize = (callback) => {
         jwtAuthorized = true
         callback(null, {})
       }
@@ -110,7 +110,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
 
     it("should authorize the JWT and reject if it is invalid", done => {
       let jwtAuthorized = false
-      googleapis.auth.JWT.prototype.authorize = (callback) => {
+      googleapis.google.auth.JWT.prototype.authorize = (callback) => {
         jwtAuthorized = true
         callback(new Error("Failed to authorize"))
       }
