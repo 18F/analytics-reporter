@@ -25,8 +25,20 @@ jobs:
           name: run tests
           command: npm test
       - run:
-          name: deploy site
+          name: install-cf-cli
+          command: |
+            curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
+            sudo dpkg -i cf-cli_amd64.deb
+            cf -v    
+      - run:
+          name: deploy staging site
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              bin/deploy-staging-ci.sh
+            fi
+      - run:
+          name: deploy production site
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              bin/deploy-ci.sh
+              bin/deploy-production-ci.sh
             fi
