@@ -1,4 +1,6 @@
- [![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)](https://codeclimate.com/github/18F/analytics-reporter) [![CircleCI](https://circleci.com/gh/18F/analytics.usa.gov.svg?style=shield)](https://circleci.com/gh/18F/analytics.usa.gov)  [![Dependency Status](https://gemnasium.com/badges/github.com/18F/analytics-reporter.svg)](https://gemnasium.com/github.com/18F/analytics-reporter)
+[![CircleCI](https://circleci.com/gh/18F/analytics.usa.gov.svg?style=shield)](https://circleci.com/gh/18F/analytics.usa.gov)  
+[![Snyk](https://snyk.io/test/github/18F/analytics-reporter/badge.svg)]
+[![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)]
 
 ## Analytics Reporter
 
@@ -7,7 +9,6 @@ A lightweight system for publishing analytics data from Google Analytics profile
 This is used in combination with [18F/analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics hub, [analytics.usa.gov](https://analytics.usa.gov).
 
 Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
-
 
 ### Installation
 
