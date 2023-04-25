@@ -60,7 +60,7 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "aws-sdk": "^2.1346.0",
+    "aws-sdk": "^2.1354.0",
     "fast-csv": "^4.3.6",
     "googleapis": "^50.0.0",
     "minimist": "^1.2.8",
