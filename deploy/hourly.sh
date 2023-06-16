@@ -110,3 +110,7 @@ $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=hourly --slim --verbose
 # Executive Office of the President
 source $ANALYTICS_ROOT_PATH/deploy/envs/executive-office-president.env
 $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=hourly --slim --verbose
+
+# Consumer Financial Protection Bureau
+source $ANALYTICS_ROOT_PATH/deploy/envs/cfpb.env
+$ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=hourly --slim --verbose
