@@ -3,10 +3,12 @@ const ResultTotalsCalculator = require("./result-totals-calculator")
 
 const processData = (report, data) => {
   let result = _initializeResult({ report, data })
+  data = data.data
 
   // If you use a filter that results in no data, you get null
   // back from google and need to protect against it.
   if (!data || !data.rows) {
+    winston.error(`Response contains no GA data!`)
     return result;
   }
 
