@@ -1,5 +1,6 @@
 const config = require("../config")
 const ResultTotalsCalculator = require("./result-totals-calculator")
+const winston = require("winston-color")
 
 const processData = (report, data) => {
   let result = _initializeResult({ report, data })
