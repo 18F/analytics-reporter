@@ -29,8 +29,7 @@ jobs:
           name: Replace Data URL in manifest.yml file when deploying to develop
           command: |
               sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
-              sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
-              sed -i 's@- analytics-s3@- analytics-s3-develop@g' manifest.yml
+              sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
 
       - run:   
