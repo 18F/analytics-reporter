@@ -24,21 +24,56 @@ jobs:
       - run:
           name: run tests
           command: npm test
+
       - run:
-          name: install-cf-cli
+          name: Replace Data URL in manifest.yml file when deploying to develop
           command: |
-            curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
-            sudo dpkg -i cf-cli_amd64.deb
-            cf -v    
+              sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
+              sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
+              sed -i 's@- analytics-s3@- analytics-s3-develop@g' manifest.yml
+              sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
+
+      - run:   
+          name: Install CF CLI
+          command: |
+            sudo wget --user-agent "Mozilla" -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add - && sudo echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list && sudo apt-get update && sudo apt-get -y install cf8-cli curl 
+      
       - run:
-          name: deploy staging site
+          name: deploy
           command: |
-            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-              bin/deploy-staging-ci.sh
-            fi
-      - run:
-          name: deploy production site
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              bin/deploy-production-ci.sh
-            fi
+              set -e
+              # Log into cloud.gov
+              cf api api.fr.cloud.gov
+              cf login -u $CF_USERNAME_DEV -p $CF_PASSWORD_DEV -o gsa-opp-analytics -s analytics-dev
+              pwd
+              ls -l
+              cat manifest.yml
+              cf push -f "./manifest.yml"
+              cf logout
+
+workflows:
+  develop_workflow:
+    jobs: 
+      - develop_deploy:
+          filters:
+            branches:
+              only:
+                - develop
+
+  # staging:
+    # jobs: 
+      # # - staging_deploy:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - staging
+                  
+  # main_workflow:
+  #   jobs: 
+  #     - main_deploy:
+  #         filters:
+  #           branches:
+  #             only:
+  #               - master
+  #          
+>>>>>>> Stashed changes
