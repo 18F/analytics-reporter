@@ -1,7 +1,7 @@
 applications:
 - name: analytics-reporter
   instances: 1
-  memory: 512M
+  memory: 256M
   disk_quota: 1024M
   no-route: true
   health-check-type: process
