@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  develop_deploy:
     docker:
       - image: cimg/node:16.19.1-browsers
         environment:
