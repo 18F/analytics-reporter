@@ -1,4 +1,6 @@
-const google = require("googleapis")
+//const google = require("googleapis")
+const { BetaAnalyticsDataClient } = require("@google-analytics/data")
+const analyticsDataClient = new BetaAnalyticsDataClient();
 const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer")
 const GoogleAnalyticsQueryBuilder = require("./query-builder")
 
@@ -22,11 +24,60 @@ const _executeFetchDataRequest = (query, { realtime }) => {
 }
 
 const _get = (realtime) => {
-  const analytics = google.analytics("v3")
+  //const analytics = google.analytics("v3")
   if (realtime) {
-    return analytics.data.realtime.get
+    const [realtimeresponse] =  analyticsDataClient.runRealtimeReport({
+      property: `properties/393249053`,
+      dateRanges: [
+        {
+          startDate: '910daysAgo',
+          endDate: 'today',
+        },
+      ],
+      dimensions: [
+        {
+            name: 'date',
+          },
+      {
+        name: "deviceCategory"
+      }
+      ],
+    
+      metrics: [
+        {
+          name: 'sessions',
+        },
+      ],"limit":"5","sort":"date"
+   
+    });//analytics.data.realtime.get
+    return realtimeresponse;
   } else {
-    return analytics.data.ga.get
+    const [response] =  analyticsDataClient.runReport({
+      property: `properties/393249053`,
+      dateRanges: [
+        {
+          startDate: '910daysAgo',
+          endDate: 'today',
+        },
+      ],
+      dimensions: [
+        {
+            name: 'date',
+          },
+      {
+        name: "deviceCategory"
+      }
+      ],
+    
+      metrics: [
+        {
+          name: 'sessions',
+        },
+      ],"limit":"5","sort":"date"
+   
+    });
+    return response;
+   
   }
 }
 

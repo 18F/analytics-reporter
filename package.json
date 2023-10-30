@@ -62,7 +62,7 @@
   "dependencies": {
     "aws-sdk": "^2.1346.0",
     "fast-csv": "^4.3.6",
-    "googleapis": "^50.0.0",
+    "@google-analytics/data": "^4.0.1",
     "minimist": "^1.2.8",
     "winston-color": "^1.0.0",
     "@snyk/protect": "^1.1130.0"
