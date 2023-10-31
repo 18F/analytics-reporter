@@ -6,7 +6,7 @@ applications:
   no-route: true
   health-check-type: process
   buildpack: nodejs_buildpack
-  command: node --trace-warnings deploy/cron.js
+  command: export NODE_ENV=production node --trace-warnings deploy/cron.js
   # These are examples. These variables are set via `cg-toolkit/generate-env.sh`
   # using the `.env` file referenced in README.md.
   # env:
