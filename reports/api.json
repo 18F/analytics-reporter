@@ -4,12 +4,12 @@
       "name": "device",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date" ,"ga:deviceCategory"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date" ,"deviceCategory"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "sort": "sessions",
+        "filters": ["sessions>100"]
       },
       "meta": {
         "name": "Devices",
@@ -20,13 +20,13 @@
       "name": "language",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date" ,"ga:language"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date" ,"language"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
+        "sort": "sessions",
         "filters": [
-          "ga:sessions>100"
+          "sessions>100"
         ]
       },
       "meta": {
@@ -38,12 +38,12 @@
       "name": "device-model",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date" ,"ga:mobileDeviceModel"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date" ,"mobileDeviceModel"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "sort": "sessions",
+        "filters": ["sessions>100"]
       },
       "meta": {
         "name": "Device Models",
@@ -54,12 +54,12 @@
       "name": "os",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date" ,"ga:operatingSystem"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date" ,"operatingSystem"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "sort": "sessions",
+        "filters": ["sessions>100"]
       },
       "meta": {
         "name": "Operating Systems",
@@ -70,14 +70,14 @@
       "name": "windows",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date" ,"operatingSystemVersion"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
+        "sort": "sessions",
         "filters": [
-          "ga:operatingSystem==Windows",
-          "ga:sessions>100"
+          "operatingSystem==Windows",
+          "sessions>100"
         ]
       },
       "meta": {
@@ -89,12 +89,12 @@
       "name": "browser",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date" ,"ga:browser"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date" ,"browser"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "sort": "sessions",
+        "filters": ["sessions>100"]
       },
       "meta": {
         "name": "Browsers",
@@ -105,14 +105,14 @@
       "name": "ie",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date","ga:browserVersion"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date","browserVersion"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
+        "sort": "sessions",
         "filters": [
-          "ga:browser==Internet Explorer",
-          "ga:sessions>100"
+          "browser==Internet Explorer",
+          "sessions>100"
         ]
       },
       "meta": {
@@ -124,12 +124,12 @@
       "name": "os-browser",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date" ,"ga:browser", "ga:operatingSystem"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date" ,"browser", "operatingSystem"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "sort": "sessions",
+        "filters": ["sessions>100"]
       },
       "meta": {
         "name": "OS-browser combinations",
@@ -140,14 +140,14 @@
       "name": "windows-browser",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date" ,"ga:browser", "ga:operatingSystemVersion"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date" ,"browser", "operatingSystemVersion"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
+        "sort": "sessions",
         "filters": [
-          "ga:sessions>100",
-          "ga:operatingSystem==Windows"
+          "sessions>100",
+          "operatingSystem==Windows"
         ]
       },
       "meta": {
@@ -159,15 +159,15 @@
       "name": "windows-ie",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date","ga:browserVersion", "ga:operatingSystemVersion"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date","browserVersion", "operatingSystemVersion"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
+        "sort": "sessions",
         "filters": [
-          "ga:sessions>100",
-          "ga:browser==Internet Explorer",
-          "ga:operatingSystem==Windows"
+          "sessions>100",
+          "browser==Internet Explorer",
+          "operatingSystem==Windows"
         ]
       },
       "meta": {
@@ -179,12 +179,12 @@
       "name": "domain",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date", "ga:hostname"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date", "hostname"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "sort": "sessions",
+        "filters": ["sessions>100"]
       },
       "meta": {
         "name": "Domains",
@@ -195,12 +195,12 @@
       "name": "traffic-source",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date", "ga:source", "ga:hasSocialSourceReferral"],
-        "metrics": ["ga:sessions"],
+        "dimensions": ["date", "source", "hasSocialSourceReferral"],
+        "metrics": ["sessions"],
         "start-date": "3daysAgo",
         "end-date": "yesterday",
-        "sort": "-ga:sessions",
-        "filters": ["ga:sessions>100"]
+        "sort": "sessions",
+        "filters": ["sessions>100"]
       },
       "meta": {
         "name": "Top Traffic Sources",
@@ -211,12 +211,12 @@
       "name": "second-level-domain",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date", "ga:hostname"],
-        "metrics": ["ga:sessions"],
-        "sort": "-ga:sessions",
+        "dimensions": ["date", "hostname"],
+        "metrics": ["sessions"],
+        "sort": "sessions",
         "filters": [
-          "ga:sessions>100",
-          "ga:hostname=~^[^\\.]+\\.[^\\.]+$"
+          "sessions>100",
+          "hostname=~^[^\\.]+\\.[^\\.]+$"
         ],
         "start-date": "3daysAgo",
         "end-date": "yesterday"
@@ -230,11 +230,11 @@
       "name": "site",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date", "ga:hostname"],
-        "metrics": ["ga:sessions"],
-        "filters": ["ga:sessions>100"],
+        "dimensions": ["date", "hostname"],
+        "metrics": ["sessions"],
+        "filters": ["sessions>100"],
         "start-date": "3daysAgo",
-        "sort": "-ga:sessions",
+        "sort": "sessions",
         "end-date": "yesterday"
       },
       "meta": {
@@ -246,15 +246,15 @@
       "name": "download",
       "frequency": "daily",
       "query": {
-        "dimensions": ["ga:date", "ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
-        "metrics": ["ga:totalEvents"],
+        "dimensions": ["date", "pageTitle", "eventLabel", "pagePath"],
+        "metrics": ["totalEvents"],
         "filters": [
-          "ga:eventCategory=~^(download|downloads|(outbound downloads))$",
-          "ga:pagePath!~(usps.com).*\/(?i)(zip|doc).*",
-          "ga:totalEvents>100"
+          "eventCategory=~^(download|downloads|(outbound downloads))$",
+          "pagePath!~(usps.com).*\/(?i)(zip|doc).*",
+          "totalEvents>100"
         ],
         "start-date": "3daysAgo",
-        "sort": "-ga:totalEvents",
+        "sort": "totalEvents",
         "end-date": "yesterday"
       },
       "meta": {
