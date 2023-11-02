@@ -1,6 +1,6 @@
 const fs = require("fs")
 const path = require('path')
-const winston = require("winston-color")
+const winston = require('winston');
 
 const config = require("./src/config")
 const Analytics = require("./src/analytics")
@@ -13,9 +13,11 @@ Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
 }
 
-winston.transports.console.level = "info"
-winston.transports.console.prettyPrint = true
-winston.transports.console.label = config.account.agency_name || "live"
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [new winston.transports.Console()],
+});
 
 const run = function(options = {}) {
   if (options.debug || options.verbose) {
@@ -46,7 +48,7 @@ const _optionsForReport = (report, options) => ({
 })
 
 const _publishReport = (report, formattedResult, options) => {
-  winston.debug(`[${report.name}]`, "Publishing...")
+  logger.debug(`[${report.name}]`, "Publishing...")
   if (options.publish) {
     return S3Publisher.publish(report, formattedResult, options)
   } else if (options.output && typeof(options.output) === "string") {
@@ -58,10 +60,10 @@ const _publishReport = (report, formattedResult, options) => {
 
 const _runReport = (report, options) => {
   const reportOptions = _optionsForReport(report, options)
-  winston.debug("[" + report.name + "] Fetching...");
+  logger.debug("[" + report.name + "] Fetching...");
 
   return Analytics.query(report).then(results => {
-    winston.debug("[" + report.name + "] Saving report data...")
+    logger.debug("[" + report.name + "] Saving report data...")
     if (config.account.agency_name) {
       results.agency = config.account.agency_name
     }
@@ -71,7 +73,7 @@ const _runReport = (report, options) => {
   }).then(formattedResult => {
     return _publishReport(report, formattedResult, reportOptions)
   }).catch(err => {
-    winston.error(`[${report.name}] `, err)
+    logger.error(`[${report.name}] `, err)
   })
 }
 
