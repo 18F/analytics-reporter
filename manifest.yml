@@ -1,12 +1,12 @@
 applications:
 - name: analytics-reporter
   instances: 1
-  memory: 512M
+  memory: 256M
   disk_quota: 1024M
   no-route: true
   health-check-type: process
   buildpack: nodejs_buildpack
-  command: node deploy/cron.js
+  command: node --trace-warnings deploy/cron.js
   # These are examples. These variables are set via `cg-toolkit/generate-env.sh`
   # using the `.env` file referenced in README.md.
   # env:
@@ -26,6 +26,6 @@ applications:
   - analytics-s3
   - analytics-env
   - analytics-reporter-database
-  stack: cflinuxfs3
+  stack: cflinuxfs4
   timeout: 180
   path: .
