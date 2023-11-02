@@ -31,6 +31,20 @@ jobs:
               sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
               sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
+              sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
+              sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
+              sed -i 's@<AWS_ACCESS_KEY_ID>@$ANALYTICS_ACESS_KEY_ID_DEV@g' manifest.yml
+              sed -i 's@<AWS_BUCKET>@$AWS_BUCKET_DEV@g' manifest.yml
+              sed -i 's@<AWS_BUCKET_PATH>@$AWS_BUCKET_PATH@g' manifest.yml
+              sed -i 's@<AWS_CACHE_TIME>@$AWS_CACHE_TIME@g' manifest.yml
+              sed -i 's@<AWS_DEFAULT_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
+              sed -i 's@<AWS_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
+              sed -i 's@<AWS_SECRET_ACCESS_KEY>@$AWS_SECRET_ACESS_KEY_DEV@g' manifest.yml
+              sed -i 's@<BUCKET_NAME>@$BUCKET_NAME_DEV@g' manifest.yml
+              sed -i 's@<POSTGRES_DATABASE>@$POSTGRES_DATABASE_DEV@g' manifest.yml
+              sed -i 's@<POSTGRES_HOST>@$POSTGRES_HOST_DEV@g' manifest.yml
+              sed -i 's@<POSTGRES_USER>@$POSTGRES_USER_DEV@g' manifest.yml
+              
 
       - run:   
           name: Install CF CLI
