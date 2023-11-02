@@ -1,7 +1,13 @@
 const AWS = require("aws-sdk")
-const winston = require("winston-color")
 const zlib = require("zlib")
 const config = require("../config")
+const winston = require("winston")
+
+const logger = winston.createLogger({
+	level: 'info',
+	format: winston.format.json(),
+	transports: [new winston.transports.Console()],
+  });
 
 // This is the case where using custom s3 api-like services like minio.
 const conf = {
@@ -15,7 +21,7 @@ const conf = {
 const S3 = new AWS.S3(conf)
 const publish = (report, results, { format }) => {
 
-  winston.debug("[" + report.name + "] Publishing to " + config.aws.bucket + "...")
+  logger.debug("[" + report.name + "] Publishing to " + config.aws.bucket + "...")
 
   return _compress(results).then(compressed => {
     return S3.putObject({
