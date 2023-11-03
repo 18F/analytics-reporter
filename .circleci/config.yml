@@ -34,6 +34,7 @@ jobs:
               sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
               sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
+              sed -i 's@<ANALYTICS_ROOT_PATH>@$ANALYTICS_ROOT_PATH@g' manifest.yml
               sed -i 's@<ANALYTICS_CREDENTIALS>@$ANALYTICS_CREDENTIALS@g' manifest.yml
               sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
               sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
