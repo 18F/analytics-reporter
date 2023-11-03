@@ -7,7 +7,20 @@ jobs:
           POSTGRES_USER: postgres
       - image: circleci/postgres:9.5-alpine
         environment:
-          POSTGRES_DB: analytics_reporter_test
+          #POSTGRES_DB: analytics_reporter_test
+          ANALYTICS_REPORT_IDS: ${{ secrets.ANALYTICS_REPORT_IDS }}
+          ANALYTICS_REPORTS_PATH: ${{ secrets.ANALYTICS_REPORTS_PATH }}
+          ANALYTICS_ACESS_KEY_ID_DEV: ${{ secrets.ANALYTICS_ACESS_KEY_ID_DEV }}
+          AWS_BUCKET_DEV: ${{ secrets.AWS_BUCKET_DEV }}
+          AWS_BUCKET_PATH: ${{ secrets.AWS_BUCKET_PATH }}
+          AWS_CACHE_TIME:  ${{ secrets.AWS_CACHE_TIME }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_SECRET_ACESS_KEY_DEV: ${{ secrets.AWS_SECRET_ACESS_KEY_DEV }}
+          BUCKET_NAME_DEV: ${{ secrets.BUCKET_NAME_DEV }}
+          POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE_DEV }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST_DEV }}
+          POSTGRES_USER_DEV: ${{ secrets.POSTGRES_USER_DEV }}
+
     steps:
       - checkout
       - restore_cache:
@@ -21,6 +34,7 @@ jobs:
           paths:
             - ./node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
       # - run:
       #     name: run tests
       #     command: npm test
@@ -31,19 +45,19 @@ jobs:
               sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
               sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORT_IDS>@${env.ANALYTICS_REPORT_IDS}@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORTS_PATH>@${env.ANALYTICS_REPORTS_PATH}@g' manifest.yml
-              sed -i 's@<AWS_ACCESS_KEY_ID>@${env.ANALYTICS_ACESS_KEY_ID_DEV}@g' manifest.yml
-              sed -i 's@<AWS_BUCKET>@${env.AWS_BUCKET_DEV}@g' manifest.yml
-              sed -i 's@<AWS_BUCKET_PATH>@${env.AWS_BUCKET_PATH}@g' manifest.yml
-              sed -i 's@<AWS_CACHE_TIME>@${env.AWS_CACHE_TIME}@g' manifest.yml
-              sed -i 's@<AWS_DEFAULT_REGION>@${env.AWS_DEFAULT_REGION}@g' manifest.yml
-              sed -i 's@<AWS_REGION>@${env.AWS_DEFAULT_REGION}@g' manifest.yml
-              sed -i 's@<AWS_SECRET_ACCESS_KEY>@${env.AWS_SECRET_ACESS_KEY_DEV}@g' manifest.yml
-              sed -i 's@<BUCKET_NAME>@${env.BUCKET_NAME_DEV}@g' manifest.yml
-              sed -i 's@<POSTGRES_DATABASE>@${env.POSTGRES_DATABASE_DEV}@g' manifest.yml
-              sed -i 's@<POSTGRES_HOST>@${env.POSTGRES_HOST_DEV}@g' manifest.yml
-              sed -i 's@<POSTGRES_USER>@${env.POSTGRES_USER_DEV}@g' manifest.yml
+              sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
+              sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
+              sed -i 's@<AWS_ACCESS_KEY_ID>@$ANALYTICS_ACESS_KEY_ID_DEV@g' manifest.yml
+              sed -i 's@<AWS_BUCKET>@$AWS_BUCKET_DEV@g' manifest.yml
+              sed -i 's@<AWS_BUCKET_PATH>@$AWS_BUCKET_PATH@g' manifest.yml
+              sed -i 's@<AWS_CACHE_TIME>@$AWS_CACHE_TIME@g' manifest.yml
+              sed -i 's@<AWS_DEFAULT_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
+              sed -i 's@<AWS_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
+              sed -i 's@<AWS_SECRET_ACCESS_KEY>@$AWS_SECRET_ACESS_KEY_DEV@g' manifest.yml
+              sed -i 's@<BUCKET_NAME>@$BUCKET_NAME_DEV@g' manifest.yml
+              sed -i 's@<POSTGRES_DATABASE>@$POSTGRES_DATABASE_DEV@g' manifest.yml
+              sed -i 's@<POSTGRES_HOST>@$POSTGRES_HOST_DEV@g' manifest.yml
+              sed -i 's@<POSTGRES_USER>@$POSTGRES_USER_DEV@g' manifest.yml
               
 
       - run:   
