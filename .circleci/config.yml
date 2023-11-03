@@ -36,7 +36,7 @@ jobs:
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
               sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
               sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
-              sed -i 's@<AWS_ACCESS_KEY_ID>@$ANALYTICS_ACESS_KEY_ID_DEV@g' manifest.yml
+              sed -i 's@<AWS_ACCESS_KEY_ID>@$AWS_ACCESS_KEY_ID_DEV@g' manifest.yml
               sed -i 's@<AWS_BUCKET>@$AWS_BUCKET_DEV@g' manifest.yml
               sed -i 's@<AWS_BUCKET_PATH>@$AWS_BUCKET_PATH@g' manifest.yml
               sed -i 's@<AWS_CACHE_TIME>@$AWS_CACHE_TIME@g' manifest.yml
