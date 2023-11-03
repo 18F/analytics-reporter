@@ -29,6 +29,7 @@ jobs:
       - run:
           name: Replace Data URL in manifest.yml file when deploying to develop
           command: |
+              npm install envsub
               sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
               sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
@@ -46,7 +47,7 @@ jobs:
               sed -i 's@<POSTGRES_HOST>@$POSTGRES_HOST_DEV@g' manifest.yml
               sed -i 's@<POSTGRES_USER>@$POSTGRES_USER_DEV@g' manifest.yml
               mv manifest.yml manifest.yml.src
-              envsubst < manifest.yml.src > manifest.yml  
+              envsub < manifest.yml.src > manifest.yml  
 
       - run:   
           name: Install CF CLI
