@@ -47,7 +47,7 @@ jobs:
               sed -i 's@<POSTGRES_HOST>@$POSTGRES_HOST_DEV@g' manifest.yml
               sed -i 's@<POSTGRES_USER>@$POSTGRES_USER_DEV@g' manifest.yml
               mv manifest.yml manifest.yml.src
-              envsub < manifest.yml.src > manifest.yml  
+              envsubst < manifest.yml.src > manifest.yml  
 
       - run:   
           name: Install CF CLI
