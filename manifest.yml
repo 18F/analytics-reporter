@@ -6,7 +6,7 @@ applications:
   no-route: true
   health-check-type: process
   buildpack: nodejs_buildpack
-  command: export NODE_ENV=development node deploy/cron.js
+  command: node deploy/cron.js
   env:
     ANALYTICS_REPORT_IDS: <ANALYTICS_REPORT_IDS>
     ANALYTICS_REPORTS_PATH: <ANALYTICS_REPORTS_PATH>
