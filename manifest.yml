@@ -8,6 +8,7 @@ applications:
   buildpack: nodejs_buildpack
   command: node deploy/cron.js
   env:
+    ANALYTICS_CREDENTIALS: <ANALYTICS_CREDENTIALS>
     ANALYTICS_REPORT_IDS: <ANALYTICS_REPORT_IDS>
     ANALYTICS_REPORTS_PATH: <ANALYTICS_REPORTS_PATH>
     AWS_ACCESS_KEY_ID: <AWS_ACCESS_KEY_ID>
