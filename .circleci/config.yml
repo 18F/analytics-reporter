@@ -7,20 +7,7 @@ jobs:
           POSTGRES_USER: postgres
       - image: circleci/postgres:9.5-alpine
         environment:
-          #POSTGRES_DB: analytics_reporter_test
-          ANALYTICS_REPORT_IDS: ${{ secrets.ANALYTICS_REPORT_IDS }}
-          ANALYTICS_REPORTS_PATH: ${{ secrets.ANALYTICS_REPORTS_PATH }}
-          ANALYTICS_ACESS_KEY_ID_DEV: ${{ secrets.ANALYTICS_ACESS_KEY_ID_DEV }}
-          AWS_BUCKET_DEV: ${{ secrets.AWS_BUCKET_DEV }}
-          AWS_BUCKET_PATH: ${{ secrets.AWS_BUCKET_PATH }}
-          AWS_CACHE_TIME:  ${{ secrets.AWS_CACHE_TIME }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          AWS_SECRET_ACESS_KEY_DEV: ${{ secrets.AWS_SECRET_ACESS_KEY_DEV }}
-          BUCKET_NAME_DEV: ${{ secrets.BUCKET_NAME_DEV }}
-          POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE_DEV }}
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST_DEV }}
-          POSTGRES_USER_DEV: ${{ secrets.POSTGRES_USER_DEV }}
-
+          POSTGRES_DB: analytics_reporter_test
     steps:
       - checkout
       - restore_cache:
@@ -58,7 +45,9 @@ jobs:
               sed -i 's@<POSTGRES_DATABASE>@$POSTGRES_DATABASE_DEV@g' manifest.yml
               sed -i 's@<POSTGRES_HOST>@$POSTGRES_HOST_DEV@g' manifest.yml
               sed -i 's@<POSTGRES_USER>@$POSTGRES_USER_DEV@g' manifest.yml
-              
+              mv manifest.yml mainfest.yml.src
+              rm manifest.yml
+              envsubst < manifest.yml.src > manifest.yml  
 
       - run:   
           name: Install CF CLI
