@@ -1,6 +1,6 @@
 const fs = require("fs")
 const path = require('path')
-const winston = require("winston")
+const winston = require('winston');
 
 const config = require("./src/config")
 const Analytics = require("./src/analytics")
@@ -16,6 +16,10 @@ const logger = winston.createLogger({
 Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
 }
+
+winston.transports.console.level = "info"
+winston.transports.console.prettyPrint = true
+winston.transports.console.label = config.account.agency_name || "live"
 
 const run = function(options = {}) {
   if (options.debug || options.verbose) {

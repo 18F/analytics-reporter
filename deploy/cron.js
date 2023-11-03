@@ -1,11 +1,19 @@
 const spawn = require("child_process").spawn;
 const winston = require("winston")
+<<<<<<< HEAD
 const logger = winston.createLogger({
 	level: 'info',
 	format: winston.format.json(),
 	transports: [new winston.transports.Console()],
   });
+=======
+>>>>>>> origin/develop
 
+const logger = winston.createLogger({
+	level: 'info',
+	format: winston.format.json(),
+	transports: [new winston.transports.Console()],
+  });
 if (process.env.NEW_RELIC_APP_NAME) {
 	logger.info("Starting New Relic")
 	require("newrelic")
