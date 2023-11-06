@@ -5,7 +5,9 @@ applications:
   disk_quota: 1024M
   no-route: true
   health-check-type: process
-  buildpack: nodejs_buildpack
+  buildpacks:
+      - https://github.com/cloudfoundry/apt-buildpack
+      - nodejs_buildpack
   command: node deploy/cron.js
   env:
     ANALYTICS_CREDENTIALS: <ANALYTICS_CREDENTIALS>
