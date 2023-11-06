@@ -6,5 +6,5 @@ repos:
   - name: deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg-snapshot main
     priority:  100
 packages:
-  - postgresql-client
+  - postgresql-client-15
   - nmap
