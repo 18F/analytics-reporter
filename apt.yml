@@ -1,4 +1,4 @@
 ---
 packages:
-  - postgresql-client-15
+  - postgresql-client
   - nmap
