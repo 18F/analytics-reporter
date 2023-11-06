@@ -4,7 +4,8 @@ keys:
 repos:
   - deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg-snapshot main
   - name: deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg-snapshot main
-    priority:  100
+    priority:  999
 packages:
+  # - libpq5
   - postgresql-client-15
   - nmap
