@@ -1,13 +1,13 @@
 ---
 # truncatesources: true
-keys:
-- https://www.postgresql.org/media/keys/ACCC4CF8.asc
-repos:
-  - deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg-snapshot main
-  - name: deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg-snapshot main
-    priority:  999
+# keys:
+# - https://www.postgresql.org/media/keys/ACCC4CF8.asc
+# repos:
+  # - deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg-snapshot main
+  # - name: deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg-snapshot main
+    # priority:  999
 packages:
   # - libpq5
   - postgresql-client
-  - postgresql-client-15
+  # - postgresql-client-15
   # - nmap
