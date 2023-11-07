@@ -6,9 +6,8 @@ applications:
   no-route: true
   health-check-type: process
   buildpacks:
-      - https://github.com/cloudfoundry/apt-buildpack
       - nodejs_buildpack
-  command: export DEBUG=* && node deploy/cron.js
+  command: node deploy/cron.js
   env:
     ANALYTICS_CREDENTIALS: <ANALYTICS_CREDENTIALS>
     ANALYTICS_ROOT_PATH: <ANALYTICS_ROOT_PATH>
@@ -27,6 +26,7 @@ applications:
     POSTGRES_PASSWORD: <POSTGRES_PASSWORD>
     POSTGRES_USER: <POSTGRES_USER>
     NODE_ENV: production
+    ANALYTICS_DEBUG: true
   services:
   - analytics-s3
   - analytics-env
