@@ -14,15 +14,12 @@ Promise.each = async function (arr, fn) {
 }
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: 'debug',
   format: winston.format.json(),
   transports: [new winston.transports.Console()],
 });
 
 const run = function(options = {}) {
-  if (options.debug || options.verbose) {
-    winston.transports.console.level = "debug"
-  }
   const reports = _filterReports(options)
   return Promise.each(reports, report => _runReport(report, options))
 }
