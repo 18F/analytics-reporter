@@ -1,5 +1,5 @@
 ---
-truncatesources: true
+# truncatesources: true
 keys:
 - https://www.postgresql.org/media/keys/ACCC4CF8.asc
 repos:
@@ -8,5 +8,6 @@ repos:
     priority:  999
 packages:
   # - libpq5
+  - postgresql-client
   - postgresql-client-15
   # - nmap
