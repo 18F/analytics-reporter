@@ -8,6 +8,8 @@
     # priority:  999
 packages:
   # - libpq5
-  - postgresql-client
+  - python3
+  - python3-pip
+  # - postgresql-client
   # - postgresql-client-15
   # - nmap
