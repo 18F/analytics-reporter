@@ -7,7 +7,7 @@ applications:
   health-check-type: process
   buildpacks:
       - nodejs_buildpack
-  command: node deploy/cron.js
+  command: npm run migrate && node deploy/cron.js
   env:
     ANALYTICS_CREDENTIALS: <ANALYTICS_CREDENTIALS>
     ANALYTICS_ROOT_PATH: <ANALYTICS_ROOT_PATH>
