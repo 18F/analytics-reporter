@@ -7,7 +7,7 @@ applications:
   health-check-type: process
   buildpacks:
       - nodejs_buildpack
-  command: node deploy/cron.js
+  command: export ANALYTICS_CREDENTIALS=$(echo $ANALYTICS_CREDENTIALS | base64 --decode) && node deploy/cron.js
   env:
     ANALYTICS_CREDENTIALS: <ANALYTICS_CREDENTIALS>
     ANALYTICS_ROOT_PATH: <ANALYTICS_ROOT_PATH>
