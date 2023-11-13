@@ -30,7 +30,8 @@ jobs:
           name: Replace Data URL in manifest.yml file when deploying to develop
           command: |
               sudo apt-get update
-              sudo apt-get install gettext 
+              sudo apt-get install gettext
+              export ANALYTICS_CREDENTIALS=$(echo $CREDS_JSON | base64 --decode)
               sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
               sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
