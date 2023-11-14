@@ -10,7 +10,7 @@ global.analyticsCredentialsIndex = 0
 
 const loadCredentials = () => {
   const credentialData = JSON.parse(config.analytics_credentials)
-  logger.info('in loadCredentials credentialData:'+credentialData);
+  logger.info('in loadCredentials credentialData:'+JSON.stringify(credentialData));
   const credentialsArray = _wrapArray(credentialData)
   const index = global.analyticsCredentialsIndex++ % credentialsArray.length
   logger.info('in loadCredentials index:'+index);
