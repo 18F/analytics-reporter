@@ -69,7 +69,8 @@ jobs:
               ls -l
               cat manifest.yml
               cf push -f "./manifest.yml"
-              cf set-env analytics-dev ANALYTICS_CREDENTIALS $(printf "%s\n" $ANALYTICS_CREDENTIALS | base64 -w 0 --decode)
+              export CREDS=$(printf "%s\n" $ANALYTICS_CREDENTIALS | base64 -w 0 --decode)
+              cf set-env analytics-dev ANALYTICS_CREDENTIALS $CREDS 
               cf logout
 
 workflows:
