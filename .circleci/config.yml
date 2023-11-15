@@ -56,8 +56,8 @@ jobs:
       - run:   
           name: Install CF CLI
           command: |
-              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb  https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4
-              yes | sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
+              sudo curl -v -L -o cf-cli.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
+              yes | sudo dpkg -i cf-cli.deb
 
       - run:
           name: deploy
