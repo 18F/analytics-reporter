@@ -34,8 +34,7 @@ jobs:
               sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
               sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
-              sed -i 's@<ANALYTICS_ROOT_PATH>@$(printf "%s\n" $ANALYTICS_CREDENTIALS | base64 -w 0 --decode)@g' manifest.yml
-              sed -i 's@<ANALYTICS_CREDENTIALS>@$ANALYTICS_CREDENTIALS@g' manifest.yml
+              sed -i 's@<ANALYTICS_ROOT_PATH>@$ANALYTICS_ROOT_PATH@g' manifest.yml
               sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
               sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
               sed -i 's@<AWS_ACCESS_KEY_ID>@$AWS_ACESS_KEY_ID_DEV@g' manifest.yml
@@ -70,7 +69,7 @@ jobs:
               ls -l
               cat manifest.yml
               cf push -f "./manifest.yml"
-              # cf set-env analytics-dev ANALYTICS_CREDENTIALS $(printf "%s\n" $ANALYTICS_CREDENTIALS | base64 -w 0 --decode)
+              cf set-env analytics-dev ANALYTICS_CREDENTIALS $(printf "%s\n" $ANALYTICS_CREDENTIALS | base64 -w 0 --decode)
               cf logout
 
 workflows:
