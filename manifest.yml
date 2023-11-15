@@ -7,7 +7,7 @@ applications:
   health-check-type: process
   buildpacks:
       - nodejs_buildpack
-  command: "export ANALYTICS_CREDENTIALS=$(printf '%s\n' $CREDS | base64 -w 0 --decode) && chmod +x ./entrypoint.sh && ./entrypoint.sh"
+  command: "chmod +x ./entrypoint.sh && ./entrypoint.sh"
   env:
     ANALYTICS_ROOT_PATH: <ANALYTICS_ROOT_PATH>
     ANALYTICS_REPORT_IDS: <ANALYTICS_REPORT_IDS>

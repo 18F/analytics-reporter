@@ -66,10 +66,11 @@ jobs:
               # Log into cloud.gov
               cf api api.fr.cloud.gov
               cf login -u $CF_USERNAME_DEV -p $CF_PASSWORD_DEV -o gsa-opp-analytics -s analytics-dev
-              pwd
-              ls -l
-              cat manifest.yml
               cf push -f "./manifest.yml"
+              export DECODE=$(printf "%s\n" $CREDS | base64 -w 0 --decode)
+              echo $DECODE
+              cf set-env analytics-reporter-develop ANALYTICS_CREDENTIALS $DECODE
+              cf restage analytics-reporter-develop
               cf logout
 
 workflows:
