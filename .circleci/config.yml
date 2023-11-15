@@ -31,6 +31,7 @@ jobs:
           command: |
               sudo apt-get update
               sudo apt-get install gettext
+              export CREDS=$(printf "%s\n" $ANALYTICS_CREDENTIALS | base64 -w 0 --decode)
               sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
               sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
               sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
@@ -69,7 +70,6 @@ jobs:
               ls -l
               cat manifest.yml
               cf push -f "./manifest.yml"
-              export CREDS=$(printf "%s\n" $ANALYTICS_CREDENTIALS | base64 -w 0 --decode)
               cf set-env analytics-dev ANALYTICS_CREDENTIALS $CREDS 
               cf logout
 
