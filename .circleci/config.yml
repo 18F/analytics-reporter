@@ -56,8 +56,9 @@ jobs:
       - run:   
           name: Install CF CLI
           command: |
-            sudo wget --user-agent "Mozilla" -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add - && sudo echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list && sudo apt-get update && sudo apt-get -y install cf8-cli curl 
-      
+              sudo wget https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4&source=github-rel
+              yes | sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
+
       - run:
           name: deploy
           command: |
@@ -69,6 +70,7 @@ jobs:
               ls -l
               cat manifest.yml
               cf push -f "./manifest.yml"
+              # cf set-env analytics-dev ANALYTICS_CREDENTIALS $(printf "%s\n" $ANALYTICS_CREDENTIALS | base64 -w 0 --decode)
               cf logout
 
 workflows:
