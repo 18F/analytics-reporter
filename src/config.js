@@ -40,7 +40,7 @@ module.exports = {
     cache: process.env.AWS_CACHE_TIME,
     endpoint: VCAP_SERVICES_JSON["s3"][0]["credentials"]["endpoint"],
     accessKeyId: VCAP_SERVICES_JSON["s3"][0]["credentials"]["access_key_id"],
-    secretAccessKey: VCAP_SERVICES_JSON["s3"][0]["credentials"]["secret_access_key"], 
+    secretAccessKey: VCAP_SERVICES_JSON["s3"][0]["credentials"]["secret_access_key"],
     s3ForcePathStyle: process.env.AWS_S3_FORCE_STYLE_PATH,
     signatureVersion: process.env.AWS_SIGNATURE_VERSION
   },
@@ -62,10 +62,11 @@ module.exports = {
   // },
 
   postgres: {
-    host : VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["host"], 
-    user : VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["username"], 
-    password : VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"],  
-    database : VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["db_name"], 
+    host : VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["host"],
+    user : VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["username"],
+    password : VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"],
+    database : VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["db_name"],
+    ssl : true,
  },
 
   static: {
