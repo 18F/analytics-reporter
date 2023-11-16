@@ -34,13 +34,13 @@ module.exports = {
   //
   aws: {
     // No trailing slashes
-    bucket:  VCAP_SERVICES_JSON.s3[0].credentials[0].bucket,
+    bucket:  VCAP_SERVICES_JSON.s3.credentials.bucket,
     path: process.env.AWS_BUCKET_PATH,
     // HTTP cache time in seconds. Defaults to 0.
     cache: process.env.AWS_CACHE_TIME,
-    endpoint: VCAP_SERVICES_JSON.s3[0].credentials[0].endpoint,
-    accessKeyId: VCAP_SERVICES_JSON.s3[0].credentials[0].access_key_id,
-    secretAccessKey: VCAP_SERVICES_JSON.s3[0].credentials[0].secret_access_key, 
+    endpoint: VCAP_SERVICES_JSON.s3.credentials.endpoint,
+    accessKeyId: VCAP_SERVICES_JSON.s3.credentials.access_key_id,
+    secretAccessKey: VCAP_SERVICES_JSON.s3.credentials.secret_access_key, 
     s3ForcePathStyle: process.env.AWS_S3_FORCE_STYLE_PATH,
     signatureVersion: process.env.AWS_SIGNATURE_VERSION
   },
@@ -62,10 +62,10 @@ module.exports = {
   // },
 
   postgres: {
-    host : VCAP_SERVICES_JSON.aws-rds[0].credentials[0].host, 
-    user : VCAP_SERVICES_JSON.aws-rds[0].credentials[0].username, 
-    password : VCAP_SERVICES_JSON.aws-rds[0].credentials[0].password,  
-    database : VCAP_SERVICES_JSON.aws-rds[0].credentials[0].db_name, 
+    host : VCAP_SERVICES_JSON.aws-rds.credentials.host, 
+    user : VCAP_SERVICES_JSON.aws-rds.credentials.username, 
+    password : VCAP_SERVICES_JSON.aws-rds.credentials.password,  
+    database : VCAP_SERVICES_JSON.aws-rds.credentials.db_name, 
  },
 
   static: {
