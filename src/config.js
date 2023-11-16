@@ -1,6 +1,7 @@
 // Set environment variables to configure the application.
 
-const VCAP_SERVICES_JSON = JSON.parse(process.env.VCAP_SERVICES)
+const VCAP_SERVICES_JSON = JSON.parse(process.env.VCAP_SERVICES);
+console.log(VCAP_SERVICES_JSON)
 
 module.exports = {
 
