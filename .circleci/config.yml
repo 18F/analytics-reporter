@@ -57,10 +57,11 @@ jobs:
           name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
           command:
               pwd
+              cd src
               ls -al
-              rm /src/config.js
-              mv /src/config.js.cloudgov /src/config.js
-              cat /src/config.js
+              rm config.js
+              mv config.js.cloudgov config.js
+              cat config.js
 
       - run:   
           name: Install CF CLI
