@@ -20,6 +20,9 @@ const logger = winston.createLogger({
 });
 
 const run = function(options = {}) {
+  if (options.debug || options.verbose) {
+    winston.transports.console.level = "debug"
+  }
   const reports = _filterReports(options)
   return Promise.each(reports, report => _runReport(report, options))
 }
