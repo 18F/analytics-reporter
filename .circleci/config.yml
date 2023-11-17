@@ -51,7 +51,14 @@ jobs:
               sed -i 's@<POSTGRES_USER>@$POSTGRES_USER_DEV@g' manifest.yml
               sed -i 's@<POSTGRES_PASSWORD>@$POSTGRES_PASSWORD_DEV@g' manifest.yml
               mv manifest.yml manifest.yml.src
-              envsubst < manifest.yml.src > manifest.yml  
+              envsubst < manifest.yml.src > manifest.yml
+
+      - run:
+          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
+          command:
+              rm ./src/config.js
+              mv ./src/config.js.cloudgov ./src/config.js
+              cat ./src/config.js
 
       - run:   
           name: Install CF CLI
