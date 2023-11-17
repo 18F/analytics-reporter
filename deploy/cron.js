@@ -4,7 +4,7 @@ const winston = require("winston")
 const logger = winston.createLogger({
 	level: 'debug',
 	format: winston.format.json(),
-	transports: [new winston.transports.Console()],
+	transports: [new winston.transports.Console({level: 'debug'})],
   });
 if (process.env.NEW_RELIC_APP_NAME) {
 	logger.info("Starting New Relic")
