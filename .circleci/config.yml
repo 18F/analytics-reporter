@@ -71,7 +71,7 @@ jobs:
               cf restage analytics-reporter-develop
               cf logout
 
-  stage_deploy:
+  staging_deploy:
     docker:
       - image: cimg/node:16.19.1-browsers
         environment:
