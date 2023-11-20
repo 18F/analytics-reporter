@@ -152,7 +152,7 @@ workflows:
               only:
                 - develop
 
-  staging:
+  staging_workflow:
     jobs: 
       - staging_deploy:
           filters:
