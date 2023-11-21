@@ -30,7 +30,6 @@ applications:
     ANALYTICS_DEBUG: true
   services:
   - analytics-s3
-  - analytics-env
   - analytics-reporter-database
   stack: cflinuxfs4
   timeout: 180
