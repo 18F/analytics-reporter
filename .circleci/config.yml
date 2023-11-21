@@ -134,7 +134,7 @@ jobs:
               set -e
               # Log into cloud.gov
               cf api api.fr.cloud.gov
-              cf login -u $CF_USERNAME -p $CF_PASSWORD -o gsa-opp-analytics -s analytics-staging
+              cf login -u $CF_STAGING_SPACE_DEPLOYER_USERNAME -p $CF_STAGING_SPACE_DEPLOYER_PASSWORD -o gsa-opp-analytics -s analytics-staging
               cf push -f "./manifest.yml"
               export DECODE=$(printf "%s\n" $CREDS | base64 -w 0 --decode | jq -c .)
               echo $DECODE
