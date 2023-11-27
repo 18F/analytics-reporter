@@ -141,7 +141,7 @@ jobs:
               cf logout
 
 
-  production_workflow:
+  production_deploy:
     docker:
       - image: cimg/node:16.19.1-browsers
         environment:
@@ -228,7 +228,7 @@ workflows:
                   
   production_workflow:
     jobs: 
-      - main_deploy:
+      - production_deploy:
           filters:
             branches:
               only:
