@@ -98,7 +98,7 @@ jobs:
       #     command: npm test
 
       - run:
-          name: Replace Data URL in manifest.yml file when deploying to develop
+          name: Replace Data URL in manifest.yml file when deploying to staging
           command: |
               sudo apt-get update
               sudo apt-get install gettext
@@ -141,6 +141,74 @@ jobs:
               cf logout
 
 
+  production_deploy:
+    docker:
+      - image: cimg/node:16.19.1-browsers
+        environment:
+          POSTGRES_USER: postgres
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_DB: analytics_reporter_test
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # - run:
+      #     name: run tests
+      #     command: npm test
+
+      - run:
+          name: Replace Data URL in manifest.yml file when deploying to production
+          command: |
+              sudo apt-get update
+              sudo apt-get install gettext
+              sed -i 's@name: analytics-reporter@name: analytics-reporter-production@g' manifest.yml
+              sed -i 's@- analytics-s3@- analytics-s3-production@g' manifest.yml
+              sed -i 's@- analytics-reporter-database@- analytics-reporter-database-production@g' manifest.yml
+              sed -i 's@<CREDS>@$CREDS@g' manifest.yml
+              sed -i 's@<ANALYTICS_ROOT_PATH>@$ANALYTICS_ROOT_PATH@g' manifest.yml
+              sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
+              sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
+              sed -i 's@<AWS_BUCKET_PATH>@$AWS_BUCKET_PATH@g' manifest.yml
+              sed -i 's@<AWS_CACHE_TIME>@$AWS_CACHE_TIME@g' manifest.yml
+              sed -i 's@<AWS_DEFAULT_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
+              sed -i 's@<AWS_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
+              mv manifest.yml manifest.yml.src
+              envsubst < manifest.yml.src > manifest.yml
+
+      - run:
+          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
+          command: |
+              rm ./src/config.js
+              mv ./src/config.js.cloudgov ./src/config.js
+
+      - run:   
+          name: Install CF CLI
+          command: |
+              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
+              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
+
+      - run:
+          name: deploy
+          command: |
+              set -e
+              cf login -a api.fr.cloud.gov -u $CF_PRODUCTION_SPACE_DEPLOYER_USERNAME -p $CF_PRODUCTION_SPACE_DEPLOYER_PASSWORD -o gsa-opp-analytics -s analytics-prod
+              cf push -f "./manifest.yml"
+              export DECODE=$(printf "%s\n" $CREDS | base64 -w 0 --decode | jq -c .)
+              echo $DECODE
+              cf set-env analytics-reporter-production ANALYTICS_CREDENTIALS "$DECODE"
+              cf restage analytics-reporter-production
+              cf logout
 workflows:
   develop_workflow:
     jobs: 
@@ -158,11 +226,11 @@ workflows:
               only:
                 - stage
                   
-  # main_workflow:
-  #   jobs: 
-  #     - main_deploy:
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #          
+  production_workflow:
+    jobs: 
+      - production_deploy:
+          filters:
+            branches:
+              only:
+                - master
+           
