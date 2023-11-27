@@ -63,7 +63,7 @@
     "aws-sdk": "^2.1483.0",
     "@snyk/protect": "^1.1237.0",
     "fast-csv": "^4.3.6",
-    "googleapis": "^19.0.0",
+    "googleapis": "^49.0.0",
     "minimist": "^1.2.8",
     "winston": "^3.11.0"
   },
