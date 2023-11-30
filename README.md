@@ -1,10 +1,14 @@
- x[![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)](https://codeclimate.com/github/18F/analytics-reporter) [![CircleCI](https://circleci.com/gh/18F/analytics.usa.gov.svg?style=shield)](https://circleci.com/gh/18F/analytics.usa.gov)  [![Dependency Status](https://gemnasium.com/badges/github.com/18F/analytics-reporter.svg)](https://gemnasium.com/github.com/18F/analytics-reporter)
+ x[![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)](https://codeclimate.com/github/18F/analytics-reporter)
+ [![CircleCI](https://circleci.com/gh/18F/analytics.usa.gov.svg?style=shield)](https://circleci.com/gh/18F/analytics.usa.gov)
+ [![Dependency Status](https://gemnasium.com/badges/github.com/18F/analytics-reporter.svg)](https://gemnasium.com/github.com/18F/analytics-reporter)
 
 ## Analytics Reporter
 
-A lightweight system for publishing analytics data from Google Analytics profiles. Uses the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/) and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/).
+A lightweight system for publishing analytics data from Google Analytics profiles.
+Uses the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/)
+and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/).
 
-This is used in combination with [18F/analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics hub, [analytics.usa.gov](https://analytics.usa.gov).
+This is used in combination with [analytics-reporter](https://github.com/18F/analytics-reporter-api) and [analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
 
 Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
 
@@ -283,13 +287,13 @@ export POSTGRES_PASSWORD = "123abc"
 export POSTGRES_DATABASE = "analytics"
 ```
 
-The database expects a particular schema which will be described in the API
-server that consumes this data.
+The database expects a particular schema which will be described in the [API
+server](https://github.com/18f/analytics-reporter-api) that consumes and publishes this data.
 
 To write reports to a database, use the `--write-to-database` option when
 starting the reporter.
 
-### Deploying to GovCloud
+### Deploying to Cloud.gov
 
 The analytics reporter runs on :cloud:.gov. Please refer to the `manifest.yml`
 file at the root of the repository for application information.
@@ -322,10 +326,7 @@ cf restage analytics-reporter
 
 ### Developing with Docker
 
-This repo contains a [Docker Compose](https://docs.docker.com/compose/)
-configuration. The reporter is configured to run in the container as if it were
-running in GovCloud. This is helpful for seeing how the reporter will behave
-when deployed without pushing it to cloud.gov.
+This repo contains a [Docker Compose](https://docs.docker.com/compose/) configuration.
 
 To start the reporter, first run the `docker-update` script to install the
 necessary dependencies:
