@@ -12,9 +12,7 @@ const logger = winston.createLogger({
 const authorizeQuery = (query) => {
   const credentials = _getCredentials()
   const email = credentials.email
-  logger.info('in authorizeQuery email:'+email)
   const key = credentials.key
-  logger.info('in authorizeQuery key:'+key)
   const scopes = ['https://www.googleapis.com/auth/analytics.readonly']
   const jwt = new googleapis.auth.JWT(email, null, key, scopes);
 
