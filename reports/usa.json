@@ -13,6 +13,23 @@
       }
     },
     {
+      "name": "traffic-sources-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date"],
+        "metrics": ["ga:sessions"],
+        "start-date": "30daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:date",
+        "max-results": "30",
+        "start-index": "1",
+      },
+      "meta": {
+        "name": "Traffic Sources (30 Days)",
+        "description": "Last 30 days' Traffic Sources, measured by sessions, for all sites."
+      }
+    },
+    {
       "name": "today",
       "frequency": "hourly",
       "query": {
