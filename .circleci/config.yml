@@ -27,25 +27,6 @@ jobs:
           command: npm test
 
       - run:
-          name: Replace Data URL in manifest.yml file when deploying to develop
-          command: |
-              sudo apt-get update
-              sudo apt-get install gettext
-              sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
-              sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
-              sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
-              sed -i 's@<CREDS>@$CREDS@g' manifest.yml
-              sed -i 's@<ANALYTICS_ROOT_PATH>@$ANALYTICS_ROOT_PATH@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
-              sed -i 's@<AWS_BUCKET_PATH>@$AWS_BUCKET_PATH@g' manifest.yml
-              sed -i 's@<AWS_CACHE_TIME>@$AWS_CACHE_TIME@g' manifest.yml
-              sed -i 's@<AWS_DEFAULT_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
-              sed -i 's@<AWS_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
-              mv manifest.yml manifest.yml.src
-              envsubst < manifest.yml.src > manifest.yml
-
-      - run:
           name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
           command: |
               rm ./src/config.js
@@ -64,11 +45,7 @@ jobs:
               # Log into cloud.gov
               cf api api.fr.cloud.gov
               cf login -u $CF_USERNAME_DEV -p $CF_PASSWORD_DEV -o gsa-opp-analytics -s analytics-dev
-              cf push -f "./manifest.yml"
-              export DECODE=$(printf "%s\n" $CREDS | base64 -w 0 --decode | jq -c .)
-              echo $DECODE
-              cf set-env analytics-reporter-develop ANALYTICS_CREDENTIALS "$DECODE"
-              cf restage analytics-reporter-develop
+              cf push analytics-reporter-develop --strategy rolling
               cf logout
 
   staging_deploy:
