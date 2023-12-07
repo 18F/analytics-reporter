@@ -1,4 +1,10 @@
 const config = require("../config")
+const winston = require('winston');
+const logger = winston.createLogger({
+	level: 'info',
+	format: winston.format.json(),
+	transports: [new winston.transports.Console()],
+  });
 
 global.analyticsCredentialsIndex = 0
 

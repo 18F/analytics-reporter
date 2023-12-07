@@ -5,9 +5,11 @@ applications:
   disk_quota: 1024M
   no-route: true
   health-check-type: process
-  buildpack: nodejs_buildpack
-  command: export NODE_ENV=development node --trace-warnings deploy/cron.js
+  buildpacks:
+      - nodejs_buildpack
+  command: "chmod +x ./entrypoint.sh && ./entrypoint.sh"
   env:
+    ANALYTICS_ROOT_PATH: <ANALYTICS_ROOT_PATH>
     ANALYTICS_REPORT_IDS: <ANALYTICS_REPORT_IDS>
     ANALYTICS_REPORTS_PATH: <ANALYTICS_REPORTS_PATH>
     AWS_ACCESS_KEY_ID: <AWS_ACCESS_KEY_ID>
@@ -17,14 +19,17 @@ applications:
     AWS_DEFAULT_REGION: <AWS_DEFAULT_REGION>
     AWS_REGION: <AWS_REGION>
     AWS_SECRET_ACCESS_KEY: <AWS_SECRET_ACCESS_KEY>
+    CREDS: <CREDS>
     BUCKET_NAME: <BUCKET_NAME>
+    PGSSLMODE: true
     POSTGRES_DATABASE: <POSTGRES_DATABASE>
     POSTGRES_HOST: <POSTGRES_HOST>
     POSTGRES_PASSWORD: <POSTGRES_PASSWORD>
     POSTGRES_USER: <POSTGRES_USER>
+    NODE_ENV: production
+    ANALYTICS_DEBUG: true
   services:
   - analytics-s3
-  - analytics-env
   - analytics-reporter-database
   stack: cflinuxfs4
   timeout: 180

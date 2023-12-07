@@ -9,7 +9,7 @@ const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 const S3Publisher = require("./src/publish/s3")
 const logger = winston.createLogger({
-  level: 'info',
+  level: 'debug',
   format: winston.format.json(),
   transports: [new winston.transports.Console()],
 });
@@ -22,9 +22,6 @@ winston.transports.console.prettyPrint = true
 winston.transports.console.label = config.account.agency_name || "live"
 
 const run = function(options = {}) {
-  if (options.debug || options.verbose) {
-    winston.transports.console.level = "debug"
-  }
   const reports = _filterReports(options)
   return Promise.each(reports, report => _runReport(report, options))
 }
