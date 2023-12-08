@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const spawn = require("child_process").spawn;
 const winston = require("winston")
 

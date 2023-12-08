@@ -22,28 +22,9 @@ jobs:
             - ./node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # - run:
-      #     name: run tests
-      #     command: npm test
-
       - run:
-          name: Replace Data URL in manifest.yml file when deploying to develop
-          command: |
-              sudo apt-get update
-              sudo apt-get install gettext
-              sed -i 's@name: analytics-reporter@name: analytics-reporter-develop@g' manifest.yml
-              sed -i 's@- analytics-s3@- analytics-s3-dev@g' manifest.yml
-              sed -i 's@- analytics-reporter-database@- analytics-reporter-database-develop@g' manifest.yml
-              sed -i 's@<CREDS>@$CREDS@g' manifest.yml
-              sed -i 's@<ANALYTICS_ROOT_PATH>@$ANALYTICS_ROOT_PATH@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
-              sed -i 's@<AWS_BUCKET_PATH>@$AWS_BUCKET_PATH@g' manifest.yml
-              sed -i 's@<AWS_CACHE_TIME>@$AWS_CACHE_TIME@g' manifest.yml
-              sed -i 's@<AWS_DEFAULT_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
-              sed -i 's@<AWS_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
-              mv manifest.yml manifest.yml.src
-              envsubst < manifest.yml.src > manifest.yml
+          name: run tests
+          command: npm test
 
       - run:
           name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
@@ -51,7 +32,7 @@ jobs:
               rm ./src/config.js
               mv ./src/config.js.cloudgov ./src/config.js
 
-      - run:   
+      - run:
           name: Install CF CLI
           command: |
               sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
@@ -64,11 +45,7 @@ jobs:
               # Log into cloud.gov
               cf api api.fr.cloud.gov
               cf login -u $CF_USERNAME_DEV -p $CF_PASSWORD_DEV -o gsa-opp-analytics -s analytics-dev
-              cf push -f "./manifest.yml"
-              export DECODE=$(printf "%s\n" $CREDS | base64 -w 0 --decode | jq -c .)
-              echo $DECODE
-              cf set-env analytics-reporter-develop ANALYTICS_CREDENTIALS "$DECODE"
-              cf restage analytics-reporter-develop
+              cf push analytics-reporter-develop --strategy rolling
               cf logout
 
   staging_deploy:
@@ -98,31 +75,12 @@ jobs:
       #     command: npm test
 
       - run:
-          name: Replace Data URL in manifest.yml file when deploying to staging
-          command: |
-              sudo apt-get update
-              sudo apt-get install gettext
-              sed -i 's@name: analytics-reporter@name: analytics-reporter-staging@g' manifest.yml
-              sed -i 's@- analytics-s3@- analytics-s3-staging@g' manifest.yml
-              sed -i 's@- analytics-reporter-database@- analytics-reporter-database-staging@g' manifest.yml
-              sed -i 's@<CREDS>@$CREDS@g' manifest.yml
-              sed -i 's@<ANALYTICS_ROOT_PATH>@$ANALYTICS_ROOT_PATH@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
-              sed -i 's@<AWS_BUCKET_PATH>@$AWS_BUCKET_PATH@g' manifest.yml
-              sed -i 's@<AWS_CACHE_TIME>@$AWS_CACHE_TIME@g' manifest.yml
-              sed -i 's@<AWS_DEFAULT_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
-              sed -i 's@<AWS_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
-              mv manifest.yml manifest.yml.src
-              envsubst < manifest.yml.src > manifest.yml
-
-      - run:
           name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
           command: |
               rm ./src/config.js
               mv ./src/config.js.cloudgov ./src/config.js
 
-      - run:   
+      - run:
           name: Install CF CLI
           command: |
               sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
@@ -133,11 +91,7 @@ jobs:
           command: |
               set -e
               cf login -a api.fr.cloud.gov -u $CF_STAGING_SPACE_DEPLOYER_USERNAME -p $CF_STAGING_SPACE_DEPLOYER_PASSWORD -o gsa-opp-analytics -s analytics-staging
-              cf push -f "./manifest.yml"
-              export DECODE=$(printf "%s\n" $CREDS | base64 -w 0 --decode | jq -c .)
-              echo $DECODE
-              cf set-env analytics-reporter-staging ANALYTICS_CREDENTIALS "$DECODE"
-              cf restage analytics-reporter-staging
+              cf push analytics-reporter-staging --strategy rolling
               cf logout
 
 
@@ -168,31 +122,12 @@ jobs:
       #     command: npm test
 
       - run:
-          name: Replace Data URL in manifest.yml file when deploying to production
-          command: |
-              sudo apt-get update
-              sudo apt-get install gettext
-              sed -i 's@name: analytics-reporter@name: analytics-reporter-production@g' manifest.yml
-              sed -i 's@- analytics-s3@- analytics-s3-production@g' manifest.yml
-              sed -i 's@- analytics-reporter-database@- analytics-reporter-database-production@g' manifest.yml
-              sed -i 's@<CREDS>@$CREDS@g' manifest.yml
-              sed -i 's@<ANALYTICS_ROOT_PATH>@$ANALYTICS_ROOT_PATH@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORT_IDS>@$ANALYTICS_REPORT_IDS@g' manifest.yml
-              sed -i 's@<ANALYTICS_REPORTS_PATH>@$ANALYTICS_REPORTS_PATH@g' manifest.yml
-              sed -i 's@<AWS_BUCKET_PATH>@$AWS_BUCKET_PATH@g' manifest.yml
-              sed -i 's@<AWS_CACHE_TIME>@$AWS_CACHE_TIME@g' manifest.yml
-              sed -i 's@<AWS_DEFAULT_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
-              sed -i 's@<AWS_REGION>@$AWS_DEFAULT_REGION@g' manifest.yml
-              mv manifest.yml manifest.yml.src
-              envsubst < manifest.yml.src > manifest.yml
-
-      - run:
           name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
           command: |
               rm ./src/config.js
               mv ./src/config.js.cloudgov ./src/config.js
 
-      - run:   
+      - run:
           name: Install CF CLI
           command: |
               sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
@@ -203,15 +138,11 @@ jobs:
           command: |
               set -e
               cf login -a api.fr.cloud.gov -u $CF_PRODUCTION_SPACE_DEPLOYER_USERNAME -p $CF_PRODUCTION_SPACE_DEPLOYER_PASSWORD -o gsa-opp-analytics -s analytics-prod
-              cf push -f "./manifest.yml"
-              export DECODE=$(printf "%s\n" $CREDS | base64 -w 0 --decode | jq -c .)
-              echo $DECODE
-              cf set-env analytics-reporter-production ANALYTICS_CREDENTIALS "$DECODE"
-              cf restage analytics-reporter-production
+              cf push analytics-reporter-production --strategy rolling
               cf logout
 workflows:
   develop_workflow:
-    jobs: 
+    jobs:
       - develop_deploy:
           filters:
             branches:
@@ -219,18 +150,17 @@ workflows:
                 - develop
 
   staging_workflow:
-    jobs: 
+    jobs:
       - staging_deploy:
           filters:
             branches:
               only:
                 - stage
-                  
+
   production_workflow:
-    jobs: 
+    jobs:
       - production_deploy:
           filters:
             branches:
               only:
                 - master
-           

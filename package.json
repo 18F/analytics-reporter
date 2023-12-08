@@ -60,8 +60,9 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "aws-sdk": "^2.1483.0",
-    "@snyk/protect": "^1.1237.0",
+    "@snyk/protect": "^1.1256.0",
+    "aws-sdk": "^2.1504.0",
+    "dotenv": "^16.3.1",
     "fast-csv": "^4.3.6",
     "googleapis": "^19.0.0",
     "minimist": "^1.2.8",
@@ -74,7 +75,7 @@
   },
   "optionalDependencies": {
     "knex": "^3.0.1",
-    "newrelic": "^11.3.0",
+    "newrelic": "^11.5.0",
     "pg": "^8.11.3"
   },
   "snyk": true
