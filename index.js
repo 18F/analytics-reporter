@@ -8,18 +8,20 @@ const DiskPublisher = require("./src/publish/disk")
 const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 const S3Publisher = require("./src/publish/s3")
+
 const logger = winston.createLogger({
   level: 'debug',
   format: winston.format.json(),
   transports: [new winston.transports.Console()],
 });
+
 Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
 }
 
-winston.transports.console.level = "info"
-winston.transports.console.prettyPrint = true
-winston.transports.console.label = config.account.agency_name || "live"
+// // winston.transports.console.level = "info"
+// // winston.transports.console.prettyPrint = true
+// // winston.transports.console.label = config.account.agency_name || "live"
 
 const run = function(options = {}) {
   const reports = _filterReports(options)
