@@ -34,7 +34,7 @@ alias analytics="docker run -t -v ${HOME}:${HOME} -e ANALYTICS_REPORT_EMAIL -e A
 To make this command working as expected you should export the env vars as follows:
 
 ```bash
-export ANALYTICS_REPORT_EMAIL=  "your-report-email"
+export ANALYTICS_REPORT_EMAIL="your-report-email"
 export ANALYTICS_REPORT_IDS="your-report-ids"
 export ANALYTICS_KEY="your-key"
 ```
