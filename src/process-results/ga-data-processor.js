@@ -2,6 +2,7 @@ const config = require("../config")
 const ResultTotalsCalculator = require("./result-totals-calculator")
 
 const processData = (report, data) => {
+  console.log(data)
   let result = _initializeResult({ report, data })
 
   // If you use a filter that results in no data, you get null
@@ -30,8 +31,10 @@ const processData = (report, data) => {
   return result;
 }
 
-const _fieldNameForColumnIndex = ({ index, data }) => {
-  const name = data.columnHeaders[index].name
+const _fieldNameForColumnIndex = ({ entryKey, index, data }) => {
+  // data keys come back as values for the header keys
+  const targetKey = entryKey.replace('Values', 'Headers')
+  const name = data[targetKey][index].name
   return _mapping[name] || name
 }
 
@@ -78,14 +81,30 @@ const _initializeResult = ({ report, data }) => ({
 const _processRow = ({ row, data, report }) => {
   const point = {}
 
-  row.forEach((rowElement, index) => {
-    const field = _fieldNameForColumnIndex({ index, data })
-    let value = rowElement
-    if (field === "date") {
-      value = _formatDate(value)
+// Iterate through each entry in the object
+for (const [entryKey, entryValue] of Object.entries(row)) {
+
+  // Iterate through each object in the array
+  entryValue.forEach((item, index) => {
+    // Iterate through each key-value pair in the object
+    for (const [key, value] of Object.entries(item)) {
+      console.log(`${key}: ${value}`);
+      if (key !== 'oneValue') {
+        const field = _fieldNameForColumnIndex({ entryKey, index, data })
+
+        let modValue;
+
+        if (field === "date") {
+          modValue = _formatDate(value)
+        }
+
+        modValue = value
+
+        point[field] = modValue
+      }
     }
-    point[field] = value
-  })
+  });
+}
 
   if (config.account.hostname && !('domain' in point)) {
     point.domain = config.account.hostname
@@ -110,43 +129,36 @@ const _removeColumnFromData = ({ column, data }) => {
 }
 
 const _mapping = {
-  "ga:date": "date",
-  "ga:hour": "hour",
-  "rt:activeUsers": "active_visitors",
-  "rt:pagePath": "page",
-  "rt:pageTitle": "page_title",
-  "ga:sessions": "visits",
-  "ga:deviceCategory": "device",
-  "ga:operatingSystem": "os",
-  "ga:operatingSystemVersion": "os_version",
-  "ga:hostname": "domain",
-  "ga:browser" : 'browser',
-  "ga:browserVersion" : "browser_version",
-  "ga:source": "source",
-  "ga:pagePath": "page",
-  "ga:pageTitle": "page_title",
-  "ga:pageviews": "visits",
-  "ga:country": "country",
-  "ga:city": 'city',
-  "ga:eventLabel": "event_label",
-  "ga:totalEvents": "total_events",
-  "ga:landingPagePath": "landing_page",
-  "ga:exitPagePath": "exit_page",
-  "ga:source": "source",
-  "ga:hasSocialSourceReferral": "has_social_referral",
-  "ga:referralPath": "referral_path",
-  "ga:pageviews": "pageviews",
-  "ga:users": "users",
-  "ga:pageviewsPerSession": "pageviews_per_session",
-  "ga:avgSessionDuration": "avg_session_duration",
-  "ga:exits": "exits",
-  "ga:language": "language",
-  "ga:screenResolution": "screen_resolution",
-  "ga:mobileDeviceModel": "mobile_device",
-  "rt:country": "country",
-  "rt:city": "city",
-  "rt:totalEvents": "total_events",
-  "rt:eventLabel": "event_label"
+  "date": "date",
+  "hour": "hour",
+  "activeUsers": "active_visitors",
+  "pagePathPlusQueryString": "page",
+  "pageTitle": "page_title",
+  "sessions": "visits",
+  "deviceCategory": "device",
+  "operatingSystem": "os",
+  "operatingSystemVersion": "os_version",
+  "hostName": "domain",
+  "browser" : 'browser',
+  // "browserVersion" : "browser_version",
+  "sessionSource": "source",
+  "screenPageViews": "visits",
+  "country": "country",
+  "city": 'city',
+  "eventName": "event_label",
+  "eventCount": "total_events",
+  // "landingPagePath": "landing_page",
+  // "exitPagePath": "exit_page",
+  // "hasSocialSourceReferral": "has_social_referral",
+  // "referralPath": "referral_path",
+  // "pageviews": "pageviews",
+  "totalUsers": "users",
+  // "pageviewsPerSession": "pageviews_per_session",
+  // "avgSessionDuration": "avg_session_duration",
+  "exits": "exits",
+  "language": "language",
+  "screenResolution": "screen_resolution",
+  "mobileDeviceModel": "mobile_device",
 }
 
 module.exports = { processData }
