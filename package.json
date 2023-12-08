@@ -11,10 +11,8 @@
   "scripts": {
     "migrate": "knex migrate:latest",
     "pretest": "NODE_ENV=test npm run migrate",
-    "start": "node app.js",
-    "test": "mocha test/*.test.js test/**/*.test.js",
-    "prepare": "npm run snyk-protect",
-    "snyk-protect": "snyk-protect"
+    "start": "node index.js",
+    "test": "mocha test/*.test.js test/**/*.test.js"
   },
   "contributors": [
     {
