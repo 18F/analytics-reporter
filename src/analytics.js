@@ -9,7 +9,7 @@ const query = (report) => {
   }
 
   return GoogleAnalyticsClient.fetchData(report).then(data => {
-    return GoogleAnalyticsDataProcessor.processData(report, data)
+    return GoogleAnalyticsDataProcessor.processData(report, data[0]) // data is now an array
   })
 }
 
