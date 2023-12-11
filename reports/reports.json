@@ -7,12 +7,18 @@
       "query": {
         "dimensions": [
           {
-            "name": "country"
+            "name": "date"
           }
         ],
         "metrics": [
           {
             "name": "activeUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "today",
+            "endDate": "today"
           }
         ]
       },
@@ -491,6 +497,62 @@
       "meta": {
         "name": "OS-browser combinations",
         "description": "90 days of visits broken down by browser and OS for all sites."
+      }
+    },
+    {
+      "name": "top-domains-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          },
+          {
+            "name": "pageTitle"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          },
+          {
+            "name": "totalUsers"
+          },
+          {
+            "name": "screenPageViews"
+          },
+          {
+            "name": "screenPageViewsPerSession"
+          },
+          {
+            "name": "averageSessionDuration"
+          },
+          {
+            "name": "bounceRate"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Domains (30 Days)",
+        "description": "Last 30 days' top 20 domains, measured by visits, for all sites."
       }
     }
   ]
