@@ -2,6 +2,7 @@ const path = require("path")
 const config = require('./config')
 const GoogleAnalyticsClient = require("./google-analytics/client")
 const GoogleAnalyticsDataProcessor = require("./process-results/ga-data-processor")
+const GoogleAnalyticsQueryBuilder = require("./google-analytics/query-builder")
 
 const query = (report) => {
   if (!report) {
@@ -9,7 +10,9 @@ const query = (report) => {
   }
 
   return GoogleAnalyticsClient.fetchData(report).then(data => {
-    return GoogleAnalyticsDataProcessor.processData(report, data[0]) // data is now an array
+  console.log({data})
+  const query = GoogleAnalyticsQueryBuilder.buildQuery(report) // included here again because it doesn't get returned with data any longer
+    return GoogleAnalyticsDataProcessor.processData(report, data[0], query) // data is now an array
   })
 }
 
