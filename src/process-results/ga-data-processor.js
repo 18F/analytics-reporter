@@ -1,9 +1,8 @@
 const config = require("../config")
 const ResultTotalsCalculator = require("./result-totals-calculator")
 
-const processData = (report, data) => {
-  console.log(data)
-  let result = _initializeResult({ report, data })
+const processData = (report, data, query) => {
+  let result = _initializeResult({ report, data, query })
 
   // If you use a filter that results in no data, you get null
   // back from google and need to protect against it.
@@ -60,18 +59,15 @@ const _formatDate = (date) => {
     return [date.substr(0,4), date.substr(4, 2), date.substr(6, 2)].join("-")
 }
 
-const _initializeResult = ({ report, data }) => ({
+const _initializeResult = ({ report, data, query }) => ({
   name: report.name,
-  sampling: {
-    containsSampledData: data.containsSampledData,
-    sampleSize: data.sampleSize,
-    sampleSpace: data.sampleSpace
-  },
+  sampling: data.metadata.samplingMetadatas,
   query: ((query) => {
+    console.log({query})
     query = Object.assign({}, query)
     delete query.ids
     return query
-  })(data.query),
+  })(query),
   meta: report.meta,
   data: [],
   totals: {},
