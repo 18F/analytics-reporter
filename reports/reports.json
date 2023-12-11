@@ -70,7 +70,7 @@
         ],
         "metrics": [
           {
-            "name": "activeUsers"
+            "name": "sessions"
           }
         ],
         "dateRanges": [
@@ -108,8 +108,8 @@
         ],
         "orderBys": [
           {
-            "metric": {
-              "metricName": "date"
+            "dimension": {
+              "dimensionName": "date"
             },
             "desc": true
           }
@@ -146,8 +146,8 @@
         ],
         "orderBys": [
           {
-            "metric": {
-              "metricName": "date"
+            "dimension": {
+              "dimensionName": "date"
             },
             "desc": true
           }
@@ -184,8 +184,8 @@
         ],
         "orderBys": [
           {
-            "metric": {
-              "metricName": "date"
+            "dimension": {
+              "dimensionName": "date"
             },
             "desc": true
           }
@@ -206,7 +206,7 @@
             "name": "date"
           },
           {
-            "name": "sessions"
+            "name": "screenResolution"
           }
         ],
         "metrics": [
@@ -320,7 +320,7 @@
             "name": "date"
           },
           {
-            "name": "operatingSystemVersion"
+            "name": "operatingSystem"
           }
         ],
         "metrics": [
@@ -410,7 +410,7 @@
             "name": "date"
           },
           {
-            "name": "browserVersion"
+            "name": "browser"
           }
         ],
         "metrics": [
