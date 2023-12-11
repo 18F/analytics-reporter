@@ -317,7 +317,7 @@
             "name": "operatingSystemVersion"
           }
         ],
-        "metrics": [x
+        "metrics": [
           {
             "name": "sessions"
           }
