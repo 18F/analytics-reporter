@@ -63,7 +63,6 @@ const _initializeResult = ({ report, data, query }) => ({
   name: report.name,
   sampling: data.metadata.samplingMetadatas,
   query: ((query) => {
-    console.log({query})
     query = Object.assign({}, query)
     delete query.ids
     return query
@@ -84,7 +83,7 @@ for (const [entryKey, entryValue] of Object.entries(row)) {
   entryValue.forEach((item, index) => {
     // Iterate through each key-value pair in the object
     for (const [key, value] of Object.entries(item)) {
-      console.log(`${key}: ${value}`);
+      // console.log(`${key}: ${value}`);
       if (key !== 'oneValue') {
         const field = _fieldNameForColumnIndex({ entryKey, index, data })
 
