@@ -91,9 +91,9 @@ for (const [entryKey, entryValue] of Object.entries(row)) {
 
         if (field === "date") {
           modValue = _formatDate(value)
+        } else {
+          modValue = value
         }
-
-        modValue = value
 
         point[field] = modValue
       }
