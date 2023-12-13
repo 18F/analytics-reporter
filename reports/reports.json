@@ -41,7 +41,7 @@
         ],
         "metrics": [
           {
-            "name": "activeUsers"
+            "name": "sessions"
           }
         ],
         "dateRanges": [
@@ -320,7 +320,7 @@
             "name": "date"
           },
           {
-            "name": "operatingSystem"
+            "name": "operatingSystemVersion"
           }
         ],
         "metrics": [
@@ -512,9 +512,6 @@
             "name": "browser"
           },
           {
-            "name": "operatingSystem"
-          },
-          {
             "name": "operatingSystemVersion"
           }
         ],
@@ -570,9 +567,6 @@
             "name": "browser"
           },
           {
-            "name": "operatingSystem"
-          },
-          {
             "name": "operatingSystemVersion"
           }
         ],
@@ -602,17 +596,25 @@
           }
         ],
         "dimensionFilter": {
-          "filter": {
-            "fieldName": "operatingSystem",
-            "stringFilter": {
-              "value": "Windows"
-            }
-          },
-          "filter": {
-            "fieldName": "browser",
-            "stringFilter": {
-              "value": "Internet Explorer"
-            }
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "filter": {
+                  "fieldName": "browser",
+                  "stringFilter": {
+                    "value": "Internet Explorer"
+                  }
+                }
+              }
+            ]
           }
         }
       },
@@ -628,7 +630,10 @@
       "query": {
         "dimensions": [
           {
-            "name": "pagePath"
+            "name": "hostName"
+          },
+          {
+            "name": "pagePathPlusQueryString"
           },
           {
             "name": "pageTitle"
@@ -731,6 +736,9 @@
           },
           {
             "name": "averageSessionDuration"
+          },
+          {
+            "name": "bounceRate"
           }
         ],
         "orderBys": [
@@ -796,12 +804,6 @@
         "dimensions": [
           {
             "name": "hostName"
-          },
-          {
-            "name": "pagePath"
-          },
-          {
-            "name": "pageTitle"
           }
         ],
         "metrics": [
@@ -851,7 +853,10 @@
       "query": {
         "dimensions": [
           {
-            "name": "landingPage"
+            "name": "hostName"
+          },
+          {
+            "name": "landingPagePlusQueryString"
           }
         ],
         "metrics": [
@@ -869,6 +874,9 @@
           },
           {
             "name": "averageSessionDuration"
+          },
+          {
+            "name": "bounceRate"
           }
         ],
         "orderBys": [
@@ -898,24 +906,30 @@
       "query": {
         "dimensions": [
           {
+            "name": "sessionSource"
+          },
+          {
             "name": "sessionDefaultChannelGroup"
           }
         ],
         "metrics": [
           {
-            "name": "screenPageViews"
-          },
-          {
             "name": "sessions"
           },
           {
-            "name": "activeUsers"
+            "name": "screenPageViews"
+          },
+          {
+            "name": "totalUsers"
           },
           {
             "name": "screenPageViewsPerSession"
           },
           {
             "name": "averageSessionDuration"
+          },
+          {
+            "name": "bounceRate"
           }
         ],
         "orderBys": [
