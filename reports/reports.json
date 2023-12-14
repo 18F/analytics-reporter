@@ -5,20 +5,9 @@
       "frequency": "realtime",
       "realtime": true,
       "query": {
-        "dimensions": [
-          {
-            "name": "date"
-          }
-        ],
         "metrics": [
           {
             "name": "activeUsers"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "today",
-            "endDate": "today"
           }
         ]
       },
@@ -630,13 +619,7 @@
       "query": {
         "dimensions": [
           {
-            "name": "hostName"
-          },
-          {
-            "name": "pagePathPlusQueryString"
-          },
-          {
-            "name": "pageTitle"
+            "name": "unifiedScreenName"
           }
         ],
         "metrics": [
@@ -650,12 +633,6 @@
               "metricName": "activeUsers"
             },
             "desc": true
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "today",
-            "endDate": "today"
           }
         ],
         "limit": "20"
