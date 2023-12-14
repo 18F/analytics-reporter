@@ -61,7 +61,7 @@ const _formatDate = (date) => {
 
 const _initializeResult = ({ report, data, query }) => ({
   name: report.name,
-  sampling: data.metadata.samplingMetadatas,
+  sampling: data.metadata?.samplingMetadatas,
   query: ((query) => {
     query = Object.assign({}, query)
     delete query.ids
@@ -127,6 +127,7 @@ const _mapping = {
   "activeUsers": "active_visitors",
   "pagePathPlusQueryString": "page",
   "pageTitle": "page_title",
+  "unifiedScreenName": "page_title",
   "sessions": "visits",
   "deviceCategory": "device",
   "operatingSystem": "os",
