@@ -10,7 +10,6 @@ const query = (report) => {
   }
 
   return GoogleAnalyticsClient.fetchData(report).then(data => {
-  // console.log({data})
   const query = GoogleAnalyticsQueryBuilder.buildQuery(report) // included here again because it doesn't get returned with data any longer
     return GoogleAnalyticsDataProcessor.processData(report, data[0], query) // data is now an array
   })
