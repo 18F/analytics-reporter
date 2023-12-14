@@ -13,8 +13,9 @@ const authorizeQuery = (query) => {
   const credentials = _getCredentials()
   const email = credentials.email
   const key = credentials.key
+  // https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport#authorization-scopes
   const scopes = ['https://www.googleapis.com/auth/analytics.readonly']
-  const jwt = new googleapis.auth.JWT(email, null, key, scopes);
+  const jwt = new googleapis.Auth.JWT(email, null, key, scopes);
 
   query = Object.assign({}, query, { auth: jwt })
 
