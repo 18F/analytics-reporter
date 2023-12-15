@@ -262,7 +262,7 @@
       }
     },
     {
-      "name": "device_model",
+      "name": "device-model",
       "frequency": "daily",
       "slim": true,
       "query": {
@@ -651,7 +651,7 @@
             "name": "hostName"
           },
           {
-            "name": "pagePathPlusQueryString"
+            "name": "fullPageUrl"
           },
           {
             "name": "pageTitle"
@@ -692,7 +692,7 @@
             "name": "hostName"
           },
           {
-            "name": "pagePathPlusQueryString"
+            "name": "fullPageUrl"
           },
           {
             "name": "pageTitle"
