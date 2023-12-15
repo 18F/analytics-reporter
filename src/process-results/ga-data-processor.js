@@ -125,7 +125,7 @@ const _removeColumnFromData = ({ column, data }) => {
 
 const _mapping = {
   "activeUsers": "active_visitors",
-  "pagePathPlusQueryString": "page",
+  "fullPageUrl": "page",
   "pageTitle": "page_title",
   "unifiedScreenName": "page_title",
   "sessions": "visits",
