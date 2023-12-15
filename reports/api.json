@@ -25,8 +25,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -73,8 +73,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -121,8 +121,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -169,8 +169,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -217,8 +217,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -273,8 +273,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -321,8 +321,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -380,8 +380,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -431,8 +431,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -490,8 +490,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -560,8 +560,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -611,8 +611,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -659,8 +659,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -717,8 +717,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "sessions"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -771,8 +771,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "eventCount"
+            "metric": {
+              "metricName": "eventCount"
             },
             "desc": true
           }
