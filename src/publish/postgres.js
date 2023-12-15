@@ -8,7 +8,7 @@ Promise.each = async function (arr, fn) {
 }
 
 const publish = (results) => {
-  if (results.query.dimensions.match(/ga:date/)) {
+  if (results.query.dimensions.some(obj => obj.name === 'date')) {
     const db = knex({ client: "pg", connection: config.postgres })
     return _writeRegularResults({ db, results }).then(() => db.destroy())
   } else {
