@@ -9,7 +9,7 @@ const connection = {
 }
 
 const resetSchema = (db) => {
-  return db("analytics_data").delete()
+  return db("analytics_data_ga4").delete()
 }
 
 module.exports = { connection, resetSchema }

@@ -1,4 +1,4 @@
-const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
+const ANALYTICS_DATA_TABLE_NAME = "analytics_data_ga4"
 
 const knex = require("knex")
 const config = require("../config")
