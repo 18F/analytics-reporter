@@ -5,8 +5,8 @@ module.exports = {
   key: process.env.ANALYTICS_KEY,
   key_file: process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.ANALYTICS_KEY_PATH,
   analytics_credentials: process.env.ANALYTICS_CREDENTIALS,
-
   reports_file: process.env.ANALYTICS_REPORTS_PATH,
+  analytics_api_version: process.env.ANALYTICS_API_VERSION,
 
   debug: (process.env.ANALYTICS_DEBUG ? true : false),
 

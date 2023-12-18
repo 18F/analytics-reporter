@@ -6,6 +6,7 @@ exports.up = function(knex) {
     table.dateTime("date_time")
     table.jsonb("data")
     table.timestamps(true, true)
+    table.string("version")
   })
 };
 
