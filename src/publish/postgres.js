@@ -84,7 +84,7 @@ const _rowForDataPoint = ({ results, dataPoint }) => {
   const row = _dataForDataPoint(dataPoint)
   row.report_name = results.name
   row.report_agency = results.agency
-  row.version = config.analytics_api_version || '2.1' // this should match analytics-reporter-api version, only use non-zero semantic versions, ie 2.1 || 2.1.1
+  row.version = config.analytics_api_version || '1.2' // this should match analytics-reporter-api version, only use non-zero semantic versions, ie 2.1 || 2.1.1
   return row
 }
 
