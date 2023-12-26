@@ -181,47 +181,68 @@ A report might look something like this:
   "name": "devices",
   "query": {
     "dimensions": [
-      "ga:date",
-      "ga:deviceCategory"
+      {
+        "name": "date"
+      },
+      {
+        "name": "deviceCategory"
+      }
     ],
     "metrics": [
-      "ga:sessions"
+      {
+        "name": "sessions"
+      }
     ],
-    "start-date": "90daysAgo",
-    "end-date": "yesterday",
-    "sort": "ga:date"
+    "dateRanges": [
+      {
+        "startDate": "90daysAgo",
+        "endDate": "yesterday"
+      }
+    ],
+    "orderBys": [
+      {
+        "dimension": {
+          "dimensionName": "date"
+        },
+        "desc": true
+      }
+    ],
+    "samplingLevel": "HIGHER_PRECISION",
+    "limit": "10000",
+    "property": "properties/393249053"
   },
   "meta": {
     "name": "Devices",
-    "description": "Weekly desktop/mobile/tablet visits by day for all sites."
+    "description": "90 days of desktop/mobile/tablet visits for all sites."
   },
   "data": [
     {
-      "date": "2014-10-14",
-      "device": "desktop",
-      "visits": "11495462"
-    },
-    {
-      "date": "2014-10-14",
+      "date": "2023-12-25",
       "device": "mobile",
-      "visits": "2499586"
+      "visits": "13681896"
     },
     {
-      "date": "2014-10-14",
-      "device": "tablet",
-      "visits": "976396"
+      "date": "2023-12-25",
+      "device": "desktop",
+      "visits": "5775002"
     },
-    // ...
+    {
+      "date": "2023-12-25",
+      "device": "tablet",
+      "visits": "367039"
+    },
+   ...
   ],
   "totals": {
+    "visits": 3584551745,
     "devices": {
-      "mobile": 213920363,
-      "desktop": 755511646,
-      "tablet": 81874189
-    },
-    "start_date": "2014-10-14",
-    "end_date": "2015-01-11"
-  }
+      "mobile": 2012722956,
+      "desktop": 1513968883,
+      "tablet": 52313579,
+      "smart tv": 5546327
+    }
+  },
+  "taken_at": "2023-12-26T20:52:50.062Z"
 }
 ```
 
