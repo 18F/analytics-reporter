@@ -844,25 +844,54 @@
     {
       "name": "second-level-domains",
       "frequency": "daily",
-      "cut": [
-        "sessions"
-      ],
       "query": {
         "dimensions": [
-          "hostname"
+          {
+            "name": "hostName"
+          }
         ],
         "metrics": [
-          "sessions"
+          {
+            "name": "sessions"
+          }
         ],
-        "filters": [
-          "sessions>4",
-          "hostname=~^[^\\.]+\\.[^\\.]+$"
+        "dateRanges": [
+          {
+            "startDate": "14daysAgo",
+            "endDate": "yesterday"
+          }
         ],
-        "start-date": "14daysAgo",
-        "end-date": "yesterday",
-        "sort": "hostname",
-        "max-results": 10000
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "hostName"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "hostname",
+            "stringFilter": {
+              "matchType": "FULL_REGEXP",
+              "value": "^[^\\.]+\\.[^\\.]+$",
+              "caseSensitive": false
+            }
+          },
+          "metricFilter": {
+            "filter": {
+              "fieldName": "sessions",
+              "numericFilter": {
+                "operation": "GREATER_THAN",
+                "value": {
+                  "int64Value": "4"
+                }
+              }
+            }
+          }
+        }
       },
+      "limit": "10000",
       "meta": {
         "name": "Participating second-level domains.",
         "description": "Participating second-level domains over the last 2 weeks."
@@ -871,24 +900,44 @@
     {
       "name": "sites",
       "frequency": "daily",
-      "cut": [
-        "sessions"
-      ],
       "query": {
         "dimensions": [
-          "hostname"
+          {
+            "name": "hostName"
+          }
         ],
         "metrics": [
-          "sessions"
+          {
+            "name": "sessions"
+          }
         ],
-        "filters": [
-          "sessions>9"
+        "dateRanges": [
+          {
+            "startDate": "14daysAgo",
+            "endDate": "yesterday"
+          }
         ],
-        "start-date": "14daysAgo",
-        "end-date": "yesterday",
-        "sort": "hostname",
-        "max-results": 10000
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "hostName"
+            },
+            "desc": true
+          }
+        ],
+        "metricFilter": {
+          "filter": {
+            "fieldName": "sessions",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "9"
+              }
+            }
+          }
+        }
       },
+      "limit": "10000",
       "meta": {
         "name": "Participating hostnames.",
         "description": "Participating hostnames over the last 14 days with at least 10 visits."
@@ -897,24 +946,44 @@
     {
       "name": "sites-extended",
       "frequency": "daily",
-      "cut": [
-        "sessions"
-      ],
       "query": {
         "dimensions": [
-          "hostname"
+          {
+            "name": "hostName"
+          }
         ],
         "metrics": [
-          "sessions"
+          {
+            "name": "sessions"
+          }
         ],
-        "filters": [
-          "sessions>1"
+        "dateRanges": [
+          {
+            "startDate": "14daysAgo",
+            "endDate": "yesterday"
+          }
         ],
-        "start-date": "14daysAgo",
-        "end-date": "yesterday",
-        "sort": "hostname",
-        "max-results": 10000
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "hostName"
+            },
+            "desc": true
+          }
+        ],
+        "metricFilter": {
+          "filter": {
+            "fieldName": "sessions",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "1"
+              }
+            }
+          }
+        }
       },
+      "limit": "10000",
       "meta": {
         "name": "Participating hostnames.",
         "description": "Participating hostnames over the last 14 days with at least 1 visit."
@@ -1007,22 +1076,86 @@
       "frequency": "daily",
       "query": {
         "dimensions": [
-          "pageTitle",
-          "eventLabel",
-          "pagePath"
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "fullPageUrl"
+          }
         ],
         "metrics": [
-          "totalEvents"
+          {
+            "name": "eventCount"
+          }
         ],
-        "filters": [
-          "eventCategory=~^(download|downloads|(outbound downloads))$",
-          "eventLabel!~swf$",
-          "pagePath!~(usps.com).*\/(?i)(zip|doc).*"
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
         ],
-        "start-date": "7daysAgo",
-        "end-date": "yesterday",
-        "sort": "totalEvents",
-        "max-results": "100"
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "matchType": "FULL_REGEXP",
+              "value": "^(file_download|download|downloads|(outbound downloads))$",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "matchType": "PARTIAL_REGEXP",
+                      "value": "~swf$",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "fileName",
+                    "stringFilter": {
+                      "matchType": "PARTIAL_REGEXP",
+                      "value": ".*\\\\.(zip|doc)\\b.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "fullPageUrl",
+                    "stringFilter": {
+                      "matchType": "PARTIAL_REGEXP",
+                      "value": ".*\\busps\\.com\\b.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
       },
       "meta": {
         "name": "Top Downloads (7 Days)",
