@@ -48,6 +48,55 @@ jobs:
               cf push analytics-reporter-develop --strategy rolling
               cf logout
 
+  ga4dev_deploy:
+    docker:
+      - image: cimg/node:16.19.1-browsers
+        environment:
+          POSTGRES_USER: postgres
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_DB: analytics_reporter_test
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # - run:
+          # name: run tests
+          # command: npm test
+
+      - run:
+          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
+          command: |
+              rm ./src/config.js
+              mv ./src/config.js.cloudgov ./src/config.js
+
+      - run:
+          name: Install CF CLI
+          command: |
+              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
+              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
+
+      - run:
+          name: deploy
+          command: |
+              set -e
+              # Log into cloud.gov
+              cf api api.fr.cloud.gov
+              cf login -u $CF_USERNAME_DEV -p $CF_PASSWORD_DEV -o gsa-opp-analytics -s analytics-dev
+              cf push analytics-reporter-develop-ga4 --strategy rolling
+              cf logout
+
+
   staging_deploy:
     docker:
       - image: cimg/node:16.19.1-browsers
@@ -171,7 +220,14 @@ workflows:
             branches:
               only:
                 - develop
-
+  
+  ga4dev_workflow:
+    jobs:
+      - ga4dev_deploy:
+          filters:
+            branches:
+              only:
+                - migrate-ga3-to-ga4 
   staging_workflow:
     jobs:
       - staging_deploy:
