@@ -125,6 +125,7 @@ const _removeColumnFromData = ({ column, data }) => {
 
 const _mapping = {
   "activeUsers": "active_visitors",
+  "fileName": "file_name",
   "fullPageUrl": "page",
   "pageTitle": "page_title",
   "unifiedScreenName": "page_title",
