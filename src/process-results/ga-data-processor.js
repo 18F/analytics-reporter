@@ -83,7 +83,6 @@ for (const [entryKey, entryValue] of Object.entries(row)) {
   entryValue.forEach((item, index) => {
     // Iterate through each key-value pair in the object
     for (const [key, value] of Object.entries(item)) {
-      // console.log(`${key}: ${value}`);
       if (key !== 'oneValue') {
         const field = _fieldNameForColumnIndex({ entryKey, index, data })
 
