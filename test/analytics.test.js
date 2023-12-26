@@ -18,7 +18,7 @@ describe("Analytics", () => {
   describe(".query(report)", () => {
     it("should resolve with formatted google analytics data for the given reports", done => {
       const report = { name: "Report Name" }
-      const data = { rows: [1, 2, 3] }
+      const data = [{ rows: [1, 2, 3] }]
       const processedData = { data: [1, 2, 3] }
 
       let fetchDataCalled = false
@@ -29,10 +29,11 @@ describe("Analytics", () => {
         expect(reportInput).to.equal(report)
         return Promise.resolve(data)
       }
+
       GoogleAnalyticsDataProcessor.processData = (reportInput, dataInput) => {
         processedDataCalled = true
         expect(reportInput).to.equal(report)
-        expect(dataInput).to.equal(data)
+        expect(dataInput).to.equal(data[0])
         return Promise.resolve(processedData)
       }
 
