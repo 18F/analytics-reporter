@@ -27,17 +27,20 @@ jobs:
           command: npm test
 
   install_cf_cli:
-   steps:
+    steps:
       - run:
           name: Install CF CLI
           command: |
               sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
               sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
 
-
   develop_deploy:
     steps:
-      - install_cf_cli
+      - run:
+          name: Install CF CLI
+          command: |
+              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
+              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
       - run:
           name: deploy
           command: |
@@ -50,7 +53,11 @@ jobs:
 
   staging_deploy:
     steps:
-      - install_cf_cli
+      - run:
+          name: Install CF CLI
+          command: |
+              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
+              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
       - run:
           name: Install CF CLI
           command: |
@@ -68,7 +75,11 @@ jobs:
 
   production_deploy:
     steps:
-      - install_cf_cli
+      - run:
+          name: Install CF CLI
+          command: |
+              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
+              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
       - run:
           name: Install CF CLI
           command: |
