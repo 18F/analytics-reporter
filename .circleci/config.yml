@@ -27,12 +27,6 @@ jobs:
           command: npm test
 
       - run:
-          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
-          command: |
-              rm ./src/config.js
-              mv ./src/config.js.cloudgov ./src/config.js
-
-      - run:
           name: Install CF CLI
           command: |
               sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
@@ -75,12 +69,6 @@ jobs:
       #     command: npm test
 
       - run:
-          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
-          command: |
-              rm ./src/config.js
-              mv ./src/config.js.cloudgov ./src/config.js
-
-      - run:
           name: Install CF CLI
           command: |
               sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
@@ -120,12 +108,6 @@ jobs:
       # - run:
       #     name: run tests
       #     command: npm test
-
-      - run:
-          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
-          command: |
-              rm ./src/config.js
-              mv ./src/config.js.cloudgov ./src/config.js
 
       - run:
           name: Install CF CLI
