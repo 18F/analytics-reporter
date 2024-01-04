@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  common_steps:
+  run_tests:
     docker:
       - image: cimg/node:16.19.1-browsers
         environment:
@@ -26,7 +26,9 @@ jobs:
           name: run tests
           command: npm test
 
-  install_cf_cli:
+  develop_deploy:
+    docker:
+      - image: cimg/node:16.19.1
     steps:
       - run:
           name: Install CF CLI
@@ -34,13 +36,6 @@ jobs:
               sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
               sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
 
-  develop_deploy:
-    steps:
-      - run:
-          name: Install CF CLI
-          command: |
-              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
-              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
       - run:
           name: deploy
           command: |
@@ -52,12 +47,9 @@ jobs:
               cf logout
 
   staging_deploy:
+    docker:
+      - image: cimg/node:16.19.1
     steps:
-      - run:
-          name: Install CF CLI
-          command: |
-              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
-              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
       - run:
           name: Install CF CLI
           command: |
@@ -74,12 +66,31 @@ jobs:
 
 
   production_deploy:
+    docker:
+      - image: cimg/node:16.19.1-browsers
+        environment:
+          POSTGRES_USER: postgres
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_DB: analytics_reporter_test
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run:
-          name: Install CF CLI
-          command: |
-              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
-              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # - run:
+      #     name: run tests
+      #     command: npm test
+
       - run:
           name: Install CF CLI
           command: |
@@ -93,22 +104,28 @@ jobs:
               cf login -a api.fr.cloud.gov -u $CF_PRODUCTION_SPACE_DEPLOYER_USERNAME -p $CF_PRODUCTION_SPACE_DEPLOYER_PASSWORD -o gsa-opp-analytics -s analytics-prod
               cf push analytics-reporter-production --strategy rolling
               cf logout
-
 workflows:
-  version: 2
-  build:
+  run_automated_tests:
     jobs:
-      - common_steps
+      - run_tests
+  develop_workflow:
+    jobs:
       - develop_deploy:
           filters:
             branches:
               only:
                 - develop
+
+  staging_workflow:
+    jobs:
       - staging_deploy:
           filters:
             branches:
               only:
                 - stage
+
+  production_workflow:
+    jobs:
       - production_deploy:
           filters:
             branches:
