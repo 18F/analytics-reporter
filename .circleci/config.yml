@@ -82,26 +82,22 @@ jobs:
               cf login -a api.fr.cloud.gov -u $CF_PRODUCTION_SPACE_DEPLOYER_USERNAME -p $CF_PRODUCTION_SPACE_DEPLOYER_PASSWORD -o gsa-opp-analytics -s analytics-prod
               cf push analytics-reporter-production --strategy rolling
               cf logout
+
 workflows:
-  common_steps
-  develop_workflow:
+  version: 2
+  build:
     jobs:
+      - common_steps
       - develop_deploy:
           filters:
             branches:
               only:
                 - develop
-
-  staging_workflow:
-    jobs:
       - staging_deploy:
           filters:
             branches:
               only:
                 - stage
-
-  production_workflow:
-    jobs:
       - production_deploy:
           filters:
             branches:
