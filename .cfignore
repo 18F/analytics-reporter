@@ -3,7 +3,6 @@
 *.pem
 .python-version
 *.env
-*.json
 *.csv
 *.gz
 /data
