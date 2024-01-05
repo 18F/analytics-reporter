@@ -64,6 +64,19 @@ jobs:
     docker:
       - image: cimg/node:16.19.1
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
       - run:
           name: Install CF CLI
           command: |
@@ -82,6 +95,19 @@ jobs:
     docker:
       - image: cimg/node:16.19.1
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
       - run:
           name: Install CF CLI
           command: |
