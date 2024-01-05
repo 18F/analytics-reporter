@@ -5,8 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 if (process.env.NEW_RELIC_APP_NAME) {
 	logger.info("Starting New Relic")
 	require("newrelic")
-} else {
-	logger.warn("Skipping New Relic Activation")
 }
 
 const spawn = require("child_process").spawn;
