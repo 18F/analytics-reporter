@@ -9,12 +9,6 @@ key_file.txt
 *.csv
 *.gz
 /data
-todo.txt
 npm-debug.log
 *.swp
 .git
-
-# Track selected JSON files
-!package.json
-!package-lock.json
-!reports/*.json

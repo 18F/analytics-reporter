@@ -9,7 +9,6 @@ key_file.txt
 *.csv
 *.gz
 /data
-todo.txt
 npm-debug.log
 *.swp
 .git
