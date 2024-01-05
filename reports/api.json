@@ -19,7 +19,7 @@
         ],
         "dateRanges": [
           {
-            "startDate": "3daysAgo",
+            "startDate": "30daysAgo",
             "endDate": "yesterday"
           }
         ],

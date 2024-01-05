@@ -163,7 +163,7 @@
         ],
         "dateRanges": [
           {
-            "startDate": "90daysAgo",
+            "startDate": "30daysAgo",
             "endDate": "yesterday"
           }
         ],
