@@ -15,6 +15,10 @@ const logger = winston.createLogger({
 	transports: [new winston.transports.Console({level: 'debug'})],
 });
 
+logger.info("===================================");
+logger.info("=== STARTING ANALYTICS-REPORTER ===");
+logger.info("    Running /deploy/cron.js");
+logger.info("===================================");
 
 const scriptRootPath = `${process.env.ANALYTICS_ROOT_PATH}/deploy`
 
