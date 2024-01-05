@@ -1,8 +1,6 @@
 .DS_Store
 *.p12
 *.pem
-key_file.txt
-/node_modules
 .python-version
 *.env
 *.json
