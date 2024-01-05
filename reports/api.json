@@ -1,7 +1,7 @@
 {
   "reports": [
     {
-      "name": "device",
+      "name": "devices",
       "frequency": "daily",
       "query": {
         "dimensions": [

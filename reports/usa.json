@@ -144,7 +144,45 @@
       }
     },
     {
-      "name": "device_model",
+      "name": "devices",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": [
+          {
+            "name": "date"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "90daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "date"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "90 days of desktop/mobile/tablet visits for all sites."
+      }
+    },
+    {
+      "name": "device-model",
       "frequency": "daily",
       "slim": true,
       "query": {
@@ -1103,6 +1141,103 @@
       }
     },
     {
+      "name": "top-pages-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "pageTitle"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          },
+          {
+            "name": "sessions"
+          },
+          {
+            "name": "activeUsers"
+          },
+          {
+            "name": "screenPageViewsPerSession"
+          },
+          {
+            "name": "averageSessionDuration"
+          },
+          {
+            "name": "bounceRate"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Pages (30 Days)",
+        "description": "Last 30 days' top 20 pages, measured by page views, for all sites."
+      }
+    },
+    {
+      "name": "top-pages-7-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "pageTitle"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Pages (7 Days)",
+        "description": "Last week's top 20 pages, measured by page views, for all sites."
+      }
+    },
+    {
       "name": "top-downloads-yesterday",
       "frequency": "daily",
       "query": {
@@ -1442,6 +1577,70 @@
       "meta": {
         "name": "All Domains (30 Days)",
         "description": "Last 30 days' domains, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "last-48-hours",
+      "frequency": "realtime",
+      "query": {
+        "dimensions": [
+          {
+            "name": "date"
+          },
+          {
+            "name": "hour"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "today"
+          }
+        ]
+      },
+      "meta": {
+        "name": "Today",
+        "description": "Today's visits for all sites."
+      }
+    },
+    {
+      "name": "users",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": [
+          {
+            "name": "date"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "90daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "date"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Visitors",
+        "description": "90 days of visits for all sites."
       }
     }
   ]
