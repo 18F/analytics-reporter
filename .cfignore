@@ -1,0 +1,11 @@
+.DS_Store
+*.p12
+*.pem
+.python-version
+*.csv
+*.gz
+/data
+npm-debug.log
+*.swp
+.git
+*.deb // don't push cf-cli packages
