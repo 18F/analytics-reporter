@@ -2,6 +2,10 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+if (process.env.NEW_RELIC_APP_NAME) {
+	require("newrelic")
+}
+
 const spawn = require("child_process").spawn;
 const winston = require("winston")
 
@@ -9,13 +13,12 @@ const logger = winston.createLogger({
 	level: 'debug',
 	format: winston.format.json(),
 	transports: [new winston.transports.Console({level: 'debug'})],
-  });
-if (process.env.NEW_RELIC_APP_NAME) {
-	logger.info("Starting New Relic")
-	require("newrelic")
-} else {
-	logger.warn("Skipping New Relic Activation")
-}
+});
+
+logger.info("===================================");
+logger.info("=== STARTING ANALYTICS-REPORTER ===");
+logger.info("    Running /deploy/cron.js");
+logger.info("===================================");
 
 const scriptRootPath = `${process.env.ANALYTICS_ROOT_PATH}/deploy`
 

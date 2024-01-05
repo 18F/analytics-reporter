@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  develop_deploy:
+  run_tests:
     docker:
       - image: cimg/node:16.19.1-browsers
         environment:
@@ -26,11 +26,23 @@ jobs:
           name: run tests
           command: npm test
 
+
+  develop_deploy:
+    docker:
+      - image: cimg/node:16.19.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run:
-          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
-          command: |
-              rm ./src/config.js
-              mv ./src/config.js.cloudgov ./src/config.js
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
           name: Install CF CLI
@@ -50,12 +62,7 @@ jobs:
 
   staging_deploy:
     docker:
-      - image: cimg/node:16.19.1-browsers
-        environment:
-          POSTGRES_USER: postgres
-      - image: circleci/postgres:9.5-alpine
-        environment:
-          POSTGRES_DB: analytics_reporter_test
+      - image: cimg/node:16.19.1
     steps:
       - checkout
       - restore_cache:
@@ -69,16 +76,6 @@ jobs:
           paths:
             - ./node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      # - run:
-      #     name: run tests
-      #     command: npm test
-
-      - run:
-          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
-          command: |
-              rm ./src/config.js
-              mv ./src/config.js.cloudgov ./src/config.js
 
       - run:
           name: Install CF CLI
@@ -94,15 +91,9 @@ jobs:
               cf push analytics-reporter-staging --strategy rolling
               cf logout
 
-
   production_deploy:
     docker:
-      - image: cimg/node:16.19.1-browsers
-        environment:
-          POSTGRES_USER: postgres
-      - image: circleci/postgres:9.5-alpine
-        environment:
-          POSTGRES_DB: analytics_reporter_test
+      - image: cimg/node:16.19.1
     steps:
       - checkout
       - restore_cache:
@@ -117,16 +108,6 @@ jobs:
             - ./node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # - run:
-      #     name: run tests
-      #     command: npm test
-
-      - run:
-          name: Delete src/config.js and rename config.js.cloudgov to replace it with Cloud.gov needed settings.
-          command: |
-              rm ./src/config.js
-              mv ./src/config.js.cloudgov ./src/config.js
-
       - run:
           name: Install CF CLI
           command: |
@@ -140,7 +121,12 @@ jobs:
               cf login -a api.fr.cloud.gov -u $CF_PRODUCTION_SPACE_DEPLOYER_USERNAME -p $CF_PRODUCTION_SPACE_DEPLOYER_PASSWORD -o gsa-opp-analytics -s analytics-prod
               cf push analytics-reporter-production --strategy rolling
               cf logout
+
 workflows:
+  run_automated_tests:
+    jobs:
+      - run_tests
+
   develop_workflow:
     jobs:
       - develop_deploy:
