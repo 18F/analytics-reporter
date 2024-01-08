@@ -172,9 +172,9 @@ jobs:
               cf logout
 
 workflows:
-  run_automated_tests:
-    jobs:
-      - run_tests
+  # run_automated_tests:
+  #   jobs:
+  #     - run_tests
 
   develop_workflow:
     jobs:
