@@ -57,7 +57,7 @@ jobs:
               # Log into cloud.gov
               cf api api.fr.cloud.gov
               cf login -u $CF_USERNAME_DEV -p $CF_PASSWORD_DEV -o gsa-opp-analytics -s analytics-dev
-              cf push analytics-reporter-develop --strategy rolling
+              cf push analytics-reporter-develop --health-check-type process --strategy rolling
               cf logout
 
   staging_deploy:
