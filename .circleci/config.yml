@@ -86,7 +86,11 @@ jobs:
       - run:
           name: Write Google GA4 Credentails file from value in CircleCI env var.
           command: |
-              echo "$GA4_CREDS" > ./my-analytics-ga4-65057af58daa.json
+              echo "Writing environment variable to file"
+              echo $GA4_CREDS
+              echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
+              pwd
+              ls -al
 
       - run:
           name: deploy
