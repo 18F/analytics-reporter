@@ -99,6 +99,11 @@ jobs:
               sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
 
       - run:
+          name: Write Google GA4 Credentails file from value in CircleCI env var.
+          command: |
+              echo "$GA4_CREDS" > ./my-analytics-ga4-65057af58daa.json
+
+      - run:
           name: deploy
           command: |
               set -e
