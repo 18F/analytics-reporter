@@ -82,20 +82,20 @@ var api_run = function() {
 // 	})
 // }
 
-// /**
-// 	Daily reports run every morning at 10 AM UTC.
-// 	This calculates the offset between now and then for the next scheduled run.
-// */
-// var calculateNextDailyRunTimeOffset = function(){
-// 	const currentTime = new Date();
-// 	const nextRunTime = new Date(
-// 		currentTime.getFullYear(),
-// 		currentTime.getMonth(),
-// 		currentTime.getDate() + 1,
-// 		10 - currentTime.getTimezoneOffset() / 60
-// 	);
-// 	return (nextRunTime - currentTime) % (1000 * 60 * 60 * 24)
-// }
+/**
+	Daily reports run every morning at 10 AM UTC.
+	This calculates the offset between now and then for the next scheduled run.
+*/
+var calculateNextDailyRunTimeOffset = function(){
+	const currentTime = new Date();
+	const nextRunTime = new Date(
+		currentTime.getFullYear(),
+		currentTime.getMonth(),
+		currentTime.getDate() + 1,
+		10 - currentTime.getTimezoneOffset() / 60
+	);
+	return (nextRunTime - currentTime) % (1000 * 60 * 60 * 24)
+}
 
 logger.info("starting cron.js!");
 api_run();
