@@ -18,7 +18,7 @@
     },
     {
       "name": "today",
-      "frequency": "realtime",
+      "frequency": "hourly",
       "query": {
         "dimensions": [
           {
@@ -35,55 +35,22 @@
         ],
         "dateRanges": [
           {
-            "startDate": "today",
+            "startDate": "yesterday",
             "endDate": "today"
           }
         ],
-        "dimensionFilter": {
-          "andGroup": {
-            "expressions": [
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hour",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hour",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hour",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
         "orderBys": [
           {
             "dimension": {
+              "orderType": "NUMERIC",
+              "dimensionName": "date"
+            }
+          },
+          {
+            "dimension": {
+              "orderType": "NUMERIC",
               "dimensionName": "hour"
-            },
-            "asc": true
+            }
           }
         ]
       },
@@ -176,7 +143,7 @@
         ],
         "dateRanges": [
           {
-            "startDate": "30daysAgo",
+            "startDate": "90daysAgo",
             "endDate": "yesterday"
           }
         ],

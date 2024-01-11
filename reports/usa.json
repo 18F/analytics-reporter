@@ -18,7 +18,7 @@
     },
     {
       "name": "today",
-      "frequency": "realtime",
+      "frequency": "hourly",
       "query": {
         "dimensions": [
           {
@@ -35,61 +35,28 @@
         ],
         "dateRanges": [
           {
-            "startDate": "today",
+            "startDate": "yesterday",
             "endDate": "today"
           }
         ],
-        "dimensionFilter": {
-          "andGroup": {
-            "expressions": [
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hour",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hour",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hour",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
         "orderBys": [
           {
             "dimension": {
+              "orderType": "NUMERIC",
+              "dimensionName": "date"
+            }
+          },
+          {
+            "dimension": {
+              "orderType": "NUMERIC",
               "dimensionName": "hour"
-            },
-            "asc": true
+            }
           }
         ]
       },
       "meta": {
-        "name": "Today",
-        "description": "Today's visits for all sites."
+        "name": "Yesterday",
+        "description": "Yesterdays's visits for all sites."
       }
     },
     {
@@ -210,7 +177,7 @@
         ],
         "dateRanges": [
           {
-            "startDate": "30daysAgo",
+            "startDate": "90daysAgo",
             "endDate": "yesterday"
           }
         ],
@@ -1690,8 +1657,8 @@
         ]
       },
       "meta": {
-        "name": "Today",
-        "description": "Today's visits for all sites."
+        "name": "Last 48 Hours",
+        "description": "Visits for all sites in the past 48 hours."
       }
     },
     {
