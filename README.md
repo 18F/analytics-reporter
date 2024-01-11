@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/18F/analytics.usa.gov.svg?style=shield)](https://circleci.com/gh/18F/analytics.usa.gov)  
-[![Snyk](https://snyk.io/test/github/18F/analytics-reporter/badge.svg)]
-[![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)]
+![Snyk](https://snyk.io/test/github/18F/analytics-reporter/badge.svg)
+![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)
 
 ## Analytics Reporter
 
