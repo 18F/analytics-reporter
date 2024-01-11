@@ -1,0 +1,1 @@
+worker: node deploy/cron.js

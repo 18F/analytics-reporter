@@ -1,15 +1,13 @@
 .DS_Store
 *.p12
 *.pem
-key_file.txt
-node_modules
+/node_modules
 .python-version
 *.env
 *.json
 *.csv
 *.gz
 /data
-todo.txt
 npm-debug.log
 *.swp
 .git

@@ -15,4 +15,15 @@ module.exports = {
       tableName: 'knex_migrations',
     },
   },
+  production: {
+    client: 'postgresql',
+    connection: {
+      host: process.env.POSTGRES_HOST,
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
+      port: 5432,
+      ssl : true
+    }
+  },
 }

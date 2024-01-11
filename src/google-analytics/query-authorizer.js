@@ -2,6 +2,12 @@ const googleapis = require('googleapis')
 const fs = require('fs')
 const config = require('../config')
 const GoogleAnalyticsCredentialLoader = require("./credential-loader")
+const winston = require('winston');
+const logger = winston.createLogger({
+	level: 'info',
+	format: winston.format.json(),
+	transports: [new winston.transports.Console()],
+  });
 
 const authorizeQuery = (query) => {
   const credentials = _getCredentials()
