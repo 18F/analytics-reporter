@@ -1,6 +1,6 @@
- x[![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)](https://codeclimate.com/github/18F/analytics-reporter)
- [![CircleCI](https://circleci.com/gh/18F/analytics.usa.gov.svg?style=shield)](https://circleci.com/gh/18F/analytics.usa.gov)
- [![Dependency Status](https://gemnasium.com/badges/github.com/18F/analytics-reporter.svg)](https://gemnasium.com/github.com/18F/analytics-reporter)
+[![CircleCI](https://circleci.com/gh/18F/analytics.usa.gov.svg?style=shield)](https://circleci.com/gh/18F/analytics.usa.gov)
+[![Snyk](https://snyk.io/test/github/18F/analytics-reporter/badge.svg)](https://snyk.io/test/github/18F/analytics-reporter)
+[![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)](https://codeclimate.com/github/18F/analytics-reporter)
 
 ## Analytics Reporter
 
@@ -11,7 +11,6 @@ and the [Google Analytics Real Time API v3](https://developers.google.com/analyt
 This is used in combination with [analytics-reporter](https://github.com/18F/analytics-reporter-api) and [analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
 
 Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
-
 
 ### Installation
 
