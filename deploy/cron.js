@@ -37,50 +37,50 @@ var api_run = function() {
 	})
 }
 
-// var daily_run = function() {
-// 	logger.info("about to run daily.sh");
+var daily_run = function() {
+	logger.info("about to run daily.sh");
 
-// 	var daily = spawn(`${scriptRootPath}/daily.sh`)
-// 	daily.stdout.on("data", (data) => {
-// 		logger.info("[daily.sh]", data.toString().trim())
-// 	})
-// 	daily.stderr.on("data", (data) => {
-// 		logger.info("[daily.sh]", data.toString().trim())
-// 	})
-// 	daily.on("exit", (code) => {
-// 		logger.info("daily.sh exitted with code:", code)
-// 	})
-// }
+	var daily = spawn(`${scriptRootPath}/daily.sh`)
+	daily.stdout.on("data", (data) => {
+		logger.info("[daily.sh]", data.toString().trim())
+	})
+	daily.stderr.on("data", (data) => {
+		logger.info("[daily.sh]", data.toString().trim())
+	})
+	daily.on("exit", (code) => {
+		logger.info("daily.sh exitted with code:", code)
+	})
+}
 
-// var hourly_run = function(){
-// 	logger.info("about to run hourly.sh");
+var hourly_run = function(){
+	logger.info("about to run hourly.sh");
 
-// 	var hourly = spawn(`${scriptRootPath}/hourly.sh`)
-// 	hourly.stdout.on("data", (data) => {
-// 		logger.info("[hourly.sh]", data.toString().trim())
-// 	})
-// 	hourly.stderr.on("data", (data) => {
-// 		logger.info("[hourly.sh]", data.toString().trim())
-// 	})
-// 	hourly.on("exit", (code) => {
-// 		logger.info("hourly.sh exitted with code:", code)
-// 	})
-// }
+	var hourly = spawn(`${scriptRootPath}/hourly.sh`)
+	hourly.stdout.on("data", (data) => {
+		logger.info("[hourly.sh]", data.toString().trim())
+	})
+	hourly.stderr.on("data", (data) => {
+		logger.info("[hourly.sh]", data.toString().trim())
+	})
+	hourly.on("exit", (code) => {
+		logger.info("hourly.sh exitted with code:", code)
+	})
+}
 
-// var realtime_run = function(){
-// 	logger.info("about to run realtime.sh");
+var realtime_run = function(){
+	logger.info("about to run realtime.sh");
 
-// 	var realtime = spawn(`${scriptRootPath}/realtime.sh`)
-// 	realtime.stdout.on("data", (data) => {
-// 		logger.info("[realtime.sh]", data.toString().trim())
-// 	})
-// 	realtime.stderr.on("data", (data) => {
-// 		logger.info("[realtime.sh]", data.toString().trim())
-// 	})
-// 	realtime.on("exit", (code) => {
-// 		logger.info("realtime.sh exitted with code:", code)
-// 	})
-// }
+	var realtime = spawn(`${scriptRootPath}/realtime.sh`)
+	realtime.stdout.on("data", (data) => {
+		logger.info("[realtime.sh]", data.toString().trim())
+	})
+	realtime.stderr.on("data", (data) => {
+		logger.info("[realtime.sh]", data.toString().trim())
+	})
+	realtime.on("exit", (code) => {
+		logger.info("realtime.sh exitted with code:", code)
+	})
+}
 
 /**
 	Daily reports run every morning at 10 AM UTC.
