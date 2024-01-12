@@ -35,17 +35,11 @@
         ],
         "dateRanges": [
           {
-            "startDate": "yesterday",
+            "startDate": "today",
             "endDate": "today"
           }
         ],
         "orderBys": [
-          {
-            "dimension": {
-              "orderType": "NUMERIC",
-              "dimensionName": "date"
-            }
-          },
           {
             "dimension": {
               "orderType": "NUMERIC",
@@ -1731,6 +1725,20 @@
           {
             "startDate": "yesterday",
             "endDate": "today"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "orderType": "NUMERIC",
+              "dimensionName": "date"
+            }
+          },
+          {
+            "dimension": {
+              "orderType": "NUMERIC",
+              "dimensionName": "hour"
+            }
           }
         ]
       },
