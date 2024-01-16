@@ -109,9 +109,6 @@
       "query": {
         "dimensions": [
           {
-            "name": "date"
-          },
-          {
             "name": "language"
           }
         ],
@@ -129,7 +126,7 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "sessions"
             },
             "desc": true
           }
@@ -1780,6 +1777,40 @@
       "meta": {
         "name": "Visitors",
         "description": "90 days of visits for all sites."
+      }
+    },
+    {
+      "name": "sessions-over-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "date"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "orderType": "NUMERIC",
+              "dimensionName": "date"
+            }
+          }
+        ]
+      },
+      "meta": {
+        "name": "Sessions Over 30 Days",
+        "description": "Visits for all sites over 30 days."
       }
     }
   ]

@@ -252,9 +252,6 @@
       "query": {
         "dimensions": [
           {
-            "name": "date"
-          },
-          {
             "name": "language"
           }
         ],
@@ -1079,6 +1076,40 @@
       "meta": {
         "name": "Top Traffic Sources (30 Days)",
         "description": "Last 30 days' Traffic sources, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "sessions-over-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "date"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "orderType": "NUMERIC",
+              "dimensionName": "date"
+            }
+          }
+        ]
+      },
+      "meta": {
+        "name": "Sessions Over 30 Days",
+        "description": "Visits for all sites over 30 days."
       }
     }
   ]
