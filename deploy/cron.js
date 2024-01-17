@@ -98,21 +98,21 @@ var calculateNextDailyRunTimeOffset = function(){
 }
 
 logger.info("starting cron.js!");
-api_run();
+// api_run();
 // daily_run();
 // hourly_run();
 // realtime_run();
 // //api
 // setInterval(api_run,1000 * 60 * 60 * 24)
 // //daily
-setTimeout(() => {
-	// Run at 10 AM UTC, then every 24 hours afterwards
-	// daily_run();
-	// setInterval(daily_run, 1000 * 60 * 60 * 24);
-	//api
-	api_run();
-	setInterval(api_run,1000 * 60 * 60 * 24)
-}, calculateNextDailyRunTimeOffset());
+// setTimeout(() => {
+// 	// Run at 10 AM UTC, then every 24 hours afterwards
+// 	// daily_run();
+// 	// setInterval(daily_run, 1000 * 60 * 60 * 24);
+// 	//api
+// 	api_run();
+// 	setInterval(api_run,1000 * 60 * 60 * 24)
+// }, calculateNextDailyRunTimeOffset());
 // //hourly
 // setInterval(hourly_run,1000 * 60 * 60);
 // //realtime
