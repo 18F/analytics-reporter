@@ -7,7 +7,6 @@ const Analytics = require("./src/analytics")
 const DiskPublisher = require("./src/publish/disk")
 const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
-const S3Publisher = require("./src/publish/s3")
 
 Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
@@ -46,9 +45,7 @@ const _optionsForReport = (report, options) => ({
 
 const _publishReport = (report, formattedResult, options) => {
   logger.debug(`[${report.name}]`, "Publishing...")
-  if (options.publish) {
-    return S3Publisher.publish(report, formattedResult, options)
-  } else if (options.output && typeof(options.output) === "string") {
+  if (options.output && typeof(options.output) === "string") {
     return DiskPublisher.publish(report, formattedResult, options)
   } else {
     console.log(formattedResult)
