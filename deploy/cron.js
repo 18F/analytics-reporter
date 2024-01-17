@@ -28,13 +28,13 @@ var api_ua_run = function() {
 	console.log(`${scriptUARootPath}/api.sh`)
 	var api = spawn(`${scriptUARootPath}/api.sh`)
 	api.stdout.on("data", (data) => {
-		logger.info("[api.sh]", data.toString().trim())
+		logger.info("[ua - api.sh]", data.toString().trim())
 	})
 	api.stderr.on("data", (data) => {
-		logger.info("[api.sh]", data.toString().trim())
+		logger.info("[ua - api.sh]", data.toString().trim())
 	})
 	api.on("exit", (code) => {
-		logger.info("api.sh exitted with code:", code)
+		logger.info("ua - api.sh exitted with code:", code)
 	})
 }
 
