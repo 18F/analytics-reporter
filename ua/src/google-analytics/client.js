@@ -1,33 +1,29 @@
-const google = require("googleapis")
+const {google} = require("googleapis")
 const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer")
 const GoogleAnalyticsQueryBuilder = require("./query-builder")
 
 const fetchData = (report) => {
   const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
   return GoogleAnalyticsQueryAuthorizer.authorizeQuery(query).then(query => {
-    return _executeFetchDataRequest(query, { realtime: report.realtime })
+    return _executeFetchDataRequest(query)
   })
 }
 
-const _executeFetchDataRequest = (query, { realtime }) => {
-  return new Promise((resolve, reject) => {
-    _get(realtime)(query, (err, data) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
+const _executeFetchDataRequest = (query) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await _get(query);
+      resolve(data);
+    } catch (err) {
+      reject(err);
+    }
+  });
 }
 
-const _get = (realtime) => {
+const _get = (query) => {
   const analytics = google.analytics({version: 'v3'})
-  if (realtime) {
-    return analytics.data.realtime.get
-  } else {
-    return analytics.data.ga.get
-  }
+    return analytics.data.ga.get(query)
 }
 
 module.exports = { fetchData }
+
