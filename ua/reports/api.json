@@ -1,0 +1,266 @@
+{
+  "reports": [
+    {
+      "name": "device",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:deviceCategory"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": ["ga:sessions>100"]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "Desktop/mobile/tablet visits"
+      }
+    },
+    {
+      "name": "language",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:language"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": [
+          "ga:sessions>100"
+        ]
+      },
+      "meta": {
+        "name": "Browser Languages",
+        "description": "Browser languages of visiting browsers"
+      }
+    },
+    {
+      "name": "device-model",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:mobileDeviceModel"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": ["ga:sessions>100"]
+      },
+      "meta": {
+        "name": "Device Models",
+        "description": "Device models of visiting devices"
+      }
+    },
+    {
+      "name": "os",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:operatingSystem"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": ["ga:sessions>100"]
+      },
+      "meta": {
+        "name": "Operating Systems",
+        "description": "Operating systems of visiting devices"
+      }
+    },
+    {
+      "name": "windows",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:operatingSystemVersion"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": [
+          "ga:operatingSystem==Windows",
+          "ga:sessions>100"
+        ]
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "Operating system of visiting windows devices"
+      }
+    },
+    {
+      "name": "browser",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:browser"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": ["ga:sessions>100"]
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "Browsers of visiting users"
+      }
+    },
+    {
+      "name": "ie",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date","ga:browserVersion"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": [
+          "ga:browser==Internet Explorer",
+          "ga:sessions>100"
+        ]
+      },
+      "meta": {
+        "name": "Internet Explorer",
+        "description": "Visits from Internet Explorer users broken down by version"
+      }
+    },
+    {
+      "name": "os-browser",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:browser", "ga:operatingSystem"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": ["ga:sessions>100"]
+      },
+      "meta": {
+        "name": "OS-browser combinations",
+        "description": "Visits broken down by browser and OS for all sites"
+      }
+    },
+    {
+      "name": "windows-browser",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date" ,"ga:browser", "ga:operatingSystemVersion"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": [
+          "ga:sessions>100",
+          "ga:operatingSystem==Windows"
+        ]
+      },
+      "meta": {
+        "name": "Windows-browser combinations",
+        "description": "Visits broken down by Windows versions and browser for all sites"
+      }
+    },
+    {
+      "name": "windows-ie",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date","ga:browserVersion", "ga:operatingSystemVersion"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": [
+          "ga:sessions>100",
+          "ga:browser==Internet Explorer",
+          "ga:operatingSystem==Windows"
+        ]
+      },
+      "meta": {
+        "name": "IE on Windows",
+        "description": "Visits from IE on Windows broken down by IE and Windows versions"
+      }
+    },
+    {
+      "name": "domain",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date", "ga:hostname"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": ["ga:sessions>100"]
+      },
+      "meta": {
+        "name": "Domains",
+        "description": "Number of visitors for a given domain"
+      }
+    },
+    {
+      "name": "traffic-source",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date", "ga:source", "ga:hasSocialSourceReferral"],
+        "metrics": ["ga:sessions"],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday",
+        "sort": "-ga:sessions",
+        "filters": ["ga:sessions>100"]
+      },
+      "meta": {
+        "name": "Top Traffic Sources",
+        "description": "Visitors for a given traffic source"
+      }
+    },
+    {
+      "name": "second-level-domain",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date", "ga:hostname"],
+        "metrics": ["ga:sessions"],
+        "sort": "-ga:sessions",
+        "filters": [
+          "ga:sessions>100",
+          "ga:hostname=~^[^\\.]+\\.[^\\.]+$"
+        ],
+        "start-date": "3daysAgo",
+        "end-date": "yesterday"
+      },
+      "meta": {
+        "name": "Participating second-level domains.",
+        "description": "Visits to participating second-level domains"
+      }
+    },
+    {
+      "name": "site",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date", "ga:hostname"],
+        "metrics": ["ga:sessions"],
+        "filters": ["ga:sessions>100"],
+        "start-date": "3daysAgo",
+        "sort": "-ga:sessions",
+        "end-date": "yesterday"
+      },
+      "meta": {
+        "name": "Participating hostnames.",
+        "description": "Visits to participating hostnames"
+      }
+    },
+    {
+      "name": "download",
+      "frequency": "daily",
+      "query": {
+        "dimensions": ["ga:date", "ga:pageTitle", "ga:eventLabel", "ga:pagePath"],
+        "metrics": ["ga:totalEvents"],
+        "filters": [
+          "ga:eventCategory=~^(download|downloads|(outbound downloads))$",
+          "ga:pagePath!~(usps.com).*\/(?i)(zip|doc).*",
+          "ga:totalEvents>100"
+        ],
+        "start-date": "3daysAgo",
+        "sort": "-ga:totalEvents",
+        "end-date": "yesterday"
+      },
+      "meta": {
+        "name": "Downloads",
+        "description": "Number of download events"
+      }
+    }
+  ]
+}

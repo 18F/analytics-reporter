@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+/*
+ * Run all analytics reports output JSON to disk.
+ *
+ * Usage: analytics
+ *
+ * Defaults to printing JSON to STDOUT.
+ *
+ * --output: Output to a directory.
+ * --publish: Publish to an S3 bucket.
+ * --only: only run one or more named reports.
+ * --slim: Where supported, use totals only (omit the `data` array).
+ *         Only applies to JSON, and reports where "slim": true.
+ * --csv: CSV instead of JSON.
+ * --frequency: Limit to reports with this 'frequency' value.
+ * --debug: print debug details on STDOUT
+ */
+
+const minimist = require("minimist");
+const run = require("../index.js").run;
+const options = minimist(process.argv.slice(2));
+
+run(options);

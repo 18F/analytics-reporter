@@ -21,6 +21,22 @@ logger.info("    Running /deploy/cron.js");
 logger.info("===================================");
 
 const scriptRootPath = `${process.env.ANALYTICS_ROOT_PATH}/deploy`
+const scriptUARootPath = `${process.env.ANALYTICS_UA_ROOT_PATH}/deploy`
+
+var api_ua_run = function() {
+	logger.info("about to run ua api.sh");
+	console.log(`${scriptUARootPath}/api.sh`)
+	var api = spawn(`${scriptUARootPath}/api.sh`)
+	api.stdout.on("data", (data) => {
+		logger.info("[api.sh]", data.toString().trim())
+	})
+	api.stderr.on("data", (data) => {
+		logger.info("[api.sh]", data.toString().trim())
+	})
+	api.on("exit", (code) => {
+		logger.info("api.sh exitted with code:", code)
+	})
+}
 
 var api_run = function() {
 	logger.info("about to run api.sh");
@@ -99,19 +115,23 @@ var calculateNextDailyRunTimeOffset = function(){
 
 logger.info("starting cron.js!");
 api_run();
-daily_run();
-hourly_run();
-realtime_run();
-//daily
-setTimeout(() => {
-	// Run at 10 AM UTC, then every 24 hours afterwards
-	daily_run();
-	setInterval(daily_run, 1000 * 60 * 60 * 24);
-	//api
-	api_run();
-	setInterval(api_run,1000 * 60 * 60 * 24)
-}, calculateNextDailyRunTimeOffset());
-//hourly
-setInterval(hourly_run,1000 * 60 * 60);
-//realtime
-setInterval(realtime_run,1000 * 60 * 5);
+api_ua_run();
+// daily_run();
+// hourly_run();
+// realtime_run();
+// daily
+// setTimeout(() => {
+// 	// Run at 10 AM UTC, then every 24 hours afterwards
+// 	daily_run();
+// 	setInterval(daily_run, 1000 * 60 * 60 * 24);
+// 	//api
+// 	api_run();
+// 	setInterval(api_run,1000 * 60 * 60 * 24)
+// 	//ua api
+// 	ua_api_run();
+// 	setInterval(api_run,1000 * 60 * 60 * 24)
+// }, calculateNextDailyRunTimeOffset());
+// //hourly
+// setInterval(hourly_run,1000 * 60 * 60);
+// //realtime
+// setInterval(realtime_run,1000 * 60 * 5);
