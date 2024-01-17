@@ -8,7 +8,6 @@
  * Defaults to printing JSON to STDOUT.
  *
  * --output: Output to a directory.
- * --publish: Publish to an S3 bucket.
  * --only: only run one or more named reports.
  * --slim: Where supported, use totals only (omit the `data` array).
  *         Only applies to JSON, and reports where "slim": true.
