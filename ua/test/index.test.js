@@ -15,7 +15,6 @@ describe("main", () => {
     let DiskPublisher
     let PostgresPublisher
     let ResultFormatter
-    let S3Publisher
     let result
     let main
 
@@ -30,7 +29,6 @@ describe("main", () => {
       ResultFormatter = {
         formatResult: (result) => Promise.resolve(JSON.stringify(result))
       }
-      S3Publisher = {}
 
       main = proxyquire("../index.js", {
         "./src/config": config,
@@ -38,7 +36,6 @@ describe("main", () => {
         "./src/publish/disk": DiskPublisher,
         "./src/publish/postgres": PostgresPublisher,
         "./src/process-results/result-formatter": ResultFormatter,
-        "./src/publish/s3": S3Publisher,
       })
     })
 
@@ -106,24 +103,6 @@ describe("main", () => {
 
         main.run({ output: "path/to/output" }).then(() => {
           expect(writtenReportNames).to.include.members(["a", "b", "c"])
-          done()
-        }).catch(done)
-      })
-    })
-
-    context("with --publish option", () => {
-      it("should publish the results to s3", done => {
-        result = { data: "I'm the result" }
-
-        const publishedReportNames = []
-        S3Publisher.publish = (report, formattedResult, options) => {
-          expect(options.format).to.equal("json")
-          expect(JSON.parse(formattedResult)).to.deep.equal(result)
-          publishedReportNames.push(report.name)
-        }
-
-        main.run({ publish: true }).then(() => {
-          expect(publishedReportNames).to.include.members(["a", "b", "c"])
           done()
         }).catch(done)
       })
@@ -215,21 +194,6 @@ describe("main", () => {
 
         main.run({ csv: true }).then(() => {
           expect(formattedReportNames).to.include.members(["a", "b", "c"])
-          done()
-        }).catch(done)
-      })
-
-      it("should publish the reports with the format set to csv", done => {
-        result = { data: "I'm the result" }
-
-        const publishedReportNames = []
-        S3Publisher.publish = (report, formattedResult, options) => {
-          expect(options.format).to.equal("csv")
-          publishedReportNames.push(report.name)
-        }
-
-        main.run({ publish: true, csv: true }).then(() => {
-          expect(publishedReportNames).to.include.members(["a", "b", "c"])
           done()
         }).catch(done)
       })
