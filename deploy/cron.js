@@ -128,8 +128,8 @@ setTimeout(() => {
 	api_run();
 	setInterval(api_run,1000 * 60 * 60 * 24)
 	//ua api
-	ua_api_run();
-	setInterval(ua_api_run,1000 * 60 * 60 * 24)
+	api_ua_run();
+	setInterval(api_ua_run,1000 * 60 * 60 * 24)
 }, calculateNextDailyRunTimeOffset());
 //hourly
 setInterval(hourly_run,1000 * 60 * 60);
