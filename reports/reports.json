@@ -132,7 +132,7 @@
       }
     },
     {
-      "name": "devices",
+      "name": "device",
       "frequency": "daily",
       "slim": true,
       "query": {
