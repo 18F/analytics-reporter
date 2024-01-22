@@ -1,7 +1,7 @@
 {
   "reports": [
     {
-      "name": "devices",
+      "name": "device",
       "frequency": "daily",
       "query": {
         "dimensions": [
@@ -19,7 +19,7 @@
         ],
         "dateRanges": [
           {
-            "startDate": "30daysAgo",
+            "startDate": "3daysAgo",
             "endDate": "yesterday"
           }
         ],
@@ -57,7 +57,7 @@
             "name": "date"
           },
           {
-            "name": "language"
+            "name": "languageCode"
           }
         ],
         "metrics": [
@@ -297,62 +297,6 @@
       }
     },
     {
-      "name": "ie",
-      "frequency": "daily",
-      "query": {
-        "dimensions": [
-          {
-            "name": "date"
-          },
-          {
-            "name": "browser"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "3daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "sessions"
-            },
-            "desc": true
-          }
-        ],
-        "dimensionFilter": {
-          "filter": {
-            "fieldName": "browser",
-            "stringFilter": {
-              "value": "Internet Explorer"
-            }
-          }
-        },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "sessions",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "100"
-              }
-            }
-          }
-        }
-      },
-      "meta": {
-        "name": "Internet Explorer",
-        "description": "Visits from Internet Explorer users broken down by version"
-      }
-    },
-    {
       "name": "os-browser",
       "frequency": "daily",
       "query": {
@@ -460,79 +404,6 @@
       "meta": {
         "name": "Windows-browser combinations",
         "description": "Visits broken down by Windows versions and browser for all sites"
-      }
-    },
-    {
-      "name": "windows-ie",
-      "frequency": "daily",
-      "query": {
-        "dimensions": [
-          {
-            "name": "date"
-          },
-          {
-            "name": "browser"
-          },
-          {
-            "name": "operatingSystemVersion"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "3daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "sessions"
-            },
-            "desc": true
-          }
-        ],
-        "dimensionFilter": {
-          "andGroup": {
-            "expressions": [
-              {
-                "filter": {
-                  "fieldName": "operatingSystem",
-                  "stringFilter": {
-                    "value": "Windows"
-                  }
-                }
-              },
-              {
-                "filter": {
-                  "fieldName": "browser",
-                  "stringFilter": {
-                    "value": "Internet Explorer"
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "sessions",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "100"
-              }
-            }
-          }
-        }
-      },
-      "meta": {
-        "name": "IE on Windows",
-        "description": "Visits from IE on Windows broken down by IE and Windows versions"
       }
     },
     {
@@ -756,6 +627,9 @@
           },
           {
             "name": "fileName"
+          },
+          {
+            "name": "fullPageUrl"
           }
         ],
         "metrics": [
