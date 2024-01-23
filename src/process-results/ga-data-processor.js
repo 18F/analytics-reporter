@@ -133,6 +133,7 @@ const _mapping = {
   "operatingSystem": "os",
   "operatingSystemVersion": "os_version",
   "hostName": "domain",
+  "languageCode": "language_code",
   // "browserVersion" : "browser_version",
   "sessionSource": "source",
   "screenPageViews": "visits",
