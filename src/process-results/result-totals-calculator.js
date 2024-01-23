@@ -25,6 +25,10 @@ const calculateTotals = (result) => {
       column: "language",
       result,
     })
+    totals.languageCode = _sumVisitsByColumn({
+      column: "languageCode",
+      result,
+    })
   }
   if (result.name.match(/^devices/)) {
     totals.devices = _sumVisitsByColumn({
