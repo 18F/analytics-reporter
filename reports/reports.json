@@ -252,7 +252,7 @@
       "query": {
         "dimensions": [
           {
-            "name": "languageCode"
+            "name": "language"
           }
         ],
         "metrics": [
