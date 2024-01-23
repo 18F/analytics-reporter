@@ -26,7 +26,7 @@ const calculateTotals = (result) => {
       result,
     })
     totals.languageCode = _sumVisitsByColumn({
-      column: "languageCode",
+      column: "language_code",
       result,
     })
   }

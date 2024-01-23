@@ -253,6 +253,9 @@
         "dimensions": [
           {
             "name": "language"
+          },
+          {
+            "name": "languageCode"
           }
         ],
         "metrics": [
