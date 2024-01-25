@@ -1,0 +1,10 @@
+diff: true
+extension: ['js']
+package: './package.json'
+slow: '75'
+spec: 'test/**/*.js'
+timeout: '2000'
+ui: 'bdd'
+watch-files:
+  - 'src/**/*.js'
+  - 'test/**/*.js'

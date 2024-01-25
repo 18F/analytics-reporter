@@ -1,0 +1,10 @@
+version: "3.0"
+services:
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=analytics_reporter_test
+      - POSTGRES_USER=analytics
+      - POSTGRES_PASSWORD=123abc
+    ports:
+      - "5432:5432"
