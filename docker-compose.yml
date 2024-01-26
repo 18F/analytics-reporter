@@ -8,7 +8,7 @@ services:
     volumes:
        - pgdata:/var/lib/postgresql/data/
   reporter:
-  image: node:7.8
+    image: node:7.8
     entrypoint: ""
     command: "node ./deploy/cron.js"
     environment:
