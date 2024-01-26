@@ -113,7 +113,7 @@ const calculateTotals = (result) => {
     } else {
       totals.start_date = result.data[0].date
     }
-    totals.end_date = result.data[result.data.length-1].date
+    totals.end_date = result.data[result.data.length - 1].date
   }
 
   return totals

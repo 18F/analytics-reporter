@@ -48,44 +48,112 @@ describe("GoogleAnalyticsDataProcessor", () => {
       expect(result.query).to.not.have.property("ids")
     })
 
-    it("should map data from GA keys to DAP keys", () => {
-      data.columnHeaders = [
-        { name: "ga:date" }, { name: "ga:browser"}, { name: "ga:city" }
-      ]
-      data.rows = [["20170130", "chrome", "Baton Rouge, La"]]
+    it("should map headers from GA keys to DAP keys", () => {
+      data.dimensionHeaders = [
+        { name: "fileName" }, { name: "operatingSystem" }
+      ];
+      data.metricHeaders = [
+        { name: "sessions" }, { name: "activeUsers" }
+      ];
+      data.rows = [{
+        dimensionValues: [{ value: "foobar" }, { value: "windows" }],
+        metricValues: [{ value: "12345" }, { value: "23456" }]
+      }];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
-      expect(Object.keys(result.data[0])).to.deep.equal(["date", "browser", "city"])
+      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      expect(Object.keys(result.data[0])).to.deep.equal(
+        ["file_name", "os", "visits", "active_visitors"]
+      );
     })
 
     it("should format dates", () => {
-      data.columnHeaders = [{ name: 'ga:date' }]
-      data.rows = [[ "20170130" ]]
+      data.dimensionHeaders = [{ name: 'date' }];
+      data.rows = [{ dimensionValues: [{ value: "20170130" }] }];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
-      expect(result.data[0].date).to.equal("2017-01-30")
+      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      expect(result.data[0].date).to.equal("2017-01-30");
     })
 
-    it("should filter rows that don't meet the threshold if a threshold is provided", () => {
+    it("should filter rows that don't meet a dimension threshold if a threshold is provided", () => {
       report.threshold = {
         field: "unmapped_column",
         value: "10",
-      }
-      data.columnHeaders = [{ name: "unmapped_column" }]
-      data.rows = [[20], [5], [15]]
+      };
+      data.dimensionHeaders = [{ name: "operatingSystem" }, { name: "unmapped_column" }];
+      data.metricHeaders = [{ name: "sessions" }];
+
+      data.rows = [
+        {
+          dimensionValues: [{ value: "macOs" }, { value: "20" }],
+          metricValues: [{ value: "12345" }]
+        },
+        {
+          dimensionValues: [{ value: "windows" }, { value: "5" }],
+          metricValues: [{ value: "12345" }]
+        },
+        {
+          dimensionValues: [{ value: "iOS" }, { value: "15" }],
+          metricValues: [{ value: "12345" }]
+        }
+      ];
 
       const result = GoogleAnalyticsDataProcessor.processData(report, data)
       expect(result.data).to.have.length(2)
-      expect(result.data.map(row => row.unmapped_column)).to.deep.equal([20, 15])
+      expect(result.data.map(row => row.unmapped_column)).to.deep.equal(["20", "15"])
+    })
+
+    it("should filter rows that don't meet a metric threshold if a threshold is provided", () => {
+      report.threshold = {
+        field: "unmapped_column",
+        value: "10",
+      };
+      data.dimensionHeaders = [{ name: "operatingSystem" }];
+      data.metricHeaders = [{ name: "sessions" }, { name: "unmapped_column" }];
+
+      data.rows = [
+        {
+          dimensionValues: [{ value: "macOs" }],
+          metricValues: [{ value: "12345" }, { value: "20" }]
+        },
+        {
+          dimensionValues: [{ value: "windows" }],
+          metricValues: [{ value: "12345" }, { value: "5" }]
+        },
+        {
+          dimensionValues: [{ value: "iOS" }],
+          metricValues: [{ value: "12345" }, { value: "15" }]
+        }
+      ];
+
+      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      expect(result.data).to.have.length(2)
+      expect(result.data.map(row => row.unmapped_column)).to.deep.equal(["20", "15"])
     })
 
     it("should remove dimensions that are specified by the cut prop", () => {
       report.cut = "unmapped_column"
-      data.columnHeaders = [{ name: "ga:hostname" }, { name: "unmapped_column" }]
-      data.rows = [["www.example.gov", 10000000]]
+      data.dimensionHeaders = [{ name: "ga:hostname" }, { name: "unmapped_column" }];
+      data.metricHeaders = [];
+      data.rows = [{
+        dimensionValues: [{ value: "www.example.gov" }, { value: '10000000' }],
+        metricValues: []
+      }];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
-      expect(result.data[0].unmapped_column).to.be.undefined
+      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      expect(result.data[0].unmapped_column).to.be.undefined;
+    })
+
+    it("should remove metrics that are specified by the cut prop", () => {
+      report.cut = "unmapped_column";
+      data.dimensionHeaders = [];;
+      data.metricHeaders = [{ name: "sessions" }, { name: "unmapped_column" }];
+      data.rows = [{
+        dimensionValues: [],
+        metricValues: [{ value: "12345" }, { value: '10000000' }]
+      }];
+
+      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      expect(result.data[0].unmapped_column).to.be.undefined;
     })
 
     it("should add a hostname to realtime data if a hostname is specified by the config", () => {
@@ -103,6 +171,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
       config.account.hostname = "www.example.gov"
 
       const result = GoogleAnalyticsDataProcessor.processData(report, dataWithHostname)
+      debugger;
       expect(result.data[0].domain).to.equal("www.example0.com")
     })
 

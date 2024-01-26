@@ -1,30 +1,75 @@
+/**
+ * A sample response from the Google Analytics Data API to use for testing.
+ * Response data schema can be found here:
+ * https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/RunReportResponse
+ */
 module.exports = {
-  kind: 'analytics#gaData',
-  id: 'https://www.googleapis.com/analytics/v3/data/ga?ids=ga:96302018&dimensions=ga:date,ga:hour&metrics=ga:sessions&start-date=today&end-date=today&max-results=10000',
-  query: {
-    'start-date': 'today', 'end-date': 'today', ids: 'ga:96302018',
-    dimensions: 'ga:date,ga:hour', metrics: [ 'ga:sessions' ],
-    'start-index': 1, 'max-results': 10000, samplingLevel: 'HIGHER_PRECISION',
-  },
-  itemsPerPage: 10000,
-  totalResults: 24,
-  selfLink: 'https://www.googleapis.com/analytics/v3/data/ga?ids=ga:96302018&dimensions=ga:date,ga:hour&metrics=ga:sessions&start-date=today&end-date=today&max-results=10000',
-  profileInfo: {
-    profileId: '96302018',
-    accountId: '33523145',
-    webPropertyId: 'UA-33523145-1',
-    internalWebPropertyId: '60822123',
-    profileName: 'Z3. Adjusted Gov-Wide Reporting Profile (.gov & .mil only)',
-    tableId: 'ga:96302018'
-  },
-  containsSampledData: false,
-  columnHeaders: [
-    { name: 'ga:date', columnType: 'DIMENSION', dataType: 'STRING' },
-    { name: 'ga:hour', columnType: 'DIMENSION', dataType: 'STRING' },
-    { name: 'ga:sessions', columnType: 'METRIC', dataType: 'INTEGER' }
-  ],
-  totalsForAllResults: { 'ga:sessions': '6782212' },
-  rows: Array(24).fill(100).map((val, index) => {
-    return ["20170130", `${index}`.length < 2 ? `0${index}` : `${index}`, `${val}`]
+  /**
+   * @typedef {Object} Row
+   * @property {Object[]} dimensionValues
+   * @property {Object[]} metricValues
+   */
+
+  /**
+   * @param Object[] Describes dimension columns. The number of DimensionHeaders
+   * and ordering of DimensionHeaders matches the dimensions present in rows.
+   */
+  dimensionHeaders: [{ name: 'date' }, { name: 'hour' }],
+  /**
+   * @param Object[] Describes metric columns. The number of MetricHeaders and
+   * ordering of MetricHeaders matches the metrics present in rows.
+   */
+  metricHeaders: [{ name: 'sessions', type: 'TYPE_INTEGER' }],
+  /**
+   * @param Row[] Rows of dimension value combinations and metric values in the
+   * report.
+   */
+  rows: Array.from(Array(24), (_, index) => {
+    return {
+      dimensionValues: [
+        {
+          value: '20170130',
+          oneValue: 'value'
+        },
+        {
+          value: `${index}`.length < 2 ? `0${index}` : `${index}`,
+          oneValue: 'value'
+        }
+      ],
+      metricValues: [{ value: `100`, oneValue: 'value' }]
+    }
   }),
+  /**
+   * @param Row[] If requested, the totaled values of metrics.
+   */
+  totals: [],
+  /**
+   * @param Number The total number of rows in the query result. rowCount is
+   * independent of the number of rows returned in the response, the limit
+   * request parameter, and the offset request parameter. For example if a query
+   * returns 175 rows and includes limit of 50 in the API request, the response
+   * will contain rowCount of 175 but only 50 rows.
+   */
+  rowCount: 24,
+  /**
+   * @param Row[] If requested, the minimum values of metrics.
+   */
+  minimums: [],
+  /**
+   * @param Row[] If requested, the maximum values of metrics.
+   */
+  minimums: [],
+  /**
+   * @param ResponseMetaData metadata carrying additional information about the
+   * report content.
+   */
+  metadata: {
+    dataLossFromOtherRow: false,
+    currencyCode: 'USD',
+    _currencyCode: 'currencyCode',
+    timeZone: 'America/New_York',
+    _timeZone: 'timeZone'
+  },
+  propertyQuota: null,
+  kind: 'analyticsData#runReport'
 }

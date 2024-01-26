@@ -1,6 +1,15 @@
 const config = require("../config")
 const ResultTotalsCalculator = require("./result-totals-calculator")
 
+/**
+ * @param {Object} report The report object that was requested
+ * @param {Object} data The response object from the Google Analytics Data API
+ * @param {Object} query The query object for the report
+ * @returns {Object} The response data transformed to flatten the data
+ * structure, format dates, and map from GA keys to DAP keys. Data is filtered
+ * as requested in the report object.  This object also includes details from
+ * the original report and query.
+ */
 const processData = (report, data, query) => {
   let result = _initializeResult({ report, data, query })
 
@@ -40,23 +49,46 @@ const _fieldNameForColumnIndex = ({ entryKey, index, data }) => {
 const _filterRowsBelowThreshold = ({ threshold, data }) => {
   data = Object.assign({}, data)
 
-  const thresholdIndex = data.columnHeaders.findIndex(header => {
-    return header.name === threshold.field
-  })
-  const thresholdValue = parseInt(threshold.value)
-
-  data.rows = data.rows.filter(row => {
-    return row[thresholdIndex] >= thresholdValue
-  })
+  const column = _findDimensionOrMetricIndex(threshold.field, data)
+  if (column != null) {
+    data.rows = data.rows.filter(row => {
+      return parseInt(row[column.rowKey][column.index].value) >= parseInt(threshold.value)
+    })
+  }
 
   return data
 }
 
-const _formatDate = (date) => {
-    if (date == "(other)") {
-      return date
+/**
+ * If dimension or metric is found matching the provided name, then return an
+ * object with rowKey matching the key in row where the value can be found and
+ * index of the named value.  If no match is found, return null.
+ */
+_findDimensionOrMetricIndex = (name, data) => {
+  const dimensionIndex = data.dimensionHeaders.findIndex(header => {
+    return header.name === name
+  })
+
+  if (dimensionIndex === -1) {
+    const metricIndex = data.metricHeaders.findIndex(header => {
+      return header.name === name
+    })
+
+    if (metricIndex === -1) {
+      return null;
+    } else {
+      return { rowKey: 'metricValues', index: metricIndex };
     }
-    return [date.substr(0,4), date.substr(4, 2), date.substr(6, 2)].join("-")
+  } else {
+    return { rowKey: 'dimensionValues', index: dimensionIndex };
+  }
+}
+
+const _formatDate = (date) => {
+  if (date == "(other)") {
+    return date
+  }
+  return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-")
 }
 
 const _initializeResult = ({ report, data, query }) => ({
@@ -76,29 +108,29 @@ const _initializeResult = ({ report, data, query }) => ({
 const _processRow = ({ row, data, report }) => {
   const point = {}
 
-// Iterate through each entry in the object
-for (const [entryKey, entryValue] of Object.entries(row)) {
+  // Iterate through each entry in the object
+  for (const [entryKey, entryValue] of Object.entries(row)) {
 
-  // Iterate through each object in the array
-  entryValue.forEach((item, index) => {
-    // Iterate through each key-value pair in the object
-    for (const [key, value] of Object.entries(item)) {
-      if (key !== 'oneValue') {
-        const field = _fieldNameForColumnIndex({ entryKey, index, data })
+    // Iterate through each object in the array
+    entryValue.forEach((item, index) => {
+      // Iterate through each key-value pair in the object
+      for (const [key, value] of Object.entries(item)) {
+        if (key !== 'oneValue') {
+          const field = _fieldNameForColumnIndex({ entryKey, index, data })
 
-        let modValue;
+          let modValue;
 
-        if (field === "date") {
-          modValue = _formatDate(value)
-        } else {
-          modValue = value
+          if (field === "date") {
+            modValue = _formatDate(value)
+          } else {
+            modValue = value
+          }
+
+          point[field] = modValue
         }
-
-        point[field] = modValue
       }
-    }
-  });
-}
+    });
+  }
 
   if (config.account.hostname && !('domain' in point)) {
     point.domain = config.account.hostname
@@ -110,14 +142,14 @@ for (const [entryKey, entryValue] of Object.entries(row)) {
 const _removeColumnFromData = ({ column, data }) => {
   data = Object.assign(data)
 
-  const columnIndex = data.columnHeaders.findIndex(header => {
-    return header.name === column
-  })
+  const columnToRemove = _findDimensionOrMetricIndex(column, data)
 
-  data.columnHeaders.splice(columnIndex, 1)
-  data.rows.forEach(row => {
-    row.splice(columnIndex, 1)
-  })
+  if (columnToRemove != null) {
+    data[columnToRemove.rowKey.replace('Values', 'Headers')].splice(columnToRemove.index, 1)
+    data.rows.forEach(row => {
+      row[columnToRemove.rowKey].splice(columnToRemove.index, 1)
+    })
+  }
 
   return data
 }
