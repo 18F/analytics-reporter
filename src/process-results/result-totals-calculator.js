@@ -60,12 +60,6 @@ const calculateTotals = (result) => {
       result,
     })
   }
-  if (result.name === "ie") {
-    totals.ie_version = _sumVisitsByColumn({
-      column: "browser_version",
-      result,
-    })
-  }
 
   // Sum up totals with 2 levels of hashes
   if (result.name === "os-browsers") {
@@ -77,18 +71,6 @@ const calculateTotals = (result) => {
     totals.by_browsers = _sumVisitsByCategoryWithDimension({
       column: "browser",
       dimension: "os",
-      result,
-    })
-  }
-  if (result.name === "windows-ie") {
-    totals.by_windows = _sumVisitsByCategoryWithDimension({
-      column: "os_version",
-      dimension: "browser_version",
-      result,
-    })
-    totals.by_ie = _sumVisitsByCategoryWithDimension({
-      column: "browser_version",
-      dimension: "os_version",
       result,
     })
   }
