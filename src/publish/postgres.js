@@ -73,8 +73,8 @@ const _queryForExistingRow = ({ db, row }) => {
 
 const _handleExistingRow = ({ db, existingRow, newRow }) => {
   if (existingRow.data.visits != newRow.data.visits ||
-      existingRow.data.users != newRow.data.users ||
-      existingRow.data.total_events != newRow.data.total_events
+    existingRow.data.users != newRow.data.users ||
+    existingRow.data.total_events != newRow.data.total_events
   ) {
     return db(ANALYTICS_DATA_TABLE_NAME).where({ id: existingRow.id }).update(newRow)
   }
@@ -105,7 +105,7 @@ const _writeRegularResults = ({ db, results }) => {
       }
     })
   }).then(() => {
-    if(rowsToInsert.length > 0) {
+    if (rowsToInsert.length > 0) {
       return db(ANALYTICS_DATA_TABLE_NAME).insert(rowsToInsert)
     }
   }).then(() => {
