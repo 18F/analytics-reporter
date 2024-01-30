@@ -44,7 +44,7 @@ describe("ResultFormatter", () => {
       return ResultFormatter.formatResult(result, { format: "csv", slim: true }).then(formattedResult => {
         const lines = formattedResult.split("\n");
         const [header, ...rows] = lines
-        debugger;
+
         expect(header).to.equal("date,hour,visits")
         rows.forEach(row => {
           // Each CSV row should match 2017-01-30,00,100

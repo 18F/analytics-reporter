@@ -171,7 +171,6 @@ describe("GoogleAnalyticsDataProcessor", () => {
       config.account.hostname = "www.example.gov"
 
       const result = GoogleAnalyticsDataProcessor.processData(report, dataWithHostname)
-      debugger;
       expect(result.data[0].domain).to.equal("www.example0.com")
     })
 

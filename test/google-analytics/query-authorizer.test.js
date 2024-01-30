@@ -1,4 +1,4 @@
-/*const expect = require("chai").expect
+const expect = require("chai").expect
 const proxyquire = require("proxyquire")
 const googleAPIsMock = require("../support/mocks/googleapis-auth")
 
@@ -36,7 +36,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       GoogleAnalyticsQueryAuthorizer.authorizeQuery(query).then(query => {
         expect(query.abc).to.equal(123)
         expect(query.auth).to.not.be.undefined
-        expect(query.auth).to.be.an.instanceof(googleapis.auth.JWT)
+        expect(query.auth).to.be.an.instanceof(googleapis.Auth.JWT)
         done()
       }).catch(done)
     })
@@ -97,7 +97,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
 
     it("should authorize the JWT and resolve if it is valid", done => {
       let jwtAuthorized = false
-      googleapis.auth.JWT.prototype.authorize = (callback) => {
+      googleapis.Auth.JWT.prototype.authorize = (callback) => {
         jwtAuthorized = true
         callback(null, {})
       }
@@ -110,7 +110,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
 
     it("should authorize the JWT and reject if it is invalid", done => {
       let jwtAuthorized = false
-      googleapis.auth.JWT.prototype.authorize = (callback) => {
+      googleapis.Auth.JWT.prototype.authorize = (callback) => {
         jwtAuthorized = true
         callback(new Error("Failed to authorize"))
       }
@@ -122,4 +122,4 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       }).catch(done)
     })
   })
-})*/
+})
