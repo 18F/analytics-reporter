@@ -365,6 +365,27 @@ Compose:
 docker-compose up
 ```
 
+#### Running unit tests locally
+
+The unit tests require a postgres database to be running and accepting
+connections at 127.0.0.1:5432
+
+To run the test database locally with docker:
+
+```shell
+docker-compose -f docker-compose.test.yml up
+```
+
+The test scripts run database migrations and then the tests themselves.  These
+require database connection details to be provided in the shell environment:
+
+```shell
+POSTGRES_PASSWORD=123abc \
+POSTGRES_USER=analytics \
+POSTGRES_DATABASE=analytics_reporter_test \
+npm test
+```
+
 ### Public domain
 
 This project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING](CONTRIBUTING.md):

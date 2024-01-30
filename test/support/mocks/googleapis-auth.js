@@ -5,7 +5,7 @@ const googleAPIsMock = () => {
     this.initArguments = arguments
   }
   JWT.prototype.authorize = (callback) => callback(null, {})
-  return { auth: { JWT } }
+  return { Auth: { JWT } }
 }
 
 module.exports = googleAPIsMock

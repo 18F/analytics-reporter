@@ -14,19 +14,21 @@ const GoogleAnalyticsDataProcessor = proxyquire("../../src/process-results/ga-da
 
 describe("GoogleAnalyticsDataProcessor", () => {
   describe(".processData(report, data)", () => {
-    let report
-    let data
+    let report;
+    let data;
+    let responseData;
 
     beforeEach(() => {
       report = Object.assign({}, reportFixture)
       data = Object.assign({}, dataFixture)
+      responseData = { data: data };
       config.account = {
         hostname: ""
       }
     })
 
     it("should return results with the correct props", () => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(result.name).to.be.a("string")
       expect(result.query).be.an("object")
       expect(result.meta).be.an("object")
@@ -38,31 +40,31 @@ describe("GoogleAnalyticsDataProcessor", () => {
 
     it("should return results with an empty data array if data is undefined or has no rows", () => {
       data.rows = []
-      expect(GoogleAnalyticsDataProcessor.processData(report, data).data).to.be.empty
+      expect(GoogleAnalyticsDataProcessor.processData(report, responseData).data).to.be.empty
       data.rows = undefined
-      expect(GoogleAnalyticsDataProcessor.processData(report, data).data).to.be.empty
+      expect(GoogleAnalyticsDataProcessor.processData(report, responseData).data).to.be.empty
     })
 
     it("should delete the query ids for the GA response", () => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(result.query).to.not.have.property("ids")
     })
 
     it("should map data from GA keys to DAP keys", () => {
       data.columnHeaders = [
-        { name: "ga:date" }, { name: "ga:browser"}, { name: "ga:city" }
+        { name: "ga:date" }, { name: "ga:browser" }, { name: "ga:city" }
       ]
       data.rows = [["20170130", "chrome", "Baton Rouge, La"]]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(Object.keys(result.data[0])).to.deep.equal(["date", "browser", "city"])
     })
 
     it("should format dates", () => {
       data.columnHeaders = [{ name: 'ga:date' }]
-      data.rows = [[ "20170130" ]]
+      data.rows = [["20170130"]]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(result.data[0].date).to.equal("2017-01-30")
     })
 
@@ -74,7 +76,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
       data.columnHeaders = [{ name: "unmapped_column" }]
       data.rows = [[20], [5], [15]]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(result.data).to.have.length(2)
       expect(result.data.map(row => row.unmapped_column)).to.deep.equal([20, 15])
     })
@@ -84,7 +86,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
       data.columnHeaders = [{ name: "ga:hostname" }, { name: "unmapped_column" }]
       data.rows = [["www.example.gov", 10000000]]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(result.data[0].unmapped_column).to.be.undefined
     })
 
@@ -92,17 +94,18 @@ describe("GoogleAnalyticsDataProcessor", () => {
       report.realtime = true
       config.account.hostname = "www.example.gov"
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(result.data[0].domain).to.equal("www.example.gov")
     })
 
     it("should not overwrite the domain with a hostname from the config", () => {
       let dataWithHostname
       dataWithHostname = Object.assign({}, dataWithHostnameFixture)
+      responseData = { data: dataWithHostname };
       report.realtime = true
       config.account.hostname = "www.example.gov"
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, dataWithHostname)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(result.data[0].domain).to.equal("www.example0.com")
     })
 
@@ -117,7 +120,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
         "./result-totals-calculator": { calculateTotals },
       })
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
       expect(result.totals).to.deep.equal({ "visits": 1234 })
     })
   })

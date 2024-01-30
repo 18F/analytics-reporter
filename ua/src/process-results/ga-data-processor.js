@@ -2,7 +2,7 @@ const config = require("../config")
 const ResultTotalsCalculator = require("./result-totals-calculator")
 
 const processData = (report, responseData) => {
-  const { data } = responseData
+  let { data } = responseData
   let result = _initializeResult({ report, data })
   // If you use a filter that results in no data, you get null
   // back from google and need to protect against it.
@@ -51,10 +51,10 @@ const _filterRowsBelowThreshold = ({ threshold, data }) => {
 }
 
 const _formatDate = (date) => {
-    if (date == "(other)") {
-      return date
-    }
-    return [date.substr(0,4), date.substr(4, 2), date.substr(6, 2)].join("-")
+  if (date == "(other)") {
+    return date
+  }
+  return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-")
 }
 
 const _initializeResult = ({ report, data }) => ({
@@ -120,8 +120,8 @@ const _mapping = {
   "ga:operatingSystem": "os",
   "ga:operatingSystemVersion": "os_version",
   "ga:hostname": "domain",
-  "ga:browser" : 'browser',
-  "ga:browserVersion" : "browser_version",
+  "ga:browser": 'browser',
+  "ga:browserVersion": "browser_version",
   "ga:source": "source",
   "ga:pagePath": "page",
   "ga:pageTitle": "page_title",

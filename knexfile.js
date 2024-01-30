@@ -8,10 +8,10 @@ module.exports = {
   test: {
     client: 'postgresql',
     connection: {
+      host: '127.0.0.1',
       database: "analytics_reporter_test",
       user: process.env.CIRCLECI ? "postgres" : config.postgres.user,
       password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DATABASE,
       port: 5432,
     },
     migrations: {
@@ -26,7 +26,7 @@ module.exports = {
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
       port: 5432,
-      ssl : true
+      ssl: true
     }
   },
 }

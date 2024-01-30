@@ -1,10 +1,11 @@
 version: "3.0"
 services:
   db:
-    image: postgres:9.6
+    image: postgres:16
     environment:
       - POSTGRES_DB=analytics-reporter
       - POSTGRES_USER=analytics
+      - POSTGRES_PASSWORD=123abc
     volumes:
        - pgdata:/var/lib/postgresql/data/
   reporter:
@@ -27,6 +28,7 @@ services:
       - POSTGRES_HOST=db
       - POSTGRES_USER=analytics
       - POSTGRES_DATABASE=analytics-reporter
+      - POSTGRES_PASSWORD=123abc
     links:
       - db
     working_dir: /usr/src/app

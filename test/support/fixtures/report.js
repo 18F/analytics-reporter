@@ -2,10 +2,9 @@ module.exports = {
   "name": "today",
   "frequency": "hourly",
   "query": {
-    "dimensions": ["ga:date", "ga:hour"],
-    "metrics": ["ga:sessions"],
-    "start-date": "today",
-    "end-date": "today",
+    "dimensions": [{ "name": "date" }, { "name": "hour" }],
+    "metrics": [{ "name": "sessions" }],
+    "dateRanges": [{ "startDate": "today", "endDate": "today" }]
   },
   "meta": {
     "name": "Today",
