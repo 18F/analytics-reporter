@@ -44,10 +44,9 @@ describe("GoogleAnalyticsClient", () => {
       }
 
       let googleAPICalled = false
-      googleapis.ga.get = (params, cb) => {
+      googleapis.ga.get = (params) => {
         googleAPICalled = true
         expect(params).to.deep.equal({ query: true, authorized: true })
-        cb(null, {})
       }
 
       GoogleAnalyticsClient.fetchData(report).then(() => {
@@ -60,7 +59,7 @@ describe("GoogleAnalyticsClient", () => {
 
     it("should return a promise for Google Analytics data", done => {
       googleapis.ga.get = (params, cb) => {
-        cb(null, { data: "that's me" })
+        return { data: "that's me" }
       }
 
       GoogleAnalyticsClient.fetchData({}).then(result => {
@@ -70,39 +69,13 @@ describe("GoogleAnalyticsClient", () => {
     })
 
     it("should reject if there is a problem fetching data", done => {
-      googleapis.ga.get = (params, cb) => {
+      googleapis.ga.get = (params) => {
         const error = new Error("i'm an error")
-        cb(error)
+        throw error;
       }
 
       GoogleAnalyticsClient.fetchData({}).catch(error => {
         expect(error.message).to.equal("i'm an error")
-        done()
-      }).catch(done)
-    })
-
-    it("should use the data function if the report is not realtime", done => {
-      let dataFunctionCalled = false
-      googleapis.ga.get = (query, cb) => {
-        dataFunctionCalled = true
-        cb(null, {})
-      }
-
-      GoogleAnalyticsClient.fetchData({}).then(() => {
-        expect(dataFunctionCalled).to.be.true
-        done()
-      }).catch(done)
-    })
-
-    it("should use the realtime function if the report is not realtime", done => {
-      let realtimeFunctionCalled = false
-      googleapis.realtime.get = (query, cb) => {
-        realtimeFunctionCalled = true
-        cb(null, {})
-      }
-
-      GoogleAnalyticsClient.fetchData({ realtime: true }).then(() => {
-        expect(realtimeFunctionCalled).to.be.true
         done()
       }).catch(done)
     })

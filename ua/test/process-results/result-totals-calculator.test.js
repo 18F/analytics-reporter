@@ -12,19 +12,21 @@ const GoogleAnalyticsDataProcessor = proxyquire("../../src/process-results/ga-da
 
 describe("ResultTotalsCalculator", () => {
   describe("calculateTotals(result)", () => {
-    let report
-    let data
+    let report;
+    let data;
+    let responseData;
 
     beforeEach(() => {
-      report = Object.assign({}, reportFixture)
-      data = Object.assign({}, dataFixture)
+      report = Object.assign({}, reportFixture);
+      data = Object.assign({}, dataFixture);
+      responseData = { data: data };
     })
 
     it("should compute totals for users", () => {
       data.columnHeaders = [{ name: "ga:users" }]
       data.rows = [["10"], ["15"], ["20"]]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.users).to.equal(10 + 15 + 20)
@@ -34,7 +36,7 @@ describe("ResultTotalsCalculator", () => {
       data.columnHeaders = [{ name: "ga:sessions" }]
       data.rows = [["10"], ["15"], ["20"]]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.visits).to.equal(10 + 15 + 20)
@@ -54,7 +56,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170131", "Android", "400"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.device_models.iPhone).to.equal(100 + 300)
@@ -75,7 +77,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170131", "es", "400"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.languages.en).to.equal(100 + 300)
@@ -98,7 +100,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170131", "desktop", "600"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.devices.mobile).to.equal(100 + 400)
@@ -120,7 +122,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170131", "200x200", "400"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.screen_resolution["100x100"]).to.equal(100 + 300)
@@ -141,7 +143,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170131", "Xbox", "400"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.os["Nintendo Wii"]).to.equal(100 + 300)
@@ -162,7 +164,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170131", "Vista", "400"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.os_version.Server).to.equal(100 + 300)
@@ -183,7 +185,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170131", "Safari", "400"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.browser.Chrome).to.equal(100 + 300)
@@ -204,7 +206,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170131", "11.0", "400"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
       expect(totals.ie_version["10.0"]).to.equal(100 + 300)
@@ -230,7 +232,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170130", "Linux", "Firefox", "800"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
 
@@ -260,7 +262,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170130", "Vista", "7", "800"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
 
@@ -290,7 +292,7 @@ describe("ResultTotalsCalculator", () => {
         ["20170130", "Vista", "Firefox", "800"],
       ]
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       const totals = ResultTotalsCalculator.calculateTotals(result)
 

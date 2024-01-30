@@ -1,4 +1,4 @@
-const {google} = require("googleapis")
+const googleapis = require("googleapis")
 const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer")
 const GoogleAnalyticsQueryBuilder = require("./query-builder")
 
@@ -21,8 +21,8 @@ const _executeFetchDataRequest = (query) => {
 }
 
 const _get = (query) => {
-  const analytics = google.analytics({version: 'v3'})
-    return analytics.data.ga.get(query)
+  const analytics = googleapis.analytics({ version: 'v3' })
+  return analytics.data.ga.get(query)
 }
 
 module.exports = { fetchData }

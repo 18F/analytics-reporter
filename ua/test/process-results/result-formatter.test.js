@@ -10,16 +10,18 @@ const ResultFormatter = require("../../src/process-results/result-formatter")
 
 describe("ResultFormatter", () => {
   describe("formatResult(result, options)", () => {
-    let report
-    let data
+    let report;
+    let data;
+    let responseData;
 
     beforeEach(() => {
       report = Object.assign({}, reportFixture)
       data = Object.assign({}, dataFixture)
+      responseData = { data: data }
     })
 
     it("should format results into JSON if the format is 'json'", done => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       ResultFormatter.formatResult(result, { format: "json" }).then(formattedResult => {
         const object = JSON.parse(formattedResult)
@@ -29,7 +31,7 @@ describe("ResultFormatter", () => {
     })
 
     it("should remove the data attribute for JSON if options.slim is true", done => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       ResultFormatter.formatResult(result, { format: "json", slim: true }).then(formattedResult => {
         const object = JSON.parse(formattedResult)
@@ -39,7 +41,7 @@ describe("ResultFormatter", () => {
     })
 
     it("should format results into CSV if the format is 'csv'", () => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data)
+      const result = GoogleAnalyticsDataProcessor.processData(report, responseData)
 
       return ResultFormatter.formatResult(result, { format: "csv", slim: true }).then(formattedResult => {
         const lines = formattedResult.split("\n");
