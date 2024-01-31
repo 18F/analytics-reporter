@@ -85,8 +85,13 @@ describe("PostgresPublisher", () => {
       }).catch(done)
     })
 
-    it("should ignore reports that don't have a ga:date dimension", done => {
-      results.query = { dimensions: "ga:something,ga:somethingElse" }
+    it("should ignore reports that don't have a date dimension", done => {
+      results.query = {
+        dimensions: [
+          { "name": "something" },
+          { "name": "somethingElse" }
+        ]
+      }
 
       PostgresPublisher.publish(results).then(() => {
         return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME)

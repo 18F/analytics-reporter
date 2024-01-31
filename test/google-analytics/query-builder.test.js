@@ -32,46 +32,18 @@ describe("GoogleAnalyticsQueryBuilder", () => {
       expect(query.b).to.equal("456def")
     })
 
-    it("should convert dimensions and metrics arrays into comma separated strings", () => {
-      report.query.dimensions = ["ga:date", "ga:hour"]
-      report.query.metrics = ["ga:sessions"]
+    it("should set limit if it is set on the report", () => {
+      report.query["limit"] = "3"
 
       const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
-      expect(query.dimensions).to.equal("ga:date,ga:hour")
-      expect(query.metrics).to.equal("ga:sessions")
+      expect(query["limit"]).to.equal("3")
     })
 
-    it("should convert filters array into a semicolon separated string", () => {
-      report.query.filters = [
-        "ga:browser==Internet Explorer",
-        "ga:operatingSystem==Windows",
-      ]
+    it("should set limit to 10000 if it is unset on the report", () => {
+      report.query["limit"] = undefined
 
       const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
-      expect(query.filters).to.equal(
-        "ga:browser==Internet Explorer;ga:operatingSystem==Windows"
-      )
-    })
-
-    it("should set the samplingLevel to HIGHER_PRECISION", () => {
-      report.query.samplingLevel = undefined
-
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
-      expect(query.samplingLevel).to.equal("HIGHER_PRECISION")
-    })
-
-    it("should set max-results if it is set on the report", () => {
-      report.query["max-results"] = 3
-
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
-      expect(query["max-results"]).to.equal(3)
-    })
-
-    it("should set max-results to 10000 if it is unset on the report", () => {
-      report.query["max-results"] = undefined
-
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
-      expect(query["max-results"]).to.equal(10000)
+      expect(query["limit"]).to.equal("10000")
     })
 
     it("should set the ids to the account ids specified by the config", () => {
