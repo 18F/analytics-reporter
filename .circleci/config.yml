@@ -26,7 +26,6 @@ jobs:
           name: run tests
           command: npm test
 
-
   develop_deploy:
     docker:
       - image: cimg/node:16.19.1
@@ -54,7 +53,7 @@ jobs:
           name: Write Google GA4 Credentails file from value in CircleCI env var.
           command: |
               echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
-      
+
       - run:
           name: deploy
           command: |
@@ -65,7 +64,7 @@ jobs:
               cf push analytics-reporter-develop --strategy rolling
               cf logout
 
-  ga4dev_deploy:
+  staging_deploy:
     docker:
       - image: cimg/node:16.19.1
     steps:
@@ -92,40 +91,6 @@ jobs:
           name: Write Google GA4 Credentails file from value in CircleCI env var.
           command: |
               echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
-
-      - run:
-          name: deploy
-          command: |
-              set -e
-              # Log into cloud.gov
-              cf api api.fr.cloud.gov
-              cf login -u $CF_USERNAME_DEV -p $CF_PASSWORD_DEV -o gsa-opp-analytics -s analytics-dev
-              cf push analytics-reporter-develop-ga4 --strategy rolling
-              cf logout
-
-
-  staging_deploy:
-    docker:
-      - image: cimg/node:16.19.1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run:
-          name: install dependencies
-          command: npm install
-      - save_cache:
-          paths:
-            - ./node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run:
-          name: Install CF CLI
-          command: |
-              sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
-              sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
 
       - run:
           name: deploy
@@ -179,13 +144,6 @@ workflows:
               only:
                 - develop
 
-  ga4dev_workflow:
-    jobs:
-      - ga4dev_deploy:
-          filters:
-            branches:
-              only:
-                - migrate-ga3-to-ga4
   staging_workflow:
     jobs:
       - staging_deploy:
