@@ -1,13 +1,13 @@
-const googleapis = require("googleapis")
-const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer")
-const GoogleAnalyticsQueryBuilder = require("./query-builder")
+const { google } = require("googleapis");
+const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer");
+const GoogleAnalyticsQueryBuilder = require("./query-builder");
 
 const fetchData = (report) => {
-  const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
-  return GoogleAnalyticsQueryAuthorizer.authorizeQuery(query).then(query => {
-    return _executeFetchDataRequest(query)
-  })
-}
+  const query = GoogleAnalyticsQueryBuilder.buildQuery(report);
+  return GoogleAnalyticsQueryAuthorizer.authorizeQuery(query).then((query) => {
+    return _executeFetchDataRequest(query);
+  });
+};
 
 const _executeFetchDataRequest = (query) => {
   return new Promise(async (resolve, reject) => {
@@ -18,12 +18,11 @@ const _executeFetchDataRequest = (query) => {
       reject(err);
     }
   });
-}
+};
 
 const _get = (query) => {
-  const analytics = googleapis.analytics({ version: 'v3' })
-  return analytics.data.ga.get(query)
-}
+  const analytics = google.analytics({ version: "v3" });
+  return analytics.data.ga.get(query);
+};
 
-module.exports = { fetchData }
-
+module.exports = { fetchData };
