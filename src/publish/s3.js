@@ -9,15 +9,16 @@ const conf = {
   secretAccessKey: config.aws.secretAccessKey,
   endpoint: config.aws.endpoint,
   s3ForcePathStyle: config.aws.s3ForcePathStyle,
-  signatureVersion: config.aws.signatureVersion
-}
+  signatureVersion: config.aws.signatureVersion,
+};
 
-const S3 = new AWS.S3(conf)
+const S3 = new AWS.S3(conf);
 const publish = (report, results, { format }) => {
+  logger.debug(
+    "[" + report.name + "] Publishing to " + config.aws.bucket + "..."
+  );
 
-  logger.debug("[" + report.name + "] Publishing to " + config.aws.bucket + "...")
-
-  return _compress(results).then(compressed => {
+  return _compress(results).then((compressed) => {
     return S3.putObject({
       Bucket: config.aws.bucket,
       Key: config.aws.path + "/" + report.name + "." + format,
@@ -26,27 +27,27 @@ const publish = (report, results, { format }) => {
       ContentEncoding: "gzip",
       ACL: "public-read",
       CacheControl: "max-age=" + (config.aws.cache || 0),
-    }).promise()
-  })
-}
+    }).promise();
+  });
+};
 
 const _compress = (data) => {
   return new Promise((resolve, reject) => {
     zlib.gzip(data, (err, compressed) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve(compressed)
+        resolve(compressed);
       }
-    })
-  })
-}
+    });
+  });
+};
 
 const _mime = (format) => {
   return {
     json: "application/json",
     csv: "text/csv",
-  }[format]
-}
+  }[format];
+};
 
-module.exports = { publish }
+module.exports = { publish };
