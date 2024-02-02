@@ -7,20 +7,7 @@ if (process.env.NEW_RELIC_APP_NAME) {
 }
 
 const spawn = require("child_process").spawn;
-const winston = require("winston");
-
-const logger = winston.createLogger({
-  level: "debug",
-  format: winston.format.combine(
-    winston.format.colorize(),
-    winston.format.simple()
-  ),
-  transports: [
-    new winston.transports.Console({
-      level: "debug",
-    }),
-  ],
-});
+const logger = require('../src/logger').initialize();
 
 logger.info("===================================");
 logger.info("=== STARTING ANALYTICS-REPORTER ===");
@@ -30,7 +17,7 @@ logger.info("===================================");
 const scriptRootPath = `${process.env.ANALYTICS_ROOT_PATH}/deploy`;
 const scriptUARootPath = `${process.env.ANALYTICS_UA_ROOT_PATH}/deploy`;
 
-const handlStderrData = (data) => {
+const handleStderrData = (data) => {
   try {
     const jsonData = JSON.parse(data.toString());
     // Handle the parsed JSON data here
@@ -43,99 +30,51 @@ const handlStderrData = (data) => {
   return;
 };
 
-var api_ua_run = function () {
-  logger.info("about to run ua api.sh");
-  logger.info(`${scriptUARootPath}/api.sh`);
-  var api = spawn(`${scriptUARootPath}/api.sh`);
+const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
+  logger.info(`Beginning: ${scriptLoggingName}`);
+  logger.info(`File path: ${scriptPath}`);
+  const childProcess = spawn(scriptPath);
 
-  api.stdout.on("data", (data) => {
-    logger.info("[ua - api.sh]");
-    handlStderrData(data);
+  childProcess.stdout.on("data", (data) => {
+    logger.info(`[${scriptLoggingName}]`);
+    handleStderrData(data);
   });
 
-  api.stderr.on("data", (data) => {
-    logger.info("[ua - api.sh]");
-    handlStderrData(data);
+  childProcess.stderr.on("data", (data) => {
+    logger.info(`[${scriptLoggingName}]`);
+    handleStderrData(data);
   });
 
-  api.on("exit", (code) => {
-    logger.info("ua - api.sh exitted with code:", code);
+  childProcess.on("exit", (code) => {
+    logger.info(`${scriptLoggingName} exitted with code:`, code);
   });
+}
+
+const api_ua_run = () => {
+  runScriptWithLogName(`${scriptUARootPath}/api.sh`, 'ua - api.sh')
 };
 
-var api_run = function () {
-  logger.info("about to run api.sh");
-
-  var api = spawn(`${scriptRootPath}/api.sh`);
-  api.stdout.on("data", (data) => {
-    logger.info("[api.sh]");
-    handlStderrData(data);
-  });
-  api.stderr.on("data", (data) => {
-    logger.info("[api.sh]");
-    handlStderrData(data);
-  });
-  api.on("exit", (code) => {
-    logger.info("api.sh exitted with code:", code);
-  });
+const api_run = () => {
+  runScriptWithLogName(`${scriptRootPath}/api.sh`, 'api.sh')
 };
 
-var daily_run = function () {
-  logger.info("about to run daily.sh");
-
-  var daily = spawn(`${scriptRootPath}/daily.sh`);
-  daily.stdout.on("data", (data) => {
-    logger.info("[daily.sh]");
-    handlStderrData(data);
-  });
-  daily.stderr.on("data", (data) => {
-    logger.info("[daily.sh]");
-    handlStderrData(data);
-  });
-  daily.on("exit", (code) => {
-    logger.info("daily.sh exitted with code:", code);
-  });
+const daily_run = () => {
+  runScriptWithLogName(`${scriptRootPath}/daily.sh`, 'daily.sh')
 };
 
-var hourly_run = function () {
-  logger.info("about to run hourly.sh");
-
-  var hourly = spawn(`${scriptRootPath}/hourly.sh`);
-  hourly.stdout.on("data", (data) => {
-    logger.info("[hourly.sh]");
-    handlStderrData(data);
-  });
-  hourly.stderr.on("data", (data) => {
-    logger.info("[hourly.sh]");
-    handlStderrData(data);
-  });
-  hourly.on("exit", (code) => {
-    logger.info("hourly.sh exitted with code:", code);
-  });
+const hourly_run = () => {
+  runScriptWithLogName(`${scriptRootPath}/hourly.sh`, 'hourly.sh')
 };
 
-var realtime_run = function () {
-  logger.info("about to run realtime.sh");
-
-  var realtime = spawn(`${scriptRootPath}/realtime.sh`);
-  realtime.stdout.on("data", (data) => {
-    logger.info("[realtime.sh]");
-    handlStderrData(data);
-  });
-  realtime.stderr.on("data", (data) => {
-    logger.info("[realtime.sh]");
-    handlStderrData(data);
-  });
-  realtime.on("exit", (code) => {
-    logger.info("realtime.sh exitted with code:", code);
-  });
+const realtime_run = () => {
+  runScriptWithLogName(`${scriptRootPath}/realtime.sh`, 'realtime.sh')
 };
 
 /**
-	Daily reports run every morning at 10 AM UTC.
-	This calculates the offset between now and then for the next scheduled run.
+  Daily reports run every morning at 10 AM UTC.
+  This calculates the offset between now and then for the next scheduled run.
 */
-var calculateNextDailyRunTimeOffset = function () {
+const calculateNextDailyRunTimeOffset = () => {
   const currentTime = new Date();
   const nextRunTime = new Date(
     currentTime.getFullYear(),
@@ -146,12 +85,18 @@ var calculateNextDailyRunTimeOffset = function () {
   return (nextRunTime - currentTime) % (1000 * 60 * 60 * 24);
 };
 
+
 logger.info("starting cron.js!");
+/**
+ * All scripts run immediately upon application start, then run again at
+ * intervals going forward.
+ */
 api_run();
 api_ua_run();
 daily_run();
 hourly_run();
 realtime_run();
+
 // daily
 setTimeout(() => {
   // Run at 10 AM UTC, then every 24 hours afterwards
