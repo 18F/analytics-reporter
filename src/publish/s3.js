@@ -1,13 +1,7 @@
 const AWS = require("aws-sdk")
 const zlib = require("zlib")
 const config = require("../config")
-const winston = require("winston")
-
-const logger = winston.createLogger({
-	level: 'info',
-	format: winston.format.json(),
-	transports: [new winston.transports.Console()],
-  });
+const logger = require('../../src/logger').initialize();
 
 // This is the case where using custom s3 api-like services like minio.
 const conf = {

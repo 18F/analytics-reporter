@@ -1,25 +1,16 @@
-const fs = require("fs")
-const path = require('path')
-const winston = require('winston');
-
 const config = require("./src/config")
 const Analytics = require("./src/analytics")
 const DiskPublisher = require("./src/publish/disk")
 const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 const S3Publisher = require("./src/publish/s3")
+const logger = require('./src/logger').initialize();
 
 Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
 }
 
-const logger = winston.createLogger({
-  level: 'debug',
-  format: winston.format.json(),
-  transports: [new winston.transports.Console()],
-});
-
-const run = function(options = {}) {
+const run = function (options = {}) {
   const reports = _filterReports(options)
   return Promise.each(reports, report => _runReport(report, options))
 }
@@ -48,7 +39,7 @@ const _publishReport = (report, formattedResult, options) => {
   logger.debug(`[${report.name}]`, "Publishing...")
   if (options.publish) {
     return S3Publisher.publish(report, formattedResult, options)
-  } else if (options.output && typeof(options.output) === "string") {
+  } else if (options.output && typeof (options.output) === "string") {
     return DiskPublisher.publish(report, formattedResult, options)
   } else {
     console.log(formattedResult)
