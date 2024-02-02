@@ -22,16 +22,6 @@ const logger = winston.createLogger({
   ],
 });
 
-// const errorLogger = winston.createLogger({
-//   level: "error",
-//   format: winston.format.combine(winston.format.errors()),
-//   transports: [
-//     new winston.transports.Console({
-//       level: "error",
-//     }),
-//   ],
-// });
-
 logger.info("===================================");
 logger.info("=== STARTING ANALYTICS-REPORTER ===");
 logger.info("    Running /deploy/cron.js");
