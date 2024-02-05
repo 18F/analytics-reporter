@@ -1,6 +1,6 @@
 const calculateTotals = (result) => {
   if (result.data.length === 0) {
-    return result
+    return {};
   }
 
   let totals = {}
