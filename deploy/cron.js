@@ -17,19 +17,6 @@ logger.info("===================================");
 const scriptRootPath = `${process.env.ANALYTICS_ROOT_PATH}/deploy`;
 const scriptUARootPath = `${process.env.ANALYTICS_UA_ROOT_PATH}/deploy`;
 
-const handleStderrData = (data) => {
-  try {
-    const jsonData = JSON.parse(data.toString());
-    // Handle the parsed JSON data here
-    jsonData.level === "error"
-      ? logger.error(jsonData.message)
-      : logger.info(jsonData);
-  } catch (error) {
-    logger.error(data.toString().trim());
-  }
-  return;
-};
-
 const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
   logger.info(`Beginning: ${scriptLoggingName}`);
   logger.info(`File path: ${scriptPath}`);
@@ -37,16 +24,18 @@ const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
 
   childProcess.stdout.on("data", (data) => {
     logger.info(`[${scriptLoggingName}]`);
-    handleStderrData(data);
+    // Writes logging output from child processes to console.
+    console.log(data.toString().trim())
   });
 
   childProcess.stderr.on("data", (data) => {
-    logger.info(`[${scriptLoggingName}]`);
-    handleStderrData(data);
+    logger.error(`[${scriptLoggingName}]`);
+    // Writes error logging output from child processes to console.
+    console.log(data.toString().trim())
   });
 
   childProcess.on("exit", (code) => {
-    logger.info(`${scriptLoggingName} exitted with code:`, code);
+    logger.info(`${scriptLoggingName} exitted with code: ${code}`);
   });
 }
 
@@ -85,8 +74,6 @@ const calculateNextDailyRunTimeOffset = () => {
   return (nextRunTime - currentTime) % (1000 * 60 * 60 * 24);
 };
 
-
-logger.info("starting cron.js!");
 /**
  * All scripts run immediately upon application start, then run again at
  * intervals going forward.
