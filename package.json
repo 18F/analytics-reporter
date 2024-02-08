@@ -60,7 +60,7 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "@snyk/protect": "^1.1269.0",
+    "@snyk/protect": "^1.1270.0",
     "aws-sdk": "^2.1533.0",
     "dotenv": "^16.3.1",
     "fast-csv": "^4.3.6",
