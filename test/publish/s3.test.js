@@ -1,17 +1,38 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
-const resultsFixture = require("../support/fixtures/results")
+const resultsFixture = require("../support/fixtures/results");
+const { should } = require("chai");
 
-const S3Mock = function() {}
-S3Mock.mockedPutObject = () => {}
-S3Mock.prototype.putObject = function() {
-  return S3Mock.mockedPutObject.apply(this, arguments)
+let shouldErrorOnSend = false;
+
+class S3ClientMock {
+  constructor(config) {
+    this.config = config;
+  }
+
+  send(command) {
+    if (shouldErrorOnSend) {
+      shouldErrorOnSend = false
+      return Promise.reject(command);
+    } else {
+      return Promise.resolve(command);
+    }
+  }
+}
+
+class PutObjectCommandMock {
+  constructor(config) {
+    this.config = config;
+  }
 }
 
 const zlibMock = {}
 
 const S3Publisher = proxyquire("../../src/publish/s3", {
-  "aws-sdk": { S3: S3Mock },
+  "@aws-sdk/client-s3": {
+    S3Client: S3ClientMock,
+    PutObjectCommand: PutObjectCommandMock
+  },
   "zlib": zlibMock,
   "../config": {
     aws: {
@@ -29,36 +50,26 @@ describe("S3Publisher", () => {
   beforeEach(() => {
     results = Object.assign({}, resultsFixture)
     report = { name: results.name }
-    S3Mock.mockedPutObject = () => ({ promise: () => Promise.resolve() })
     zlibMock.gzip = (data, cb) => cb(null, data)
   })
 
   it("should publish compressed JSON results to the S3 bucket", done => {
     report.name = "test-report"
-
-    let s3PutObjectCalled = false
     let gzipCalled = false
 
-    S3Mock.mockedPutObject = (options) => {
-      s3PutObjectCalled = true
-
-      expect(options.Key).to.equal("path/to/data/test-report.json")
-      expect(options.Bucket).to.equal("test-bucket")
-      expect(options.ContentType).to.equal("application/json")
-      expect(options.ContentEncoding).to.equal("gzip")
-      expect(options.ACL).to.equal("public-read")
-      expect(options.CacheControl).to.equal("max-age=60")
-      expect(options.Body).to.equal("compressed data")
-
-      return { promise: () => Promise.resolve() }
-    }
     zlibMock.gzip = (data, cb) => {
       gzipCalled = true
       cb(null, "compressed data")
     }
 
-    S3Publisher.publish(report, `${results}`, { format: "json" }).then(() => {
-      expect(s3PutObjectCalled).to.equal(true)
+    S3Publisher.publish(report, `${results}`, { format: "json" }).then((putObjectCommand) => {
+      expect(putObjectCommand.config.Key).to.equal("path/to/data/test-report.json")
+      expect(putObjectCommand.config.Bucket).to.equal("test-bucket")
+      expect(putObjectCommand.config.ContentType).to.equal("application/json")
+      expect(putObjectCommand.config.ContentEncoding).to.equal("gzip")
+      expect(putObjectCommand.config.ACL).to.equal("public-read")
+      expect(putObjectCommand.config.CacheControl).to.equal("max-age=60")
+      expect(putObjectCommand.config.Body).to.equal("compressed data")
       expect(gzipCalled).to.equal(true)
       done()
     }).catch(done)
@@ -66,42 +77,37 @@ describe("S3Publisher", () => {
 
   it("should publish compressed CSV results to the S3 bucket", done => {
     report.name = "test-report"
-
-    let s3PutObjectCalled = false
     let gzipCalled = false
 
-    S3Mock.mockedPutObject = (options) => {
-      s3PutObjectCalled = true
-
-      expect(options.Key).to.equal("path/to/data/test-report.csv")
-      expect(options.Bucket).to.equal("test-bucket")
-      expect(options.ContentType).to.equal("text/csv")
-      expect(options.ContentEncoding).to.equal("gzip")
-      expect(options.ACL).to.equal("public-read")
-      expect(options.CacheControl).to.equal("max-age=60")
-      expect(options.Body).to.equal("compressed data")
-
-      return { promise: () => Promise.resolve() }
-    }
     zlibMock.gzip = (data, cb) => {
       gzipCalled = true
       cb(null, "compressed data")
     }
 
-    S3Publisher.publish(report, `${results}`, { format: "csv" }).then(() => {
-      expect(s3PutObjectCalled).to.equal(true)
+    S3Publisher.publish(report, `${results}`, { format: "csv" }).then((putObjectCommand) => {
+      expect(putObjectCommand.config.Key).to.equal("path/to/data/test-report.csv")
+      expect(putObjectCommand.config.Bucket).to.equal("test-bucket")
+      expect(putObjectCommand.config.ContentType).to.equal("text/csv")
+      expect(putObjectCommand.config.ContentEncoding).to.equal("gzip")
+      expect(putObjectCommand.config.ACL).to.equal("public-read")
+      expect(putObjectCommand.config.CacheControl).to.equal("max-age=60")
+      expect(putObjectCommand.config.Body).to.equal("compressed data")
       expect(gzipCalled).to.equal(true)
       done()
     }).catch(done)
   })
 
   it("should reject if there is an error uploading the data", done => {
-    S3Mock.mockedPutObject = () => ({
-      promise: () => Promise.reject(new Error("test s3 error"))
-    })
+    shouldErrorOnSend = true
+    let gzipCalled = false
+
+    zlibMock.gzip = (data, cb) => {
+      gzipCalled = true
+      cb(null, "compressed data")
+    }
 
     S3Publisher.publish(report, `${results}`, { format: "json" }).catch(err => {
-      expect(err.message).to.equal("test s3 error")
+      expect(gzipCalled).to.equal(true)
       done()
     }).catch(done)
   })

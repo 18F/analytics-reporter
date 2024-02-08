@@ -33,7 +33,7 @@ alias analytics="docker run -t -v ${HOME}:${HOME} -e ANALYTICS_REPORT_EMAIL -e A
 To make this command working as expected you should export the env vars as follows:
 
 ```bash
-export ANALYTICS_REPORT_EMAIL=  "your-report-email"
+export ANALYTICS_REPORT_EMAIL="your-report-email"
 export ANALYTICS_REPORT_IDS="your-report-ids"
 export ANALYTICS_KEY="your-key"
 ```
@@ -180,47 +180,68 @@ A report might look something like this:
   "name": "devices",
   "query": {
     "dimensions": [
-      "ga:date",
-      "ga:deviceCategory"
+      {
+        "name": "date"
+      },
+      {
+        "name": "deviceCategory"
+      }
     ],
     "metrics": [
-      "ga:sessions"
+      {
+        "name": "sessions"
+      }
     ],
-    "start-date": "90daysAgo",
-    "end-date": "yesterday",
-    "sort": "ga:date"
+    "dateRanges": [
+      {
+        "startDate": "90daysAgo",
+        "endDate": "yesterday"
+      }
+    ],
+    "orderBys": [
+      {
+        "dimension": {
+          "dimensionName": "date"
+        },
+        "desc": true
+      }
+    ],
+    "samplingLevel": "HIGHER_PRECISION",
+    "limit": "10000",
+    "property": "properties/393249053"
   },
   "meta": {
     "name": "Devices",
-    "description": "Weekly desktop/mobile/tablet visits by day for all sites."
+    "description": "90 days of desktop/mobile/tablet visits for all sites."
   },
   "data": [
     {
-      "date": "2014-10-14",
-      "device": "desktop",
-      "visits": "11495462"
-    },
-    {
-      "date": "2014-10-14",
+      "date": "2023-12-25",
       "device": "mobile",
-      "visits": "2499586"
+      "visits": "13681896"
     },
     {
-      "date": "2014-10-14",
-      "device": "tablet",
-      "visits": "976396"
+      "date": "2023-12-25",
+      "device": "desktop",
+      "visits": "5775002"
     },
-    // ...
+    {
+      "date": "2023-12-25",
+      "device": "tablet",
+      "visits": "367039"
+    },
+   ...
   ],
   "totals": {
+    "visits": 3584551745,
     "devices": {
-      "mobile": 213920363,
-      "desktop": 755511646,
-      "tablet": 81874189
-    },
-    "start_date": "2014-10-14",
-    "end_date": "2015-01-11"
-  }
+      "mobile": 2012722956,
+      "desktop": 1513968883,
+      "tablet": 52313579,
+      "smart tv": 5546327
+    }
+  },
+  "taken_at": "2023-12-26T20:52:50.062Z"
 }
 ```
 
@@ -342,6 +363,27 @@ Compose:
 
 ```shell
 docker-compose up
+```
+
+#### Running unit tests locally
+
+The unit tests require a postgres database to be running and accepting
+connections at 127.0.0.1:5432
+
+To run the test database locally with docker:
+
+```shell
+docker-compose -f docker-compose.test.yml up
+```
+
+The test scripts run database migrations and then the tests themselves.  These
+require database connection details to be provided in the shell environment:
+
+```shell
+POSTGRES_PASSWORD=123abc \
+POSTGRES_USER=analytics \
+POSTGRES_DATABASE=analytics_reporter_test \
+npm test
 ```
 
 ### Public domain

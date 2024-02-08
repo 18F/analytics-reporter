@@ -1,6 +1,6 @@
 const calculateTotals = (result) => {
   if (result.data.length === 0) {
-    return result
+    return {};
   }
 
   let totals = {}
@@ -23,6 +23,10 @@ const calculateTotals = (result) => {
   if (result.name.match(/^language/)) {
     totals.languages = _sumVisitsByColumn({
       column: "language",
+      result,
+    })
+    totals.language_codes = _sumVisitsByColumn({
+      column: "language_code",
       result,
     })
   }
@@ -56,12 +60,6 @@ const calculateTotals = (result) => {
       result,
     })
   }
-  if (result.name === "ie") {
-    totals.ie_version = _sumVisitsByColumn({
-      column: "browser_version",
-      result,
-    })
-  }
 
   // Sum up totals with 2 levels of hashes
   if (result.name === "os-browsers") {
@@ -73,18 +71,6 @@ const calculateTotals = (result) => {
     totals.by_browsers = _sumVisitsByCategoryWithDimension({
       column: "browser",
       dimension: "os",
-      result,
-    })
-  }
-  if (result.name === "windows-ie") {
-    totals.by_windows = _sumVisitsByCategoryWithDimension({
-      column: "os_version",
-      dimension: "browser_version",
-      result,
-    })
-    totals.by_ie = _sumVisitsByCategoryWithDimension({
-      column: "browser_version",
-      dimension: "os_version",
       result,
     })
   }
@@ -109,7 +95,7 @@ const calculateTotals = (result) => {
     } else {
       totals.start_date = result.data[0].date
     }
-    totals.end_date = result.data[result.data.length-1].date
+    totals.end_date = result.data[result.data.length - 1].date
   }
 
   return totals

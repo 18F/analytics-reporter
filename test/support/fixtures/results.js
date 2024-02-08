@@ -1,18 +1,12 @@
 module.exports = {
   "name": "devices",
   "query": {
-    "start-date": "90daysAgo",
-    "end-date": "yesterday",
-    "dimensions": "ga:date,ga:deviceCategory",
-    "metrics": [
-      "ga:sessions"
-    ],
-    "sort": [
-      "ga:date"
-    ],
-    "start-index": 1,
-    "max-results": 10000,
-    "samplingLevel": "HIGHER_PRECISION"
+    "dimensions": [{ "name": "date" }, { "name": "deviceCategory" }],
+    "metrics": [{ "name": "sessions" }],
+    "dateRanges": [{ "startDate": "90daysAgo", "endDate": "yesterday" }],
+    "orderBys": [{ "dimension": { "dimensionName": "date" } }],
+    "offset": 1,
+    "limit": 10000
   },
   "meta": {
     "name": "Devices",

@@ -1,0 +1,21 @@
+.DS_Store
+*.p12
+*.pem
+/node_modules
+.python-version
+*.env
+*.json
+*.csv
+*.gz
+/data
+npm-debug.log
+*.swp
+.git
+
+# Track selected env files
+!deploy/envs/*.env
+
+# Track selected JSON files
+!package.json
+!package-lock.json
+!reports/*.json
