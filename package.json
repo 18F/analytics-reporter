@@ -62,7 +62,7 @@
   "dependencies": {
     "@snyk/protect": "^1.1269.0",
     "aws-sdk": "^2.1533.0",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.3.2",
     "fast-csv": "^4.3.6",
     "googleapis": "^19.0.0",
     "minimist": "^1.2.8",
