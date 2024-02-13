@@ -172,7 +172,6 @@ const _mapping = {
   "eventCount": "total_events",
   "landingPagePlusQueryString": "landing_page",
   "sessionDefaultChannelGroup": "session_default_channel_group",
-  "referralPath": "referral_path",
   "screenPageViews": "pageviews",
   "totalUsers": "users",
   "screenPageViewsPerSession": "pageviews_per_session",
