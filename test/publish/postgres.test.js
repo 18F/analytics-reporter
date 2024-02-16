@@ -8,32 +8,27 @@ const resultsFixture = require("../support/fixtures/results")
 
 proxyquire.noCallThru()
 
-const config = {
-  postgres: database.connection,
-  timezone: "US/Eastern",
-}
-
 const PostgresPublisher = proxyquire("../../src/publish/postgres", {
-  "../config": config,
+  "../config": require('../../src/config'),
 })
 
 describe("PostgresPublisher", () => {
   let databaseClient, results
 
-  before(() => {
+  before((done) => {
     // Setup the database client
     databaseClient = knex({ client: "pg", connection: database.connection })
+    done()
   });
 
-
-  after(() => {
+  after((done) => {
     // Clean up the database client
-    return databaseClient.destroy();
+    databaseClient.destroy().then(() => done());
   });
 
-  beforeEach(() => {
+  beforeEach((done) => {
     results = Object.assign({}, resultsFixture)
-    return database.resetSchema(databaseClient)
+    database.resetSchema(databaseClient).then(() => done())
   })
 
   describe(".publish(results)", () => {

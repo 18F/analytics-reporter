@@ -365,24 +365,26 @@ Compose:
 docker-compose up
 ```
 
-#### Running unit tests locally
+# Running the unit tests
 
-The unit tests require a postgres database to be running and accepting
-connections at 127.0.0.1:5432
+The unit tests for this repo require a local PostgreSQL database. You can run a
+local DB server or create a docker container using the provided test compose
+file. (Requires docker and docker-compose to be installed)
 
-To run the test database locally with docker:
+Starting a docker test DB:
 
 ```shell
 docker-compose -f docker-compose.test.yml up
 ```
 
-The test scripts run database migrations and then the tests themselves.  These
-require database connection details to be provided in the shell environment:
+Once you have a PostgreSQL DB running locally, you can run the tests. The test
+DB connection in knexfile.js has some default connection config which can be
+overridden with environment variables.  If using the provided docker-compose DB
+then you can avoid setting the connection details.
+
+Run the tests (pre-test hook runs DB migrations):
 
 ```shell
-POSTGRES_PASSWORD=123abc \
-POSTGRES_USER=analytics \
-POSTGRES_DATABASE=analytics_reporter_test \
 npm test
 ```
 

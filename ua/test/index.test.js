@@ -2,7 +2,7 @@ const expect = require("chai").expect
 const proxyquire = require("proxyquire")
 const resultFixture = require("./support/fixtures/results")
 
-describe("main", () => {
+describe("UA main", () => {
   describe(".run(options)", () => {
     const consoleLogOriginal = console.log
     after(() => {
@@ -57,7 +57,7 @@ describe("main", () => {
       ResultFormatter.formatResult = () => Promise.resolve("I'm the results!")
 
       let consoleLogCalled = false
-      console.log = function(output) {
+      console.log = function (output) {
         if (output === "I'm the results!") {
           consoleLogCalled = true
         } else {

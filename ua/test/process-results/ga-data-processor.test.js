@@ -12,7 +12,7 @@ const GoogleAnalyticsDataProcessor = proxyquire("../../src/process-results/ga-da
   "../config": config,
 })
 
-describe("GoogleAnalyticsDataProcessor", () => {
+describe("UA GoogleAnalyticsDataProcessor", () => {
   describe(".processData(report, data)", () => {
     let report;
     let data;

@@ -19,7 +19,7 @@ const GoogleAnalyticsQueryAuthorizer = proxyquire("../../src/google-analytics/qu
   googleapis,
 })
 
-describe("GoogleAnalyticsQueryAuthorizer", () => {
+describe("UA GoogleAnalyticsQueryAuthorizer", () => {
   describe(".authorizeQuery(query)", () => {
     beforeEach(() => {
       Object.assign(googleapis, googleAPIsMock())

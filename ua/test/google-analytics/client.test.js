@@ -11,7 +11,7 @@ let report;
 
 let GoogleAnalyticsClient;
 
-describe("GoogleAnalyticsClient", () => {
+describe("UA GoogleAnalyticsClient", () => {
   describe(".fetchData(query, options)", () => {
     beforeEach(() => {
       googleapis = googleAPIsMock();
