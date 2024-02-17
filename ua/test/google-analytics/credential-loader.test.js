@@ -9,7 +9,7 @@ const GoogleAnalyticsCredentialLoader = proxyquire("../../src/google-analytics/c
   "../config": config,
 })
 
-describe("GoogleAnalyticsCredentialLoader", () => {
+describe("UA GoogleAnalyticsCredentialLoader", () => {
   describe(".loadCredentials()", () => {
     beforeEach(() => {
       config.analytics_credentials = undefined
