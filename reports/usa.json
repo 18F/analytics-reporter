@@ -1454,7 +1454,7 @@
       }
     },
     {
-      "name": "all-pages-realtime",
+      "name": "top-pages-realtime",
       "frequency": "realtime",
       "realtime": true,
       "query": {
@@ -1495,7 +1495,7 @@
       }
     },
     {
-      "name": "all-domains-30-days",
+      "name": "top-domains-30-days",
       "frequency": "daily",
       "query": {
         "dimensions": [
@@ -1557,8 +1557,8 @@
         "limit": "10000"
       },
       "meta": {
-        "name": "All Domains (30 Days)",
-        "description": "Last 30 days' domains, measured by visits, for all sites."
+        "name": "Top Domains (30 Days)",
+        "description": "Last 30 days' domains, measured by page views, for the top 10000 sites."
       }
     },
     {
