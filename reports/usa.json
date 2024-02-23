@@ -1694,7 +1694,7 @@
       }
     },
     {
-      "name": "top-domains-30-days",
+      "name": "top-10000-domains-30-days",
       "frequency": "daily",
       "query": {
         "dimensions": [
@@ -1756,7 +1756,7 @@
         "limit": "10000"
       },
       "meta": {
-        "name": "Top Domains (30 Days)",
+        "name": "Top 10000 Domains (30 Days)",
         "description": "Last 30 days' domains, measured by page views, for the top 10000 sites. (>10 active users)"
       }
     },
