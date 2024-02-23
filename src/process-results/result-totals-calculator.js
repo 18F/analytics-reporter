@@ -42,19 +42,19 @@ const calculateTotals = (result) => {
       result,
     })
   }
-  if (result.name === "os") {
+  if (result.name === "os" || result.name === "os-90-days") {
     totals.os = _sumVisitsByColumn({
       column: "os",
       result,
     })
   }
-  if (result.name === "windows") {
+  if (result.name === "windows" || result.name === "windows-90-days") {
     totals.os_version = _sumVisitsByColumn({
       column: "os_version",
       result,
     })
   }
-  if (result.name === "browsers") {
+  if (result.name === "browsers" || result.name === "browsers-90-days") {
     totals.browser = _sumVisitsByColumn({
       column: "browser",
       result,
