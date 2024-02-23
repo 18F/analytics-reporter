@@ -5,8 +5,8 @@
 ## Analytics Reporter
 
 A lightweight system for publishing analytics data from the Digital Analytics Program (DAP) Google Analytics 4 government-wide property.
-Uses the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/)
-and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/).
+For Universal Analytics, uses the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/)
+and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/) (will be deprecated on July 1, 2024). 
 
 This is used in combination with [analytics-reporter](https://github.com/18F/analytics-reporter-api) and [analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
 
