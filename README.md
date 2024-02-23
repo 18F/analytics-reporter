@@ -4,7 +4,7 @@
 
 ## Analytics Reporter
 
-A lightweight system for publishing analytics data from Google Analytics profiles.
+A lightweight system for publishing analytics data from the Digital Analytics Program (DAP) Google Analytics 4 government-wide property.
 Uses the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/)
 and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/).
 
