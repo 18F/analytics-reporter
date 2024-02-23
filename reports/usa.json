@@ -152,45 +152,7 @@
       }
     },
     {
-      "name": "device",
-      "frequency": "daily",
-      "slim": true,
-      "query": {
-        "dimensions": [
-          {
-            "name": "date"
-          },
-          {
-            "name": "deviceCategory"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "90daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "dimension": {
-              "dimensionName": "date"
-            },
-            "desc": true
-          }
-        ]
-      },
-      "meta": {
-        "name": "Devices",
-        "description": "90 days of desktop/mobile/tablet visits for all sites."
-      }
-    },
-    {
-      "name": "device-30-days",
+      "name": "devices",
       "frequency": "daily",
       "slim": true,
       "query": {
@@ -225,6 +187,44 @@
       "meta": {
         "name": "Devices",
         "description": "30 days of desktop/mobile/tablet visits for all sites."
+      }
+    },
+    {
+      "name": "devices-90-days",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": [
+          {
+            "name": "date"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "90daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "date"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices - 90 days",
+        "description": "90 days of desktop/mobile/tablet visits for all sites."
       }
     },
     {
@@ -296,55 +296,6 @@
         ],
         "dateRanges": [
           {
-            "startDate": "90daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "dimension": {
-              "dimensionName": "date"
-            },
-            "desc": true
-          }
-        ],
-        "metricFilter": {
-          "filter": {
-            "fieldName": "sessions",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "100"
-              }
-            }
-          }
-        }
-      },
-      "meta": {
-        "name": "Operating Systems",
-        "description": "90 days of visits, broken down by operating system and date, for all sites. (>100 sessions)"
-      }
-    },
-    {
-      "name": "os-30-days",
-      "frequency": "daily",
-      "slim": true,
-      "query": {
-        "dimensions": [
-          {
-            "name": "date"
-          },
-          {
-            "name": "operatingSystem"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
             "startDate": "30daysAgo",
             "endDate": "yesterday"
           }
@@ -375,7 +326,7 @@
       }
     },
     {
-      "name": "windows",
+      "name": "os-90-days",
       "frequency": "daily",
       "slim": true,
       "query": {
@@ -384,7 +335,7 @@
             "name": "date"
           },
           {
-            "name": "operatingSystemVersion"
+            "name": "operatingSystem"
           }
         ],
         "metrics": [
@@ -400,20 +351,12 @@
         ],
         "orderBys": [
           {
-            "metric": {
-              "metricName": "sessions"
+            "dimension": {
+              "dimensionName": "date"
             },
             "desc": true
           }
         ],
-        "dimensionFilter": {
-          "filter": {
-            "fieldName": "operatingSystem",
-            "stringFilter": {
-              "value": "Windows"
-            }
-          }
-        },
         "metricFilter": {
           "filter": {
             "fieldName": "sessions",
@@ -427,12 +370,12 @@
         }
       },
       "meta": {
-        "name": "Windows",
-        "description": "90 days of visits from Windows users, broken down by operating system version and date, for all sites. (>100 sessions)"
+        "name": "Operating Systems - 90 Days",
+        "description": "90 days of visits, broken down by operating system and date, for all sites. (>100 sessions)"
       }
     },
     {
-      "name": "windows-30-days",
+      "name": "windows",
       "frequency": "daily",
       "slim": true,
       "query": {
@@ -489,7 +432,7 @@
       }
     },
     {
-      "name": "browser",
+      "name": "windows-90-days",
       "frequency": "daily",
       "slim": true,
       "query": {
@@ -498,7 +441,7 @@
             "name": "date"
           },
           {
-            "name": "browser"
+            "name": "operatingSystemVersion"
           }
         ],
         "metrics": [
@@ -514,18 +457,20 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "date"
-            },
-            "desc": true
-          },
-          {
             "metric": {
               "metricName": "sessions"
             },
             "desc": true
           }
         ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "operatingSystem",
+            "stringFilter": {
+              "value": "Windows"
+            }
+          }
+        },
         "metricFilter": {
           "filter": {
             "fieldName": "sessions",
@@ -539,12 +484,12 @@
         }
       },
       "meta": {
-        "name": "Browsers",
-        "description": "90 days of visits broken down by browser for all sites. (>100 sessions)"
+        "name": "Windows - 90 days",
+        "description": "90 days of visits from Windows users, broken down by operating system version and date, for all sites. (>100 sessions)"
       }
     },
     {
-      "name": "browser-30-days",
+      "name": "browsers",
       "frequency": "daily",
       "slim": true,
       "query": {
@@ -596,6 +541,61 @@
       "meta": {
         "name": "Browsers",
         "description": "30 days of visits broken down by browser for all sites. (>100 sessions)"
+      }
+    },
+    {
+      "name": "browsers-90-days",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": [
+          {
+            "name": "date"
+          },
+          {
+            "name": "browser"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "90daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "date"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "metricFilter": {
+          "filter": {
+            "fieldName": "sessions",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "100"
+              }
+            }
+          }
+        }
+      },
+      "meta": {
+        "name": "Browsers - 90 days",
+        "description": "90 days of visits broken down by browser for all sites. (>100 sessions)"
       }
     },
     {
