@@ -432,6 +432,63 @@
       }
     },
     {
+      "name": "windows-30-days",
+      "frequency": "daily",
+      "slim": true,
+      "query": {
+        "dimensions": [
+          {
+            "name": "date"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "operatingSystem",
+            "stringFilter": {
+              "value": "Windows"
+            }
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "sessions",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "100"
+              }
+            }
+          }
+        }
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "30 days of visits from Windows users, broken down by operating system version and date, for all sites. (>100 sessions)"
+      }
+    },
+    {
       "name": "browser",
       "frequency": "daily",
       "slim": true,
