@@ -1454,7 +1454,7 @@
       }
     },
     {
-      "name": "top-pages-realtime",
+      "name": "all-pages-realtime",
       "frequency": "realtime",
       "realtime": true,
       "query": {
