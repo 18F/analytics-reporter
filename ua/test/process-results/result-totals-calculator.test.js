@@ -10,7 +10,7 @@ const GoogleAnalyticsDataProcessor = proxyquire("../../src/process-results/ga-da
   "../config": { account: { hostname: "" } },
 })
 
-describe("ResultTotalsCalculator", () => {
+describe("UA ResultTotalsCalculator", () => {
   describe("calculateTotals(result)", () => {
     let report;
     let data;

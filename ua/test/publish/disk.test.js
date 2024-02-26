@@ -1,7 +1,7 @@
 const expect = require("chai").expect
 const proxyquire = require("proxyquire")
 
-describe("DiskPublisher", () => {
+describe("UA DiskPublisher", () => {
   let DiskPublisher
   let fs = {}
 

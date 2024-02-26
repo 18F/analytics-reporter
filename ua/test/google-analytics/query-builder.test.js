@@ -10,7 +10,7 @@ const GoogleAnalyticsQueryBuilder = proxyquire("../../src/google-analytics/query
   "../config": config,
 })
 
-describe("GoogleAnalyticsQueryBuilder", () => {
+describe("UA GoogleAnalyticsQueryBuilder", () => {
   describe(".buildQuery(report)", () => {
     let report
 

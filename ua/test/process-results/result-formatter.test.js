@@ -8,7 +8,7 @@ const GoogleAnalyticsDataProcessor = proxyquire("../../src/process-results/ga-da
 })
 const ResultFormatter = require("../../src/process-results/result-formatter")
 
-describe("ResultFormatter", () => {
+describe("UA ResultFormatter", () => {
   describe("formatResult(result, options)", () => {
     let report;
     let data;
