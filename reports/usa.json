@@ -1750,21 +1750,6 @@
         "metrics": [
           {
             "name": "screenPageViews"
-          },
-          {
-            "name": "sessions"
-          },
-          {
-            "name": "activeUsers"
-          },
-          {
-            "name": "screenPageViewsPerSession"
-          },
-          {
-            "name": "averageSessionDuration"
-          },
-          {
-            "name": "bounceRate"
           }
         ],
         "orderBys": [
