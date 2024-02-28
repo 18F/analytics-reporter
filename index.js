@@ -5,7 +5,8 @@ const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 const S3Publisher = require("./src/publish/s3")
 const util = require('util');
-const logger = require('./src/logger').initialize();
+const Logger = require('./src/logger');
+const logger = Logger.initialize();
 
 async function run(options = {}) {
   try {
@@ -43,11 +44,11 @@ async function _runReports(reports, options) {
 
 async function _runReport(report, options) {
   const reportOptions = _optionsForReport(report, options)
-  logger.debug("[" + report.name + "] Fetching...");
+  logger.debug(`${Logger.tag(report.name)} Fetching...`);
 
   try {
     const analyticsResults = await Analytics.query(report);
-    logger.debug("[" + report.name + "] Saving report data...")
+    logger.debug(`${Logger.tag(report.name)} Saving report data...`)
     if (config.account.agency_name) {
       analyticsResults.agency = config.account.agency_name
     }
@@ -62,7 +63,7 @@ async function _runReport(report, options) {
     )
     await _publishReport(report, formattedResults, reportOptions)
   } catch (e) {
-    logger.error(`[${report.name}] Encountered an error`)
+    logger.error(`${Logger.tag(report.name)} encountered an error`)
     throw e;
   }
 }
@@ -87,7 +88,7 @@ function _writeReportToDatabase(report, result, options) {
 }
 
 function _publishReport(report, formattedResult, options) {
-  logger.debug(`[${report.name}]`, "Publishing...")
+  logger.debug(`${Logger.tag(report.name)} Publishing...`)
   if (options.publish) {
     return S3Publisher.publish(report, formattedResult, options)
   } else if (options.output && typeof (options.output) === "string") {

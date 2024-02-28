@@ -17,10 +17,10 @@ describe("UA GoogleAnalyticsCredentialLoader", () => {
     })
 
     it("should return the credentials if the credentials are an object", () => {
-      config.analytics_credentials = `{
+      config.analytics_credentials = Buffer.from(`{
         "email": "email@example.com",
         "key": "this-is-a-secret"
-      }`
+      }`, 'utf8').toString('base64')
 
       const creds = GoogleAnalyticsCredentialLoader.loadCredentials()
       expect(creds.email).to.equal("email@example.com")
@@ -28,7 +28,7 @@ describe("UA GoogleAnalyticsCredentialLoader", () => {
     })
 
     it("should return successive credentials if the credentials are an array", () => {
-      config.analytics_credentials = `[
+      config.analytics_credentials = Buffer.from(`[
         {
           "email": "email_1@example.com",
           "key": "this-is-a-secret-1"
@@ -37,7 +37,7 @@ describe("UA GoogleAnalyticsCredentialLoader", () => {
           "email": "email_2@example.com",
           "key": "this-is-a-secret-2"
         }
-      ]`
+      ]`, 'utf8').toString('base64')
 
       const firstCreds = GoogleAnalyticsCredentialLoader.loadCredentials()
       const secondCreds = GoogleAnalyticsCredentialLoader.loadCredentials()

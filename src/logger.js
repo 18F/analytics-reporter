@@ -19,5 +19,8 @@ module.exports = {
         }),
       ],
     });
+  },
+  tag: (reportName) => {
+    return `[${reportName}: ${process.env.AGENCY_NAME || "gov-wide"}]`
   }
 };
