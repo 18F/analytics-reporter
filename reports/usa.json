@@ -1675,6 +1675,45 @@
             "desc": true
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "unifiedScreenName",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "unifiedScreenName",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "unifiedScreenName",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "metricFilter": {
           "filter": {
             "fieldName": "activeUsers",
@@ -1711,21 +1750,6 @@
         "metrics": [
           {
             "name": "screenPageViews"
-          },
-          {
-            "name": "sessions"
-          },
-          {
-            "name": "activeUsers"
-          },
-          {
-            "name": "screenPageViewsPerSession"
-          },
-          {
-            "name": "averageSessionDuration"
-          },
-          {
-            "name": "bounceRate"
           }
         ],
         "orderBys": [
