@@ -1,4 +1,4 @@
-const ANALYTICS_DATA_TABLE_NAME = "analytics_data"
+const ANALYTICS_DATA_TABLE_NAME = "analytics_data_ga4"
 
 const knex = require("knex")
 const config = require("../config")
@@ -8,7 +8,7 @@ Promise.each = async function (arr, fn) {
 }
 
 const publish = (results) => {
-  if (results.query.dimensions.match(/ga:date/)) {
+  if (results.query.dimensions.some(obj => obj.name === 'date')) {
     const db = knex({ client: "pg", connection: config.postgres })
     return _writeRegularResults({ db, results }).then(() => db.destroy())
   } else {
@@ -73,8 +73,8 @@ const _queryForExistingRow = ({ db, row }) => {
 
 const _handleExistingRow = ({ db, existingRow, newRow }) => {
   if (existingRow.data.visits != newRow.data.visits ||
-      existingRow.data.users != newRow.data.users ||
-      existingRow.data.total_events != newRow.data.total_events
+    existingRow.data.users != newRow.data.users ||
+    existingRow.data.total_events != newRow.data.total_events
   ) {
     return db(ANALYTICS_DATA_TABLE_NAME).where({ id: existingRow.id }).update(newRow)
   }
@@ -104,7 +104,7 @@ const _writeRegularResults = ({ db, results }) => {
       }
     })
   }).then(() => {
-    if(rowsToInsert.length > 0) {
+    if (rowsToInsert.length > 0) {
       return db(ANALYTICS_DATA_TABLE_NAME).insert(rowsToInsert)
     }
   }).then(() => {

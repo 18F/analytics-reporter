@@ -2,19 +2,19 @@
 [![Snyk](https://snyk.io/test/github/18F/analytics-reporter/badge.svg)](https://snyk.io/test/github/18F/analytics-reporter)
 [![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)](https://codeclimate.com/github/18F/analytics-reporter)
 
-## Analytics Reporter
+# Analytics Reporter
 
-A lightweight system for publishing analytics data from Google Analytics profiles.
-Uses the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/)
-and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/).
+A lightweight system for publishing analytics data from the Digital Analytics Program (DAP) Google Analytics 4 government-wide property.
+This project uses the [Google Analytics Data API v1](https://developers.google.com/analytics/devguides/reporting/data/v1/rest) to acquire analytics data and then processes it into a flat data structure.
 
-This is used in combination with [analytics-reporter](https://github.com/18F/analytics-reporter-api) and [analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
+The project previously used the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/)
+and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/), also known as Universal Analytics,  which has slightly different data points. See [Upgrading from Universal Analytics](#upgrading-from-universal-analytics) for more details. The Google Analytics v3 API will be deprecated on July 1, 2024.
+
+This is used in combination with [analytics-reporter-api](https://github.com/18F/analytics-reporter-api) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
 
 Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
 
-### Installation
-
-### Docker
+## Docker Setup
 
 * To build the docker image on your computer, run:
 
@@ -30,15 +30,22 @@ Then you can create an alias in order to have the analytics command available:
 alias analytics="docker run -t -v ${HOME}:${HOME} -e ANALYTICS_REPORT_EMAIL -e ANALYTICS_REPORT_IDS -e ANALYTICS_KEY analytics-reporter"
 ```
 
-To make this command working as expected you should export the env vars as follows:
+To make this command work as expected you should export the env vars as follows:
 
 ```bash
-export ANALYTICS_REPORT_EMAIL=  "your-report-email"
+export ANALYTICS_REPORT_EMAIL="your-report-email"
 export ANALYTICS_REPORT_IDS="your-report-ids"
 export ANALYTICS_KEY="your-key"
 ```
 
-### NPM
+## Local development setup
+
+### Prerequistites
+
+* NodeJS > v20.x
+* A postgres DB running
+
+### Running the application as a npm package
 
 * To run the utility on your computer, install it through npm:
 
@@ -46,9 +53,15 @@ export ANALYTICS_KEY="your-key"
 npm install -g analytics-reporter
 ```
 
-If you're developing locally inside the repo, `npm install` is sufficient.
+### Running the application locally
 
-### Setup
+#### Install dependencies
+
+```bash
+npm install
+```
+
+## Configuration and Google Analytics Setup
 
 * Enable [Google Analytics API](https://console.cloud.google.com/apis/library/analytics.googleapis.com) for your project in the Google developer dashboard.
 
@@ -64,7 +77,7 @@ If you're developing locally inside the repo, `npm install` is sufficient.
 
 ```bash
 export ANALYTICS_REPORT_EMAIL="YYYYYYY@developer.gserviceaccount.com"
-export ANALYTICS_REPORT_IDS="ga:XXXXXX"
+export ANALYTICS_REPORT_IDS="XXXXXX"
 ```
 
 You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv). If you do, there is an `example.env` file you can copy to `.env` to get started.
@@ -141,8 +154,7 @@ There are cases where you want to use a custom  object storage server compatible
 export AWS_S3_ENDPOINT=http://your-storage-server:port
 ```
 
-
-### Other configuration
+## Other configuration
 
 If you use a **single domain** for all of your analytics data, then your profile is likely set to return relative paths (e.g. `/faq`) and not absolute paths when accessing real-time reports.
 
@@ -163,7 +175,7 @@ This will produce points similar to the following:
 }
 ```
 
-### Use
+## Use
 
 Reports are created and published using the `analytics` command.
 
@@ -178,53 +190,73 @@ A report might look something like this:
 ```javascript
 {
   "name": "devices",
+  "frequency": "daily",
+  "slim": true,
   "query": {
     "dimensions": [
-      "ga:date",
-      "ga:deviceCategory"
+      {
+        "name": "date"
+      },
+      {
+        "name": "deviceCategory"
+      }
     ],
     "metrics": [
-      "ga:sessions"
+      {
+        "name": "sessions"
+      }
     ],
-    "start-date": "90daysAgo",
-    "end-date": "yesterday",
-    "sort": "ga:date"
+    "dateRanges": [
+      {
+        "startDate": "30daysAgo",
+        "endDate": "yesterday"
+      }
+    ],
+    "orderBys": [
+      {
+        "dimension": {
+          "dimensionName": "date"
+        },
+        "desc": true
+      }
+    ]
   },
   "meta": {
     "name": "Devices",
-    "description": "Weekly desktop/mobile/tablet visits by day for all sites."
-  },
+    "description": "30 days of desktop/mobile/tablet visits for all sites."
+  }
   "data": [
     {
-      "date": "2014-10-14",
-      "device": "desktop",
-      "visits": "11495462"
-    },
-    {
-      "date": "2014-10-14",
+      "date": "2023-12-25",
       "device": "mobile",
-      "visits": "2499586"
+      "visits": "13681896"
     },
     {
-      "date": "2014-10-14",
-      "device": "tablet",
-      "visits": "976396"
+      "date": "2023-12-25",
+      "device": "desktop",
+      "visits": "5775002"
     },
-    // ...
+    {
+      "date": "2023-12-25",
+      "device": "tablet",
+      "visits": "367039"
+    },
+   ...
   ],
   "totals": {
+    "visits": 3584551745,
     "devices": {
-      "mobile": 213920363,
-      "desktop": 755511646,
-      "tablet": 81874189
-    },
-    "start_date": "2014-10-14",
-    "end_date": "2015-01-11"
-  }
+      "mobile": 2012722956,
+      "desktop": 1513968883,
+      "tablet": 52313579,
+      "smart tv": 5546327
+    }
+  },
+  "taken_at": "2023-12-26T20:52:50.062Z"
 }
 ```
 
-#### Options
+### Options
 
 * `--output` - Output to a directory.
 
@@ -273,7 +305,7 @@ analytics --frequency=realtime
 analytics --publish --debug
 ```
 
-### Saving data to postgres
+## Saving data to postgres
 
 The analytics reporter can write data is pulls from Google Analytics to a
 Postgres database. The postgres configuration can be set using environment
@@ -291,6 +323,48 @@ server](https://github.com/18f/analytics-reporter-api) that consumes and publish
 
 To write reports to a database, use the `--write-to-database` option when
 starting the reporter.
+
+## Upgrading from Universal Analytics
+
+### Background
+
+This project previously acquired data from Google Analytics V3, also known as Universal Analytics (UA).
+
+Google is retiring UA and is encouraging users to move to their new version Google Analytics V4 (GA4).
+UA will be deprecated on July 1st 2024.
+
+### Migration details
+
+Some data points have been removed or added by Google as part of the move to GA4.
+
+#### Deprecated fields
+
+- browser_version
+- has_social_referral
+- exits
+- exit_page
+
+#### New fields
+
+##### bounce_rate
+
+The percentage of sessions that were not engaged.  GA4 defines engaged as a
+session that lasts longer than 10 seconds or has multiple pageviews.
+
+##### file_name
+
+The page path of a downloaded file.
+
+##### language_code
+
+The ISO639 language setting of the user's device.  e.g. 'en-us'
+
+##### session_default_channel_group
+
+An enum which describes the session. Possible values:
+
+'Direct', 'Organic Search', 'Paid Social', 'Organic Social', 'Email',
+'Affiliates', 'Referral', 'Paid Search', 'Video', and 'Display'
 
 ### Deploying to Cloud.gov
 
@@ -344,7 +418,30 @@ Compose:
 docker-compose up
 ```
 
-### Public domain
+## Running the unit tests
+
+The unit tests for this repo require a local PostgreSQL database. You can run a
+local DB server or create a docker container using the provided test compose
+file. (Requires docker and docker-compose to be installed)
+
+Starting a docker test DB:
+
+```shell
+docker-compose -f docker-compose.test.yml up
+```
+
+Once you have a PostgreSQL DB running locally, you can run the tests. The test
+DB connection in knexfile.js has some default connection config which can be
+overridden with environment variables.  If using the provided docker-compose DB
+then you can avoid setting the connection details.
+
+Run the tests (pre-test hook runs DB migrations):
+
+```shell
+npm test
+```
+
+## Public domain
 
 This project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING](CONTRIBUTING.md):
 

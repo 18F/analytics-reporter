@@ -1,30 +1,24 @@
-const fs = require("fs")
-const path = require('path')
-const winston = require('winston');
-
 const config = require("./src/config")
 const Analytics = require("./src/analytics")
 const DiskPublisher = require("./src/publish/disk")
 const PostgresPublisher = require("./src/publish/postgres")
 const ResultFormatter = require("./src/process-results/result-formatter")
 const S3Publisher = require("./src/publish/s3")
+const util = require('util');
+const logger = require('./src/logger').initialize();
 
-Promise.each = async function (arr, fn) {
-  for (const item of arr) await fn(item);
+async function run(options = {}) {
+  try {
+    const reports = _filterReports(options);
+    await _runReports(reports, options);
+  } catch (e) {
+    // Log errors when filtering or iterating on reports.  No execution errors
+    // bubble up to the caller unless we throw here.
+    logger.error(util.inspect(e));
+  }
 }
 
-const logger = winston.createLogger({
-  level: 'debug',
-  format: winston.format.json(),
-  transports: [new winston.transports.Console()],
-});
-
-const run = function(options = {}) {
-  const reports = _filterReports(options)
-  return Promise.each(reports, report => _runReport(report, options))
-}
-
-const _filterReports = ({ only, frequency }) => {
+function _filterReports({ only, frequency }) {
   const reports = Analytics.reports
   if (only) {
     return reports.filter(report => report.name === only)
@@ -35,50 +29,71 @@ const _filterReports = ({ only, frequency }) => {
   }
 }
 
-const _optionsForReport = (report, options) => ({
-  format: options.csv ? "csv" : "json",
-  output: options.output,
-  publish: options.publish,
-  realtime: report.realtime,
-  slim: options.slim && report.slim,
-  writeToDatabase: options["write-to-database"],
-})
-
-const _publishReport = (report, formattedResult, options) => {
-  logger.debug(`[${report.name}]`, "Publishing...")
-  if (options.publish) {
-    return S3Publisher.publish(report, formattedResult, options)
-  } else if (options.output && typeof(options.output) === "string") {
-    return DiskPublisher.publish(report, formattedResult, options)
-  } else {
-    console.log(formattedResult)
+async function _runReports(reports, options) {
+  for (const report of reports) {
+    try {
+      await _runReport(report, options);
+    } catch (e) {
+      // Log errors when running a specific report.  Do not return the error
+      // so that subsequent reports still run.
+      logger.error(util.inspect(e))
+    }
   }
 }
 
-const _runReport = (report, options) => {
+async function _runReport(report, options) {
   const reportOptions = _optionsForReport(report, options)
   logger.debug("[" + report.name + "] Fetching...");
 
-  return Analytics.query(report).then(results => {
+  try {
+    const analyticsResults = await Analytics.query(report);
     logger.debug("[" + report.name + "] Saving report data...")
     if (config.account.agency_name) {
-      results.agency = config.account.agency_name
+      analyticsResults.agency = config.account.agency_name
     }
-    return _writeReportToDatabase(report, results, options)
-  }).then(results => {
-    return ResultFormatter.formatResult(results, reportOptions)
-  }).then(formattedResult => {
-    return _publishReport(report, formattedResult, reportOptions)
-  }).catch(err => {
-    logger.error(`[${report.name}] `, err)
-  })
+    const dbResults = await _writeReportToDatabase(
+      report,
+      analyticsResults,
+      options
+    );
+    const formattedResults = await ResultFormatter.formatResult(
+      dbResults,
+      reportOptions
+    )
+    await _publishReport(report, formattedResults, reportOptions)
+  } catch (e) {
+    logger.error(`[${report.name}] Encountered an error`)
+    throw e;
+  }
 }
 
-const _writeReportToDatabase = (report, result, options) => {
+function _optionsForReport(report, options) {
+  return {
+    format: options.csv ? "csv" : "json",
+    output: options.output,
+    publish: options.publish,
+    realtime: report.realtime,
+    slim: options.slim && report.slim,
+    writeToDatabase: options["write-to-database"],
+  }
+}
+
+function _writeReportToDatabase(report, result, options) {
   if (options["write-to-database"] && !report.realtime) {
     return PostgresPublisher.publish(result).then(() => result)
   } else {
     return Promise.resolve(result)
+  }
+}
+
+function _publishReport(report, formattedResult, options) {
+  logger.debug(`[${report.name}]`, "Publishing...")
+  if (options.publish) {
+    return S3Publisher.publish(report, formattedResult, options)
+  } else if (options.output && typeof (options.output) === "string") {
+    return DiskPublisher.publish(report, formattedResult, options)
+  } else {
+    console.log(formattedResult)
   }
 }
 

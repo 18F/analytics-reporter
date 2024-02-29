@@ -1,6 +1,6 @@
 const calculateTotals = (result) => {
   if (result.data.length === 0) {
-    return result
+    return {};
   }
 
   let totals = {}
@@ -25,6 +25,10 @@ const calculateTotals = (result) => {
       column: "language",
       result,
     })
+    totals.language_codes = _sumVisitsByColumn({
+      column: "language_code",
+      result,
+    })
   }
   if (result.name.match(/^devices/)) {
     totals.devices = _sumVisitsByColumn({
@@ -38,27 +42,21 @@ const calculateTotals = (result) => {
       result,
     })
   }
-  if (result.name === "os") {
+  if (result.name === "os" || result.name === "os-90-days") {
     totals.os = _sumVisitsByColumn({
       column: "os",
       result,
     })
   }
-  if (result.name === "windows") {
+  if (result.name === "windows" || result.name === "windows-90-days") {
     totals.os_version = _sumVisitsByColumn({
       column: "os_version",
       result,
     })
   }
-  if (result.name === "browsers") {
+  if (result.name === "browsers" || result.name === "browsers-90-days") {
     totals.browser = _sumVisitsByColumn({
       column: "browser",
-      result,
-    })
-  }
-  if (result.name === "ie") {
-    totals.ie_version = _sumVisitsByColumn({
-      column: "browser_version",
       result,
     })
   }
@@ -73,18 +71,6 @@ const calculateTotals = (result) => {
     totals.by_browsers = _sumVisitsByCategoryWithDimension({
       column: "browser",
       dimension: "os",
-      result,
-    })
-  }
-  if (result.name === "windows-ie") {
-    totals.by_windows = _sumVisitsByCategoryWithDimension({
-      column: "os_version",
-      dimension: "browser_version",
-      result,
-    })
-    totals.by_ie = _sumVisitsByCategoryWithDimension({
-      column: "browser_version",
-      dimension: "os_version",
       result,
     })
   }
@@ -109,7 +95,7 @@ const calculateTotals = (result) => {
     } else {
       totals.start_date = result.data[0].date
     }
-    totals.end_date = result.data[result.data.length-1].date
+    totals.end_date = result.data[result.data.length - 1].date
   }
 
   return totals

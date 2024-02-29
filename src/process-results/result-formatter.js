@@ -1,9 +1,12 @@
 const csv = require("fast-csv")
+const util = require('util');
+const logger = require('../logger').initialize();
+
 
 const formatResult = (result, { format = "json", slim = false } = {}) => {
   result = Object.assign({}, result)
 
-  switch(format) {
+  switch (format) {
     case "json":
       return _formatJSON(result, { slim })
       break
@@ -17,13 +20,19 @@ const formatResult = (result, { format = "json", slim = false } = {}) => {
 
 const _formatJSON = (result, { slim }) => {
   if (slim) {
-   delete result.data
+    delete result.data
   }
-  return Promise.resolve(JSON.stringify(result, null, 2))
+  try {
+    return Promise.resolve(JSON.stringify(result, null, 2))
+  } catch (e) {
+    logger.error('Cannot stringify JSON');
+    logger.error(util.inspect(result));
+    return Promise.reject(e)
+  }
 }
 
 const _formatCSV = (result) => {
-  return csv.writeToString(result.data, {headers: true})
+  return csv.writeToString(result.data, { headers: true })
 }
 
 module.exports = { formatResult }
