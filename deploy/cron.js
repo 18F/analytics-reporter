@@ -92,14 +92,15 @@ setTimeout(() => {
   // Run at 10 AM UTC, then every 24 hours afterwards
   daily_run();
   setInterval(daily_run, 1000 * 60 * 60 * 24);
-  //api
+  // API
   api_run();
   setInterval(api_run, 1000 * 60 * 60 * 24);
-  //ua api
+  // UA API
   api_ua_run();
   setInterval(api_ua_run, 1000 * 60 * 60 * 24);
 }, calculateNextDailyRunTimeOffset());
-//hourly
+// hourly
 setInterval(hourly_run, 1000 * 60 * 60);
-//realtime
-setInterval(realtime_run, 1000 * 60 * 5);
+// realtime. Runs every 15 minutes.
+// Google updates realtime reports every 30 minutes, so there is some overlap.
+setInterval(realtime_run, 1000 * 60 * 15);
