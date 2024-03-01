@@ -418,6 +418,21 @@ Compose:
 docker-compose up
 ```
 
+## Linting
+
+This repo uses Eslint and Prettier for code static analysis and formatting. Run
+the linter with:
+
+```shell
+npm run lint
+```
+
+Automatically fix lint issues with:
+
+```shell
+npm run lint:fix
+```
+
 ## Running the unit tests
 
 The unit tests for this repo require a local PostgreSQL database. You can run a

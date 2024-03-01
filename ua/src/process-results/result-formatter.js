@@ -1,29 +1,29 @@
-const csv = require("fast-csv")
+const csv = require("fast-csv");
 
 const formatResult = (result, { format = "json", slim = false } = {}) => {
-  result = Object.assign({}, result)
+  result = Object.assign({}, result);
 
-  switch(format) {
+  switch (format) {
     case "json":
-      return _formatJSON(result, { slim })
-      break
+      return _formatJSON(result, { slim });
+      break;
     case "csv":
-      return _formatCSV(result)
-      break
+      return _formatCSV(result);
+      break;
     default:
-      return Promise.reject("Unsupported format: " + format)
+      return Promise.reject("Unsupported format: " + format);
   }
-}
+};
 
 const _formatJSON = (result, { slim }) => {
   if (slim) {
-   delete result.data
+    delete result.data;
   }
-  return Promise.resolve(JSON.stringify(result, null, 2))
-}
+  return Promise.resolve(JSON.stringify(result, null, 2));
+};
 
 const _formatCSV = (result) => {
-  return csv.writeToString(result.data, {headers: true})
-}
+  return csv.writeToString(result.data, { headers: true });
+};
 
-module.exports = { formatResult }
+module.exports = { formatResult };

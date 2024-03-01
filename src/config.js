@@ -1,13 +1,15 @@
-const knexfile = require('../knexfile');
+const knexfile = require("../knexfile");
 
 // Set environment variables to configure the application.
 module.exports = {
   email: process.env.ANALYTICS_REPORT_EMAIL,
   key: process.env.ANALYTICS_KEY,
-  key_file: process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.ANALYTICS_KEY_PATH,
+  key_file:
+    process.env.GOOGLE_APPLICATION_CREDENTIALS ||
+    process.env.ANALYTICS_KEY_PATH,
   analytics_credentials: process.env.ANALYTICS_CREDENTIALS,
   reports_file: process.env.ANALYTICS_REPORTS_PATH,
-  debug: (process.env.ANALYTICS_DEBUG ? true : false),
+  debug: process.env.ANALYTICS_DEBUG ? true : false,
   /*
     AWS S3 information.
 
@@ -24,7 +26,7 @@ module.exports = {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     s3ForcePathStyle: process.env.AWS_S3_FORCE_STYLE_PATH,
-    signatureVersion: process.env.AWS_SIGNATURE_VERSION
+    signatureVersion: process.env.AWS_SIGNATURE_VERSION,
   },
   account: {
     ids: process.env.ANALYTICS_REPORT_IDS,
@@ -35,6 +37,6 @@ module.exports = {
   },
   postgres: knexfile[process.env.NODE_ENV || "development"].connection,
   static: {
-    path: '../analytics.usa.gov/',
+    path: "../analytics.usa.gov/",
   },
 };

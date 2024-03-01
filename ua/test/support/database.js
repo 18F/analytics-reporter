@@ -1,10 +1,9 @@
-const { ANALYTICS_DATA_TABLE_NAME } = require("../../src/publish/postgres")
+const { ANALYTICS_DATA_TABLE_NAME } = require("../../src/publish/postgres");
 
-const config = require('../../src/config')
+const config = require("../../src/config");
 
 const resetSchema = (db) => {
   return db(ANALYTICS_DATA_TABLE_NAME).delete();
-}
+};
 
-module.exports = { connection: config.postgres, resetSchema }
-
+module.exports = { connection: config.postgres, resetSchema };

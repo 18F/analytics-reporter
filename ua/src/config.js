@@ -1,4 +1,4 @@
-const knexfile = require('../../knexfile');
+const knexfile = require("../../knexfile");
 
 // Set environment variables to configure the application.
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
   key: process.env.ANALYTICS_KEY,
   analytics_credentials: process.env.ANALYTICS_CREDENTIALS,
   ua_reports_file: process.env.ANALYTICS_UA_REPORTS_PATH,
-  debug: (process.env.ANALYTICS_DEBUG ? true : false),
+  debug: process.env.ANALYTICS_DEBUG ? true : false,
   account: {
     ids: process.env.ANALYTICS_REPORT_UA_IDS,
     agency_name: process.env.AGENCY_NAME,
@@ -16,6 +16,6 @@ module.exports = {
   },
   postgres: knexfile[process.env.NODE_ENV || "development"].connection,
   static: {
-    path: '../analytics.usa.gov/',
+    path: "../analytics.usa.gov/",
   },
 };
