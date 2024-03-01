@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.504.0",
-    "@google-analytics/data": "^4.0.1",
+    "@google-analytics/data": "^4.3.0",
     "@snyk/protect": "^1.1269.0",
     "dotenv": "^16.3.1",
     "fast-csv": "^4.3.6",
