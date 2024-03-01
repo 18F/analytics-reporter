@@ -6,9 +6,13 @@ describe("DiskPublisher", () => {
   let fs = {};
 
   beforeEach(() => {
-    fs = { writeFile: (path, contents, cb) => cb() };
+    fs = {
+      writeFile: async (path, contents) => {
+        return contents;
+      },
+    };
     DiskPublisher = proxyquire("../../src/publish/disk", {
-      fs: fs,
+      "node:fs/promises": fs,
     });
   });
 
@@ -20,11 +24,11 @@ describe("DiskPublisher", () => {
         const results = "I'm the results";
 
         let fileWritten = false;
-        fs.writeFile = (path, contents, cb) => {
+        fs.writeFile = async (path, contents) => {
           expect(path).to.equal("path/to/output/report-name.json");
           expect(contents).to.equal("I'm the results");
           fileWritten = true;
-          cb(null);
+          return null;
         };
 
         DiskPublisher.publish(report, results, options)
@@ -43,11 +47,11 @@ describe("DiskPublisher", () => {
         const results = "I'm the results";
 
         let fileWritten = false;
-        fs.writeFile = (path, contents, cb) => {
+        fs.writeFile = async (path, contents) => {
           expect(path).to.equal("path/to/output/report-name.csv");
           expect(contents).to.equal("I'm the results");
           fileWritten = true;
-          cb(null);
+          return null;
         };
 
         DiskPublisher.publish(report, results, options)
