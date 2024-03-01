@@ -1,9 +1,9 @@
-const config = require("../config")
-const ResultTotalsCalculator = require("./result-totals-calculator")
+const config = require("../config");
+const ResultTotalsCalculator = require("./result-totals-calculator");
 
 const processData = (report, responseData) => {
-  let { data } = responseData
-  let result = _initializeResult({ report, data })
+  let { data } = responseData;
+  let result = _initializeResult({ report, data });
   // If you use a filter that results in no data, you get null
   // back from google and need to protect against it.
   if (!data || !data.rows) {
@@ -12,102 +12,102 @@ const processData = (report, responseData) => {
 
   // Some reports may decide to cut fields from the output.
   if (report.cut) {
-    data = _removeColumnFromData({ column: report.cut, data })
+    data = _removeColumnFromData({ column: report.cut, data });
   }
 
   // Remove data points that are below the threshold if one exists
   if (report.threshold) {
-    data = _filterRowsBelowThreshold({ threshold: report.threshold, data })
+    data = _filterRowsBelowThreshold({ threshold: report.threshold, data });
   }
 
   // Process each row
-  result.data = data.rows.map(row => {
-    return _processRow({ row, report, data })
-  })
+  result.data = data.rows.map((row) => {
+    return _processRow({ row, report, data });
+  });
 
-  result.totals = ResultTotalsCalculator.calculateTotals(result)
+  result.totals = ResultTotalsCalculator.calculateTotals(result);
 
   return result;
-}
+};
 
 const _fieldNameForColumnIndex = ({ index, data }) => {
-  const name = data.columnHeaders[index].name
-  return _mapping[name] || name
-}
+  const name = data.columnHeaders[index].name;
+  return _mapping[name] || name;
+};
 
 const _filterRowsBelowThreshold = ({ threshold, data }) => {
-  data = Object.assign({}, data)
+  data = Object.assign({}, data);
 
-  const thresholdIndex = data.columnHeaders.findIndex(header => {
-    return header.name === threshold.field
-  })
-  const thresholdValue = parseInt(threshold.value)
+  const thresholdIndex = data.columnHeaders.findIndex((header) => {
+    return header.name === threshold.field;
+  });
+  const thresholdValue = parseInt(threshold.value);
 
-  data.rows = data.rows.filter(row => {
-    return row[thresholdIndex] >= thresholdValue
-  })
+  data.rows = data.rows.filter((row) => {
+    return row[thresholdIndex] >= thresholdValue;
+  });
 
-  return data
-}
+  return data;
+};
 
 const _formatDate = (date) => {
   if (date == "(other)") {
-    return date
+    return date;
   }
-  return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-")
-}
+  return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-");
+};
 
 const _initializeResult = ({ report, data }) => ({
   name: report.name,
   sampling: {
     containsSampledData: data.containsSampledData,
     sampleSize: data.sampleSize,
-    sampleSpace: data.sampleSpace
+    sampleSpace: data.sampleSpace,
   },
   query: ((query) => {
-    query = Object.assign({}, query)
-    delete query.ids
-    return query
+    query = Object.assign({}, query);
+    delete query.ids;
+    return query;
   })(data.query),
   meta: report.meta,
   data: [],
   totals: {},
   taken_at: new Date(),
-})
+});
 
 const _processRow = ({ row, data, report }) => {
-  const point = {}
+  const point = {};
 
   row.forEach((rowElement, index) => {
-    const field = _fieldNameForColumnIndex({ index, data })
-    let value = rowElement
+    const field = _fieldNameForColumnIndex({ index, data });
+    let value = rowElement;
     if (field === "date") {
-      value = _formatDate(value)
+      value = _formatDate(value);
     }
-    point[field] = value
-  })
+    point[field] = value;
+  });
 
-  if (config.account.hostname && !('domain' in point)) {
-    point.domain = config.account.hostname
+  if (config.account.hostname && !("domain" in point)) {
+    point.domain = config.account.hostname;
   }
 
-  return point
-}
+  return point;
+};
 
 const _removeColumnFromData = ({ column, data }) => {
-  data = Object.assign(data)
+  data = Object.assign(data);
 
-  const columnIndex = data.columnHeaders.findIndex(header => {
-    return header.name === column
-  })
+  const columnIndex = data.columnHeaders.findIndex((header) => {
+    return header.name === column;
+  });
 
-  data.columnHeaders.splice(columnIndex, 1)
-  data.rows.forEach(row => {
-    row.splice(columnIndex, 1)
-  })
+  data.columnHeaders.splice(columnIndex, 1);
+  data.rows.forEach((row) => {
+    row.splice(columnIndex, 1);
+  });
 
-  return data
-}
+  return data;
+};
 
 const _mapping = {
   "ga:date": "date",
@@ -120,14 +120,14 @@ const _mapping = {
   "ga:operatingSystem": "os",
   "ga:operatingSystemVersion": "os_version",
   "ga:hostname": "domain",
-  "ga:browser": 'browser',
+  "ga:browser": "browser",
   "ga:browserVersion": "browser_version",
   "ga:source": "source",
   "ga:pagePath": "page",
   "ga:pageTitle": "page_title",
   "ga:pageviews": "visits",
   "ga:country": "country",
-  "ga:city": 'city',
+  "ga:city": "city",
   "ga:eventLabel": "event_label",
   "ga:totalEvents": "total_events",
   "ga:landingPagePath": "landing_page",
@@ -146,7 +146,7 @@ const _mapping = {
   "rt:country": "country",
   "rt:city": "city",
   "rt:totalEvents": "total_events",
-  "rt:eventLabel": "event_label"
-}
+  "rt:eventLabel": "event_label",
+};
 
-module.exports = { processData }
+module.exports = { processData };

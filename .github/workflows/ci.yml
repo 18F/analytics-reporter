@@ -3,7 +3,22 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: 'npm'
+      - name: Install node dependencies
+        run: npm ci
+      - name: Lint javascript
+        run: npm run lint
   test:
+    needs: lint
     runs-on: ubuntu-latest
     # Start Postgres as a service, wait until healthy. Uses latest Postgres version.
     services:
@@ -34,6 +49,7 @@ jobs:
         run: npm test
   deploy_dev:
     needs:
+      - lint
       - test
     if: github.ref == 'refs/heads/develop'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
@@ -54,6 +70,7 @@ jobs:
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_DEV }}
   deploy_stg:
     needs:
+      - lint
       - test
     if: github.ref == 'refs/heads/staging'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
@@ -74,6 +91,7 @@ jobs:
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_STG }}
   deploy_prd:
     needs:
+      - lint
       - test
     if: github.ref == 'refs/heads/master'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop

@@ -7,7 +7,7 @@ if (process.env.NEW_RELIC_APP_NAME) {
 }
 
 const spawn = require("child_process").spawn;
-const logger = require('../src/logger').initialize();
+const logger = require("../src/logger").initialize();
 
 logger.info("===================================");
 logger.info("=== STARTING ANALYTICS-REPORTER ===");
@@ -25,13 +25,13 @@ const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
   childProcess.stdout.on("data", (data) => {
     logger.info(`[${scriptLoggingName}]`);
     // Writes logging output from child processes to console.
-    console.log(data.toString().trim())
+    console.log(data.toString().trim());
   });
 
   childProcess.stderr.on("data", (data) => {
     logger.error(`[${scriptLoggingName}]`);
     // Writes error logging output from child processes to console.
-    console.log(data.toString().trim())
+    console.log(data.toString().trim());
   });
 
   childProcess.on("close", (code, signal) => {
@@ -40,26 +40,26 @@ const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
       logger.info(`${scriptLoggingName} received signal: ${signal}`);
     }
   });
-}
+};
 
 const api_ua_run = () => {
-  runScriptWithLogName(`${scriptUARootPath}/api.sh`, 'ua - api.sh')
+  runScriptWithLogName(`${scriptUARootPath}/api.sh`, "ua - api.sh");
 };
 
 const api_run = () => {
-  runScriptWithLogName(`${scriptRootPath}/api.sh`, 'api.sh')
+  runScriptWithLogName(`${scriptRootPath}/api.sh`, "api.sh");
 };
 
 const daily_run = () => {
-  runScriptWithLogName(`${scriptRootPath}/daily.sh`, 'daily.sh')
+  runScriptWithLogName(`${scriptRootPath}/daily.sh`, "daily.sh");
 };
 
 const hourly_run = () => {
-  runScriptWithLogName(`${scriptRootPath}/hourly.sh`, 'hourly.sh')
+  runScriptWithLogName(`${scriptRootPath}/hourly.sh`, "hourly.sh");
 };
 
 const realtime_run = () => {
-  runScriptWithLogName(`${scriptRootPath}/realtime.sh`, 'realtime.sh')
+  runScriptWithLogName(`${scriptRootPath}/realtime.sh`, "realtime.sh");
 };
 
 /**
@@ -72,7 +72,7 @@ const calculateNextDailyRunTimeOffset = () => {
     currentTime.getFullYear(),
     currentTime.getMonth(),
     currentTime.getDate() + 1,
-    10 - currentTime.getTimezoneOffset() / 60
+    10 - currentTime.getTimezoneOffset() / 60,
   );
   return (nextRunTime - currentTime) % (1000 * 60 * 60 * 24);
 };

@@ -78,9 +78,9 @@ jobs:
       - name: Replace config.js and knexfile.js with .cloudgov versions of those files
         run: |
           rm ./src/config.js
-          mv ./src/config.js.cloudgov ./src/config.js
+          mv ./src/config.cloudgov.js ./src/config.js
           rm knexfile.js
-          mv knexfile.js.cloudgov knexfile.js
+          mv knexfile.cloudgov.js knexfile.js
       - name: Login to cloud.gov and deploy
         run: |
           set -e
