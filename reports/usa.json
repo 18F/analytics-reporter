@@ -900,21 +900,6 @@
         "metrics": [
           {
             "name": "sessions"
-          },
-          {
-            "name": "totalUsers"
-          },
-          {
-            "name": "screenPageViews"
-          },
-          {
-            "name": "screenPageViewsPerSession"
-          },
-          {
-            "name": "averageSessionDuration"
-          },
-          {
-            "name": "bounceRate"
           }
         ],
         "dateRanges": [
@@ -962,18 +947,6 @@
                     "fieldName": "hostName",
                     "stringFilter": {
                       "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "matchType": "FULL_REGEXP",
-                      "value": "\/(.+)$",
                       "caseSensitive": false
                     }
                   }
