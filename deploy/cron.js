@@ -7,7 +7,7 @@ if (process.env.NEW_RELIC_APP_NAME) {
 }
 
 const spawn = require("child_process").spawn;
-const logger = require('../src/logger').initialize();
+const logger = require("../src/logger").initialize();
 
 logger.info("===================================");
 logger.info("=== STARTING ANALYTICS-REPORTER ===");
@@ -25,41 +25,41 @@ const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
   childProcess.stdout.on("data", (data) => {
     logger.info(`[${scriptLoggingName}]`);
     // Writes logging output from child processes to console.
-    console.log(data.toString().trim())
+    console.log(data.toString().trim());
   });
 
   childProcess.stderr.on("data", (data) => {
     logger.error(`[${scriptLoggingName}]`);
     // Writes error logging output from child processes to console.
-    console.log(data.toString().trim())
+    console.log(data.toString().trim());
   });
 
-  childProcess.on("exit", (code, signal) => {
+  childProcess.on("close", (code, signal) => {
     logger.info(`${scriptLoggingName} exitted with code: ${code}`);
     if (signal) {
       logger.info(`${scriptLoggingName} received signal: ${signal}`);
     }
   });
-}
+};
 
 const api_ua_run = () => {
-  runScriptWithLogName(`${scriptUARootPath}/api.sh`, 'ua - api.sh')
+  runScriptWithLogName(`${scriptUARootPath}/api.sh`, "ua - api.sh");
 };
 
 const api_run = () => {
-  runScriptWithLogName(`${scriptRootPath}/api.sh`, 'api.sh')
+  runScriptWithLogName(`${scriptRootPath}/api.sh`, "api.sh");
 };
 
 const daily_run = () => {
-  runScriptWithLogName(`${scriptRootPath}/daily.sh`, 'daily.sh')
+  runScriptWithLogName(`${scriptRootPath}/daily.sh`, "daily.sh");
 };
 
 const hourly_run = () => {
-  runScriptWithLogName(`${scriptRootPath}/hourly.sh`, 'hourly.sh')
+  runScriptWithLogName(`${scriptRootPath}/hourly.sh`, "hourly.sh");
 };
 
 const realtime_run = () => {
-  runScriptWithLogName(`${scriptRootPath}/realtime.sh`, 'realtime.sh')
+  runScriptWithLogName(`${scriptRootPath}/realtime.sh`, "realtime.sh");
 };
 
 /**
@@ -72,7 +72,7 @@ const calculateNextDailyRunTimeOffset = () => {
     currentTime.getFullYear(),
     currentTime.getMonth(),
     currentTime.getDate() + 1,
-    10 - currentTime.getTimezoneOffset() / 60
+    10 - currentTime.getTimezoneOffset() / 60,
   );
   return (nextRunTime - currentTime) % (1000 * 60 * 60 * 24);
 };
@@ -92,14 +92,15 @@ setTimeout(() => {
   // Run at 10 AM UTC, then every 24 hours afterwards
   daily_run();
   setInterval(daily_run, 1000 * 60 * 60 * 24);
-  //api
+  // API
   api_run();
   setInterval(api_run, 1000 * 60 * 60 * 24);
-  //ua api
+  // UA API
   api_ua_run();
   setInterval(api_ua_run, 1000 * 60 * 60 * 24);
 }, calculateNextDailyRunTimeOffset());
-//hourly
+// hourly
 setInterval(hourly_run, 1000 * 60 * 60);
-//realtime
-setInterval(realtime_run, 1000 * 60 * 5);
+// realtime. Runs every 15 minutes.
+// Google updates realtime reports every 30 minutes, so there is some overlap.
+setInterval(realtime_run, 1000 * 60 * 15);

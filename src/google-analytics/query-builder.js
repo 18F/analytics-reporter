@@ -1,11 +1,11 @@
-const config = require('../config')
+const config = require("../config");
 
 const buildQuery = (report) => {
-  let query = Object.assign({}, report.query)
-  query.limit = query['limit'] || "10000"
-  query.property = `properties/${config.account.ids}`
+  let query = Object.assign({}, report.query);
+  query.limit = query["limit"] || "10000";
+  query.property = `properties/${config.account.ids}`;
   query.ids = config.account.ids;
-  return query
-}
+  return query;
+};
 
-module.exports = { buildQuery }
+module.exports = { buildQuery };

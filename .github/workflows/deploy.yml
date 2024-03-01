@@ -1,0 +1,91 @@
+on:
+  workflow_call:
+    inputs:
+      ANALYTICS_KEY_FILE_NAME:
+        required: true
+        type: string
+      ANALYTICS_REPORT_EMAIL:
+        required: true
+        type: string
+      APP_NAME:
+        required: true
+        type: string
+      CF_ORGANIZATION_NAME:
+        required: true
+        type: string
+      CF_SPACE_NAME:
+        required: true
+        type: string
+      DB_SERVICE_NAME:
+        required: true
+        type: string
+      NEW_RELIC_APP_NAME:
+        type: string
+      S3_SERVICE_NAME:
+        required: true
+        type: string
+    secrets:
+      ANALYTICS_CREDENTIALS:
+        required: true
+      CF_USERNAME:
+        required: true
+      CF_PASSWORD:
+        required: true
+      GA4_CREDS:
+        required: true
+      NEW_RELIC_LICENSE_KEY:
+
+env:
+  ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
+  ANALYTICS_KEY_FILE_NAME: ${{ inputs.ANALYTICS_KEY_FILE_NAME }}
+  ANALYTICS_REPORT_EMAIL: ${{ inputs.ANALYTICS_REPORT_EMAIL }}
+  APP_NAME: ${{ inputs.APP_NAME }}
+  CF_USERNAME: ${{ secrets.CF_USERNAME }}
+  CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+  CF_ORGANIZATION_NAME: ${{ inputs.CF_ORGANIZATION_NAME }}
+  CF_SPACE_NAME: ${{ inputs.CF_SPACE_NAME }}
+  DB_SERVICE_NAME: ${{ inputs.DB_SERVICE_NAME }}
+  GA4_CREDS: ${{ secrets.GA4_CREDS }}
+  NEW_RELIC_APP_NAME: ${{ inputs.NEW_RELIC_APP_NAME }}
+  NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+  S3_SERVICE_NAME: ${{ inputs.S3_SERVICE_NAME }}
+
+jobs:
+  deploy_reporter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: 'npm'
+      - name: Install node dependencies
+        run: npm ci
+      - name: Install cloud foundry CLI for interacting with cloud.gov
+        run: |
+          sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
+          sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
+      - name: Write Google GA4 Credentials file from the value in GA4_CREDS env var.
+        run: |
+          echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
+      - name: Run envsubst on manifest.yml to set environment specific values
+        run: |
+          mv manifest.yml manifest.yml.src
+          envsubst < manifest.yml.src > manifest.yml
+          cat manifest.yml
+      - name: Replace config.js and knexfile.js with .cloudgov versions of those files
+        run: |
+          rm ./src/config.js
+          mv ./src/config.cloudgov.js ./src/config.js
+          rm knexfile.js
+          mv knexfile.cloudgov.js knexfile.js
+      - name: Login to cloud.gov and deploy
+        run: |
+          set -e
+          # Log into cloud.gov
+          cf api api.fr.cloud.gov
+          cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION_NAME -s $CF_SPACE_NAME
+          cf push -f "./manifest.yml" --strategy rolling
+          cf logout

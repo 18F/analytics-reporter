@@ -1,4 +1,13 @@
 const knexfile = require("../knexfile");
+const VCAP_SERVICES_JSON = JSON.parse(process.env.VCAP_SERVICES);
+
+// Set AWS env vars based on VCAP service values.
+process.env["AWS_ACCESS_KEY_ID"] =
+  VCAP_SERVICES_JSON["s3"][0]["credentials"]["access_key_id"];
+process.env["AWS_SECRET_ACCESS_KEY"] =
+  VCAP_SERVICES_JSON["s3"][0]["credentials"]["secret_access_key"];
+process.env["AWS_REGION"] =
+  VCAP_SERVICES_JSON["s3"][0]["credentials"]["region"];
 
 // Set environment variables to configure the application.
 module.exports = {
@@ -10,21 +19,17 @@ module.exports = {
   analytics_credentials: process.env.ANALYTICS_CREDENTIALS,
   reports_file: process.env.ANALYTICS_REPORTS_PATH,
   debug: process.env.ANALYTICS_DEBUG ? true : false,
-  /*
-    AWS S3 information.
-
-    Separately, you need to set AWS_REGION, AWS_ACCESS_KEY_ID, and
-    AWS_SECRET_ACCESS_KEY. The AWS SDK for Node reads these in automatically.
-  */
+  // AWS S3 information.
   aws: {
-    // No trailing slashes
-    bucket: process.env.AWS_BUCKET,
+    bucket: VCAP_SERVICES_JSON["s3"][0]["credentials"]["bucket"],
     path: process.env.AWS_BUCKET_PATH,
     // HTTP cache time in seconds. Defaults to 0.
     cache: process.env.AWS_CACHE_TIME,
-    endpoint: process.env.AWS_S3_ENDPOINT,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    endpoint: `https://${VCAP_SERVICES_JSON["s3"][0]["credentials"]["endpoint"]}`,
+    accessKeyId: VCAP_SERVICES_JSON["s3"][0]["credentials"]["access_key_id"],
+    secretAccessKey:
+      VCAP_SERVICES_JSON["s3"][0]["credentials"]["secret_access_key"],
+    region: VCAP_SERVICES_JSON["s3"][0]["credentials"]["region"],
     s3ForcePathStyle: process.env.AWS_S3_FORCE_STYLE_PATH,
     signatureVersion: process.env.AWS_SIGNATURE_VERSION,
   },

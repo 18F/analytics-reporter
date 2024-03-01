@@ -1,26 +1,20 @@
-const { BetaAnalyticsDataClient } = require("@google-analytics/data")
+const { BetaAnalyticsDataClient } = require("@google-analytics/data");
 const analyticsDataClient = new BetaAnalyticsDataClient();
-const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer")
-const GoogleAnalyticsQueryBuilder = require("./query-builder")
+const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer");
+const GoogleAnalyticsQueryBuilder = require("./query-builder");
 
 const fetchData = (report) => {
-  const query = GoogleAnalyticsQueryBuilder.buildQuery(report)
+  const query = GoogleAnalyticsQueryBuilder.buildQuery(report);
 
-  return GoogleAnalyticsQueryAuthorizer.authorizeQuery(query).then(query => {
-    return _executeFetchDataRequest({ realtime: report.realtime }, query)
-  })
-}
-
-const _executeFetchDataRequest = ({ realtime }, query) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const data = await _get(realtime, query);
-      resolve(data);
-    } catch (err) {
-      reject(err);
-    }
+  return GoogleAnalyticsQueryAuthorizer.authorizeQuery(query).then((query) => {
+    return _executeFetchDataRequest({ realtime: report.realtime }, query);
   });
-}
+};
+
+const _executeFetchDataRequest = async ({ realtime }, query) => {
+  const data = await _get(realtime, query);
+  return data;
+};
 
 async function _get(realtime, query) {
   if (realtime === true) {

@@ -1,0 +1,40 @@
+applications:
+- name: ${APP_NAME}
+  instances: 1
+  # 1GB is needed right at startup because many child processes are spawned in
+  # parallel. This could be reduced if we limited the number of simultaneous
+  # processes.
+  memory: 1024M
+  disk_quota: 1024M
+  no-route: true
+  health-check-type: process
+  buildpacks:
+  - nodejs_buildpack
+  command: node deploy/cron.js
+  env:
+    # This is a JSON string which has been base64 encoded
+    ANALYTICS_CREDENTIALS: ${ANALYTICS_CREDENTIALS}
+    ANALYTICS_DEBUG: 'true'
+    ANALYTICS_KEY_PATH: /home/vcap/app/${ANALYTICS_KEY_FILE_NAME}
+    # The default property ID for reports (used for gov-wide reports)
+    ANALYTICS_REPORT_IDS: '393249053'
+    # The default property ID for UA reports (used for gov-wide reports)
+    ANALYTICS_REPORT_UA_IDS: 'ga:96302018'
+    ANALYTICS_REPORT_EMAIL: ${ANALYTICS_REPORT_EMAIL}
+    ANALYTICS_REPORTS_PATH: /home/vcap/app/reports/usa.json
+    ANALYTICS_ROOT_PATH: /home/vcap/app
+    ANALYTICS_UA_ROOT_PATH: /home/vcap/app/ua
+    # The default path for reports (used for gov-wide reports)
+    AWS_BUCKET_PATH: data/live
+    AWS_CACHE_TIME: '0'
+    GOOGLE_APPLICATION_CREDENTIALS: /home/vcap/app/${ANALYTICS_KEY_FILE_NAME}
+    NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
+    NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+    NODE_ENV: production
+    PGSSLMODE: true
+  services:
+  - ${S3_SERVICE_NAME}
+  - ${DB_SERVICE_NAME}
+  stack: cflinuxfs4
+  timeout: 180
+  path: .

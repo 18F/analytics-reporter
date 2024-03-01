@@ -418,6 +418,21 @@ Compose:
 docker-compose up
 ```
 
+## Linting
+
+This repo uses Eslint and Prettier for code static analysis and formatting. Run
+the linter with:
+
+```shell
+npm run lint
+```
+
+Automatically fix lint issues with:
+
+```shell
+npm run lint:fix
+```
+
 ## Running the unit tests
 
 The unit tests for this repo require a local PostgreSQL database. You can run a
@@ -439,6 +454,16 @@ Run the tests (pre-test hook runs DB migrations):
 
 ```shell
 npm test
+```
+
+### Running the unit tests with code coverage reporting
+
+If you wish to see a code coverage report after running the tests, use the
+following command. This runs the DB migrations, tests, and the NYC code coverage
+tool:
+
+```shell
+npm run coverage
 ```
 
 ## Public domain

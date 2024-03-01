@@ -1,5 +1,5 @@
-const config = require("../config")
-const ResultTotalsCalculator = require("./result-totals-calculator")
+const config = require("../config");
+const ResultTotalsCalculator = require("./result-totals-calculator");
 
 /**
  * @param {Object} report The report object that was requested
@@ -11,7 +11,7 @@ const ResultTotalsCalculator = require("./result-totals-calculator")
  * the original report and query.
  */
 const processData = (report, data, query) => {
-  let result = _initializeResult({ report, data, query })
+  let result = _initializeResult({ report, data, query });
 
   // If you use a filter that results in no data, you get null
   // back from google and need to protect against it.
@@ -21,164 +21,168 @@ const processData = (report, data, query) => {
 
   // Some reports may decide to cut fields from the output.
   if (report.cut) {
-    data = _removeColumnFromData({ column: report.cut, data })
+    data = _removeColumnFromData({ column: report.cut, data });
   }
 
   // Remove data points that are below the threshold if one exists
   if (report.threshold) {
-    data = _filterRowsBelowThreshold({ threshold: report.threshold, data })
+    data = _filterRowsBelowThreshold({ threshold: report.threshold, data });
   }
 
   // Process each row
-  result.data = data.rows.map(row => {
-    return _processRow({ row, report, data })
-  })
+  result.data = data.rows.map((row) => {
+    return _processRow({ row, report, data });
+  });
 
-  result.totals = ResultTotalsCalculator.calculateTotals(result)
+  result.totals = ResultTotalsCalculator.calculateTotals(result);
 
   return result;
-}
+};
 
 const _fieldNameForColumnIndex = ({ entryKey, index, data }) => {
   // data keys come back as values for the header keys
-  const targetKey = entryKey.replace('Values', 'Headers')
-  const name = data[targetKey][index].name
-  return _mapping[name] || name
-}
+  const targetKey = entryKey.replace("Values", "Headers");
+  const name = data[targetKey][index].name;
+  return _mapping[name] || name;
+};
 
 const _filterRowsBelowThreshold = ({ threshold, data }) => {
-  data = Object.assign({}, data)
+  data = Object.assign({}, data);
 
-  const column = _findDimensionOrMetricIndex(threshold.field, data)
+  const column = _findDimensionOrMetricIndex(threshold.field, data);
   if (column != null) {
-    data.rows = data.rows.filter(row => {
-      return parseInt(row[column.rowKey][column.index].value) >= parseInt(threshold.value)
-    })
+    data.rows = data.rows.filter((row) => {
+      return (
+        parseInt(row[column.rowKey][column.index].value) >=
+        parseInt(threshold.value)
+      );
+    });
   }
 
-  return data
-}
+  return data;
+};
 
 /**
  * If dimension or metric is found matching the provided name, then return an
  * object with rowKey matching the key in row where the value can be found and
  * index of the named value.  If no match is found, return null.
  */
-_findDimensionOrMetricIndex = (name, data) => {
-  const dimensionIndex = data.dimensionHeaders.findIndex(header => {
-    return header.name === name
-  })
+const _findDimensionOrMetricIndex = (name, data) => {
+  const dimensionIndex = data.dimensionHeaders.findIndex((header) => {
+    return header.name === name;
+  });
 
   if (dimensionIndex === -1) {
-    const metricIndex = data.metricHeaders.findIndex(header => {
-      return header.name === name
-    })
+    const metricIndex = data.metricHeaders.findIndex((header) => {
+      return header.name === name;
+    });
 
     if (metricIndex === -1) {
       return null;
     } else {
-      return { rowKey: 'metricValues', index: metricIndex };
+      return { rowKey: "metricValues", index: metricIndex };
     }
   } else {
-    return { rowKey: 'dimensionValues', index: dimensionIndex };
+    return { rowKey: "dimensionValues", index: dimensionIndex };
   }
-}
+};
 
 const _formatDate = (date) => {
   if (date == "(other)") {
-    return date
+    return date;
   }
-  return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-")
-}
+  return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-");
+};
 
 const _initializeResult = ({ report, data, query }) => ({
   name: report.name,
   sampling: data.metadata?.samplingMetadatas,
   query: ((query) => {
-    query = Object.assign({}, query)
-    delete query.ids
-    return query
+    query = Object.assign({}, query);
+    delete query.ids;
+    return query;
   })(query),
   meta: report.meta,
   data: [],
   totals: {},
   taken_at: new Date(),
-})
+});
 
-const _processRow = ({ row, data, report }) => {
-  const point = {}
+const _processRow = ({ row, data }) => {
+  const point = {};
 
   // Iterate through each entry in the object
   for (const [entryKey, entryValue] of Object.entries(row)) {
-
     // Iterate through each object in the array
     entryValue.forEach((item, index) => {
       // Iterate through each key-value pair in the object
       for (const [key, value] of Object.entries(item)) {
-        if (key !== 'oneValue') {
-          const field = _fieldNameForColumnIndex({ entryKey, index, data })
+        if (key !== "oneValue") {
+          const field = _fieldNameForColumnIndex({ entryKey, index, data });
 
           let modValue;
 
           if (field === "date") {
-            modValue = _formatDate(value)
+            modValue = _formatDate(value);
           } else {
-            modValue = value
+            modValue = value;
           }
 
-          point[field] = modValue
+          point[field] = modValue;
         }
       }
     });
   }
 
-  if (config.account.hostname && !('domain' in point)) {
-    point.domain = config.account.hostname
+  if (config.account.hostname && !("domain" in point)) {
+    point.domain = config.account.hostname;
   }
 
-  return point
-}
+  return point;
+};
 
 const _removeColumnFromData = ({ column, data }) => {
-  data = Object.assign(data)
+  data = Object.assign(data);
 
-  const columnToRemove = _findDimensionOrMetricIndex(column, data)
+  const columnToRemove = _findDimensionOrMetricIndex(column, data);
 
   if (columnToRemove != null) {
-    data[columnToRemove.rowKey.replace('Values', 'Headers')].splice(columnToRemove.index, 1)
-    data.rows.forEach(row => {
-      row[columnToRemove.rowKey].splice(columnToRemove.index, 1)
-    })
+    data[columnToRemove.rowKey.replace("Values", "Headers")].splice(
+      columnToRemove.index,
+      1,
+    );
+    data.rows.forEach((row) => {
+      row[columnToRemove.rowKey].splice(columnToRemove.index, 1);
+    });
   }
 
-  return data
-}
+  return data;
+};
 
 const _mapping = {
-  "activeUsers": "active_visitors",
-  "fileName": "file_name",
-  "fullPageUrl": "page",
-  "pageTitle": "page_title",
-  "unifiedScreenName": "page_title",
-  "sessions": "visits",
-  "deviceCategory": "device",
-  "operatingSystem": "os",
-  "operatingSystemVersion": "os_version",
-  "hostName": "domain",
-  "languageCode": "language_code",
-  "sessionSource": "source",
-  "screenPageViews": "visits",
-  "eventName": "event_label",
-  "eventCount": "total_events",
-  "landingPagePlusQueryString": "landing_page",
-  "sessionDefaultChannelGroup": "session_default_channel_group",
-  "screenPageViews": "pageviews",
-  "totalUsers": "users",
-  "screenPageViewsPerSession": "pageviews_per_session",
-  "averageSessionDuration": "avg_session_duration",
-  "bounceRate": "bounce_rate",
-  "screenResolution": "screen_resolution",
-  "mobileDeviceModel": "mobile_device",
-}
+  activeUsers: "active_visitors",
+  fileName: "file_name",
+  fullPageUrl: "page",
+  pageTitle: "page_title",
+  unifiedScreenName: "page_title",
+  sessions: "visits",
+  deviceCategory: "device",
+  operatingSystem: "os",
+  operatingSystemVersion: "os_version",
+  hostName: "domain",
+  languageCode: "language_code",
+  sessionSource: "source",
+  eventName: "event_label",
+  eventCount: "total_events",
+  landingPagePlusQueryString: "landing_page",
+  sessionDefaultChannelGroup: "session_default_channel_group",
+  screenPageViews: "pageviews",
+  totalUsers: "users",
+  screenPageViewsPerSession: "pageviews_per_session",
+  averageSessionDuration: "avg_session_duration",
+  bounceRate: "bounce_rate",
+  screenResolution: "screen_resolution",
+  mobileDeviceModel: "mobile_device",
+};
 
-module.exports = { processData }
+module.exports = { processData };
