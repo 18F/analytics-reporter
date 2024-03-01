@@ -60,7 +60,7 @@
     "url": "https://github.com/18F/analytics-reporter/issues"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.504.0",
+    "@aws-sdk/client-s3": "^3.509.0",
     "@google-analytics/data": "^4.0.1",
     "@snyk/protect": "^1.1269.0",
     "dotenv": "^16.3.1",
