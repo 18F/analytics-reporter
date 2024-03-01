@@ -14,7 +14,7 @@ const authorizeQuery = (query) => {
   query = Object.assign({}, query, { auth: jwt });
 
   return new Promise((resolve, reject) => {
-    jwt.authorize((err, result) => {
+    jwt.authorize((err) => {
       if (err) {
         reject(err);
       } else {

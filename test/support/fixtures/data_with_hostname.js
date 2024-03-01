@@ -12,7 +12,7 @@ module.exports = {
   totals: [],
   rowCount: 24,
   minimums: [],
-  minimums: [],
+  maximums: [],
   metadata: {
     dataLossFromOtherRow: false,
     currencyCode: "USD",

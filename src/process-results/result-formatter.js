@@ -8,10 +8,8 @@ const formatResult = (result, { format = "json", slim = false } = {}) => {
   switch (format) {
     case "json":
       return _formatJSON(result, { slim });
-      break;
     case "csv":
       return _formatCSV(result);
-      break;
     default:
       return Promise.reject("Unsupported format: " + format);
   }

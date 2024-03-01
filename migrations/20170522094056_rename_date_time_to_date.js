@@ -1,4 +1,4 @@
-exports.up = function (knex, Promise) {
+exports.up = function (knex) {
   return knex.schema
     .raw("ALTER TABLE analytics_data RENAME COLUMN date_time TO date")
     .then(() => {
@@ -8,7 +8,7 @@ exports.up = function (knex, Promise) {
     });
 };
 
-exports.down = function (knex, Promise) {
+exports.down = function (knex) {
   return knex.schema
     .raw("ALTER TABLE analytics_data RENAME COLUMN date TO date_time")
     .then(() => {

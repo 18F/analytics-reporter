@@ -107,8 +107,8 @@ describe("PostgresPublisher", () => {
     });
 
     it("should ignore data points that have already been inserted", (done) => {
-      firstResults = Object.assign({}, results);
-      secondResults = Object.assign({}, results);
+      const firstResults = Object.assign({}, results);
+      const secondResults = Object.assign({}, results);
 
       firstResults.data = [
         {
@@ -150,8 +150,8 @@ describe("PostgresPublisher", () => {
     });
 
     it("should overwrite existing data points if the number of visits or users has changed", (done) => {
-      firstResults = Object.assign({}, results);
-      secondResults = Object.assign({}, results);
+      const firstResults = Object.assign({}, results);
+      const secondResults = Object.assign({}, results);
 
       firstResults.data = [
         {

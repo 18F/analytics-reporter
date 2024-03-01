@@ -32,7 +32,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
     });
 
     it("should resolve a query with the auth prop set to an authorized JWT", (done) => {
-      query = {
+      let query = {
         abc: 123,
       };
 
@@ -128,7 +128,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       };
 
       GoogleAnalyticsQueryAuthorizer.authorizeQuery({})
-        .then((query) => {
+        .then(() => {
           expect(jwtAuthorized).to.equal(true);
           done();
         })

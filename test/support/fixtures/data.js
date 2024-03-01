@@ -58,7 +58,7 @@ module.exports = {
   /**
    * @param Row[] If requested, the maximum values of metrics.
    */
-  minimums: [],
+  maximums: [],
   /**
    * @param ResponseMetaData metadata carrying additional information about the
    * report content.

@@ -10,7 +10,7 @@ exports.up = function (knex) {
     });
 };
 
-exports.down = function (knex, Promise) {
+exports.down = function (knex) {
   return knex.schema.table("analytics_data", (table) => {
     table.dropIndex(["report_name", "report_agency"]);
     table.dropIndex("date_time", "analytics_data_date_time_desc");

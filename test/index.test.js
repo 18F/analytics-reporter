@@ -1,6 +1,5 @@
 const expect = require("chai").expect;
 const proxyquire = require("proxyquire");
-const resultFixture = require("./support/fixtures/results");
 
 describe("main", () => {
   describe(".run(options)", () => {

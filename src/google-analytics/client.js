@@ -11,15 +11,9 @@ const fetchData = (report) => {
   });
 };
 
-const _executeFetchDataRequest = ({ realtime }, query) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const data = await _get(realtime, query);
-      resolve(data);
-    } catch (err) {
-      reject(err);
-    }
-  });
+const _executeFetchDataRequest = async ({ realtime }, query) => {
+  const data = await _get(realtime, query);
+  return data;
 };
 
 async function _get(realtime, query) {

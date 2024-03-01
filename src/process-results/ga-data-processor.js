@@ -67,7 +67,7 @@ const _filterRowsBelowThreshold = ({ threshold, data }) => {
  * object with rowKey matching the key in row where the value can be found and
  * index of the named value.  If no match is found, return null.
  */
-_findDimensionOrMetricIndex = (name, data) => {
+const _findDimensionOrMetricIndex = (name, data) => {
   const dimensionIndex = data.dimensionHeaders.findIndex((header) => {
     return header.name === name;
   });
@@ -108,7 +108,7 @@ const _initializeResult = ({ report, data, query }) => ({
   taken_at: new Date(),
 });
 
-const _processRow = ({ row, data, report }) => {
+const _processRow = ({ row, data }) => {
   const point = {};
 
   // Iterate through each entry in the object
@@ -172,7 +172,6 @@ const _mapping = {
   hostName: "domain",
   languageCode: "language_code",
   sessionSource: "source",
-  screenPageViews: "visits",
   eventName: "event_label",
   eventCount: "total_events",
   landingPagePlusQueryString: "landing_page",

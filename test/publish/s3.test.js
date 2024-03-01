@@ -1,7 +1,6 @@
 const expect = require("chai").expect;
 const proxyquire = require("proxyquire");
 const resultsFixture = require("../support/fixtures/results");
-const { should } = require("chai");
 
 let shouldErrorOnSend = false;
 
@@ -117,7 +116,7 @@ describe("S3Publisher", () => {
     };
 
     S3Publisher.publish(report, `${results}`, { format: "json" })
-      .catch((err) => {
+      .catch(() => {
         expect(gzipCalled).to.equal(true);
         done();
       })

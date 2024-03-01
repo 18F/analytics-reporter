@@ -50,7 +50,7 @@ const _dateTimeForDataPoint = (dataPoint) => {
 };
 
 const _queryForExistingRow = ({ db, row }) => {
-  query = db(ANALYTICS_DATA_TABLE_NAME);
+  let query = db(ANALYTICS_DATA_TABLE_NAME);
 
   Object.keys(row).forEach((key) => {
     if (row[key] === undefined) {
