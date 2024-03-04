@@ -1,6 +1,4 @@
-const config = require("../config");
-
-const buildQuery = (report) => {
+const buildQuery = (report, config) => {
   let query = Object.assign({}, report.query);
   query.limit = query["limit"] || "10000";
   query.property = `properties/${config.account.ids}`;

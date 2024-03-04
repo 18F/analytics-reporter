@@ -1,8 +1,6 @@
-const config = require("../config");
-
 global.analyticsCredentialsIndex = 0;
 
-const loadCredentials = () => {
+const loadCredentials = (config) => {
   const credentialData = JSON.parse(
     Buffer.from(config.analytics_credentials, "base64").toString("utf8"),
   );

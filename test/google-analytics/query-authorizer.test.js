@@ -16,13 +16,14 @@ const GoogleAnalyticsCredentialLoader = {
 const GoogleAnalyticsQueryAuthorizer = proxyquire(
   "../../src/google-analytics/query-authorizer",
   {
-    "../config": config,
     "./credential-loader": GoogleAnalyticsCredentialLoader,
     googleapis,
   },
 );
 
 describe("GoogleAnalyticsQueryAuthorizer", () => {
+  let subject;
+
   describe(".authorizeQuery(query)", () => {
     beforeEach(() => {
       Object.assign(googleapis, googleAPIsMock());
@@ -36,7 +37,10 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
         abc: 123,
       };
 
-      GoogleAnalyticsQueryAuthorizer.authorizeQuery(query)
+      subject = new GoogleAnalyticsQueryAuthorizer(config);
+
+      subject
+        .authorizeQuery(query)
         .then((query) => {
           expect(query.abc).to.equal(123);
           expect(query.auth).to.not.be.undefined;
@@ -50,7 +54,10 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       config.email = "test@example.com";
       config.key = "Shh, this is a secret";
 
-      GoogleAnalyticsQueryAuthorizer.authorizeQuery({})
+      subject = new GoogleAnalyticsQueryAuthorizer(config);
+
+      subject
+        .authorizeQuery({})
         .then((query) => {
           expect(query.auth.initArguments[0]).to.equal("test@example.com");
           expect(query.auth.initArguments[2]).to.equal("Shh, this is a secret");
@@ -64,7 +71,10 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       config.key = undefined;
       config.key_file = "./test/support/fixtures/secret_key.pem";
 
-      GoogleAnalyticsQueryAuthorizer.authorizeQuery({})
+      subject = new GoogleAnalyticsQueryAuthorizer(config);
+
+      subject
+        .authorizeQuery({})
         .then((query) => {
           expect(query.auth.initArguments[0]).to.equal("test@example.com");
           expect(query.auth.initArguments[2]).to.equal(
@@ -79,7 +89,10 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       config.key = undefined;
       config.key_file = "./test/support/fixtures/secret_key.json";
 
-      GoogleAnalyticsQueryAuthorizer.authorizeQuery({})
+      subject = new GoogleAnalyticsQueryAuthorizer(config);
+
+      subject
+        .authorizeQuery({})
         .then((query) => {
           expect(query.auth.initArguments[0]).to.equal(
             "json_test_email@example.com",
@@ -96,7 +109,10 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       config.key = undefined;
       config.analytics_credentials = "[{}]"; // overriden by proxyquire
 
-      GoogleAnalyticsQueryAuthorizer.authorizeQuery({})
+      subject = new GoogleAnalyticsQueryAuthorizer(config);
+
+      subject
+        .authorizeQuery({})
         .then((query) => {
           expect(query.auth.initArguments[0]).to.equal(
             "next_email@example.com",
@@ -110,7 +126,9 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
     });
 
     it("should create a JWT with the proper scopes", (done) => {
-      GoogleAnalyticsQueryAuthorizer.authorizeQuery({})
+      subject = new GoogleAnalyticsQueryAuthorizer(config);
+      subject
+        .authorizeQuery({})
         .then((query) => {
           expect(query.auth.initArguments[3]).to.deep.equal([
             "https://www.googleapis.com/auth/analytics.readonly",
@@ -127,7 +145,10 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
         callback(null, {});
       };
 
-      GoogleAnalyticsQueryAuthorizer.authorizeQuery({})
+      subject = new GoogleAnalyticsQueryAuthorizer(config);
+
+      subject
+        .authorizeQuery({})
         .then(() => {
           expect(jwtAuthorized).to.equal(true);
           done();
@@ -142,7 +163,10 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
         callback(new Error("Failed to authorize"));
       };
 
-      GoogleAnalyticsQueryAuthorizer.authorizeQuery({})
+      subject = new GoogleAnalyticsQueryAuthorizer(config);
+
+      subject
+        .authorizeQuery({})
         .catch((err) => {
           expect(jwtAuthorized).to.equal(true);
           expect(err.message).to.equal("Failed to authorize");

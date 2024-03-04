@@ -6,6 +6,8 @@ services:
       - POSTGRES_DB=analytics-reporter
       - POSTGRES_USER=analytics
       - POSTGRES_PASSWORD=123abc
+    ports:
+      - "5432:5432"
     volumes:
        - pgdata:/var/lib/postgresql/data/
   reporter:

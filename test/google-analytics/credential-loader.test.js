@@ -1,19 +1,10 @@
 const expect = require("chai").expect;
-const proxyquire = require("proxyquire");
-
-proxyquire.noCallThru();
+const GoogleAnalyticsCredentialLoader = require("../../src/google-analytics/credential-loader");
 
 const config = {};
 
-const GoogleAnalyticsCredentialLoader = proxyquire(
-  "../../src/google-analytics/credential-loader",
-  {
-    "../config": config,
-  },
-);
-
 describe("GoogleAnalyticsCredentialLoader", () => {
-  describe(".loadCredentials()", () => {
+  describe(".loadCredentials(config)", () => {
     beforeEach(() => {
       config.analytics_credentials = undefined;
       global.analyticsCredentialsIndex = 0;
@@ -28,7 +19,7 @@ describe("GoogleAnalyticsCredentialLoader", () => {
         "utf8",
       ).toString("base64");
 
-      const creds = GoogleAnalyticsCredentialLoader.loadCredentials();
+      const creds = GoogleAnalyticsCredentialLoader.loadCredentials(config);
       expect(creds.email).to.equal("email@example.com");
       expect(creds.key).to.equal("this-is-a-secret");
     });
@@ -48,9 +39,12 @@ describe("GoogleAnalyticsCredentialLoader", () => {
         "utf8",
       ).toString("base64");
 
-      const firstCreds = GoogleAnalyticsCredentialLoader.loadCredentials();
-      const secondCreds = GoogleAnalyticsCredentialLoader.loadCredentials();
-      const thirdCreds = GoogleAnalyticsCredentialLoader.loadCredentials();
+      const firstCreds =
+        GoogleAnalyticsCredentialLoader.loadCredentials(config);
+      const secondCreds =
+        GoogleAnalyticsCredentialLoader.loadCredentials(config);
+      const thirdCreds =
+        GoogleAnalyticsCredentialLoader.loadCredentials(config);
 
       expect(firstCreds.email).to.equal("email_1@example.com");
       expect(firstCreds.key).to.equal("this-is-a-secret-1");

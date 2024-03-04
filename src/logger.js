@@ -20,6 +20,11 @@ module.exports = {
       ],
     });
   },
+  /**
+   * @param {String} reportName the name of the report currently being processed
+   * @returns {String} a standard tag for the logger to identify the specific
+   * report being processed when writing logs.
+   */
   tag: (reportName) => {
     return `[${reportName}: ${process.env.AGENCY_NAME || "gov-wide"}]`;
   },
