@@ -1,7 +1,7 @@
 const winston = require("winston");
 
 const logLevel = () => {
-  return process.env.ANALYTICS_LOG_LEVEL || "debug"
+  return process.env.ANALYTICS_LOG_LEVEL || "debug";
 };
 
 // Application logger configuration
@@ -19,5 +19,8 @@ module.exports = {
         }),
       ],
     });
-  }
+  },
+  tag: (reportName) => {
+    return `[${reportName}: ${process.env.AGENCY_NAME || "gov-wide"}]`;
+  },
 };

@@ -14,12 +14,12 @@ module.exports = {
    * @param Object[] Describes dimension columns. The number of DimensionHeaders
    * and ordering of DimensionHeaders matches the dimensions present in rows.
    */
-  dimensionHeaders: [{ name: 'date' }, { name: 'hour' }],
+  dimensionHeaders: [{ name: "date" }, { name: "hour" }],
   /**
    * @param Object[] Describes metric columns. The number of MetricHeaders and
    * ordering of MetricHeaders matches the metrics present in rows.
    */
-  metricHeaders: [{ name: 'sessions', type: 'TYPE_INTEGER' }],
+  metricHeaders: [{ name: "sessions", type: "TYPE_INTEGER" }],
   /**
    * @param Row[] Rows of dimension value combinations and metric values in the
    * report.
@@ -28,16 +28,16 @@ module.exports = {
     return {
       dimensionValues: [
         {
-          value: '20170130',
-          oneValue: 'value'
+          value: "20170130",
+          oneValue: "value",
         },
         {
           value: `${index}`.length < 2 ? `0${index}` : `${index}`,
-          oneValue: 'value'
-        }
+          oneValue: "value",
+        },
       ],
-      metricValues: [{ value: `100`, oneValue: 'value' }]
-    }
+      metricValues: [{ value: `100`, oneValue: "value" }],
+    };
   }),
   /**
    * @param Row[] If requested, the totaled values of metrics.
@@ -58,18 +58,18 @@ module.exports = {
   /**
    * @param Row[] If requested, the maximum values of metrics.
    */
-  minimums: [],
+  maximums: [],
   /**
    * @param ResponseMetaData metadata carrying additional information about the
    * report content.
    */
   metadata: {
     dataLossFromOtherRow: false,
-    currencyCode: 'USD',
-    _currencyCode: 'currencyCode',
-    timeZone: 'America/New_York',
-    _timeZone: 'timeZone'
+    currencyCode: "USD",
+    _currencyCode: "currencyCode",
+    timeZone: "America/New_York",
+    _timeZone: "timeZone",
   },
   propertyQuota: null,
-  kind: 'analyticsData#runReport'
-}
+  kind: "analyticsData#runReport",
+};

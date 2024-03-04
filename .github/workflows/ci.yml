@@ -1,0 +1,112 @@
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: 'npm'
+      - name: Install node dependencies
+        run: npm ci
+      - name: Lint javascript
+        run: npm run lint
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    # Start Postgres as a service, wait until healthy. Uses latest Postgres version.
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: analytics_reporter_test
+          POSTGRES_USER: analytics
+          POSTGRES_PASSWORD: 123abc
+        ports:
+          - 5432:5432
+        options:
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: 'npm'
+      - name: Install node dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+  deploy_dev:
+    needs:
+      - lint
+      - test
+    if: github.ref == 'refs/heads/develop'
+    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
+    with:
+      ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
+      ANALYTICS_REPORT_EMAIL: ${{ vars.ANALYTICS_REPORT_EMAIL }}
+      APP_NAME: ${{ vars.APP_NAME_DEV }}
+      CF_ORGANIZATION_NAME: ${{ vars.CF_ORGANIZATION_NAME }}
+      CF_SPACE_NAME: ${{ vars.CF_SPACE_NAME_DEV }}
+      DB_SERVICE_NAME: ${{ vars.DB_SERVICE_NAME_DEV }}
+      NEW_RELIC_APP_NAME: ${{ vars.NEW_RELIC_APP_NAME_DEV }}
+      S3_SERVICE_NAME: ${{ vars.S3_SERVICE_NAME_DEV }}
+    secrets:
+      ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
+      CF_USERNAME: ${{ secrets.CF_USERNAME_DEV }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD_DEV }}
+      GA4_CREDS: ${{ secrets.GA4_CREDS }}
+      NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_DEV }}
+  deploy_stg:
+    needs:
+      - lint
+      - test
+    if: github.ref == 'refs/heads/staging'
+    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
+    with:
+      ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
+      ANALYTICS_REPORT_EMAIL: ${{ vars.ANALYTICS_REPORT_EMAIL }}
+      APP_NAME: ${{ vars.APP_NAME_STG }}
+      CF_ORGANIZATION_NAME: ${{ vars.CF_ORGANIZATION_NAME }}
+      CF_SPACE_NAME: ${{ vars.CF_SPACE_NAME_STG }}
+      DB_SERVICE_NAME: ${{ vars.DB_SERVICE_NAME_STG }}
+      NEW_RELIC_APP_NAME: ${{ vars.NEW_RELIC_APP_NAME_STG }}
+      S3_SERVICE_NAME: ${{ vars.S3_SERVICE_NAME_STG }}
+    secrets:
+      ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
+      CF_USERNAME: ${{ secrets.CF_USERNAME_STG }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD_STG }}
+      GA4_CREDS: ${{ secrets.GA4_CREDS }}
+      NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_STG }}
+  deploy_prd:
+    needs:
+      - lint
+      - test
+    if: github.ref == 'refs/heads/master'
+    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
+    with:
+      ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
+      ANALYTICS_REPORT_EMAIL: ${{ vars.ANALYTICS_REPORT_EMAIL }}
+      APP_NAME: ${{ vars.APP_NAME_PRD }}
+      CF_ORGANIZATION_NAME: ${{ vars.CF_ORGANIZATION_NAME }}
+      CF_SPACE_NAME: ${{ vars.CF_SPACE_NAME_PRD }}
+      DB_SERVICE_NAME: ${{ vars.DB_SERVICE_NAME_PRD }}
+      NEW_RELIC_APP_NAME: ${{ vars.NEW_RELIC_APP_NAME_PRD }}
+      S3_SERVICE_NAME: ${{ vars.S3_SERVICE_NAME_PRD }}
+    secrets:
+      ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
+      CF_USERNAME: ${{ secrets.CF_USERNAME_PRD }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD_PRD }}
+      GA4_CREDS: ${{ secrets.GA4_CREDS }}
+      NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_PRD }}
