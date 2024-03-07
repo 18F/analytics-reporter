@@ -1,5 +1,4 @@
 const Action = require("./action");
-const Logger = require("../logger");
 
 /**
  * Chain of responsibility action for logging formatted analytics data
@@ -21,11 +20,7 @@ class LogAnalyticsData extends Action {
    */
   async executeStrategy(context) {
     const store = context.getStore();
-    store
-      .get("logger")
-      .debug(
-        `${Logger.tag(store.get("reportConfig").name)} logging analytics data`,
-      );
+    store.get("logger").debug("Logging analytics data");
     await store.get("logger").info(store.get("formattedAnalyticsData"));
   }
 }

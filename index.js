@@ -50,7 +50,7 @@ async function run(options = {}) {
 async function _processReport(config, context, reportConfig) {
   const store = new Map();
   return context.run(store, async () => {
-    const logger = Logger.initialize();
+    const logger = Logger.initialize(config, reportConfig);
     store.set("config", config);
     store.set("logger", logger);
     store.set("reportConfig", reportConfig);
@@ -58,9 +58,9 @@ async function _processReport(config, context, reportConfig) {
     try {
       const processor = _buildProcessor(config);
       await processor.processChain(context);
-      logger.info(`${Logger.tag(reportConfig.name)} processing complete`);
+      logger.info("Processing complete");
     } catch (e) {
-      logger.error(`${Logger.tag(reportConfig.name)} encountered an error`);
+      logger.error("Encountered an error");
       logger.error(util.inspect(e));
     }
   });

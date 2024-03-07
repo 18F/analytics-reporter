@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export ANALYTICS_UA_REPORTS_PATH=ua/reports/api.json
+export ANALYTICS_SCRIPT_NAME=ua/api.sh
 
 # Gov Wide
 $ANALYTICS_UA_ROOT_PATH/bin/analytics --debug --write-to-database --output /tmp

@@ -1,5 +1,4 @@
 const Action = require("./action");
-const Logger = require("../logger");
 
 /**
  * Chain of responsibility action for querying google analytics for data.
@@ -36,11 +35,7 @@ class WriteAnalyticsDataToDatabase extends Action {
    */
   async executeStrategy(context) {
     const store = context.getStore();
-    store
-      .get("logger")
-      .debug(
-        `${Logger.tag(store.get("reportConfig").name)} writing report data to database`,
-      );
+    store.get("logger").debug("Writing report data to database");
     await this.#postgresPublisher.publish(store.get("processedAnalyticsData"));
   }
 }

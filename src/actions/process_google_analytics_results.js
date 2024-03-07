@@ -1,5 +1,4 @@
 const Action = require("./action");
-const Logger = require("../logger");
 
 /**
  * Chain of responsibility action for processing google analytics data
@@ -24,11 +23,7 @@ class ProcessGoogleAnalyticsResults extends Action {
   async executeStrategy(context) {
     const store = context.getStore();
 
-    store
-      .get("logger")
-      .debug(
-        `${Logger.tag(store.get("reportConfig").name)} processing GA report data`,
-      );
+    store.get("logger").debug("Processing GA report data");
     store.set(
       "processedAnalyticsData",
       await this.#analyticsDataProcessor.processData(

@@ -1,5 +1,4 @@
 const Action = require("./action");
-const Logger = require("../logger");
 
 /**
  * Chain of responsibility action for writing formatted analytics data to AWS S3
@@ -32,11 +31,7 @@ class PublishAnalyticsDataToS3 extends Action {
    */
   async executeStrategy(context) {
     const store = context.getStore();
-    store
-      .get("logger")
-      .debug(
-        `${Logger.tag(store.get("reportConfig").name)} publishing analytics data to S3`,
-      );
+    store.get("logger").debug("Publishing analytics data to S3");
     await this.#s3Service.publish(
       store.get("reportConfig"),
       store.get("formattedAnalyticsData"),

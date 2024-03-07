@@ -53,8 +53,20 @@ class Config {
     return !!this.#options.slim;
   }
 
+  get agency() {
+    return process.env.AGENCY_NAME || "gov-wide";
+  }
+
+  get scriptName() {
+    return process.env.ANALYTICS_SCRIPT_NAME;
+  }
+
   get email() {
     return process.env.ANALYTICS_REPORT_EMAIL;
+  }
+
+  get logLevel() {
+    return process.env.ANALYTICS_LOG_LEVEL || "debug";
   }
 
   // TODO: This doesn't seem to be used.

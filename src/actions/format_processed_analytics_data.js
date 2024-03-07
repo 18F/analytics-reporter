@@ -1,5 +1,4 @@
 const Action = require("./action");
-const Logger = require("../logger");
 const ResultFormatter = require("../process-results/result-formatter");
 
 /**
@@ -17,11 +16,7 @@ class FormatProcessedAnalyticsData extends Action {
     const config = store.get("config");
     const data = store.get("processedAnalyticsData");
 
-    store
-      .get("logger")
-      .debug(
-        `${Logger.tag(store.get("reportConfig").name)} formatting analytics data`,
-      );
+    store.get("logger").debug("Formatting analytics data");
     store.set(
       "formattedAnalyticsData",
       await ResultFormatter.formatResult(data, {

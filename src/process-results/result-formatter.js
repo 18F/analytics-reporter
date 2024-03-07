@@ -1,6 +1,4 @@
 const csv = require("fast-csv");
-const util = require("util");
-const logger = require("../logger").initialize();
 
 const formatResult = (result, { format = "json", slim = false } = {}) => {
   result = Object.assign({}, result);
@@ -22,8 +20,6 @@ const _formatJSON = (result, { slim }) => {
   try {
     return Promise.resolve(JSON.stringify(result, null, 2));
   } catch (e) {
-    logger.error("Cannot stringify JSON");
-    logger.error(util.inspect(result));
     return Promise.reject(e);
   }
 };

@@ -1,6 +1,5 @@
 const Action = require("./action");
 const GoogleAnalyticsQueryBuilder = require("../google-analytics/query-builder");
-const Logger = require("../logger");
 
 /**
  * Chain of responsibility action for querying google analytics for data.
@@ -33,11 +32,7 @@ class QueryGoogleAnalytics extends Action {
     );
     store.set("googleAnalyticsQuery", query);
 
-    store
-      .get("logger")
-      .debug(
-        `${Logger.tag(store.get("reportConfig").name)} fetching analytics report data from GA`,
-      );
+    store.get("logger").debug("Fetching analytics report data from GA");
     store.set(
       "rawGoogleAnalyticsReportData",
       await this.#googleAnalyticsService.runReportQuery(

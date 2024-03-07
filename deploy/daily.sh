@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export ANALYTICS_SCRIPT_NAME=daily.sh
+
 # Government Wide
 $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=daily --slim --debug
 $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=daily --slim --debug --csv

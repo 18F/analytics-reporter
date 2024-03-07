@@ -1,6 +1,5 @@
 const Action = require("./action");
 const DiskPublisher = require("../publish/disk");
-const Logger = require("../logger");
 
 /**
  * Chain of responsibility action for writing formatted analytics data to disk
@@ -23,11 +22,7 @@ class PublishAnalyticsDataToDisk extends Action {
    */
   async executeStrategy(context) {
     const store = context.getStore();
-    store
-      .get("logger")
-      .debug(
-        `${Logger.tag(store.get("reportConfig").name)} publishing analytics data to disk`,
-      );
+    store.get("logger").debug("Publishing analytics data to disk");
     await DiskPublisher.publish(
       store.get("reportConfig"),
       store.get("formattedAnalyticsData"),
