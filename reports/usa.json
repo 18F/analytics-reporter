@@ -1756,9 +1756,9 @@
               {
                 "notExpression": {
                   "filter": {
-                    "fieldName": "pageTitle",
+                    "fieldName": "hostname",
                     "stringFilter": {
-                      "value": "(other)",
+                      "value": "null",
                       "caseSensitive": false
                     }
                   }
@@ -1767,9 +1767,9 @@
               {
                 "notExpression": {
                   "filter": {
-                    "fieldName": "fullPageUrl",
+                    "fieldName": "hostname",
                     "stringFilter": {
-                      "value": "(other)",
+                      "value": "",
                       "caseSensitive": false
                     }
                   }
