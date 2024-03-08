@@ -1739,6 +1739,45 @@
             "endDate": "yesterday"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostname",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "fullPageUrl",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "metricFilter": {
           "filter": {
             "fieldName": "activeUsers",
