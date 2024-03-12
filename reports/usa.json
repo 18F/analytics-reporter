@@ -1146,8 +1146,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "hostName"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -1192,8 +1192,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "hostName"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
