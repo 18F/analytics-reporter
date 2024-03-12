@@ -1,6 +1,9 @@
 on:
   workflow_call:
     inputs:
+      ANALYTICS_GA4_CALL_RETRY_COUNT:
+        required: false
+        type: string
       ANALYTICS_KEY_FILE_NAME:
         required: true
         type: string
@@ -40,6 +43,7 @@ on:
 
 env:
   ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
+  ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ inputs.ANALYTICS_GA4_CALL_RETRY_COUNT }}
   ANALYTICS_KEY_FILE_NAME: ${{ inputs.ANALYTICS_KEY_FILE_NAME }}
   ANALYTICS_LOG_LEVEL: ${{ inputs.ANALYTICS_LOG_LEVEL }}
   ANALYTICS_REPORT_EMAIL: ${{ inputs.ANALYTICS_REPORT_EMAIL }}

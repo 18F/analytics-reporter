@@ -54,6 +54,7 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
     with:
+      ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ vars.ANALYTICS_GA4_CALL_RETRY_COUNT_DEV }}
       ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
       ANALYTICS_LOG_LEVEL: ${{ vars.ANALYTICS_LOG_LEVEL_DEV }}
       ANALYTICS_REPORT_EMAIL: ${{ vars.ANALYTICS_REPORT_EMAIL }}
@@ -76,6 +77,7 @@ jobs:
     if: github.ref == 'refs/heads/staging'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
     with:
+      ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ vars.ANALYTICS_GA4_CALL_RETRY_COUNT_STG }}
       ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
       ANALYTICS_LOG_LEVEL: ${{ vars.ANALYTICS_LOG_LEVEL_STG }}
       ANALYTICS_REPORT_EMAIL: ${{ vars.ANALYTICS_REPORT_EMAIL }}
@@ -98,6 +100,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
     with:
+      ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ vars.ANALYTICS_GA4_CALL_RETRY_COUNT_PRD }}
       ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
       ANALYTICS_LOG_LEVEL: ${{ vars.ANALYTICS_LOG_LEVEL_PRD }}
       ANALYTICS_REPORT_EMAIL: ${{ vars.ANALYTICS_REPORT_EMAIL }}
