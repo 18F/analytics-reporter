@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/18F/analytics.usa.gov.svg?style=shield)](https://circleci.com/gh/18F/analytics.usa.gov)
+![Build Status](https://github.com/18F/analytics-reporter/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Snyk](https://snyk.io/test/github/18F/analytics-reporter/badge.svg)](https://snyk.io/test/github/18F/analytics-reporter)
 [![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)](https://codeclimate.com/github/18F/analytics-reporter)
 
@@ -12,7 +12,7 @@ and the [Google Analytics Real Time API v3](https://developers.google.com/analyt
 
 This is used in combination with [analytics-reporter-api](https://github.com/18F/analytics-reporter-api) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
 
-Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
+Available reports are named and described in [`api.json`](reports/api.json) and [`usa.json`](reports/usa.json). For now, they're hardcoded into the repository.
 
 ## Docker Setup
 

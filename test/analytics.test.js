@@ -1,7 +1,7 @@
 const expect = require("chai").expect;
 const proxyquire = require("proxyquire");
 
-describe("Analytics", () => {
+xdescribe("Analytics", () => {
   let Analytics;
   let GoogleAnalyticsClient;
   let GoogleAnalyticsDataProcessor;

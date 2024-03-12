@@ -1,21 +1,16 @@
-const { ANALYTICS_DATA_TABLE_NAME } = require("../../src/publish/postgres");
-
 const expect = require("chai").expect;
 const knex = require("knex");
-const proxyquire = require("proxyquire");
 const database = require("../support/database");
 const resultsFixture = require("../support/fixtures/results");
-
-proxyquire.noCallThru();
-
-const PostgresPublisher = proxyquire("../../src/publish/postgres", {
-  "../config": require("../../src/config"),
-});
+const Config = require("../../src/config");
+const PostgresPublisher = require("../../src/publish/postgres");
+const config = new Config();
 
 describe("PostgresPublisher", () => {
-  let databaseClient, results;
+  let databaseClient, results, subject;
 
   before((done) => {
+    process.env.NODE_ENV = "test";
     // Setup the database client
     databaseClient = knex({ client: "pg", connection: database.connection });
     done();
@@ -28,6 +23,7 @@ describe("PostgresPublisher", () => {
 
   beforeEach((done) => {
     results = Object.assign({}, resultsFixture);
+    subject = new PostgresPublisher(config);
     database.resetSchema(databaseClient).then(() => done());
   });
 
@@ -45,9 +41,10 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      PostgresPublisher.publish(results)
+      subject
+        .publish(results)
         .then(() => {
-          return databaseClient(ANALYTICS_DATA_TABLE_NAME)
+          return databaseClient(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME)
             .orderBy("date", "asc")
             .select();
         })
@@ -75,9 +72,12 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      PostgresPublisher.publish(results)
+      subject
+        .publish(results)
         .then(() => {
-          return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME);
+          return databaseClient
+            .select()
+            .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
         .then((rows) => {
           const row = rows[0];
@@ -95,9 +95,12 @@ describe("PostgresPublisher", () => {
         dimensions: [{ name: "something" }, { name: "somethingElse" }],
       };
 
-      PostgresPublisher.publish(results)
+      subject
+        .publish(results)
         .then(() => {
-          return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME);
+          return databaseClient
+            .select()
+            .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
         .then((rows) => {
           expect(rows).to.have.length(0);
@@ -135,12 +138,15 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      PostgresPublisher.publish(firstResults)
+      subject
+        .publish(firstResults)
         .then(() => {
-          return PostgresPublisher.publish(secondResults);
+          return subject.publish(secondResults);
         })
         .then(() => {
-          return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME);
+          return databaseClient
+            .select()
+            .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
         .then((rows) => {
           expect(rows).to.have.length(3);
@@ -178,12 +184,15 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      PostgresPublisher.publish(firstResults)
+      subject
+        .publish(firstResults)
         .then(() => {
-          return PostgresPublisher.publish(secondResults);
+          return subject.publish(secondResults);
         })
         .then(() => {
-          return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME);
+          return databaseClient
+            .select()
+            .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
         .then((rows) => {
           expect(rows).to.have.length(2);
@@ -211,9 +220,12 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      PostgresPublisher.publish(results)
+      subject
+        .publish(results)
         .then(() => {
-          return databaseClient.select().table(ANALYTICS_DATA_TABLE_NAME);
+          return databaseClient
+            .select()
+            .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
         .then((rows) => {
           expect(rows).to.have.length(1);

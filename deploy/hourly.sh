@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export ANALYTICS_SCRIPT_NAME=hourly.sh
+
 # Government Wide
 $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=hourly --slim --debug
 

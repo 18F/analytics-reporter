@@ -2,12 +2,11 @@ const expect = require("chai").expect;
 const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
 const dataFixture = require("../support/fixtures/data");
+const ResultTotalsCalculator = require("../../src/process-results/result-totals-calculator");
 
-const GoogleAnalyticsDataProcessor = proxyquire(
-  "../../src/process-results/ga-data-processor",
-  {
-    "../config": { account: { hostname: "" } },
-  },
+const AnalyticsDataProcessor = proxyquire(
+  "../../src/process-results/analytics-data-processor",
+  { "./result-totals-calculator": ResultTotalsCalculator },
 );
 const ResultFormatter = require("../../src/process-results/result-formatter");
 
@@ -15,14 +14,18 @@ describe("ResultFormatter", () => {
   describe("formatResult(result, options)", () => {
     let report;
     let data;
+    let analyticsDataProcessor;
 
     beforeEach(() => {
       report = Object.assign({}, reportFixture);
       data = Object.assign({}, dataFixture);
+      analyticsDataProcessor = new AnalyticsDataProcessor({
+        account: { hostname: "" },
+      });
     });
 
     it("should format results into JSON if the format is 'json'", (done) => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = analyticsDataProcessor.processData(report, data);
 
       ResultFormatter.formatResult(result, { format: "json" })
         .then((formattedResult) => {
@@ -34,7 +37,7 @@ describe("ResultFormatter", () => {
     });
 
     it("should remove the data attribute for JSON if options.slim is true", (done) => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = analyticsDataProcessor.processData(report, data);
 
       ResultFormatter.formatResult(result, { format: "json", slim: true })
         .then((formattedResult) => {
@@ -46,7 +49,7 @@ describe("ResultFormatter", () => {
     });
 
     it("should format results into CSV if the format is 'csv'", () => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = analyticsDataProcessor.processData(report, data);
 
       return ResultFormatter.formatResult(result, {
         format: "csv",

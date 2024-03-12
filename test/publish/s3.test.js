@@ -27,24 +27,25 @@ class PutObjectCommandMock {
 
 const zlibMock = {};
 
-const S3Publisher = proxyquire("../../src/publish/s3", {
+const S3Service = proxyquire("../../src/publish/s3", {
   "@aws-sdk/client-s3": {
     S3Client: S3ClientMock,
     PutObjectCommand: PutObjectCommandMock,
   },
   zlib: zlibMock,
-  "../config": {
+});
+
+describe("S3Service", () => {
+  let report;
+  let results;
+  let subject;
+  const config = {
     aws: {
       bucket: "test-bucket",
       cache: 60,
       path: "path/to/data",
     },
-  },
-});
-
-describe("S3Publisher", () => {
-  let report;
-  let results;
+  };
 
   beforeEach(() => {
     results = Object.assign({}, resultsFixture);
@@ -61,7 +62,10 @@ describe("S3Publisher", () => {
       cb(null, "compressed data");
     };
 
-    S3Publisher.publish(report, `${results}`, { format: "json" })
+    subject = new S3Service({ ...config, format: "json" });
+
+    subject
+      .publish(report, `${results}`)
       .then((putObjectCommand) => {
         expect(putObjectCommand.config.Key).to.equal(
           "path/to/data/test-report.json",
@@ -89,7 +93,10 @@ describe("S3Publisher", () => {
       cb(null, "compressed data");
     };
 
-    S3Publisher.publish(report, `${results}`, { format: "csv" })
+    subject = new S3Service({ ...config, format: "csv" });
+
+    subject
+      .publish(report, `${results}`)
       .then((putObjectCommand) => {
         expect(putObjectCommand.config.Key).to.equal(
           "path/to/data/test-report.csv",
@@ -115,7 +122,10 @@ describe("S3Publisher", () => {
       cb(null, "compressed data");
     };
 
-    S3Publisher.publish(report, `${results}`, { format: "json" })
+    subject = new S3Service({ ...config, format: "json" });
+
+    subject
+      .publish(report, `${results}`)
       .catch(() => {
         expect(gzipCalled).to.equal(true);
         done();
@@ -126,7 +136,10 @@ describe("S3Publisher", () => {
   it("should reject if there is an error compressing the data", (done) => {
     zlibMock.gzip = (data, cb) => cb(new Error("test zlib error"));
 
-    S3Publisher.publish(report.name, `${results}`, { format: "json" })
+    subject = new S3Service({ ...config, format: "json" });
+
+    subject
+      .publish(report.name, `${results}`)
       .catch((err) => {
         expect(err.message).to.equal("test zlib error");
         done();

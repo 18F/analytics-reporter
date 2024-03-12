@@ -15,6 +15,8 @@ applications:
     # This is a JSON string which has been base64 encoded
     ANALYTICS_CREDENTIALS: ${ANALYTICS_CREDENTIALS}
     ANALYTICS_DEBUG: 'true'
+    ANALYTICS_DEPLOYED_TO_CLOUD_GOV: 'true'
+    ANALYTICS_LOG_LEVEL: ${ANALYTICS_LOG_LEVEL}
     ANALYTICS_KEY_PATH: /home/vcap/app/${ANALYTICS_KEY_FILE_NAME}
     # The default property ID for reports (used for gov-wide reports)
     ANALYTICS_REPORT_IDS: '393249053'

@@ -10,7 +10,7 @@ and the [Google Analytics Real Time API v3](https://developers.google.com/analyt
 
 This is used in combination with [analytics-reporter](https://github.com/18F/analytics-reporter-api) and [analytics.usa.gov](https://github.com/18F/analytics.usa.gov) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
 
-Available reports are named and described in [`reports.json`](reports/reports.json). For now, they're hardcoded into the repository.
+Available reports are named and described in [`api.json`](reports/api.json). For now, they're hardcoded into the repository.
 
 ### Installation
 

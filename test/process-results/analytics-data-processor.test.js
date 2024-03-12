@@ -3,22 +3,22 @@ const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
 const dataFixture = require("../support/fixtures/data");
 const dataWithHostnameFixture = require("../support/fixtures/data_with_hostname");
+const ResultTotalsCalculator = require("../../src/process-results/result-totals-calculator");
 
 proxyquire.noCallThru();
 
 const config = {};
 
-const GoogleAnalyticsDataProcessor = proxyquire(
-  "../../src/process-results/ga-data-processor",
-  {
-    "../config": config,
-  },
+const AnalyticsDataProcessor = proxyquire(
+  "../../src/process-results/analytics-data-processor",
+  { "./result-totals-calculator": ResultTotalsCalculator },
 );
 
-describe("GoogleAnalyticsDataProcessor", () => {
+describe("AnalyticsDataProcessor", () => {
   describe(".processData(report, data)", () => {
     let report;
     let data;
+    let subject;
 
     beforeEach(() => {
       report = Object.assign({}, reportFixture);
@@ -26,10 +26,11 @@ describe("GoogleAnalyticsDataProcessor", () => {
       config.account = {
         hostname: "",
       };
+      subject = new AnalyticsDataProcessor(config);
     });
 
     it("should return results with the correct props", () => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(result.name).to.be.a("string");
       expect(result.query).be.an("object");
       expect(result.meta).be.an("object");
@@ -41,15 +42,13 @@ describe("GoogleAnalyticsDataProcessor", () => {
 
     it("should return results with an empty data array if data is undefined or has no rows", () => {
       data.rows = [];
-      expect(GoogleAnalyticsDataProcessor.processData(report, data).data).to.be
-        .empty;
+      expect(subject.processData(report, data).data).to.be.empty;
       data.rows = undefined;
-      expect(GoogleAnalyticsDataProcessor.processData(report, data).data).to.be
-        .empty;
+      expect(subject.processData(report, data).data).to.be.empty;
     });
 
     it("should delete the query ids for the GA response", () => {
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(result.query).to.not.have.property("ids");
     });
 
@@ -66,7 +65,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
         },
       ];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(Object.keys(result.data[0])).to.deep.equal([
         "file_name",
         "os",
@@ -79,7 +78,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
       data.dimensionHeaders = [{ name: "date" }];
       data.rows = [{ dimensionValues: [{ value: "20170130" }] }];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(result.data[0].date).to.equal("2017-01-30");
     });
 
@@ -109,7 +108,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
         },
       ];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(result.data).to.have.length(2);
       expect(result.data.map((row) => row.unmapped_column)).to.deep.equal([
         "20",
@@ -140,7 +139,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
         },
       ];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(result.data).to.have.length(2);
       expect(result.data.map((row) => row.unmapped_column)).to.deep.equal([
         "20",
@@ -165,7 +164,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
         },
       ];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(result.data[0].unmapped_column).to.be.undefined;
     });
 
@@ -180,7 +179,7 @@ describe("GoogleAnalyticsDataProcessor", () => {
         },
       ];
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(result.data[0].unmapped_column).to.be.undefined;
     });
 
@@ -188,7 +187,9 @@ describe("GoogleAnalyticsDataProcessor", () => {
       report.realtime = true;
       config.account.hostname = "www.example.gov";
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      subject = new AnalyticsDataProcessor(config);
+
+      const result = subject.processData(report, data);
       expect(result.data[0].domain).to.equal("www.example.gov");
     });
 
@@ -197,11 +198,9 @@ describe("GoogleAnalyticsDataProcessor", () => {
       dataWithHostname = Object.assign({}, dataWithHostnameFixture);
       report.realtime = true;
       config.account.hostname = "www.example.gov";
+      subject = new AnalyticsDataProcessor(config);
 
-      const result = GoogleAnalyticsDataProcessor.processData(
-        report,
-        dataWithHostname,
-      );
+      const result = subject.processData(report, dataWithHostname);
       expect(result.data[0].domain).to.equal("www.example0.com");
     });
 
@@ -211,15 +210,13 @@ describe("GoogleAnalyticsDataProcessor", () => {
         expect(result.data).to.be.an("array");
         return { visits: 1234 };
       };
-      const GoogleAnalyticsDataProcessor = proxyquire(
-        "../../src/process-results/ga-data-processor",
-        {
-          "./config": config,
-          "./result-totals-calculator": { calculateTotals },
-        },
+      const AnalyticsDataProcessor = proxyquire(
+        "../../src/process-results/analytics-data-processor",
+        { "./result-totals-calculator": { calculateTotals } },
       );
+      subject = new AnalyticsDataProcessor(config);
 
-      const result = GoogleAnalyticsDataProcessor.processData(report, data);
+      const result = subject.processData(report, data);
       expect(result.totals).to.deep.equal({ visits: 1234 });
     });
   });

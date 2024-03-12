@@ -4,7 +4,7 @@ const DiskPublisher = require("./src/publish/disk");
 const PostgresPublisher = require("./src/publish/postgres");
 const ResultFormatter = require("./src/process-results/result-formatter");
 const Logger = require("../src/logger");
-const logger = Logger.initialize();
+const logger = Logger.initialize(config);
 
 Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
@@ -36,7 +36,7 @@ const _optionsForReport = (report, options) => ({
 });
 
 const _publishReport = (report, formattedResult, options) => {
-  logger.debug(`${Logger.tag(report.name)} Publishing...`);
+  logger.debug("Publishing...");
   if (options.output && typeof options.output === "string") {
     return DiskPublisher.publish(report, formattedResult, options);
   } else {
@@ -46,11 +46,11 @@ const _publishReport = (report, formattedResult, options) => {
 
 const _runReport = (report, options) => {
   const reportOptions = _optionsForReport(report, options);
-  logger.debug(`${Logger.tag(report.name)} Fetching...`);
+  logger.debug("Fetching...");
 
   return Analytics.query(report)
     .then((results) => {
-      logger.debug(`${Logger.tag(report.name)} Saving report data...`);
+      logger.debug("Saving report data...");
       if (config.account.agency_name) {
         results.agency = config.account.agency_name;
       }
@@ -63,7 +63,7 @@ const _runReport = (report, options) => {
       return _publishReport(report, formattedResult, reportOptions);
     })
     .catch((err) => {
-      logger.error(`[${report.name}] `, err);
+      logger.error(err);
     });
 };
 
