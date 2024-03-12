@@ -1090,8 +1090,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "hostName"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
