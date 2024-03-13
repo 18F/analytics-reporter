@@ -15,6 +15,7 @@ class AnalyticsDataProcessor {
     hostName: "domain",
     languageCode: "language_code",
     sessionSource: "source",
+    sessionSourceMedium: "session_source_medium",
     eventName: "event_label",
     eventCount: "total_events",
     landingPagePlusQueryString: "landing_page",
@@ -68,7 +69,9 @@ class AnalyticsDataProcessor {
       return this.#processRow({ row, report, data });
     });
 
-    result.totals = ResultTotalsCalculator.calculateTotals(result);
+    result.totals = ResultTotalsCalculator.calculateTotals(result, {
+      sumVisitsByColumns: report.sumVisitsByColumns,
+    });
 
     return result;
   }

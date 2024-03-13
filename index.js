@@ -56,7 +56,7 @@ async function _processReport(config, context, reportConfig) {
     store.set("reportConfig", reportConfig);
 
     try {
-      const processor = _buildProcessor(config);
+      const processor = _buildProcessor(config, logger);
       await processor.processChain(context);
       logger.info("Processing complete");
     } catch (e) {
@@ -66,12 +66,14 @@ async function _processReport(config, context, reportConfig) {
   });
 }
 
-function _buildProcessor(config) {
+function _buildProcessor(config, logger) {
   return new Processor([
     new QueryGoogleAnalytics(
       new GoogleAnalyticsService(
         new BetaAnalyticsDataClient(),
         new GoogleAnalyticsQueryAuthorizer(config),
+        config,
+        logger,
       ),
     ),
     new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor(config)),

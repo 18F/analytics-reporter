@@ -49,8 +49,26 @@ class Config {
     return !!this.#options["write-to-database"];
   }
 
+  /**
+   * @returns {Boolean} true if report configs with slim:true should have their
+   * data removed from report results and only include totals.
+   */
   get slim() {
     return !!this.#options.slim;
+  }
+
+  // The number of times to retry GA4 API calls. Defaults to 5
+  get ga4_call_retry_count() {
+    return Number.parseInt(process.env.ANALYTICS_GA4_CALL_RETRY_COUNT || 5);
+  }
+
+  // The number of milliseconds to delay before retrying a GA4 API call.
+  // Defaults to 1000. (This is only the first retry delay, subsequent calls
+  // will use exponential backoff.)
+  get ga4_call_retry_delay() {
+    return Number.parseInt(
+      process.env.ANALYTICS_GA4_CALL_RETRY_DELAY_MS || 1000,
+    );
   }
 
   get agency() {

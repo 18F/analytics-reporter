@@ -57,6 +57,9 @@
       "name": "screen-size",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "screen_resolution"
+      ],
       "query": {
         "dimensions": [
           {
@@ -106,6 +109,10 @@
       "name": "language",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "language",
+        "language_code"
+      ],
       "query": {
         "dimensions": [
           {
@@ -155,6 +162,9 @@
       "name": "devices",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "device"
+      ],
       "query": {
         "dimensions": [
           {
@@ -193,6 +203,9 @@
       "name": "devices-90-days",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "device"
+      ],
       "query": {
         "dimensions": [
           {
@@ -231,6 +244,9 @@
       "name": "device-model",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "mobile_device"
+      ],
       "query": {
         "dimensions": [
           {
@@ -280,6 +296,9 @@
       "name": "os",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "os"
+      ],
       "query": {
         "dimensions": [
           {
@@ -329,6 +348,9 @@
       "name": "os-90-days",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "os"
+      ],
       "query": {
         "dimensions": [
           {
@@ -378,6 +400,9 @@
       "name": "windows",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "os_version"
+      ],
       "query": {
         "dimensions": [
           {
@@ -435,6 +460,9 @@
       "name": "windows-90-days",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "os_version"
+      ],
       "query": {
         "dimensions": [
           {
@@ -492,6 +520,9 @@
       "name": "browsers",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "browser"
+      ],
       "query": {
         "dimensions": [
           {
@@ -547,6 +578,9 @@
       "name": "browsers-90-days",
       "frequency": "daily",
       "slim": true,
+      "sumVisitsByColumns": [
+        "browser"
+      ],
       "query": {
         "dimensions": [
           {
@@ -807,11 +841,11 @@
             }
           }
         },
-        "limit": "20"
+        "limit": "30"
       },
       "meta": {
         "name": "Top Pages (Live)",
-        "description": "The top 20 pages, measured by active onsite users, for all sites. (>10 active users)"
+        "description": "The top 30 pages, measured by active onsite users, for all sites. (>10 active users)"
       }
     },
     {
@@ -881,11 +915,11 @@
             ]
           }
         },
-        "limit": "20"
+        "limit": "30"
       },
       "meta": {
         "name": "Top Domains (7 Days)",
-        "description": "Last week's top 20 domains, measured by visits, for all sites."
+        "description": "Last week's top 30 domains, measured by visits, for all sites."
       }
     },
     {
@@ -955,11 +989,11 @@
             ]
           }
         },
-        "limit": "20"
+        "limit": "30"
       },
       "meta": {
         "name": "Top Domains (30 Days)",
-        "description": "Last 30 days' top 20 domains, measured by visits, for all sites."
+        "description": "Last 30 days' top 30 domains, measured by visits, for all sites."
       }
     },
     {
@@ -1021,36 +1055,21 @@
       "query": {
         "dimensions": [
           {
-            "name": "sessionSource"
+            "name": "sessionDefaultChannelGroup"
           },
           {
-            "name": "sessionDefaultChannelGroup"
+            "name": "sessionSourceMedium"
           }
         ],
         "metrics": [
           {
             "name": "sessions"
-          },
-          {
-            "name": "screenPageViews"
-          },
-          {
-            "name": "totalUsers"
-          },
-          {
-            "name": "screenPageViewsPerSession"
-          },
-          {
-            "name": "averageSessionDuration"
-          },
-          {
-            "name": "bounceRate"
           }
         ],
         "orderBys": [
           {
             "metric": {
-              "metricName": "screenPageViews"
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -1066,6 +1085,184 @@
       "meta": {
         "name": "Top Traffic Sources (30 Days)",
         "description": "Top 20 traffic sources for the last 30 days, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group-30-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumVisitsByColumns": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "unassigned",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "paid other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups (30 Days)",
+        "description": "Top 20 channel groups that initiated a session for the last 30 days, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium-30-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumVisitsByColumns": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "other / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "expected / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "outfordelivery / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources (30 Days)",
+        "description": "Top 20 sources that initiated a session for the last 30 days, measured by visits, for all sites."
       }
     },
     {
@@ -1256,7 +1453,7 @@
               {
                 "notExpression": {
                   "filter": {
-                    "fieldName": "hostname",
+                    "fieldName": "hostName",
                     "stringFilter": {
                       "value": "(other)",
                       "caseSensitive": false
@@ -1267,7 +1464,7 @@
               {
                 "notExpression": {
                   "filter": {
-                    "fieldName": "hostname",
+                    "fieldName": "hostName",
                     "stringFilter": {
                       "value": "null",
                       "caseSensitive": false
@@ -1278,7 +1475,7 @@
               {
                 "notExpression": {
                   "filter": {
-                    "fieldName": "hostname",
+                    "fieldName": "hostName",
                     "stringFilter": {
                       "value": "",
                       "caseSensitive": false
@@ -1289,11 +1486,11 @@
             ]
           }
         },
-        "limit": "20"
+        "limit": "30"
       },
       "meta": {
         "name": "Top Pages (30 Days)",
-        "description": "Top 20 pages for the last 30 days, measured by page views, for all sites."
+        "description": "Top 30 pages for the last 30 days, measured by page views, for all sites."
       }
     },
     {
@@ -1369,11 +1566,11 @@
             ]
           }
         },
-        "limit": "20"
+        "limit": "30"
       },
       "meta": {
         "name": "Top Pages (7 Days)",
-        "description": "Top 20 pages for the last week, measured by page views, for all sites."
+        "description": "Top 30 pages for the last week, measured by page views, for all sites."
       }
     },
     {
@@ -1802,22 +1999,11 @@
             ]
           }
         },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "activeUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "10"
-              }
-            }
-          }
-        },
         "limit": "10000"
       },
       "meta": {
         "name": "Top 10000 Domains (30 Days)",
-        "description": "Last 30 days' domains, measured by page views, for the top 10000 sites. (>10 active users)"
+        "description": "Last 30 days' domains, measured by page views, for the top 10000 sites."
       }
     },
     {
