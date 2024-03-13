@@ -1,4 +1,12 @@
-const calculateTotals = (result) => {
+/**
+ * @param {Object} result the result of the analytics report API call after
+ * processing by the AnalyticsDataProcessor.
+ * @param {Object} options options for the ResultTotalsCalculator.
+ * @param {String[]} options.sumVisitsByColumns an array of columns to be
+ * totalled by the number of visits for each unique key in the column.
+ * @returns {Object} totals for the results.
+ */
+const calculateTotals = (result, options = {}) => {
   if (result.data.length === 0) {
     return {};
   }
@@ -13,52 +21,10 @@ const calculateTotals = (result) => {
     totals.visits = _sumColumn({ column: "visits", result });
   }
 
-  // Sum up categories
-  if (result.name.match(/^device_model/)) {
-    totals.device_models = _sumVisitsByColumn({
-      column: "mobile_device",
-      result,
-    });
-  }
-  if (result.name.match(/^language/)) {
-    totals.languages = _sumVisitsByColumn({
-      column: "language",
-      result,
-    });
-    totals.language_codes = _sumVisitsByColumn({
-      column: "language_code",
-      result,
-    });
-  }
-  if (result.name.match(/^devices/)) {
-    totals.devices = _sumVisitsByColumn({
-      column: "device",
-      result,
-    });
-  }
-  if (result.name == "screen-size") {
-    totals.screen_resolution = _sumVisitsByColumn({
-      column: "screen_resolution",
-      result,
-    });
-  }
-  if (result.name === "os" || result.name === "os-90-days") {
-    totals.os = _sumVisitsByColumn({
-      column: "os",
-      result,
-    });
-  }
-  if (result.name === "windows" || result.name === "windows-90-days") {
-    totals.os_version = _sumVisitsByColumn({
-      column: "os_version",
-      result,
-    });
-  }
-  if (result.name === "browsers" || result.name === "browsers-90-days") {
-    totals.browser = _sumVisitsByColumn({
-      column: "browser",
-      result,
-    });
+  if (options.sumVisitsByColumns && Array.isArray(options.sumVisitsByColumns)) {
+    for (const column of options.sumVisitsByColumns) {
+      totals[`by_${column}`] = _sumVisitsByColumn({ column, result });
+    }
   }
 
   // Sum up totals with 2 levels of hashes

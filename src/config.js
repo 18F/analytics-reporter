@@ -49,6 +49,10 @@ class Config {
     return !!this.#options["write-to-database"];
   }
 
+  /**
+   * @returns {Boolean} true if report configs with slim:true should have their
+   * data removed from report results and only include totals.
+   */
   get slim() {
     return !!this.#options.slim;
   }
