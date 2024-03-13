@@ -1090,8 +1090,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "hostName"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -1146,8 +1146,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "hostName"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -1192,8 +1192,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "hostName"
+            "metric": {
+              "metricName": "sessions"
             },
             "desc": true
           }
@@ -1234,21 +1234,6 @@
         "metrics": [
           {
             "name": "screenPageViews"
-          },
-          {
-            "name": "sessions"
-          },
-          {
-            "name": "activeUsers"
-          },
-          {
-            "name": "screenPageViewsPerSession"
-          },
-          {
-            "name": "averageSessionDuration"
-          },
-          {
-            "name": "bounceRate"
           }
         ],
         "orderBys": [
@@ -1265,6 +1250,45 @@
             "endDate": "yesterday"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostname",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostname",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostname",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "limit": "20"
       },
       "meta": {
@@ -1739,6 +1763,45 @@
             "endDate": "yesterday"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostname",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostname",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostname",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "metricFilter": {
           "filter": {
             "fieldName": "activeUsers",

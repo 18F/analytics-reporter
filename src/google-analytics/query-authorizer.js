@@ -1,55 +1,63 @@
 const googleapis = require("googleapis");
 const fs = require("fs");
-const config = require("../config");
 const GoogleAnalyticsCredentialLoader = require("./credential-loader");
 
-const authorizeQuery = (query) => {
-  const credentials = _getCredentials();
-  const email = credentials.email;
-  const key = credentials.key;
-  // https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport#authorization-scopes
-  const scopes = ["https://www.googleapis.com/auth/analytics.readonly"];
-  const jwt = new googleapis.Auth.JWT(email, null, key, scopes);
+class GoogleAnalyticsQueryAuthorizer {
+  #config;
 
-  query = Object.assign({}, query, { auth: jwt });
+  constructor(config) {
+    this.#config = config;
+  }
 
-  return new Promise((resolve, reject) => {
-    jwt.authorize((err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(query);
-      }
+  authorizeQuery(query) {
+    const credentials = this.#getCredentials();
+    const email = credentials.email;
+    const key = credentials.key;
+    // https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport#authorization-scopes
+    const scopes = ["https://www.googleapis.com/auth/analytics.readonly"];
+    const jwt = new googleapis.Auth.JWT(email, null, key, scopes);
+
+    query = Object.assign({}, query, { auth: jwt });
+
+    return new Promise((resolve, reject) => {
+      jwt.authorize((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(query);
+        }
+      });
     });
-  });
-};
-
-const _getCredentials = () => {
-  if (config.key) {
-    return { key: config.key, email: config.email };
-  } else if (config.key_file) {
-    return _loadCredentialsFromKeyfile(config.key_file);
-  } else if (config.analytics_credentials) {
-    return GoogleAnalyticsCredentialLoader.loadCredentials();
-  } else {
-    throw new Error("No key or key file specified in config");
-  }
-};
-
-const _loadCredentialsFromKeyfile = (keyfile) => {
-  if (!fs.existsSync(keyfile)) {
-    throw new Error(`No such key file: ${keyfile}`);
   }
 
-  let key = fs.readFileSync(keyfile).toString().trim();
-  let email = config.email;
-
-  if (keyfile.match(/\.json$/)) {
-    const json = JSON.parse(key);
-    key = json.private_key;
-    email = json.client_email;
+  #getCredentials() {
+    if (this.#config.key) {
+      return { key: this.#config.key, email: this.#config.email };
+    } else if (this.#config.key_file) {
+      return this.#loadCredentialsFromKeyfile();
+    } else if (this.#config.analytics_credentials) {
+      return GoogleAnalyticsCredentialLoader.loadCredentials(this.#config);
+    } else {
+      throw new Error("No key or key file specified in config");
+    }
   }
-  return { key, email };
-};
 
-module.exports = { authorizeQuery };
+  #loadCredentialsFromKeyfile() {
+    const keyfile = this.#config.key_file;
+    if (!fs.existsSync(keyfile)) {
+      throw new Error(`No such key file: ${keyfile}`);
+    }
+
+    let key = fs.readFileSync(keyfile).toString().trim();
+    let email = this.#config.email;
+
+    if (keyfile.match(/\.json$/)) {
+      const json = JSON.parse(key);
+      key = json.private_key;
+      email = json.client_email;
+    }
+    return { key, email };
+  }
+}
+
+module.exports = GoogleAnalyticsQueryAuthorizer;

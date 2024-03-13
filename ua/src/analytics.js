@@ -18,7 +18,7 @@ const query = (report) => {
 const _loadReports = () => {
   const _reportFilePath = path.resolve(
     process.cwd(),
-    config.ua_reports_file || "reports/reports.json",
+    config.ua_reports_file || "reports/api.json",
   );
   return require(_reportFilePath).reports;
 };

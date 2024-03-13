@@ -1,17 +1,8 @@
 const expect = require("chai").expect;
-const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
-
-proxyquire.noCallThru();
+const GoogleAnalyticsQueryBuilder = require("../../src/google-analytics/query-builder");
 
 const config = {};
-
-const GoogleAnalyticsQueryBuilder = proxyquire(
-  "../../src/google-analytics/query-builder",
-  {
-    "../config": config,
-  },
-);
 
 describe("GoogleAnalyticsQueryBuilder", () => {
   describe(".buildQuery(report)", () => {
@@ -30,7 +21,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
         b: "456def",
       };
 
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report);
+      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, config);
       expect(query.a).to.equal("123abc");
       expect(query.b).to.equal("456def");
     });
@@ -38,21 +29,21 @@ describe("GoogleAnalyticsQueryBuilder", () => {
     it("should set limit if it is set on the report", () => {
       report.query["limit"] = "3";
 
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report);
+      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, config);
       expect(query["limit"]).to.equal("3");
     });
 
     it("should set limit to 10000 if it is unset on the report", () => {
       report.query["limit"] = undefined;
 
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report);
+      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, config);
       expect(query["limit"]).to.equal("10000");
     });
 
     it("should set the ids to the account ids specified by the config", () => {
       config.account.ids = "ga:abc123";
 
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report);
+      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, config);
       expect(query.ids).to.equal("ga:abc123");
     });
   });

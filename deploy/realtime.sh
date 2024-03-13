@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export ANALYTICS_SCRIPT_NAME=realtime.sh
+
 # Government Wide
 $ANALYTICS_ROOT_PATH/bin/analytics --publish --frequency=realtime --slim --debug
 # we want just one realtime report in CSV, hardcoded for now to save on API requests

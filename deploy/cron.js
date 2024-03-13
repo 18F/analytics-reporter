@@ -7,7 +7,8 @@ if (process.env.NEW_RELIC_APP_NAME) {
 }
 
 const spawn = require("child_process").spawn;
-const logger = require("../src/logger").initialize();
+const config = require("../src/config");
+const logger = require("../src/logger").initialize(config);
 
 logger.info("===================================");
 logger.info("=== STARTING ANALYTICS-REPORTER ===");
@@ -23,13 +24,11 @@ const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
   const childProcess = spawn(scriptPath);
 
   childProcess.stdout.on("data", (data) => {
-    logger.info(`[${scriptLoggingName}]`);
     // Writes logging output from child processes to console.
     console.log(data.toString().trim());
   });
 
   childProcess.stderr.on("data", (data) => {
-    logger.error(`[${scriptLoggingName}]`);
     // Writes error logging output from child processes to console.
     console.log(data.toString().trim());
   });

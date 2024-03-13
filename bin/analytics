@@ -21,4 +21,7 @@ const minimist = require("minimist");
 const run = require("../index.js").run;
 const options = minimist(process.argv.slice(2));
 
-run(options);
+(async () => {
+  await run(options);
+})()
+
