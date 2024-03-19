@@ -7,7 +7,6 @@ describe("GoogleAnalyticsCredentialLoader", () => {
   describe(".loadCredentials(config)", () => {
     beforeEach(() => {
       config.analytics_credentials = undefined;
-      global.analyticsCredentialsIndex = 0;
     });
 
     it("should return the credentials if the credentials are an object", () => {
