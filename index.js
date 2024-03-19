@@ -4,7 +4,6 @@ const util = require("util");
 const AnalyticsDataProcessor = require("./src/process-results/analytics-data-processor");
 const Config = require("./src/config");
 const FormatProcessedAnalyticsData = require("./src/actions/format_processed_analytics_data");
-const GoogleAnalyticsQueryAuthorizer = require("./src/google-analytics/query-authorizer");
 const GoogleAnalyticsService = require("./src/google-analytics/service");
 const LogAnalyticsData = require("./src/actions/log_analytics_data");
 const Logger = require("./src/logger");
@@ -69,12 +68,7 @@ async function _processReport(config, context, reportConfig) {
 function _buildProcessor(config, logger) {
   return new Processor([
     new QueryGoogleAnalytics(
-      new GoogleAnalyticsService(
-        new BetaAnalyticsDataClient(),
-        new GoogleAnalyticsQueryAuthorizer(config),
-        config,
-        logger,
-      ),
+      new GoogleAnalyticsService(new BetaAnalyticsDataClient(), config, logger),
     ),
     new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor(config)),
     new FormatProcessedAnalyticsData(),

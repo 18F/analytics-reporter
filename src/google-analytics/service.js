@@ -1,19 +1,13 @@
+const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer");
 const util = require("util");
 
 class GoogleAnalyticsService {
   #analyticsDataClient;
-  #googleAnalyticsQueryAuthorizer;
   #config;
   #logger;
 
-  constructor(
-    analyticsDataClient,
-    googleAnalyticsQueryAuthorizer,
-    config,
-    logger,
-  ) {
+  constructor(analyticsDataClient, config, logger) {
     this.#analyticsDataClient = analyticsDataClient;
-    this.#googleAnalyticsQueryAuthorizer = googleAnalyticsQueryAuthorizer;
     this.#config = config;
     this.#logger = logger;
   }
@@ -29,23 +23,39 @@ class GoogleAnalyticsService {
    * @returns {Object} the results of the GA4 report API call.
    */
   async runReportQuery(query, isRealtime = false) {
+    const authorizedQuery = await this.#authorizeQuery(query);
+    const results = await this.#runAuthorizedReportQuery(
+      authorizedQuery,
+      isRealtime,
+    );
+    return results;
+  }
+
+  async #authorizeQuery(query) {
     // Have to import this way for ESM modules until the app is fully converted
     // to ESM module imports.
     const { default: pRetry } = await import("p-retry");
-    const authorizedQuery = await pRetry(() => {
-      return this.#googleAnalyticsQueryAuthorizer.authorizeQuery(query);
-    }, this.#retryOptions());
     const results = await pRetry(() => {
-      return this.#runAuthorizedReportQuery(authorizedQuery, isRealtime);
+      return GoogleAnalyticsQueryAuthorizer.authorizeQuery(query, this.#config);
     }, this.#retryOptions());
     return results;
   }
 
-  #runAuthorizedReportQuery(query, isRealtime) {
+  async #runAuthorizedReportQuery(authorizedQuery, isRealtime) {
+    // Have to import this way for ESM modules until the app is fully converted
+    // to ESM module imports.
+    const { default: pRetry } = await import("p-retry");
+    const results = await pRetry(() => {
+      return this.#queryGoogleApi(authorizedQuery, isRealtime);
+    }, this.#retryOptions());
+    return results;
+  }
+
+  #queryGoogleApi(authorizedQuery, isRealtime) {
     if (isRealtime) {
-      return this.#analyticsDataClient.runRealtimeReport(query);
+      return this.#analyticsDataClient.runRealtimeReport(authorizedQuery);
     } else {
-      return this.#analyticsDataClient.runReport(query);
+      return this.#analyticsDataClient.runReport(authorizedQuery);
     }
   }
 
