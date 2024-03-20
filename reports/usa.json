@@ -1266,6 +1266,53 @@
       }
     },
     {
+      "name": "engagement-rate",
+      "frequency": "daily",
+      "slim": false,
+      "query": {
+        "metrics": [
+          {
+            "name": "engagementRate"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ]
+      },
+      "meta": {
+        "name": "Engagement rate (30 Days)",
+        "description": "Percent of sessions where the user was engaged over the past 30 days."
+      }
+    },
+    {
+      "name": "user-engagement-duration",
+      "frequency": "daily",
+      "slim": false,
+      "query": {
+        "metrics": [
+          {
+            "name": "userEngagementDuration"
+          },
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ]
+      },
+      "meta": {
+        "name": "User engagement duration (30 Days)",
+        "description": "The number of seconds that users were engaged with all sites as well as the total number of sessions for the past 30 days."
+      }
+    },
+    {
       "name": "second-level-domains",
       "frequency": "daily",
       "query": {
