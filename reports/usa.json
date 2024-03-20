@@ -179,6 +179,23 @@
             "name": "sessions"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "30daysAgo",
