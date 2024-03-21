@@ -129,9 +129,7 @@ describe("AnalyticsDataProcessor", () => {
         field: "foobar",
         value: "10",
       };
-      data.dimensionHeaders = [
-        { name: "operatingSystem" },
-      ];
+      data.dimensionHeaders = [{ name: "operatingSystem" }];
       data.metricHeaders = [{ name: "sessions" }];
 
       data.rows = [
@@ -221,7 +219,7 @@ describe("AnalyticsDataProcessor", () => {
     });
 
     it("should not remove metrics when the cut prop is a column that doesn't exist", () => {
-      report.cut = 'junk';
+      report.cut = "junk";
       data.dimensionHeaders = [];
       data.metricHeaders = [{ name: "sessions" }, { name: "unmapped_column" }];
       data.rows = [

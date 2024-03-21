@@ -39,7 +39,7 @@ describe("S3Service", () => {
   let report;
   let results;
   let subject;
-  let config = {}
+  let config = {};
 
   beforeEach(() => {
     config = {
