@@ -39,15 +39,16 @@ describe("S3Service", () => {
   let report;
   let results;
   let subject;
-  const config = {
-    aws: {
-      bucket: "test-bucket",
-      cache: 60,
-      path: "path/to/data",
-    },
-  };
+  let config = {}
 
   beforeEach(() => {
+    config = {
+      aws: {
+        bucket: "test-bucket",
+        cache: 60,
+        path: "path/to/data",
+      },
+    };
     results = Object.assign({}, resultsFixture);
     report = { name: results.name };
     zlibMock.gzip = (data, cb) => cb(null, data);
@@ -85,6 +86,7 @@ describe("S3Service", () => {
   });
 
   it("should publish compressed CSV results to the S3 bucket", (done) => {
+    config.aws.cache = undefined;
     report.name = "test-report";
     let gzipCalled = false;
 
@@ -105,7 +107,7 @@ describe("S3Service", () => {
         expect(putObjectCommand.config.ContentType).to.equal("text/csv");
         expect(putObjectCommand.config.ContentEncoding).to.equal("gzip");
         expect(putObjectCommand.config.ACL).to.equal("public-read");
-        expect(putObjectCommand.config.CacheControl).to.equal("max-age=60");
+        expect(putObjectCommand.config.CacheControl).to.equal("max-age=0");
         expect(putObjectCommand.config.Body).to.equal("compressed data");
         expect(gzipCalled).to.equal(true);
         done();

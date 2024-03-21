@@ -82,6 +82,14 @@ describe("AnalyticsDataProcessor", () => {
       expect(result.data[0].date).to.equal("2017-01-30");
     });
 
+    it("should not format dates with value (other)", () => {
+      data.dimensionHeaders = [{ name: "date" }];
+      data.rows = [{ dimensionValues: [{ value: "(other)" }] }];
+
+      const result = subject.processData(report, data);
+      expect(result.data[0].date).to.equal("(other)");
+    });
+
     it("should filter rows that don't meet a dimension threshold if a threshold is provided", () => {
       report.threshold = {
         field: "unmapped_column",
@@ -114,6 +122,35 @@ describe("AnalyticsDataProcessor", () => {
         "20",
         "15",
       ]);
+    });
+
+    it("should not filter rows when a threshold is provided that doesn't exist in the data", () => {
+      report.threshold = {
+        field: "foobar",
+        value: "10",
+      };
+      data.dimensionHeaders = [
+        { name: "operatingSystem" },
+      ];
+      data.metricHeaders = [{ name: "sessions" }];
+
+      data.rows = [
+        {
+          dimensionValues: [{ value: "macOs" }],
+          metricValues: [{ value: "12345" }],
+        },
+        {
+          dimensionValues: [{ value: "windows" }],
+          metricValues: [{ value: "12345" }],
+        },
+        {
+          dimensionValues: [{ value: "iOS" }],
+          metricValues: [{ value: "12345" }],
+        },
+      ];
+
+      const result = subject.processData(report, data);
+      expect(result.data).to.have.length(3);
     });
 
     it("should filter rows that don't meet a metric threshold if a threshold is provided", () => {
@@ -181,6 +218,21 @@ describe("AnalyticsDataProcessor", () => {
 
       const result = subject.processData(report, data);
       expect(result.data[0].unmapped_column).to.be.undefined;
+    });
+
+    it("should not remove metrics when the cut prop is a column that doesn't exist", () => {
+      report.cut = 'junk';
+      data.dimensionHeaders = [];
+      data.metricHeaders = [{ name: "sessions" }, { name: "unmapped_column" }];
+      data.rows = [
+        {
+          dimensionValues: [],
+          metricValues: [{ value: "12345" }, { value: "10000000" }],
+        },
+      ];
+
+      const result = subject.processData(report, data);
+      expect(Object.keys(result.data[0]).length).to.equal(2);
     });
 
     it("should add a hostname to realtime data if a hostname is specified by the config", () => {

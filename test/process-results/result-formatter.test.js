@@ -48,10 +48,22 @@ describe("ResultFormatter", () => {
         .catch(done);
     });
 
-    it("should format results into CSV if the format is 'csv'", () => {
+    it("should reject if the data cannot be JSON stringified", (done) => {
+      const array = []
+      array[0] = array;
+
+      ResultFormatter.formatResult(array)
+        .catch((e) => {
+          expect(e).to.equal("")
+        }).finally(() => {
+          done()
+        })
+    });
+
+    it("should format results into CSV if the format is 'csv'", (done) => {
       const result = analyticsDataProcessor.processData(report, data);
 
-      return ResultFormatter.formatResult(result, {
+      ResultFormatter.formatResult(result, {
         format: "csv",
         slim: true,
       }).then((formattedResult) => {
@@ -63,7 +75,19 @@ describe("ResultFormatter", () => {
           // Each CSV row should match 2017-01-30,00,100
           expect(row).to.match(/[0-9]{4}-[0-9]{2}-[0-9]{2},[0-9]{2},100/);
         });
-      });
+      }).finally(() => { done() })
+    });
+
+    it("should throw an error if the format is unsupported", (done) => {
+      const result = analyticsDataProcessor.processData(report, data);
+
+      ResultFormatter.formatResult(result, {
+        format: "xml",
+        slim: true,
+      }).catch((e) => {
+        expect(e).to.equal("Unsupported format: xml")
+        done()
+      })
     });
   });
 });
