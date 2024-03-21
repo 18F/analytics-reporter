@@ -1283,7 +1283,7 @@
       }
     },
     {
-      "name": "engagement-rate",
+      "name": "engagement-rate-30-days",
       "frequency": "daily",
       "slim": false,
       "query": {
@@ -1305,7 +1305,7 @@
       }
     },
     {
-      "name": "user-engagement-duration",
+      "name": "engagement-duration-30-days",
       "frequency": "daily",
       "slim": false,
       "query": {
