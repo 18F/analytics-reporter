@@ -13,7 +13,7 @@
     "pretest": "NODE_ENV=test npm run migrate",
     "start": "node app.js",
     "test": "NODE_ENV=test mocha",
-    "coverage": "nyc npm run test",
+    "coverage": "nyc --reporter html --reporter text -t coverage --report-dir coverage/summary npm run test",
     "prepare": "npm run snyk-protect",
     "snyk-protect": "snyk-protect",
     "lint": "eslint .",

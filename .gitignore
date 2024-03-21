@@ -12,6 +12,7 @@ npm-debug.log
 *.swp
 .git
 /.nyc_output
+/coverage
 
 # Track selected JSON files
 !package.json
