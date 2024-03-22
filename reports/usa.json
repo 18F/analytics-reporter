@@ -1326,7 +1326,7 @@
       },
       "meta": {
         "name": "User engagement duration (30 Days)",
-        "description": "The number of seconds that users were engaged with all sites as well as the total number of sessions for the past 30 days."
+        "description": "The number of seconds that users were engaged with all sites and the total number of sessions for the past 30 days."
       }
     },
     {
