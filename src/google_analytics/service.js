@@ -64,9 +64,10 @@ class GoogleAnalyticsService {
       retries: this.#config.ga4CallRetryCount,
       minTimeout: this.#config.ga4CallRetryDelay,
       randomize: true,
-      onFailedAttempt: (e, attemptNumber) => {
+      onFailedAttempt: (e) => {
         this.#logger.debug("GA4 API error encountered");
-        this.#logger.debug(`retry attempt number: ${attemptNumber}`);
+        this.#logger.debug(`retry attempt number: ${e.attemptNumber}`);
+        this.#logger.debug(`${e.retriesLeft} retries left`);
         this.#logger.debug(util.inspect(e));
       },
     };
