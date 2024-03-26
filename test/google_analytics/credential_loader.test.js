@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const GoogleAnalyticsCredentialLoader = require("../../src/google-analytics/credential-loader");
+const GoogleAnalyticsCredentialLoader = require("../../src/google_analytics/credential_loader");
 
 describe("GoogleAnalyticsCredentialLoader", () => {
   const subject = GoogleAnalyticsCredentialLoader;

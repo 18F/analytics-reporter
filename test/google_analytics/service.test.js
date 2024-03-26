@@ -7,9 +7,9 @@ const GoogleAnalyticsQueryAuthorizer = {
 };
 
 const GoogleAnalyticsService = proxyquire(
-  "../../src/google-analytics/service",
+  "../../src/google_analytics/service",
   {
-    "./query-authorizer": GoogleAnalyticsQueryAuthorizer,
+    "./query_authorizer": GoogleAnalyticsQueryAuthorizer,
   },
 );
 
@@ -19,8 +19,8 @@ describe("GoogleAnalyticsService", () => {
     runReport: sinon.stub(),
   };
   const config = {
-    ga4_call_retry_count: 5,
-    ga4_call_retry_delay: 1,
+    ga4CallRetryCount: 5,
+    ga4CallRetryDelay: 1,
   };
   const logger = {
     debug: () => {},
@@ -81,7 +81,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4_call_retry_count);
+          expect(retryCount).to.equal(config.ga4CallRetryCount);
         });
       });
 
@@ -104,7 +104,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4_call_retry_count);
+          expect(retryCount).to.equal(config.ga4CallRetryCount);
         });
       });
     });
@@ -168,7 +168,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4_call_retry_count);
+          expect(retryCount).to.equal(config.ga4CallRetryCount);
         });
       });
 
@@ -191,7 +191,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4_call_retry_count);
+          expect(retryCount).to.equal(config.ga4CallRetryCount);
         });
       });
     });

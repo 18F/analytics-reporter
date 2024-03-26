@@ -3,15 +3,15 @@ const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
 const dataFixture = require("../support/fixtures/data");
 const dataWithHostnameFixture = require("../support/fixtures/data_with_hostname");
-const ResultTotalsCalculator = require("../../src/process-results/result-totals-calculator");
+const ResultTotalsCalculator = require("../../src/process_results/result_totals_calculator");
 
 proxyquire.noCallThru();
 
 const config = {};
 
 const AnalyticsDataProcessor = proxyquire(
-  "../../src/process-results/analytics-data-processor",
-  { "./result-totals-calculator": ResultTotalsCalculator },
+  "../../src/process_results/analytics_data_processor",
+  { "./result_totals_calculator": ResultTotalsCalculator },
 );
 
 describe("AnalyticsDataProcessor", () => {
@@ -254,15 +254,15 @@ describe("AnalyticsDataProcessor", () => {
       expect(result.data[0].domain).to.equal("www.example0.com");
     });
 
-    it("should set use ResultTotalsCalculator to calculate the totals", () => {
+    it("should use ResultTotalsCalculator to calculate the totals", () => {
       const calculateTotals = (result) => {
         expect(result.name).to.equal(report.name);
         expect(result.data).to.be.an("array");
         return { visits: 1234 };
       };
       const AnalyticsDataProcessor = proxyquire(
-        "../../src/process-results/analytics-data-processor",
-        { "./result-totals-calculator": { calculateTotals } },
+        "../../src/process_results/analytics_data_processor",
+        { "./result_totals_calculator": { calculateTotals } },
       );
       subject = new AnalyticsDataProcessor(config);
 

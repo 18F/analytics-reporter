@@ -1,4 +1,4 @@
-const GoogleAnalyticsQueryAuthorizer = require("./query-authorizer");
+const GoogleAnalyticsQueryAuthorizer = require("./query_authorizer");
 const util = require("util");
 
 class GoogleAnalyticsService {
@@ -61,8 +61,8 @@ class GoogleAnalyticsService {
 
   #retryOptions() {
     return {
-      retries: this.#config.ga4_call_retry_count,
-      minTimeout: this.#config.ga4_call_retry_delay,
+      retries: this.#config.ga4CallRetryCount,
+      minTimeout: this.#config.ga4CallRetryDelay,
       randomize: true,
       onFailedAttempt: (e, attemptNumber) => {
         this.#logger.debug("GA4 API error encountered");

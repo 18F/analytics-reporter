@@ -14,9 +14,9 @@ const GoogleAnalyticsCredentialLoader = {
 };
 
 const GoogleAnalyticsQueryAuthorizer = proxyquire(
-  "../../src/google-analytics/query-authorizer",
+  "../../src/google_analytics/query_authorizer",
   {
-    "./credential-loader": GoogleAnalyticsCredentialLoader,
+    "./credential_loader": GoogleAnalyticsCredentialLoader,
     googleapis,
   },
 );

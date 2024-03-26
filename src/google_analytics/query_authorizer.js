@@ -1,7 +1,13 @@
 const googleapis = require("googleapis");
-const GoogleAnalyticsCredentialLoader = require("./credential-loader");
+const GoogleAnalyticsCredentialLoader = require("./credential_loader");
 
 class GoogleAnalyticsQueryAuthorizer {
+  /**
+   * @param {Object} query the query object for the google analytics reporting
+   * API.
+   * @param {Config} config an application config instance.
+   * @returns {Object} the query object with current authorization JWT included.
+   */
   static authorizeQuery(query, config) {
     const credentials = GoogleAnalyticsCredentialLoader.getCredentials(config);
     const email = credentials.email;

@@ -7,7 +7,7 @@ const GoogleAnalyticsQueryBuilder = { buildQuery: sinon.stub() };
 const QueryGoogleAnalytics = proxyquire(
   "../../src/actions/query_google_analytics",
   {
-    "../google-analytics/query-builder": GoogleAnalyticsQueryBuilder,
+    "../google_analytics/query_builder": GoogleAnalyticsQueryBuilder,
   },
 );
 

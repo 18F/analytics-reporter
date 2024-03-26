@@ -1,5 +1,5 @@
 const Action = require("./action");
-const ResultFormatter = require("../process-results/result-formatter");
+const ResultFormatter = require("../process_results/result_formatter");
 
 /**
  * Chain of responsibility action for formatting processed analytics data

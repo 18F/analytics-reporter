@@ -1,296 +1,110 @@
 const expect = require("chai").expect;
 const proxyquire = require("proxyquire");
+const sinon = require("sinon");
+const util = require("util");
 
-xdescribe("index", () => {
-  describe(".run(options)", () => {
-    const consoleLogOriginal = console.log;
-    after(() => {
-      console.log = consoleLogOriginal;
-    });
+let reportConfigs;
+let contextStore;
+let logger;
+let processorError;
 
-    const config = {};
+class Config {
+  get filteredReportConfigurations() {
+    return reportConfigs;
+  }
+}
 
-    let Analytics;
-    let DiskPublisher;
-    let PostgresPublisher;
-    let ResultFormatter;
-    let S3Publisher;
-    let result;
-    let main;
+class AsyncLocalStorage {
+  async run(store, callback) {
+    contextStore = store;
+    await callback();
+  }
+}
 
-    beforeEach(() => {
-      result = {};
-      Analytics = {
-        reports: [{ name: "a" }, { name: "b" }, { name: "c" }],
-        query: (report) =>
-          Promise.resolve(Object.assign(result, { name: report.name })),
-      };
-      DiskPublisher = {};
-      PostgresPublisher = {};
-      ResultFormatter = {
-        formatResult: (result) => Promise.resolve(JSON.stringify(result)),
-      };
-      S3Publisher = {};
+class Processor {
+  processChain(reportConfig) {
+    if (processorError) {
+      return Promise.reject(processorError);
+    }
+    return Promise.resolve(reportConfig);
+  }
+}
 
-      main = proxyquire("../index.js", {
-        "./src/config": config,
-        "./src/analytics": Analytics,
-        "./src/publish/disk": DiskPublisher,
-        "./src/publish/postgres": PostgresPublisher,
-        "./src/process-results/result-formatter": ResultFormatter,
-        "./src/publish/s3": S3Publisher,
+class S3Service {}
+
+const subject = proxyquire("../index.js", {
+  "node:async_hooks": { AsyncLocalStorage },
+  "./src/config": Config,
+  "./src/processor": Processor,
+  "./src/logger": {
+    initialize: () => {
+      return logger;
+    },
+  },
+  "./src/publish/s3": S3Service,
+});
+
+describe("index", () => {
+  beforeEach(() => {
+    logger = {
+      info: sinon.spy(),
+      error: sinon.spy(),
+    };
+  });
+
+  describe(".run", () => {
+    const reportConfig = { foo: "bar" };
+
+    describe("when processing is successful", () => {
+      beforeEach(async () => {
+        reportConfigs = [reportConfig];
+        await subject.run();
+      });
+
+      it("sets a config instance on the context", () => {
+        expect(contextStore.get("config") instanceof Config).to.equal(true);
+      });
+
+      it("sets a report config on the context", () => {
+        expect(contextStore.get("reportConfig")).to.equal(reportConfig);
+      });
+
+      it("sets a logger on the context", () => {
+        expect(contextStore.get("logger")).to.equal(logger);
+      });
+
+      it("logs processing complete", () => {
+        expect(logger.info.calledWith("Processing complete")).to.equal(true);
       });
     });
 
-    it("should query for every single report", (done) => {
-      const queriedReportNames = [];
-
-      Analytics.query = (report) => {
-        queriedReportNames.push(report.name);
-        return Promise.resolve(result);
-      };
-
-      main
-        .run()
-        .then(() => {
-          expect(queriedReportNames).to.include.members(["a", "b", "c"]);
-          done();
-        })
-        .catch(done);
-    });
-
-    it("should log formatted results", (done) => {
-      ResultFormatter.formatResult = () => Promise.resolve("I'm the results!");
-
-      let consoleLogCalled = false;
-      console.log = function (output) {
-        if (output === "I'm the results!") {
-          consoleLogCalled = true;
-        } else {
-          consoleLogOriginal.apply(this, arguments);
-        }
-      };
-
-      main
-        .run()
-        .then(() => {
-          console.log = consoleLogOriginal;
-          expect(consoleLogCalled).to.be.true;
-          done();
-        })
-        .catch((err) => {
-          console.log = consoleLogOriginal;
-          done(err);
-        });
-    });
-
-    it("should format the results with the format set to JSON", (done) => {
-      let formatResultCalled = false;
-      ResultFormatter.formatResult = (result, options) => {
-        expect(options.format).to.equal("json");
-        formatResultCalled = true;
-        return Promise.resolve("");
-      };
-
-      main
-        .run()
-        .then(() => {
-          expect(formatResultCalled).to.be.true;
-          done();
-        })
-        .catch(done);
-    });
-
-    context("with --output option", () => {
-      it("should write the results to the given path folder", (done) => {
-        ResultFormatter.formatResult = () => Promise.resolve("I'm the result");
-
-        const writtenReportNames = [];
-        DiskPublisher.publish = (report, formattedResult, options) => {
-          expect(options.format).to.equal("json");
-          expect(options.output).to.equal("path/to/output");
-          expect(formattedResult).to.equal("I'm the result");
-          writtenReportNames.push(report.name);
-        };
-
-        main
-          .run({ output: "path/to/output" })
-          .then(() => {
-            expect(writtenReportNames).to.include.members(["a", "b", "c"]);
-            done();
-          })
-          .catch(done);
-      });
-    });
-
-    context("with --publish option", () => {
-      it("should publish the results to s3", (done) => {
-        result = { data: "I'm the result" };
-
-        const publishedReportNames = [];
-        S3Publisher.publish = (report, formattedResult, options) => {
-          expect(options.format).to.equal("json");
-          expect(JSON.parse(formattedResult)).to.deep.equal(result);
-          publishedReportNames.push(report.name);
-        };
-
-        main
-          .run({ publish: true })
-          .then(() => {
-            expect(publishedReportNames).to.include.members(["a", "b", "c"]);
-            done();
-          })
-          .catch(done);
-      });
-    });
-
-    context("with --write-to-database option", () => {
-      it("should write the results to postgres", (done) => {
-        result = { data: "I am the result" };
-
-        let publishCalled = false;
-        PostgresPublisher.publish = (resultToPublish) => {
-          expect(resultToPublish).to.deep.equal(result);
-          publishCalled = true;
-          return Promise.resolve();
-        };
-
-        main
-          .run({ ["write-to-database"]: true })
-          .then(() => {
-            expect(publishCalled).to.be.true;
-            done();
-          })
-          .catch(done);
+    describe("when processing has an error", () => {
+      beforeEach(async () => {
+        processorError = new Error("you broke it");
+        reportConfigs = [reportConfig];
+        await subject.run();
       });
 
-      it("should not write the results to postgres if the report is realtime", (done) => {
-        let publishCalled = false;
-        PostgresPublisher.publish = () => {
-          publishCalled = true;
-          return Promise.resolve();
-        };
-
-        main
-          .run({ ["write-to-database"]: false })
-          .then(() => {
-            expect(publishCalled).to.be.false;
-            done();
-          })
-          .catch(done);
-      });
-    });
-
-    context("with --only option", () => {
-      it("should only query the given report", (done) => {
-        const queriedReportNames = [];
-
-        Analytics.query = (report) => {
-          queriedReportNames.push(report.name);
-          return Promise.resolve(result);
-        };
-
-        main
-          .run({ only: "a" })
-          .then(() => {
-            expect(queriedReportNames).to.include("a");
-            expect(queriedReportNames).not.to.include.members(["b", "c"]);
-            done();
-          })
-          .catch(done);
-      });
-    });
-
-    context("with --slim option", () => {
-      it("should format the results with the slim option for slim reports", (done) => {
-        Analytics.reports = [
-          { name: "a", slim: false },
-          { name: "b", slim: true },
-          { name: "c", slim: false },
-        ];
-
-        const formattedSlimReportNames = [];
-        const formattedRegularReportNames = [];
-        ResultFormatter.formatResult = (result, options) => {
-          if (options.slim === true) {
-            formattedSlimReportNames.push(result.name);
-          } else {
-            formattedRegularReportNames.push(result.name);
-          }
-          return Promise.resolve("");
-        };
-
-        main
-          .run({ slim: true })
-          .then(() => {
-            expect(formattedSlimReportNames).to.include.members(["b"]);
-            expect(formattedRegularReportNames).to.include.members(["a", "c"]);
-            done();
-          })
-          .catch(done);
-      });
-    });
-
-    context("with --csv option", () => {
-      it("should format the reports with the format set to csv", (done) => {
-        const formattedReportNames = [];
-        ResultFormatter.formatResult = (result, options) => {
-          expect(options.format).to.equal("csv");
-          formattedReportNames.push(result.name);
-          return Promise.resolve("");
-        };
-
-        main
-          .run({ csv: true })
-          .then(() => {
-            expect(formattedReportNames).to.include.members(["a", "b", "c"]);
-            done();
-          })
-          .catch(done);
+      it("sets a config instance on the context", () => {
+        expect(contextStore.get("config") instanceof Config).to.equal(true);
       });
 
-      it("should publish the reports with the format set to csv", (done) => {
-        result = { data: "I'm the result" };
-
-        const publishedReportNames = [];
-        S3Publisher.publish = (report, formattedResult, options) => {
-          expect(options.format).to.equal("csv");
-          publishedReportNames.push(report.name);
-        };
-
-        main
-          .run({ publish: true, csv: true })
-          .then(() => {
-            expect(publishedReportNames).to.include.members(["a", "b", "c"]);
-            done();
-          })
-          .catch(done);
+      it("sets a report config on the context", () => {
+        expect(contextStore.get("reportConfig")).to.equal(reportConfig);
       });
-    });
 
-    context("with --frequency option", () => {
-      it("should only query reports with the given frequency", (done) => {
-        Analytics.reports = [
-          { name: "a", frequency: "daily" },
-          { name: "b", frequency: "hourly" },
-          { name: "c", frequency: "daily" },
-        ];
+      it("sets a logger on the context", () => {
+        expect(contextStore.get("logger")).to.equal(logger);
+      });
 
-        const queriedReportNames = [];
+      it("logs that there was a processing error", () => {
+        expect(logger.error.calledWith("Encountered an error")).to.equal(true);
+      });
 
-        Analytics.query = (report) => {
-          queriedReportNames.push(report.name);
-          return Promise.resolve(result);
-        };
-
-        main
-          .run({ frequency: "daily" })
-          .then(() => {
-            expect(queriedReportNames).to.include.members(["a", "c"]);
-            expect(queriedReportNames).not.to.include.members(["b"]);
-            done();
-          })
-          .catch(done);
+      it("logs the error", () => {
+        expect(logger.error.calledWith(util.inspect(processorError))).to.equal(
+          true,
+        );
       });
     });
   });

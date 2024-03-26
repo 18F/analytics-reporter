@@ -2,13 +2,13 @@ const expect = require("chai").expect;
 const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
 const dataFixture = require("../support/fixtures/data");
-const ResultTotalsCalculator = require("../../src/process-results/result-totals-calculator");
+const ResultTotalsCalculator = require("../../src/process_results/result_totals_calculator");
 
 const AnalyticsDataProcessor = proxyquire(
-  "../../src/process-results/analytics-data-processor",
-  { "./result-totals-calculator": ResultTotalsCalculator },
+  "../../src/process_results/analytics_data_processor",
+  { "./result_totals_calculator": ResultTotalsCalculator },
 );
-const ResultFormatter = require("../../src/process-results/result-formatter");
+const ResultFormatter = require("../../src/process_results/result_formatter");
 
 describe("ResultFormatter", () => {
   describe("formatResult(result, options)", () => {
