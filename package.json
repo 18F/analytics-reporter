@@ -19,7 +19,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "cucumber": "node node_modules/@cucumber/cucumber/bin/cucumber-js",
-    "cucumber:debug": "node --inspect-brk node_modules/@cucumber/cucumber/bin/cucumber-js"
+    "cucumber:debug": "node --inspect-brk node_modules/@cucumber/cucumber/bin/cucumber-js",
+    "install-git-hooks": "cp ./hooks/* .git/hooks/ && chmod -R a+x .git/hooks/"
   },
   "contributors": [
     {

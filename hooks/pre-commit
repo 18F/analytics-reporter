@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Run linter before committing.
+
+echo "Executing pre-commit hooks"
+
+npm run lint

@@ -19,7 +19,93 @@ Available reports are named and described in [`api.json`](reports/api.json) and 
 ### Prerequistites
 
 * NodeJS > v20.x
-* A postgres DB running
+* A postgres DB running and/or docker installed
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Linting
+
+This repo uses Eslint and Prettier for code static analysis and formatting. Run
+the linter with:
+
+```bash
+npm run lint
+```
+
+Automatically fix lint issues with:
+
+```bash
+npm run lint:fix
+```
+
+### Install git hooks
+
+There are some git hooks provided in the `./hooks` directory to help with
+common development tasks. These will checkout current NPM packages on branch
+change events, and run the linter on pre-commit.
+
+Install the provided hooks with the following command:
+
+```bash
+npm run install-git-hooks
+```
+
+### Running the unit tests
+
+The unit tests for this repo require a local PostgreSQL database. You can run a
+local DB server or create a docker container using the provided test compose
+file. (Requires docker and docker-compose to be installed)
+
+Starting a docker test DB:
+
+```bash
+docker-compose -f docker-compose.test.yml up
+```
+
+Once you have a PostgreSQL DB running locally, you can run the tests. The test
+DB connection in knexfile.js has some default connection config which can be
+overridden with environment variables.  If using the provided docker-compose DB
+then you can avoid setting the connection details.
+
+Run the tests (pre-test hook runs DB migrations):
+
+```bash
+npm test
+```
+
+#### Running the unit tests with code coverage reporting
+
+If you wish to see a code coverage report after running the tests, use the
+following command. This runs the DB migrations, tests, and the NYC code coverage
+tool:
+
+```bash
+npm run coverage
+```
+
+### Running the integration tests
+
+The integration tests for this repo require the google analytics credentials to
+be set in the environment. This can be setup with the dotenv-cli package as
+described in "Setup Environment" section above.
+
+Note that these tests make real requests to google analytics APIs and should be
+run sparingly to avoid being rate limited in our live apps which use the
+same account credentials.
+
+```bash
+# Run cucumber integration tests
+dotenv -e .env npm run cucumber
+
+# Run cucumber integration tests with node debugging enabled
+dotenv -e .env npm run cucumber:debug
+```
+
+The cucumber features and support files can be found in the `features` directory
 
 ### Running the application as a npm package
 
@@ -31,10 +117,12 @@ npm install -g analytics-reporter
 
 ### Running the application locally
 
-#### Install dependencies
+To run the application locally with database reporting, you'll need a postgres
+database running on port 5432. There is a docker-compose file provided in the
+repo so that you can start an empty database with the command:
 
 ```bash
-npm install
+docker-compose up
 ```
 
 #### Setup environment
@@ -393,74 +481,6 @@ Restage the application to use the environment variables.
 ```shell
 cf restage analytics-reporter
 ```
-
-## Linting
-
-This repo uses Eslint and Prettier for code static analysis and formatting. Run
-the linter with:
-
-```shell
-npm run lint
-```
-
-Automatically fix lint issues with:
-
-```shell
-npm run lint:fix
-```
-
-## Running the unit tests
-
-The unit tests for this repo require a local PostgreSQL database. You can run a
-local DB server or create a docker container using the provided test compose
-file. (Requires docker and docker-compose to be installed)
-
-Starting a docker test DB:
-
-```shell
-docker-compose -f docker-compose.test.yml up
-```
-
-Once you have a PostgreSQL DB running locally, you can run the tests. The test
-DB connection in knexfile.js has some default connection config which can be
-overridden with environment variables.  If using the provided docker-compose DB
-then you can avoid setting the connection details.
-
-Run the tests (pre-test hook runs DB migrations):
-
-```shell
-npm test
-```
-
-### Running the unit tests with code coverage reporting
-
-If you wish to see a code coverage report after running the tests, use the
-following command. This runs the DB migrations, tests, and the NYC code coverage
-tool:
-
-```shell
-npm run coverage
-```
-
-## Running the integration tests
-
-The integration tests for this repo require the google analytics credentials to
-be set in the environment. This can be setup with the dotenv-cli package as
-described in "Setup Environment" section above.
-
-Note that these tests make real requests to google analytics APIs and should be
-run sparingly to avoid being rate limited in our live apps which use the
-same account credentials.
-
-```shell
-# Run cucumber integration tests
-dotenv -e .env npm run cucumber
-
-# Run cucumber integration tests with node debugging enabled
-dotenv -e .env npm run cucumber:debug
-```
-
-The cucumber features and support files can be found in the `features` directory
 
 ## Public domain
 
