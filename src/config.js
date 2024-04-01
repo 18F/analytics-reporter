@@ -20,6 +20,10 @@ class Config {
    * data object when formatting the processed data.
    * @param {Boolean} options['write-to-database'] if true, the application will
    * write the processed analytics data to the postgres database.
+   * @param {String} options.only if set, runs only the report with name
+   * matching the passed string.
+   * @param {String} options.frequency if set, runs only the reports with
+   * frequency matching the passed string.
    */
   constructor(options = {}) {
     this.#options = options;
