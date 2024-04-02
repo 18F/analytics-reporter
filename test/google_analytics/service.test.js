@@ -1,18 +1,26 @@
 const expect = require("chai").expect;
+const proxyquire = require("proxyquire");
 const sinon = require("sinon");
-const GoogleAnalyticsService = require("../../src/google-analytics/service");
+
+const GoogleAnalyticsQueryAuthorizer = {
+  authorizeQuery: sinon.stub(),
+};
+
+const GoogleAnalyticsService = proxyquire(
+  "../../src/google_analytics/service",
+  {
+    "./query_authorizer": GoogleAnalyticsQueryAuthorizer,
+  },
+);
 
 describe("GoogleAnalyticsService", () => {
-  const googleAnalyticsQueryAuthorizer = {
-    authorizeQuery: sinon.stub(),
-  };
   const analyticsDataClient = {
     runRealtimeReport: sinon.stub(),
     runReport: sinon.stub(),
   };
   const config = {
-    ga4_call_retry_count: 5,
-    ga4_call_retry_delay: 1,
+    ga4CallRetryCount: 5,
+    ga4CallRetryDelay: 1,
   };
   const logger = {
     debug: () => {},
@@ -22,19 +30,14 @@ describe("GoogleAnalyticsService", () => {
   beforeEach(() => {
     analyticsDataClient.runRealtimeReport.reset();
     analyticsDataClient.runReport.reset();
-    subject = new GoogleAnalyticsService(
-      analyticsDataClient,
-      googleAnalyticsQueryAuthorizer,
-      config,
-      logger,
-    );
+    subject = new GoogleAnalyticsService(analyticsDataClient, config, logger);
   });
 
   describe(".runReportQuery", () => {
     const query = { foo: "bar" };
 
     beforeEach(() => {
-      googleAnalyticsQueryAuthorizer.authorizeQuery.callsFake((query) =>
+      GoogleAnalyticsQueryAuthorizer.authorizeQuery.callsFake((query) =>
         Promise.resolve(query),
       );
     });
@@ -63,9 +66,9 @@ describe("GoogleAnalyticsService", () => {
         let retryCount;
 
         beforeEach(async () => {
-          googleAnalyticsQueryAuthorizer.authorizeQuery.reset();
+          GoogleAnalyticsQueryAuthorizer.authorizeQuery.reset();
           retryCount = -1;
-          googleAnalyticsQueryAuthorizer.authorizeQuery.callsFake(() => {
+          GoogleAnalyticsQueryAuthorizer.authorizeQuery.callsFake(() => {
             retryCount = retryCount + 1;
             return Promise.reject(new Error("You broke it"));
           });
@@ -78,7 +81,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4_call_retry_count);
+          expect(retryCount).to.equal(config.ga4CallRetryCount);
         });
       });
 
@@ -101,7 +104,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4_call_retry_count);
+          expect(retryCount).to.equal(config.ga4CallRetryCount);
         });
       });
     });
@@ -150,9 +153,9 @@ describe("GoogleAnalyticsService", () => {
         let retryCount;
 
         beforeEach(async () => {
-          googleAnalyticsQueryAuthorizer.authorizeQuery.reset();
+          GoogleAnalyticsQueryAuthorizer.authorizeQuery.reset();
           retryCount = -1;
-          googleAnalyticsQueryAuthorizer.authorizeQuery.callsFake(() => {
+          GoogleAnalyticsQueryAuthorizer.authorizeQuery.callsFake(() => {
             retryCount = retryCount + 1;
             return Promise.reject(new Error("You broke it"));
           });
@@ -165,7 +168,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4_call_retry_count);
+          expect(retryCount).to.equal(config.ga4CallRetryCount);
         });
       });
 
@@ -188,7 +191,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4_call_retry_count);
+          expect(retryCount).to.equal(config.ga4CallRetryCount);
         });
       });
     });

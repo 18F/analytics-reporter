@@ -1,4 +1,4 @@
-const ResultTotalsCalculator = require("./result-totals-calculator");
+const ResultTotalsCalculator = require("./result_totals_calculator");
 
 class AnalyticsDataProcessor {
   #hostname;
@@ -39,7 +39,7 @@ class AnalyticsDataProcessor {
    * @param {Object} query The query object for the report
    * @returns {Object} The response data transformed to flatten the data
    * structure, format dates, and map from GA keys to DAP keys. Data is filtered
-   * as requested in the report object.  This object also includes details from
+   * as requested in the report object. This object also includes details from
    * the original report and query.
    */
   processData(report, data, query) {

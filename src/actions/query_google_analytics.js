@@ -1,5 +1,5 @@
 const Action = require("./action");
-const GoogleAnalyticsQueryBuilder = require("../google-analytics/query-builder");
+const GoogleAnalyticsQueryBuilder = require("../google_analytics/query_builder");
 
 /**
  * Chain of responsibility action for querying google analytics for data.

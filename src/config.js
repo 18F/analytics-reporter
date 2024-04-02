@@ -20,6 +20,10 @@ class Config {
    * data object when formatting the processed data.
    * @param {Boolean} options['write-to-database'] if true, the application will
    * write the processed analytics data to the postgres database.
+   * @param {String} options.only if set, runs only the report with name
+   * matching the passed string.
+   * @param {String} options.frequency if set, runs only the reports with
+   * frequency matching the passed string.
    */
   constructor(options = {}) {
     this.#options = options;
@@ -58,14 +62,14 @@ class Config {
   }
 
   // The number of times to retry GA4 API calls. Defaults to 5
-  get ga4_call_retry_count() {
+  get ga4CallRetryCount() {
     return Number.parseInt(process.env.ANALYTICS_GA4_CALL_RETRY_COUNT || 5);
   }
 
   // The number of milliseconds to delay before retrying a GA4 API call.
   // Defaults to 1000. (This is only the first retry delay, subsequent calls
   // will use exponential backoff.)
-  get ga4_call_retry_delay() {
+  get ga4CallRetryDelay() {
     return Number.parseInt(
       process.env.ANALYTICS_GA4_CALL_RETRY_DELAY_MS || 1000,
     );

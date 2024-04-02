@@ -6,7 +6,7 @@ const ResultFormatter = { formatResult: sinon.stub() };
 const FormatProcessedAnalyticsData = proxyquire(
   "../../src/actions/format_processed_analytics_data",
   {
-    "../process-results/result-formatter": ResultFormatter,
+    "../process_results/result_formatter": ResultFormatter,
   },
 );
 

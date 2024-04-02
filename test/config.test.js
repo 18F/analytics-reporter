@@ -171,6 +171,106 @@ describe("Config", () => {
     });
   });
 
+  describe("ga4CallRetryCount", () => {
+    describe("when ANALYTICS_GA4_CALL_RETRY_COUNT is set", () => {
+      beforeEach(() => {
+        process.env.ANALYTICS_GA4_CALL_RETRY_COUNT = 3;
+        subject = new Config();
+      });
+
+      afterEach(() => {
+        delete process.env.ANALYTICS_GA4_CALL_RETRY_COUNT;
+      });
+
+      it("returns the number set in the env var", () => {
+        expect(subject.ga4CallRetryCount).to.equal(3);
+      });
+    });
+
+    describe("when ANALYTICS_GA4_CALL_RETRY_COUNT is not set", () => {
+      beforeEach(() => {
+        delete process.env.ANALYTICS_GA4_CALL_RETRY_COUNT;
+        subject = new Config();
+      });
+
+      it("returns the default: 5", () => {
+        expect(subject.ga4CallRetryCount).to.equal(5);
+      });
+    });
+  });
+
+  describe("ga4CallRetryDelay", () => {
+    describe("when ANALYTICS_GA4_CALL_RETRY_DELAY_MS is set", () => {
+      beforeEach(() => {
+        process.env.ANALYTICS_GA4_CALL_RETRY_DELAY_MS = 3;
+        subject = new Config();
+      });
+
+      afterEach(() => {
+        delete process.env.ANALYTICS_GA4_CALL_RETRY_DELAY_MS;
+      });
+
+      it("returns the number set in the env var", () => {
+        expect(subject.ga4CallRetryDelay).to.equal(3);
+      });
+    });
+
+    describe("when ANALYTICS_GA4_CALL_RETRY_DELAY_MS is not set", () => {
+      beforeEach(() => {
+        delete process.env.ANALYTICS_GA4_CALL_RETRY_DELAY_MS;
+        subject = new Config();
+      });
+
+      it("returns the default: 1000", () => {
+        expect(subject.ga4CallRetryDelay).to.equal(1000);
+      });
+    });
+  });
+
+  describe("agency", () => {
+    describe("when AGENCY_NAME is set", () => {
+      beforeEach(() => {
+        process.env.AGENCY_NAME = "HUD";
+        subject = new Config();
+      });
+
+      afterEach(() => {
+        delete process.env.AGENCY_NAME;
+      });
+
+      it("returns the string set in the env var", () => {
+        expect(subject.agency).to.equal("HUD");
+      });
+    });
+
+    describe("when AGENCY_NAME is not set", () => {
+      beforeEach(() => {
+        delete process.env.AGENCY_NAME;
+        subject = new Config();
+      });
+
+      it("returns the default: gov-wide", () => {
+        expect(subject.agency).to.equal("gov-wide");
+      });
+    });
+  });
+
+  describe(".script_name", () => {
+    const script_name = "daily.sh";
+
+    beforeEach(() => {
+      process.env.ANALYTICS_SCRIPT_NAME = script_name;
+    });
+
+    afterEach(() => {
+      delete process.env.ANALYTICS_SCRIPT_NAME;
+    });
+
+    it("return the value of ANALYTICS_SCRIPT_NAME", () => {
+      expect(subject.scriptName).to.equal(script_name);
+    });
+  });
+
   describe(".email", () => {
     const email = "analytics@games.gov";
 
@@ -184,6 +284,34 @@ describe("Config", () => {
 
     it("return the value of ANALYTICS_REPORT_EMAIL", () => {
       expect(subject.email).to.equal(email);
+    });
+  });
+
+  describe("logLevel", () => {
+    describe("when ANALYTICS_LOG_LEVEL is set", () => {
+      beforeEach(() => {
+        process.env.ANALYTICS_LOG_LEVEL = "warn";
+        subject = new Config();
+      });
+
+      afterEach(() => {
+        delete process.env.ANALYTICS_LOG_LEVEL;
+      });
+
+      it("returns the string set in the env var", () => {
+        expect(subject.logLevel).to.equal("warn");
+      });
+    });
+
+    describe("when ANALYTICS_LOG_LEVEL is not set", () => {
+      beforeEach(() => {
+        delete process.env.ANALYTICS_LOG_LEVEL;
+        subject = new Config();
+      });
+
+      it("returns the default: debug", () => {
+        expect(subject.logLevel).to.equal("debug");
+      });
     });
   });
 
