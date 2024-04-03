@@ -3,15 +3,15 @@ const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
 const dataFixture = require("../support/fixtures/data");
 const dataWithHostnameFixture = require("../support/fixtures/data_with_hostname");
-const ResultTotalsCalculator = require("../../src/process-results/result-totals-calculator");
+const ResultTotalsCalculator = require("../../src/process_results/result_totals_calculator");
 
 proxyquire.noCallThru();
 
 const config = {};
 
 const AnalyticsDataProcessor = proxyquire(
-  "../../src/process-results/analytics-data-processor",
-  { "./result-totals-calculator": ResultTotalsCalculator },
+  "../../src/process_results/analytics_data_processor",
+  { "./result_totals_calculator": ResultTotalsCalculator },
 );
 
 describe("AnalyticsDataProcessor", () => {
@@ -82,6 +82,14 @@ describe("AnalyticsDataProcessor", () => {
       expect(result.data[0].date).to.equal("2017-01-30");
     });
 
+    it("should not format dates with value (other)", () => {
+      data.dimensionHeaders = [{ name: "date" }];
+      data.rows = [{ dimensionValues: [{ value: "(other)" }] }];
+
+      const result = subject.processData(report, data);
+      expect(result.data[0].date).to.equal("(other)");
+    });
+
     it("should filter rows that don't meet a dimension threshold if a threshold is provided", () => {
       report.threshold = {
         field: "unmapped_column",
@@ -114,6 +122,33 @@ describe("AnalyticsDataProcessor", () => {
         "20",
         "15",
       ]);
+    });
+
+    it("should not filter rows when a threshold is provided that doesn't exist in the data", () => {
+      report.threshold = {
+        field: "foobar",
+        value: "10",
+      };
+      data.dimensionHeaders = [{ name: "operatingSystem" }];
+      data.metricHeaders = [{ name: "sessions" }];
+
+      data.rows = [
+        {
+          dimensionValues: [{ value: "macOs" }],
+          metricValues: [{ value: "12345" }],
+        },
+        {
+          dimensionValues: [{ value: "windows" }],
+          metricValues: [{ value: "12345" }],
+        },
+        {
+          dimensionValues: [{ value: "iOS" }],
+          metricValues: [{ value: "12345" }],
+        },
+      ];
+
+      const result = subject.processData(report, data);
+      expect(result.data).to.have.length(3);
     });
 
     it("should filter rows that don't meet a metric threshold if a threshold is provided", () => {
@@ -183,6 +218,21 @@ describe("AnalyticsDataProcessor", () => {
       expect(result.data[0].unmapped_column).to.be.undefined;
     });
 
+    it("should not remove metrics when the cut prop is a column that doesn't exist", () => {
+      report.cut = "junk";
+      data.dimensionHeaders = [];
+      data.metricHeaders = [{ name: "sessions" }, { name: "unmapped_column" }];
+      data.rows = [
+        {
+          dimensionValues: [],
+          metricValues: [{ value: "12345" }, { value: "10000000" }],
+        },
+      ];
+
+      const result = subject.processData(report, data);
+      expect(Object.keys(result.data[0]).length).to.equal(2);
+    });
+
     it("should add a hostname to realtime data if a hostname is specified by the config", () => {
       report.realtime = true;
       config.account.hostname = "www.example.gov";
@@ -204,15 +254,15 @@ describe("AnalyticsDataProcessor", () => {
       expect(result.data[0].domain).to.equal("www.example0.com");
     });
 
-    it("should set use ResultTotalsCalculator to calculate the totals", () => {
+    it("should use ResultTotalsCalculator to calculate the totals", () => {
       const calculateTotals = (result) => {
         expect(result.name).to.equal(report.name);
         expect(result.data).to.be.an("array");
         return { visits: 1234 };
       };
       const AnalyticsDataProcessor = proxyquire(
-        "../../src/process-results/analytics-data-processor",
-        { "./result-totals-calculator": { calculateTotals } },
+        "../../src/process_results/analytics_data_processor",
+        { "./result_totals_calculator": { calculateTotals } },
       );
       subject = new AnalyticsDataProcessor(config);
 

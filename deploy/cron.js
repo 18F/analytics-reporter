@@ -7,8 +7,7 @@ if (process.env.NEW_RELIC_APP_NAME) {
 }
 
 const spawn = require("child_process").spawn;
-const config = require("../src/config");
-const logger = require("../src/logger").initialize(config);
+const logger = require("../src/logger").initialize();
 
 logger.info("===================================");
 logger.info("=== STARTING ANALYTICS-REPORTER ===");
@@ -87,8 +86,8 @@ hourly_run();
 realtime_run();
 
 // daily
+// Runs at 10 AM UTC, then every 24 hours afterwards
 setTimeout(() => {
-  // Run at 10 AM UTC, then every 24 hours afterwards
   daily_run();
   setInterval(daily_run, 1000 * 60 * 60 * 24);
   // API

@@ -1,0 +1,4 @@
+default:
+  forceExit: true
+  order: random
+  strict: true

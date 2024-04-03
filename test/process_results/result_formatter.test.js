@@ -2,13 +2,13 @@ const expect = require("chai").expect;
 const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
 const dataFixture = require("../support/fixtures/data");
-const ResultTotalsCalculator = require("../../src/process-results/result-totals-calculator");
+const ResultTotalsCalculator = require("../../src/process_results/result_totals_calculator");
 
 const AnalyticsDataProcessor = proxyquire(
-  "../../src/process-results/analytics-data-processor",
-  { "./result-totals-calculator": ResultTotalsCalculator },
+  "../../src/process_results/analytics_data_processor",
+  { "./result_totals_calculator": ResultTotalsCalculator },
 );
-const ResultFormatter = require("../../src/process-results/result-formatter");
+const ResultFormatter = require("../../src/process_results/result_formatter");
 
 describe("ResultFormatter", () => {
   describe("formatResult(result, options)", () => {
@@ -48,21 +48,50 @@ describe("ResultFormatter", () => {
         .catch(done);
     });
 
-    it("should format results into CSV if the format is 'csv'", () => {
+    it("should reject if the data cannot be JSON stringified", (done) => {
+      const array = [];
+      array[0] = array;
+
+      ResultFormatter.formatResult(array)
+        .catch((e) => {
+          expect(e).to.equal("");
+        })
+        .finally(() => {
+          done();
+        });
+    });
+
+    it("should format results into CSV if the format is 'csv'", (done) => {
       const result = analyticsDataProcessor.processData(report, data);
 
-      return ResultFormatter.formatResult(result, {
+      ResultFormatter.formatResult(result, {
         format: "csv",
         slim: true,
-      }).then((formattedResult) => {
-        const lines = formattedResult.split("\n");
-        const [header, ...rows] = lines;
+      })
+        .then((formattedResult) => {
+          const lines = formattedResult.split("\n");
+          const [header, ...rows] = lines;
 
-        expect(header).to.equal("date,hour,visits");
-        rows.forEach((row) => {
-          // Each CSV row should match 2017-01-30,00,100
-          expect(row).to.match(/[0-9]{4}-[0-9]{2}-[0-9]{2},[0-9]{2},100/);
+          expect(header).to.equal("date,hour,visits");
+          rows.forEach((row) => {
+            // Each CSV row should match 2017-01-30,00,100
+            expect(row).to.match(/[0-9]{4}-[0-9]{2}-[0-9]{2},[0-9]{2},100/);
+          });
+        })
+        .finally(() => {
+          done();
         });
+    });
+
+    it("should throw an error if the format is unsupported", (done) => {
+      const result = analyticsDataProcessor.processData(report, data);
+
+      ResultFormatter.formatResult(result, {
+        format: "xml",
+        slim: true,
+      }).catch((e) => {
+        expect(e).to.equal("Unsupported format: xml");
+        done();
       });
     });
   });

@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 const reportFixture = require("../support/fixtures/report");
-const GoogleAnalyticsQueryBuilder = require("../../src/google-analytics/query-builder");
+const GoogleAnalyticsQueryBuilder = require("../../src/google_analytics/query_builder");
 
 const config = {};
 

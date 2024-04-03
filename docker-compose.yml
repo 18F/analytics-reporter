@@ -10,33 +10,5 @@ services:
       - "5432:5432"
     volumes:
        - pgdata:/var/lib/postgresql/data/
-  reporter:
-    image: node:7.8
-    entrypoint: ""
-    command: "node ./deploy/cron.js"
-    environment:
-      - ANALYTICS_ROOT_PATH=/usr/src/app
-      - ANALYTICS_CREDENTIALS=${ANALYTICS_CREDENTIALS}
-      - ANALYTICS_REPORTS_PATH=${ANALYTICS_REPORTS_PATH}
-      - ANALYTICS_REPORT_IDS=${ANALYTICS_REPORT_IDS}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_BUCKET=${AWS_BUCKET}
-      - AWS_BUCKET_PATH=${AWS_BUCKET_PATH}
-      - AWS_CACHE_TIME=${AWS_CACHE_TIME}
-      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
-      - AWS_REGION=${AWS_REGION}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - BUCKET_NAME=${BUCKET_NAME}
-      - POSTGRES_HOST=db
-      - POSTGRES_USER=analytics
-      - POSTGRES_DATABASE=analytics-reporter
-      - POSTGRES_PASSWORD=123abc
-    links:
-      - db
-    working_dir: /usr/src/app
-    volumes:
-      - .:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
 volumes:
-  node_modules:
   pgdata:

@@ -179,6 +179,23 @@
             "name": "sessions"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "30daysAgo",
@@ -1263,6 +1280,53 @@
       "meta": {
         "name": "Top Session Sources (30 Days)",
         "description": "Top 20 sources that initiated a session for the last 30 days, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "engagement-rate-30-days",
+      "frequency": "daily",
+      "slim": false,
+      "query": {
+        "metrics": [
+          {
+            "name": "engagementRate"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ]
+      },
+      "meta": {
+        "name": "Engagement rate (30 Days)",
+        "description": "Percent of sessions where the user was engaged over the past 30 days."
+      }
+    },
+    {
+      "name": "engagement-duration-30-days",
+      "frequency": "daily",
+      "slim": false,
+      "query": {
+        "metrics": [
+          {
+            "name": "userEngagementDuration"
+          },
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ]
+      },
+      "meta": {
+        "name": "User engagement duration (30 Days)",
+        "description": "The number of seconds that users were engaged with all sites and the total number of sessions for the past 30 days."
       }
     },
     {

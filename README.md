@@ -14,36 +14,98 @@ This is used in combination with [analytics-reporter-api](https://github.com/18F
 
 Available reports are named and described in [`api.json`](reports/api.json) and [`usa.json`](reports/usa.json). For now, they're hardcoded into the repository.
 
-## Docker Setup
-
-* To build the docker image on your computer, run:
-
-````bash
-export NODE_ENV=development # just needed when developing against the image
-export NODE_ENV=production # to build an image for production
-docker build --build-arg NODE_ENV=${NODE_ENV} -t analytics-reporter .
-````
-
-Then you can create an alias in order to have the analytics command available:
-
-```bash
-alias analytics="docker run -t -v ${HOME}:${HOME} -e ANALYTICS_REPORT_EMAIL -e ANALYTICS_REPORT_IDS -e ANALYTICS_KEY analytics-reporter"
-```
-
-To make this command work as expected you should export the env vars as follows:
-
-```bash
-export ANALYTICS_REPORT_EMAIL="your-report-email"
-export ANALYTICS_REPORT_IDS="your-report-ids"
-export ANALYTICS_KEY="your-key"
-```
-
 ## Local development setup
 
 ### Prerequistites
 
 * NodeJS > v20.x
-* A postgres DB running
+* A postgres DB running and/or docker installed
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Linting
+
+This repo uses Eslint and Prettier for code static analysis and formatting. Run
+the linter with:
+
+```bash
+npm run lint
+```
+
+Automatically fix lint issues with:
+
+```bash
+npm run lint:fix
+```
+
+### Install git hooks
+
+There are some git hooks provided in the `./hooks` directory to help with
+common development tasks. These will checkout current NPM packages on branch
+change events, and run the linter on pre-commit.
+
+Install the provided hooks with the following command:
+
+```bash
+npm run install-git-hooks
+```
+
+### Running the unit tests
+
+The unit tests for this repo require a local PostgreSQL database. You can run a
+local DB server or create a docker container using the provided test compose
+file. (Requires docker and docker-compose to be installed)
+
+Starting a docker test DB:
+
+```bash
+docker-compose -f docker-compose.test.yml up
+```
+
+Once you have a PostgreSQL DB running locally, you can run the tests. The test
+DB connection in knexfile.js has some default connection config which can be
+overridden with environment variables.  If using the provided docker-compose DB
+then you can avoid setting the connection details.
+
+Run the tests (pre-test hook runs DB migrations):
+
+```bash
+npm test
+```
+
+#### Running the unit tests with code coverage reporting
+
+If you wish to see a code coverage report after running the tests, use the
+following command. This runs the DB migrations, tests, and the NYC code coverage
+tool:
+
+```bash
+npm run coverage
+```
+
+### Running the integration tests
+
+The integration tests for this repo require the google analytics credentials to
+be set in the environment. This can be setup with the dotenv-cli package as
+described in "Setup Environment" section above.
+
+Note that these tests make real requests to google analytics APIs and should be
+run sparingly to avoid being rate limited in our live apps which use the
+same account credentials.
+
+```bash
+# Run cucumber integration tests
+dotenv -e .env npm run cucumber
+
+# Run cucumber integration tests with node debugging enabled
+dotenv -e .env npm run cucumber:debug
+```
+
+The cucumber features and support files can be found in the `features` directory
 
 ### Running the application as a npm package
 
@@ -55,10 +117,31 @@ npm install -g analytics-reporter
 
 ### Running the application locally
 
-#### Install dependencies
+To run the application locally with database reporting, you'll need a postgres
+database running on port 5432. There is a docker-compose file provided in the
+repo so that you can start an empty database with the command:
 
 ```bash
-npm install
+docker-compose up
+```
+
+#### Setup environment
+
+See "Configuration and Google Analytics Setup" below for the required environment variables and other setup for Google Analytics auth.
+
+It may be easiest to use the dotenv-cli package to configure the environment for the application.
+
+Create a `.env` file using `env.example` as a template, with the correct credentials and other config values.
+This file is ignored in the `.gitignore` file and should not be checked in to the repository.
+
+#### Run the application
+
+```bash
+# running the app with no config
+npm start
+
+# running the app with dotenv-cli
+dotenv -e .env npm start
 ```
 
 ## Configuration and Google Analytics Setup
@@ -177,13 +260,17 @@ This will produce points similar to the following:
 
 ## Use
 
-Reports are created and published using the `analytics` command.
+Reports are created and published using `npm start` or `./bin/analytics`
 
 ```bash
-analytics
+# using npm scripts
+npm start
+
+# running the app directly
+./bin/analytics
 ```
 
-This will run every report, in sequence, and print out the resulting JSON to STDOUT. There will be two newlines between each report.
+This will run every report, in sequence, and print out the resulting JSON to STDOUT.
 
 A report might look something like this:
 
@@ -258,18 +345,16 @@ A report might look something like this:
 
 ### Options
 
-* `--output` - Output to a directory.
+* `--output` - write the report result to a provided directory. Report files will be named with the name in the report configuration.
 
 ```bash
-analytics --output /path/to/data
+./bin/analytics --output /path/to/data
 ```
-
-*Note that when using the docker image you have to use the absolute path, for example "/home/youruser/path/to/data"*
 
 * `--publish` - Publish to an S3 bucket. Requires AWS environment variables set as described above.
 
 ```bash
-analytics --publish
+./bin/analytics --publish
 ```
 
 * `--write-to-database` - write data to a database. Requires a postgres configuration to be set in environment variables as described below.
@@ -277,32 +362,32 @@ analytics --publish
 * `--only` - only run one or more specific reports. Multiple reports are comma separated.
 
 ```bash
-analytics --only devices
-analytics --only devices,today
+./bin/analytics --only devices
+./bin/analytics --only devices,today
 ```
 
 * `--slim` -Where supported, use totals only (omit the `data` array). Only applies to JSON, and reports where `"slim": true`.
 
 ```bash
-analytics --only devices --slim
+./bin/analytics --only devices --slim
 ```
 
-* `--csv` - Gives you CSV instead of JSON.
+* `--csv` - Formats reports as CSV instead of the default JSON format.
 
 ```bash
-analytics --csv
+./bin/analytics --csv
 ```
 
-* `--frequency` - Limit to reports with this 'frequency' value.
+* `--frequency` - Run only reports with 'frequency' value matching the provided value.
 
 ```bash
-analytics --frequency=realtime
+./bin/analytics --frequency=realtime
 ```
 
 * `--debug` - Print debug details on STDOUT.
 
 ```bash
-analytics --publish --debug
+./bin/analytics --publish --debug
 ```
 
 ## Saving data to postgres
@@ -395,75 +480,6 @@ Restage the application to use the environment variables.
 
 ```shell
 cf restage analytics-reporter
-```
-
-### Developing with Docker
-
-This repo contains a [Docker Compose](https://docs.docker.com/compose/) configuration.
-
-To start the reporter, first run the `docker-update` script to install the
-necessary dependencies:
-
-```shell
-./bin/docker-update
-```
-
-Note that this script will need to be run again when new dependencies are added
-to update the Docker volumes where the dependencies are stored.
-
-After the dependencies are installed, the reporter can be started using Docker
-Compose:
-
-```shell
-docker-compose up
-```
-
-## Linting
-
-This repo uses Eslint and Prettier for code static analysis and formatting. Run
-the linter with:
-
-```shell
-npm run lint
-```
-
-Automatically fix lint issues with:
-
-```shell
-npm run lint:fix
-```
-
-## Running the unit tests
-
-The unit tests for this repo require a local PostgreSQL database. You can run a
-local DB server or create a docker container using the provided test compose
-file. (Requires docker and docker-compose to be installed)
-
-Starting a docker test DB:
-
-```shell
-docker-compose -f docker-compose.test.yml up
-```
-
-Once you have a PostgreSQL DB running locally, you can run the tests. The test
-DB connection in knexfile.js has some default connection config which can be
-overridden with environment variables.  If using the provided docker-compose DB
-then you can avoid setting the connection details.
-
-Run the tests (pre-test hook runs DB migrations):
-
-```shell
-npm test
-```
-
-### Running the unit tests with code coverage reporting
-
-If you wish to see a code coverage report after running the tests, use the
-following command. This runs the DB migrations, tests, and the NYC code coverage
-tool:
-
-```shell
-npm run coverage
 ```
 
 ## Public domain

@@ -22,8 +22,18 @@ const tag = (config, reportConfig) => {
   return tagString;
 };
 
-// Application logger configuration
 module.exports = {
+  /**
+   * Creates an application logger instance.
+   *
+   * @param {Config} config application config instance. Sets the log level and
+   * is also referenced to create a leading log tag for this logger instance.
+   * @param {Object} reportConfig config for the report being run for this
+   * logger instance. Used to create a leading log tag for messages
+   * @param {String} reportConfig.name the name of the report being run for this
+   * logger instance. Used to create a leading log tag for messages
+   * @returns {winston.Logger} the configured logger instance
+   */
   initialize: (config = { logLevel: "debug" }, reportConfig = {}) => {
     return winston.createLogger({
       level: config.logLevel,
