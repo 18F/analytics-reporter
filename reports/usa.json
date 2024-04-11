@@ -1997,17 +1997,14 @@
         "dimensions": [
           {
             "name": "hostName"
-          },
-          {
-            "name": "fullPageUrl"
-          },
-          {
-            "name": "pageTitle"
           }
         ],
         "metrics": [
           {
             "name": "screenPageViews"
+          },
+          {
+            "name": "sessions"
           }
         ],
         "orderBys": [
@@ -2067,7 +2064,7 @@
       },
       "meta": {
         "name": "Top 10000 Domains (30 Days)",
-        "description": "Last 30 days' domains, measured by page views, for the top 10000 sites."
+        "description": "Last 30 days' domains, measured by page views and sessions, for the top 10000 sites."
       }
     },
     {
