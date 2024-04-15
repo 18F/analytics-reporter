@@ -79,6 +79,9 @@
   "devDependencies": {
     "@cucumber/cucumber": "^10.3.1",
     "@eslint/js": "^8.57.0",
+    "@pollyjs/adapter-node-http": "^6.0.6",
+    "@pollyjs/core": "^6.0.6",
+    "@pollyjs/persister-fs": "^6.0.6",
     "chai": "^4.4.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",

@@ -11,7 +11,12 @@ chai.config.truncateThreshold = 0;
 Then(
   "the {string} report should exist in the output directory",
   function (reportName) {
-    expect(fs.existsSync(path.join(this.outputDir, `${reportName}.json`)));
+    expect(
+      fs.existsSync(path.join(this.outputDir, `${reportName}.json`)),
+    ).to.equal(
+      true,
+      `${reportName}.json did not exist in the output directory`,
+    );
   },
 );
 
@@ -52,6 +57,9 @@ Then(
     dataTable.hashes().forEach((row) => {
       expect(
         fs.existsSync(path.join(this.outputDir, `${row.reportName}.json`)),
+      ).to.equal(
+        true,
+        `${row.reportName}.json did not exist in the output directory`,
       );
     });
   },
@@ -59,6 +67,11 @@ Then(
 
 Then("the report(s) should have the expected analytics fields", function () {
   const files = fs.readdirSync(this.outputDir);
+
+  if (!files) {
+    throw "No files found in the output directory";
+  }
+
   files.forEach((file) => {
     const reportJSON = loadReportJson(this.outputDir, file);
     expect(() => {
