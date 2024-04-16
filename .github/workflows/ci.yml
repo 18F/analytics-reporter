@@ -52,6 +52,11 @@ jobs:
       - lint
       - test
     runs-on: ubuntu-latest
+    env:
+      ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
+      ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
+      ANALYTICS_REPORT_EMAIL: ${{ vars.ANALYTICS_REPORT_EMAIL }}
+      GA4_CREDS: ${{ secrets.GA4_CREDS }}
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
