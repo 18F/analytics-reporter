@@ -93,19 +93,66 @@ The integration tests for this repo require the google analytics credentials to
 be set in the environment. This can be setup with the dotenv-cli package as
 described in "Setup Environment" section above.
 
-Note that these tests make real requests to google analytics APIs and should be
-run sparingly to avoid being rate limited in our live apps which use the
-same account credentials.
+These tests use the CucumberJS library to setup scenarios for testing the
+application as a black box. They execute the analytics-reporter application with
+specified parameters and test the output.
+
+In order to avoid making real requests to Google APIs on each test run, the
+integration tests use the PollyJS library for HTTP request recording and
+playback. When in record mode, the application under test makes real HTTP
+requests and PollyJS intercepts and records the request/response to a file.
+When in playback mode (the default), as the application under test makes HTTP
+requests then the requests are intercepted by PollyJS, matched to a recorded
+request in the recordings file, and replayed sending the recorded response to
+the application.
+
+#### Recording
+
+Set the environment variable `RECORD` when running the tests to set PollyJS to
+record mode. This will cause the tests to update the associated files in the
+`features/__recordings__` directory.
+
+Note that tests run in record mode make real requests to Google analytics APIs
+and should be run sparingly to avoid being rate limited in our live apps which
+use the same account credentials.
+
+```bash
+# Run cucumber integration tests
+RECORD=true dotenv -e .env npm run cucumber
+
+# Run cucumber integration tests for a specific scenario tag
+RECORD=true dotenv -e .env npm run cucumber -- -t @foobar
+
+# Run cucumber integration tests with node debugging enabled
+RECORD=true dotenv -e .env npm run cucumber:debug
+```
+
+#### Playback
+
+In order to run in PollyJS playback mode, do not set the `RECORD` environment
+variable. This will run the cucumber tests, responding to application HTTP
+requests with recorded responses.
 
 ```bash
 # Run cucumber integration tests
 dotenv -e .env npm run cucumber
 
+# Run cucumber integration tests for a specific scenario tag
+dotenv -e .env npm run cucumber -- -t @foobar
+
 # Run cucumber integration tests with node debugging enabled
 dotenv -e .env npm run cucumber:debug
 ```
 
-The cucumber features and support files can be found in the `features` directory
+#### Creating new integration test scenarios
+
+The cucumber features and support files can be found in the `features`
+directory. When crafting new features or scenarios, in order for HTTP requests
+to be recorded for the scenario, a tag must be added to the scenario following
+the format `@uuid-XXXXX`. It may be easiest to use the command line utility
+`uuidgen` to generate that portion of the tag. PollyJS will create recordings
+for the scenario in the `features/__recordings__` directory with the file name
+matching the portion of the tag after `@uuid-`.
 
 ### Running the application as a npm package
 
