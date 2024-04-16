@@ -47,10 +47,28 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+  cucumber:
+    needs:
+      - lint
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: 'npm'
+      - name: Install node dependencies
+        run: npm ci
+      - name: Run integration tests
+        run: npm run cucumber
   deploy_dev:
     needs:
       - lint
       - test
+      - cucumber
     if: github.ref == 'refs/heads/develop'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
     with:
@@ -74,6 +92,7 @@ jobs:
     needs:
       - lint
       - test
+      - cucumber
     if: github.ref == 'refs/heads/staging'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
     with:
@@ -97,6 +116,7 @@ jobs:
     needs:
       - lint
       - test
+      - cucumber
     if: github.ref == 'refs/heads/master'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
     with:
