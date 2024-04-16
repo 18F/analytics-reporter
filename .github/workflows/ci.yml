@@ -67,6 +67,9 @@ jobs:
           cache: 'npm'
       - name: Install node dependencies
         run: npm ci
+      - name: Write Google GA4 Credentials file from the value in GA4_CREDS env var.
+        run: |
+          echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
       - name: Run integration tests
         run: npm run cucumber
   deploy_dev:
