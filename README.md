@@ -14,6 +14,9 @@ This is used in combination with [analytics-reporter-api](https://github.com/18F
 
 Available reports are named and described in [`api.json`](reports/api.json) and [`usa.json`](reports/usa.json). For now, they're hardcoded into the repository.
 
+The process for adding features to this project is described in
+[Development and deployment process](docs/development_and_deployment_process.md).
+
 ## Local development setup
 
 ### Prerequistites
@@ -450,37 +453,6 @@ An enum which describes the session. Possible values:
 
 'Direct', 'Organic Search', 'Paid Social', 'Organic Social', 'Email',
 'Affiliates', 'Referral', 'Paid Search', 'Video', and 'Display'
-
-### Deploying to Cloud.gov
-
-The analytics reporter runs on :cloud:.gov. Please refer to the `manifest.yml`
-file at the root of the repository for application information.
-
-Ensure you're targeting the proper `org` and `space`.
-
-```shell
-cf target
-```
-
-Deploy the application with the following command.
-
-```shell
-cf push -f manifest.yml
-```
-
-Set the environmental variables based on local `.env` file.
-
-```shell
-cf set-env analytics-reporter AWS_ACCESS_KEY_ID 123abc
-cf set-env analytics-reporter AWS_SECRET_ACCESS_KEY 456def
-# ...
-```
-
-Restage the application to use the environment variables.
-
-```shell
-cf restage analytics-reporter
-```
 
 ## Public domain
 
