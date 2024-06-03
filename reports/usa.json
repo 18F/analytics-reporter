@@ -1768,9 +1768,6 @@
       "query": {
         "dimensions": [
           {
-            "name": "date"
-          },
-          {
             "name": "pageTitle"
           },
           {
@@ -1859,6 +1856,9 @@
             "name": "eventName"
           },
           {
+            "name": "fileName"
+          },
+          {
             "name": "fullPageUrl"
           }
         ],
@@ -1895,15 +1895,85 @@
               {
                 "notExpression": {
                   "filter": {
-                    "fieldName": "eventName",
+                    "fieldName": "fileName",
                     "stringFilter": {
                       "matchType": "PARTIAL_REGEXP",
-                      "value": "~swf$",
+                      "value": ".*\\\\.(zip|doc)\\b.*",
                       "caseSensitive": false
                     }
                   }
                 }
               },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "fullPageUrl",
+                    "stringFilter": {
+                      "matchType": "PARTIAL_REGEXP",
+                      "value": ".*\\busps\\.com\\b.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloads (7 Days)",
+        "description": "Top 100 downloads in the last 7 days."
+      }
+    },
+    {
+      "name": "top-downloads-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "fileName"
+          },
+          {
+            "name": "fullPageUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "matchType": "FULL_REGEXP",
+              "value": "^(file_download|download|downloads|(outbound downloads))$",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
               {
                 "notExpression": {
                   "filter": {
@@ -1934,8 +2004,8 @@
         "limit": "100"
       },
       "meta": {
-        "name": "Top Downloads (7 Days)",
-        "description": "Top 100 downloads in the last 7 days."
+        "name": "Top Downloads (30 Days)",
+        "description": "Top 100 downloads in the last 30 days."
       }
     },
     {
