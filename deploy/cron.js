@@ -2,6 +2,11 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+// Set the node variable for node configuration to use an egress proxy here
+// instead of in the manifest because it interferes with the cloud.gov buildpack
+// setup.
+process.env.HTTPS_PROXY = process.env.PROXY_ROUTE;
+
 if (process.env.NEW_RELIC_APP_NAME) {
   require("newrelic");
 }

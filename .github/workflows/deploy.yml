@@ -40,6 +40,10 @@ on:
       GA4_CREDS:
         required: true
       NEW_RELIC_LICENSE_KEY:
+      PROXY_USERNAME:
+        required: true
+      PROXY_PASSWORD:
+        required: true
 
 env:
   ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
@@ -56,6 +60,9 @@ env:
   GA4_CREDS: ${{ secrets.GA4_CREDS }}
   NEW_RELIC_APP_NAME: ${{ inputs.NEW_RELIC_APP_NAME }}
   NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+  PROXY_PORT: '8080'
+  PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
+  PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
   S3_SERVICE_NAME: ${{ inputs.S3_SERVICE_NAME }}
 
 jobs:
@@ -96,5 +103,5 @@ jobs:
           # Log into cloud.gov
           cf api api.fr.cloud.gov
           cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION_NAME -s $CF_SPACE_NAME
-          cf push -f "./manifest.yml" --strategy rolling
+          cf push -f "./manifest.yml"
           cf logout
