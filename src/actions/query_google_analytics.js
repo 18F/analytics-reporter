@@ -21,25 +21,22 @@ class QueryGoogleAnalytics extends Action {
    * passed to the google analytics service to make the API call(s) necessary to
    * retrieve the data. The analytics data and the query are set to the context
    * to be used by subsequent actions.
-   * @param {AsyncLocalStorage} context the context for the action chain.
+   * @param {ReportProcessingContext} context the context for the action chain.
    */
   async executeStrategy(context) {
-    const store = context.getStore();
-    const reportConfig = store.get("reportConfig");
+    const reportConfig = context.reportConfig;
     const query = await GoogleAnalyticsQueryBuilder.buildQuery(
       reportConfig,
-      store.get("config"),
+      context.config,
     );
-    store.set("googleAnalyticsQuery", query);
+    context.googleAnalyticsQuery = query;
 
-    store.get("logger").debug("Fetching analytics report data from GA");
-    store.set(
-      "rawGoogleAnalyticsReportData",
+    context.logger.debug("Fetching analytics report data from GA");
+    context.rawGoogleAnalyticsReportData =
       await this.#googleAnalyticsService.runReportQuery(
         query,
         reportConfig.realtime,
-      ),
-    );
+      );
   }
 }
 
