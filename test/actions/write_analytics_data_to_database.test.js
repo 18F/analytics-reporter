@@ -5,12 +5,7 @@ const postgresPublisher = { publish: sinon.stub() };
 const WriteAnalyticsDataToDatabase = require("../../src/actions/write_analytics_data_to_database");
 
 describe("WriteAnalyticsDataToDatabase", () => {
-  let store;
-  const context = {
-    getStore: () => {
-      return store;
-    },
-  };
+  let context;
   let subject;
 
   beforeEach(() => {
@@ -21,10 +16,10 @@ describe("WriteAnalyticsDataToDatabase", () => {
     describe("when config.shouldWriteToDatabase is true", () => {
       describe("and report is realtime", () => {
         beforeEach(() => {
-          store = new Map([
-            ["config", { shouldWriteToDatabase: true }],
-            ["reportConfig", { realtime: true }],
-          ]);
+          context = {
+            config: { shouldWriteToDatabase: true },
+            reportConfig: { realtime: true },
+          };
         });
 
         it("returns false", () => {
@@ -34,10 +29,10 @@ describe("WriteAnalyticsDataToDatabase", () => {
 
       describe("and report is not realtime", () => {
         beforeEach(() => {
-          store = new Map([
-            ["config", { shouldWriteToDatabase: true }],
-            ["reportConfig", { realtime: false }],
-          ]);
+          context = {
+            config: { shouldWriteToDatabase: true },
+            reportConfig: { realtime: false },
+          };
         });
 
         it("returns true", () => {
@@ -49,10 +44,10 @@ describe("WriteAnalyticsDataToDatabase", () => {
     describe("when config.shouldWriteToDatabase is false", () => {
       describe("and report is realtime", () => {
         beforeEach(() => {
-          store = new Map([
-            ["config", { shouldWriteToDatabase: false }],
-            ["reportConfig", { realtime: true }],
-          ]);
+          context = {
+            config: { shouldWriteToDatabase: false },
+            reportConfig: { realtime: true },
+          };
         });
 
         it("returns false", () => {
@@ -62,10 +57,10 @@ describe("WriteAnalyticsDataToDatabase", () => {
 
       describe("and report is not realtime", () => {
         beforeEach(() => {
-          store = new Map([
-            ["config", { shouldWriteToDatabase: false }],
-            ["reportConfig", { realtime: false }],
-          ]);
+          context = {
+            config: { shouldWriteToDatabase: false },
+            reportConfig: { realtime: false },
+          };
         });
 
         it("returns false", () => {
@@ -84,11 +79,11 @@ describe("WriteAnalyticsDataToDatabase", () => {
       debugLogSpy.resetHistory();
       postgresPublisher.publish.resetHistory();
       postgresPublisher.publish.returns(processedAnalyticsData);
-      store = new Map([
-        ["processedAnalyticsData", processedAnalyticsData],
-        ["logger", { debug: debugLogSpy }],
-        ["reportConfig", reportConfig],
-      ]);
+      context = {
+        processedAnalyticsData: processedAnalyticsData,
+        logger: { debug: debugLogSpy },
+        reportConfig: reportConfig,
+      };
       await subject.executeStrategy(context);
     });
 

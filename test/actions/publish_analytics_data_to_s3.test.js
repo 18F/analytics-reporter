@@ -5,12 +5,7 @@ const s3Service = { publish: sinon.stub() };
 const PublishAnalyticsDataToS3 = require("../../src/actions/publish_analytics_data_to_s3");
 
 describe("PublishAnalyticsDataToS3", () => {
-  let store;
-  const context = {
-    getStore: () => {
-      return store;
-    },
-  };
+  let context;
   let subject;
 
   beforeEach(() => {
@@ -20,7 +15,7 @@ describe("PublishAnalyticsDataToS3", () => {
   describe(".handles", () => {
     describe("when config.shouldPublishToS3 is true", () => {
       beforeEach(() => {
-        store = new Map([["config", { shouldPublishToS3: true }]]);
+        context = { config: { shouldPublishToS3: true } };
       });
 
       it("returns true", () => {
@@ -30,7 +25,7 @@ describe("PublishAnalyticsDataToS3", () => {
 
     describe("when config.shouldPublishToS3 is false", () => {
       beforeEach(() => {
-        store = new Map([["config", { shouldPublishToS3: false }]]);
+        context = { config: { shouldPublishToS3: false } };
       });
 
       it("returns false", () => {
@@ -47,11 +42,11 @@ describe("PublishAnalyticsDataToS3", () => {
     beforeEach(async () => {
       debugLogSpy.resetHistory();
       s3Service.publish.resetHistory();
-      store = new Map([
-        ["formattedAnalyticsData", formattedAnalyticsData],
-        ["logger", { debug: debugLogSpy }],
-        ["reportConfig", reportConfig],
-      ]);
+      context = {
+        formattedAnalyticsData: formattedAnalyticsData,
+        logger: { debug: debugLogSpy },
+        reportConfig: reportConfig,
+      };
       await subject.executeStrategy(context);
     });
 

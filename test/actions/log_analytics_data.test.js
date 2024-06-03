@@ -3,12 +3,7 @@ const sinon = require("sinon");
 const LogAnalyticsData = require("../../src/actions/log_analytics_data");
 
 describe("LogAnalyticsData", () => {
-  let store;
-  const context = {
-    getStore: () => {
-      return store;
-    },
-  };
+  let context;
   let subject;
 
   beforeEach(() => {
@@ -18,7 +13,9 @@ describe("LogAnalyticsData", () => {
   describe(".handles", () => {
     describe("when config.shouldLogAnalyticsData is true", () => {
       beforeEach(() => {
-        store = new Map([["config", { shouldLogAnalyticsData: true }]]);
+        context = {
+          config: { shouldLogAnalyticsData: true },
+        };
       });
 
       it("returns true", () => {
@@ -28,7 +25,9 @@ describe("LogAnalyticsData", () => {
 
     describe("when config.shouldLogAnalyticsData is false", () => {
       beforeEach(() => {
-        store = new Map([["config", { shouldLogAnalyticsData: false }]]);
+        context = {
+          config: { shouldLogAnalyticsData: false },
+        };
       });
 
       it("returns false", () => {
@@ -43,11 +42,11 @@ describe("LogAnalyticsData", () => {
 
     beforeEach(async () => {
       infoLogSpy.resetHistory();
-      store = new Map([
-        ["formattedAnalyticsData", formattedAnalyticsData],
-        ["logger", { debug: () => {}, info: infoLogSpy }],
-        ["reportConfig", { name: "test" }],
-      ]);
+      context = {
+        formattedAnalyticsData: formattedAnalyticsData,
+        logger: { debug: () => {}, info: infoLogSpy },
+        reportConfig: { name: "test" },
+      };
       await subject.executeStrategy(context);
     });
 
