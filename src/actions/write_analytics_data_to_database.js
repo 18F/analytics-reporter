@@ -16,27 +16,24 @@ class WriteAnalyticsDataToDatabase extends Action {
   }
 
   /**
-   * @param {AsyncLocalStorage} context the context for the action chain.
+   * @param {ReportProcessingContext} context the context for the action chain.
    * @returns {Boolean} true if the application and report config is set to
    * write processed analytics data to the database.
    */
   handles(context) {
-    const store = context.getStore();
     return (
-      store.get("config").shouldWriteToDatabase &&
-      !store.get("reportConfig").realtime
+      context.config.shouldWriteToDatabase && !context.reportConfig.realtime
     );
   }
 
   /**
    * Takes the processed analytics data from the context and writes the data to
    * the postgres database.
-   * @param {AsyncLocalStorage} context the context for the action chain.
+   * @param {ReportProcessingContext} context the context for the action chain.
    */
   async executeStrategy(context) {
-    const store = context.getStore();
-    store.get("logger").debug("Writing report data to database");
-    await this.#postgresPublisher.publish(store.get("processedAnalyticsData"));
+    context.logger.debug("Writing report data to database");
+    await this.#postgresPublisher.publish(context.processedAnalyticsData);
   }
 }
 

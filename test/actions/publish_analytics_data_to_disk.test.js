@@ -11,12 +11,7 @@ const PublishAnalyticsDataToDisk = proxyquire(
 );
 
 describe("PublishAnalyticsDataToDisk", () => {
-  let store;
-  const context = {
-    getStore: () => {
-      return store;
-    },
-  };
+  let context;
   let subject;
 
   beforeEach(() => {
@@ -26,7 +21,7 @@ describe("PublishAnalyticsDataToDisk", () => {
   describe(".handles", () => {
     describe("when config.shouldPublishToDisk is true", () => {
       beforeEach(() => {
-        store = new Map([["config", { shouldPublishToDisk: true }]]);
+        context = { config: { shouldPublishToDisk: true } };
       });
 
       it("returns true", () => {
@@ -36,7 +31,7 @@ describe("PublishAnalyticsDataToDisk", () => {
 
     describe("when config.shouldPublishToDisk is false", () => {
       beforeEach(() => {
-        store = new Map([["config", { shouldPublishToDisk: false }]]);
+        context = { config: { shouldPublishToDisk: false } };
       });
 
       it("returns false", () => {
@@ -54,12 +49,12 @@ describe("PublishAnalyticsDataToDisk", () => {
     beforeEach(async () => {
       debugLogSpy.resetHistory();
       DiskPublisher.publish.resetHistory();
-      store = new Map([
-        ["config", config],
-        ["formattedAnalyticsData", formattedAnalyticsData],
-        ["logger", { debug: debugLogSpy }],
-        ["reportConfig", reportConfig],
-      ]);
+      context = {
+        config: config,
+        formattedAnalyticsData: formattedAnalyticsData,
+        logger: { debug: debugLogSpy },
+        reportConfig: reportConfig,
+      };
       await subject.executeStrategy(context);
     });
 

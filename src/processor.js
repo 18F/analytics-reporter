@@ -11,7 +11,7 @@ class Processor {
   /**
    * Process a chain of actions with a shared context.
    *
-   * @param {AsyncLocalStorage} context the shared local storage context.
+   * @param {ReportProcessingContext} context the shared context.
    */
   async processChain(context) {
     for (const action of this.#actions) {

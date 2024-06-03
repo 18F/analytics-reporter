@@ -11,12 +11,7 @@ const FormatProcessedAnalyticsData = proxyquire(
 );
 
 describe("FormatProcessedAnalyticsData", () => {
-  let store;
-  const context = {
-    getStore: () => {
-      return store;
-    },
-  };
+  let context;
   let subject;
 
   describe(".executeStrategy", () => {
@@ -36,12 +31,12 @@ describe("FormatProcessedAnalyticsData", () => {
 
       beforeEach(async () => {
         ResultFormatter.formatResult.returns(formattedAnalyticsData);
-        store = new Map([
-          ["config", config],
-          ["processedAnalyticsData", processedAnalyticsData],
-          ["logger", { debug: debugLogSpy }],
-          ["reportConfig", reportConfig],
-        ]);
+        context = {
+          config: config,
+          processedAnalyticsData: processedAnalyticsData,
+          logger: { debug: debugLogSpy },
+          reportConfig: reportConfig,
+        };
         await subject.executeStrategy(context);
       });
 
@@ -55,9 +50,7 @@ describe("FormatProcessedAnalyticsData", () => {
       });
 
       it("sets the formatted data to the context store", () => {
-        expect(context.getStore().get("formattedAnalyticsData")).to.equal(
-          formattedAnalyticsData,
-        );
+        expect(context.formattedAnalyticsData).to.equal(formattedAnalyticsData);
       });
     });
 
@@ -69,12 +62,12 @@ describe("FormatProcessedAnalyticsData", () => {
 
       beforeEach(async () => {
         ResultFormatter.formatResult.returns(formattedAnalyticsData);
-        store = new Map([
-          ["config", config],
-          ["processedAnalyticsData", processedAnalyticsData],
-          ["logger", { debug: debugLogSpy }],
-          ["reportConfig", reportConfig],
-        ]);
+        context = {
+          config: config,
+          processedAnalyticsData: processedAnalyticsData,
+          logger: { debug: debugLogSpy },
+          reportConfig: reportConfig,
+        };
         await subject.executeStrategy(context);
       });
 
@@ -88,9 +81,7 @@ describe("FormatProcessedAnalyticsData", () => {
       });
 
       it("sets the formatted data to the context store", () => {
-        expect(context.getStore().get("formattedAnalyticsData")).to.equal(
-          formattedAnalyticsData,
-        );
+        expect(context.formattedAnalyticsData).to.equal(formattedAnalyticsData);
       });
     });
   });

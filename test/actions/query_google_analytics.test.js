@@ -12,6 +12,7 @@ const QueryGoogleAnalytics = proxyquire(
 );
 
 describe("QueryGoogleAnalytics", () => {
+  let context;
   let subject;
 
   beforeEach(() => {
@@ -24,12 +25,6 @@ describe("QueryGoogleAnalytics", () => {
     const googleAnalyticsQuery = { name: "users", realtime: true };
     const reportConfig = { name: "foobar", realtime: true };
     const config = { fake: "config" };
-    let store;
-    const context = {
-      getStore: () => {
-        return store;
-      },
-    };
 
     beforeEach(async () => {
       debugLogSpy.resetHistory();
@@ -39,13 +34,13 @@ describe("QueryGoogleAnalytics", () => {
       googleAnalyticsService.runReportQuery.returns(
         rawGoogleAnalyticsReportData,
       );
-      store = new Map([
-        ["rawGoogleAnalyticsReportData", rawGoogleAnalyticsReportData],
-        ["googleAnalyticsQuery", googleAnalyticsQuery],
-        ["logger", { debug: debugLogSpy }],
-        ["reportConfig", reportConfig],
-        ["config", config],
-      ]);
+      context = {
+        rawGoogleAnalyticsReportData: rawGoogleAnalyticsReportData,
+        googleAnalyticsQuery: googleAnalyticsQuery,
+        logger: { debug: debugLogSpy },
+        reportConfig: reportConfig,
+        config: config,
+      };
       await subject.executeStrategy(context);
     });
 
@@ -56,9 +51,7 @@ describe("QueryGoogleAnalytics", () => {
     });
 
     it("sets the google analytics query to the context store", () => {
-      expect(context.getStore().get("googleAnalyticsQuery")).to.equal(
-        googleAnalyticsQuery,
-      );
+      expect(context.googleAnalyticsQuery).to.equal(googleAnalyticsQuery);
     });
 
     it("calls googleAnalyticsService.runReportQuery with the expected params", () => {
@@ -71,7 +64,7 @@ describe("QueryGoogleAnalytics", () => {
     });
 
     it("sets the raw google analytics report response to the context store", () => {
-      expect(context.getStore().get("rawGoogleAnalyticsReportData")).to.equal(
+      expect(context.rawGoogleAnalyticsReportData).to.equal(
         rawGoogleAnalyticsReportData,
       );
     });

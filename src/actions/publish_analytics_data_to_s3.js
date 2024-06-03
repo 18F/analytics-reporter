@@ -15,26 +15,25 @@ class PublishAnalyticsDataToS3 extends Action {
   }
 
   /**
-   * @param {AsyncLocalStorage} context the context for the action chain.
+   * @param {ReportProcessingContext} context the context for the action chain.
    * @returns {Boolean} true if the application config is set to publish data to
    * AWS S3.
    */
   handles(context) {
-    return context.getStore().get("config").shouldPublishToS3;
+    return context.config.shouldPublishToS3;
   }
 
   /**
    * Takes the formatted analytics data from the context and writes the data to
    * AWS S3 in a bucket and path specified in the application config with the
    * report name as the filename.
-   * @param {AsyncLocalStorage} context the context for the action chain.
+   * @param {ReportProcessingContext} context the context for the action chain.
    */
   async executeStrategy(context) {
-    const store = context.getStore();
-    store.get("logger").debug("Publishing analytics data to S3");
+    context.logger.debug("Publishing analytics data to S3");
     await this.#s3Service.publish(
-      store.get("reportConfig"),
-      store.get("formattedAnalyticsData"),
+      context.reportConfig,
+      context.formattedAnalyticsData,
     );
   }
 }
