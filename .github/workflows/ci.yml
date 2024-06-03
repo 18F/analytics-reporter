@@ -70,6 +70,8 @@ jobs:
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_DEV }}
       GA4_CREDS: ${{ secrets.GA4_CREDS }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_DEV }}
+      PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
+      PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
   deploy_stg:
     needs:
       - lint
@@ -93,6 +95,8 @@ jobs:
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_STG }}
       GA4_CREDS: ${{ secrets.GA4_CREDS }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_STG }}
+      PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
+      PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
   deploy_prd:
     needs:
       - lint
@@ -116,3 +120,5 @@ jobs:
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_PRD }}
       GA4_CREDS: ${{ secrets.GA4_CREDS }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_PRD }}
+      PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
+      PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}

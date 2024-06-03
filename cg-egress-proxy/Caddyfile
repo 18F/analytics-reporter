@@ -1,0 +1,25 @@
+{
+	debug
+	log {
+		format console
+		level INFO
+	}
+	auto_https off
+}
+
+:{$PROXY_PORT} {
+	route {
+		forward_proxy {
+			basic_auth {$PROXY_USERNAME} {$PROXY_PASSWORD}
+			acl {
+			  allow localhost
+			}
+			ports 80 443 22 61443
+		}
+	}
+	log {
+		format json
+		level INFO
+		output stdout
+	}
+}
