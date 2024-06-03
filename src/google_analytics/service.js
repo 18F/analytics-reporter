@@ -39,6 +39,8 @@ class GoogleAnalyticsService {
       authorizedQuery,
       isRealtime,
     );
+    this.#logger.info("auth call successful");
+    this.#logger.info(results);
     return results;
   }
 
@@ -68,8 +70,10 @@ class GoogleAnalyticsService {
 
   #queryGoogleApi(authorizedQuery, isRealtime) {
     if (isRealtime) {
+      this.#logger.debug("Running GA4 runRealtimeReport");
       return this.#analyticsDataClient.runRealtimeReport(authorizedQuery);
     } else {
+      this.#logger.debug("Running GA4 runReport");
       return this.#analyticsDataClient.runReport(authorizedQuery);
     }
   }

@@ -75,6 +75,7 @@
     "googleapis": "^140.0.0",
     "minimist": "^1.2.8",
     "p-retry": "^6.2.0",
+    "proxy-agent": "^6.4.0",
     "winston": "^3.11.0"
   },
   "devDependencies": {
