@@ -170,13 +170,13 @@ describe("ReportProcessingContext", () => {
       });
     });
 
-    describe("get rawGoogleAnalyticsData", () => {
-      describe("when rawGoogleAnalyticsData has not been set in the run function", () => {
+    describe("get rawGoogleAnalyticsReportData", () => {
+      describe("when rawGoogleAnalyticsReportData has not been set in the run function", () => {
         let actual;
 
         beforeEach(async () => {
           await subject.run(() => {
-            actual = subject.rawGoogleAnalyticsData;
+            actual = subject.rawGoogleAnalyticsReportData;
           });
         });
 
@@ -185,14 +185,14 @@ describe("ReportProcessingContext", () => {
         });
       });
 
-      describe("when rawGoogleAnalyticsData has been set in the run function", () => {
+      describe("when rawGoogleAnalyticsReportData has been set in the run function", () => {
         const expected = { foo: "bar" };
         let actual;
 
         beforeEach(async () => {
           await subject.run(() => {
-            subject.rawGoogleAnalyticsData = expected;
-            actual = subject.rawGoogleAnalyticsData;
+            subject.rawGoogleAnalyticsReportData = expected;
+            actual = subject.rawGoogleAnalyticsReportData;
           });
         });
 

@@ -9,7 +9,8 @@ applications:
   no-route: true
   health-check-type: process
   buildpacks:
-  - nodejs_buildpack
+  - nodejs_buildpack # for reporter
+  - binary_buildpack # for caddy egress-proxy
   command: node deploy/cron.js
   env:
     # This is a JSON string which has been base64 encoded
@@ -35,9 +36,17 @@ applications:
     NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
     NODE_ENV: production
     PGSSLMODE: true
+    PROXY_PORT: ${PROXY_PORT}
+    PROXY_ROUTE: 'http://${PROXY_USERNAME}:${PROXY_PASSWORD}@localhost:${PROXY_PORT}'
+    PROXY_USERNAME: ${PROXY_USERNAME}
+    PROXY_PASSWORD: ${PROXY_PASSWORD}
   services:
   - ${S3_SERVICE_NAME}
   - ${DB_SERVICE_NAME}
+  sidecars:
+  - name: egress-proxy
+    process_types: ['web']
+    command: exec ./cg-egress-proxy/caddy run --config ./cg-egress-proxy/Caddyfile
   stack: cflinuxfs4
   timeout: 180
   path: .
