@@ -37,7 +37,7 @@ applications:
     NODE_ENV: production
     PGSSLMODE: true
     PROXY_PORT: ${PROXY_PORT}
-    PROXY_ROUTE: 'http://${PROXY_USERNAME}:${PROXY_PASSWORD}@localhost:${PROXY_PORT}'
+    PROXY_ROUTE: 'https://${PROXY_USERNAME}:${PROXY_PASSWORD}@localhost:${PROXY_PORT}'
     PROXY_USERNAME: ${PROXY_USERNAME}
     PROXY_PASSWORD: ${PROXY_PASSWORD}
   services:

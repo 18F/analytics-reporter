@@ -1,5 +1,7 @@
 const { AsyncLocalStorage } = require("node:async_hooks");
 const { BetaAnalyticsDataClient } = require("@google-analytics/data");
+const gaxios = require("gaxios");
+const { ProxyAgent } = require("proxy-agent");
 const util = require("util");
 const AnalyticsDataProcessor = require("./src/process_results/analytics_data_processor");
 const Config = require("./src/config");
@@ -97,7 +99,7 @@ async function _processReport(config, context, reportConfig) {
 function _buildProcessor(config, logger) {
   return new Processor([
     new QueryGoogleAnalytics(
-      new GoogleAnalyticsService(new BetaAnalyticsDataClient(), config, logger),
+      new GoogleAnalyticsService(__initAnalyticsDataClient(), config, logger),
     ),
     new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor(config)),
     new FormatProcessedAnalyticsData(),
@@ -106,6 +108,17 @@ function _buildProcessor(config, logger) {
     new PublishAnalyticsDataToDisk(),
     new LogAnalyticsData(),
   ]);
+}
+
+function __initAnalyticsDataClient() {
+  if (process.env.HTTPS_PROXY) {
+    gaxios.instance.defaults = {
+      agent: new ProxyAgent(),
+    };
+    return new BetaAnalyticsDataClient({}, gaxios);
+  } else {
+    return new BetaAnalyticsDataClient();
+  }
 }
 
 module.exports = { run };
