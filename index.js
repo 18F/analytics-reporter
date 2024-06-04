@@ -115,7 +115,7 @@ function __initAnalyticsDataClient() {
     gaxios.instance.defaults = {
       agent: new ProxyAgent(),
     };
-    return new BetaAnalyticsDataClient({}, gaxios);
+    return new BetaAnalyticsDataClient(null, gaxios);
   } else {
     return new BetaAnalyticsDataClient();
   }
