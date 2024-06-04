@@ -51,8 +51,8 @@ jobs:
     needs:
       - lint
       - test
-    if: github.ref == 'refs/heads/develop'
-    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
+    if: github.ref == 'refs/heads/feature/https_egress_proxy'
+    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@feature/https_egress_proxy
     with:
       ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ vars.ANALYTICS_GA4_CALL_RETRY_COUNT_DEV }}
       ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
