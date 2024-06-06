@@ -27,6 +27,12 @@ on:
         type: string
       NEW_RELIC_APP_NAME:
         type: string
+      PROXY_FQDN:
+        required: true
+        type: string
+      PROXY_PORT:
+        required: true
+        type: string
       S3_SERVICE_NAME:
         required: true
         type: string
@@ -60,7 +66,8 @@ env:
   GA4_CREDS: ${{ secrets.GA4_CREDS }}
   NEW_RELIC_APP_NAME: ${{ inputs.NEW_RELIC_APP_NAME }}
   NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
-  PROXY_PORT: '8080'
+  PROXY_FQDN: ${{ inputs.PROXY_FQDN }}
+  PROXY_PORT: ${{ inputs.PROXY_PORT }}
   PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
   PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
   S3_SERVICE_NAME: ${{ inputs.S3_SERVICE_NAME }}

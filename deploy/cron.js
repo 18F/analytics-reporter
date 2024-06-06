@@ -5,7 +5,12 @@ if (process.env.NODE_ENV !== "production") {
 // Set the node variable for node configuration to use an egress proxy here
 // instead of in the manifest because it interferes with the cloud.gov buildpack
 // setup.
-process.env.HTTPS_PROXY = process.env.PROXY_ROUTE;
+if (process.env.PROXY_FQDN) {
+  const credentials = encodeURI(
+    `${process.env.PROXY_USERNAME}:${process.env.PROXY_PASSWORD}`,
+  );
+  process.env.HTTPS_PROXY = `http://${credentials}@${process.env.PROXY_FQDN}:${process.env.PROXY_PORT}`;
+}
 
 if (process.env.NEW_RELIC_APP_NAME) {
   require("newrelic");
