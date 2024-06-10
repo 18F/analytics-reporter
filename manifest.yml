@@ -30,7 +30,7 @@ applications:
     # The default path for reports (used for gov-wide reports)
     AWS_BUCKET_PATH: data/live
     AWS_CACHE_TIME: '0'
-    NODE_DEBUG: http,net,stream
+    NODE_DEBUG: http,net
     GOOGLE_APPLICATION_CREDENTIALS: /home/vcap/app/${ANALYTICS_KEY_FILE_NAME}
     NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
     NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
