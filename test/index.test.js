@@ -3,8 +3,8 @@ const proxyquire = require("proxyquire");
 const sinon = require("sinon");
 const util = require("util");
 
+let context;
 let reportConfigs;
-let contextStore;
 let logger;
 let processorError;
 
@@ -14,12 +14,42 @@ class Config {
   }
 }
 
-class AsyncLocalStorage {
-  async run(store, callback) {
-    contextStore = store;
-    await callback();
+class ReportProcessingContext {
+  #config;
+  #logger;
+  #reportConfig;
+
+  run(callback) {
+    context = this;
+    return callback();
+  }
+
+  get config() {
+    return this.#config;
+  }
+
+  set config(config) {
+    this.#config = config;
+  }
+
+  get logger() {
+    return this.#logger;
+  }
+
+  set logger(logger) {
+    this.#logger = logger;
+  }
+
+  get reportConfig() {
+    return this.#reportConfig;
+  }
+
+  set reportConfig(reportConfig) {
+    this.#reportConfig = reportConfig;
   }
 }
+
+class AsyncLocalStorage {}
 
 class Processor {
   processChain(reportConfig) {
@@ -35,6 +65,7 @@ class S3Service {}
 const subject = proxyquire("../index.js", {
   "node:async_hooks": { AsyncLocalStorage },
   "./src/config": Config,
+  "./src/report_processing_context": ReportProcessingContext,
   "./src/processor": Processor,
   "./src/logger": {
     initialize: () => {
@@ -62,15 +93,15 @@ describe("index", () => {
       });
 
       it("sets a config instance on the context", () => {
-        expect(contextStore.get("config") instanceof Config).to.equal(true);
+        expect(context.config instanceof Config).to.equal(true);
       });
 
       it("sets a report config on the context", () => {
-        expect(contextStore.get("reportConfig")).to.equal(reportConfig);
+        expect(context.reportConfig).to.equal(reportConfig);
       });
 
       it("sets a logger on the context", () => {
-        expect(contextStore.get("logger")).to.equal(logger);
+        expect(context.logger).to.equal(logger);
       });
 
       it("logs processing complete", () => {
@@ -86,15 +117,15 @@ describe("index", () => {
       });
 
       it("sets a config instance on the context", () => {
-        expect(contextStore.get("config") instanceof Config).to.equal(true);
+        expect(context.config instanceof Config).to.equal(true);
       });
 
       it("sets a report config on the context", () => {
-        expect(contextStore.get("reportConfig")).to.equal(reportConfig);
+        expect(context.reportConfig).to.equal(reportConfig);
       });
 
       it("sets a logger on the context", () => {
-        expect(contextStore.get("logger")).to.equal(logger);
+        expect(context.logger).to.equal(logger);
       });
 
       it("logs that there was a processing error", () => {

@@ -9,20 +9,16 @@ class FormatProcessedAnalyticsData extends Action {
    * Takes the processed analytics data from the context and changes the format
    * to JSON or CSV based on application and report config options. Writes the
    * formatted data to the context for use in subsequent actions.
-   * @param {AsyncLocalStorage} context the context for the action chain.
+   * @param {ReportProcessingContext} context the context for the action chain.
    */
   async executeStrategy(context) {
-    const store = context.getStore();
-    const config = store.get("config");
-    const data = store.get("processedAnalyticsData");
-
-    store.get("logger").debug("Formatting analytics data");
-    store.set(
-      "formattedAnalyticsData",
-      await ResultFormatter.formatResult(data, {
-        format: config.format,
-        slim: config.slim && store.get("reportConfig").slim,
-      }),
+    context.logger.debug("Formatting analytics data");
+    context.formattedAnalyticsData = await ResultFormatter.formatResult(
+      context.processedAnalyticsData,
+      {
+        format: context.config.format,
+        slim: context.config.slim && context.reportConfig.slim,
+      },
     );
   }
 }

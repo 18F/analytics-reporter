@@ -3,6 +3,7 @@ const { BetaAnalyticsDataClient } = require("@google-analytics/data");
 const util = require("util");
 const AnalyticsDataProcessor = require("./src/process_results/analytics_data_processor");
 const Config = require("./src/config");
+const ReportProcessingContext = require("./src/report_processing_context");
 const FormatProcessedAnalyticsData = require("./src/actions/format_processed_analytics_data");
 const GoogleAnalyticsService = require("./src/google_analytics/service");
 const LogAnalyticsData = require("./src/actions/log_analytics_data");
@@ -43,7 +44,7 @@ const WriteAnalyticsDataToDatabase = require("./src/actions/write_analytics_data
  */
 async function run(options = {}) {
   const config = new Config(options);
-  const context = new AsyncLocalStorage();
+  const context = new ReportProcessingContext(new AsyncLocalStorage());
   const reportConfigs = config.filteredReportConfigurations;
 
   for (const reportConfig of reportConfigs) {
@@ -52,7 +53,7 @@ async function run(options = {}) {
 }
 
 /**
- * Creates a new AsyncLocalStorage context for the processing of the report.
+ * Creates a new ReportProcessingContext run for the processing of the report.
  * Adds data to the context store which can be used by all actions in the
  * processor chain (config, logger, reportConfig). Catches any errors that
  * occur during processing and logs success or failure. This method does not
@@ -60,18 +61,17 @@ async function run(options = {}) {
  * report.
  *
  * @param {Config} config the application config
- * @param {AsyncLocalStorage} context
+ * @param {ReportProcessingContext} context
  * @param {Object} reportConfig the configuration object for the analytics
  * report to process.
  * @returns {Promise<void>} resolves when processing completes or has an error.
  */
 async function _processReport(config, context, reportConfig) {
-  const store = new Map();
-  return context.run(store, async () => {
+  return context.run(async () => {
     const logger = Logger.initialize(config, reportConfig);
-    store.set("config", config);
-    store.set("logger", logger);
-    store.set("reportConfig", reportConfig);
+    context.config = config;
+    context.logger = logger;
+    context.reportConfig = reportConfig;
 
     try {
       const processor = _buildProcessor(config, logger);
