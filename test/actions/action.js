@@ -18,11 +18,7 @@ describe("Action", () => {
   describe(".execute", () => {
     const errorlogSpy = sinon.spy();
     const context = {
-      getStore: () => {
-        const map = new Map();
-        map.set("logger", { error: errorlogSpy });
-        return map;
-      },
+      logger: { error: errorlogSpy },
     };
 
     describe("when action is successful", () => {

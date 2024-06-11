@@ -8,6 +8,7 @@ module.exports = {
   exclude: [
     "coverage",
     "eslint.config.js",
+    "features",
     "knexfile.js",
     "knexfile.cloudgov.js",
     "migrations",
