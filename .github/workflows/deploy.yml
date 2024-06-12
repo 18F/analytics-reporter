@@ -110,5 +110,8 @@ jobs:
           # Log into cloud.gov
           cf api api.fr.cloud.gov
           cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION_NAME -s $CF_SPACE_NAME
+          # Deploy app
           cf push -f "./manifest.yml"
+          # Create apps.internal route for the application
+          cf map-route $APP_NAME apps.internal --hostname $APP_NAME
           cf logout
