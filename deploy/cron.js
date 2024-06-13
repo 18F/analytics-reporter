@@ -11,7 +11,7 @@ if (process.env.PROXY_FQDN) {
   );
   const proxy_url = `http://${credentials}@${process.env.PROXY_FQDN}:${process.env.PROXY_PORT}`;
   process.env.HTTP_PROXY = proxy_url;
-  process.env.HTTPS_PROXY = proxy_url;
+  //process.env.HTTPS_PROXY = proxy_url;
 }
 
 if (process.env.NEW_RELIC_APP_NAME) {
