@@ -10,6 +10,7 @@ if (process.env.PROXY_FQDN) {
     `${process.env.PROXY_USERNAME}:${process.env.PROXY_PASSWORD}`,
   );
   const proxy_url = `http://${credentials}@${process.env.PROXY_FQDN}:${process.env.PROXY_PORT}`;
+  process.env.NODE_DEBUG = "http";
   process.env.HTTP_PROXY = proxy_url;
   //process.env.HTTPS_PROXY = proxy_url;
 }
@@ -91,22 +92,22 @@ const calculateNextDailyRunTimeOffset = () => {
  * All scripts run immediately upon application start, then run again at
  * intervals going forward.
  */
-api_run();
-api_ua_run();
-daily_run();
+//api_run();
+//api_ua_run();
+//daily_run();
 hourly_run();
-realtime_run();
+//realtime_run();
 
 // daily
 // Runs at 10 AM UTC, then every 24 hours afterwards
 setTimeout(() => {
-  daily_run();
+  //daily_run();
   setInterval(daily_run, 1000 * 60 * 60 * 24);
   // API
-  api_run();
+  //api_run();
   setInterval(api_run, 1000 * 60 * 60 * 24);
   // UA API
-  api_ua_run();
+  //api_ua_run();
   setInterval(api_ua_run, 1000 * 60 * 60 * 24);
 }, calculateNextDailyRunTimeOffset());
 // hourly
