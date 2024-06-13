@@ -28,6 +28,8 @@ class GoogleAnalyticsService {
       authorizedQuery,
       isRealtime,
     );
+    this.#logger.info("auth call successful");
+    this.#logger.info(results);
     return results;
   }
 

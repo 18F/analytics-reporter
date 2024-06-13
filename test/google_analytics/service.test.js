@@ -24,6 +24,7 @@ describe("GoogleAnalyticsService", () => {
   };
   const logger = {
     debug: () => {},
+    info: () => {},
   };
   let subject;
 
