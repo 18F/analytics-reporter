@@ -1,6 +1,7 @@
 const ResultTotalsCalculator = require("./result_totals_calculator");
 
 class AnalyticsDataProcessor {
+  #agency;
   #hostname;
   #mapping = {
     activeUsers: "active_visitors",
@@ -30,6 +31,7 @@ class AnalyticsDataProcessor {
   };
 
   constructor(config) {
+    this.#agency = config.account.agency_name;
     this.#hostname = config.account.hostname;
   }
 
@@ -74,6 +76,23 @@ class AnalyticsDataProcessor {
     });
 
     return result;
+  }
+
+  #initializeResult({ report, data, query }) {
+    return {
+      name: report.name,
+      agency: this.#agency,
+      sampling: data.metadata?.samplingMetadatas,
+      query: ((query) => {
+        query = Object.assign({}, query);
+        delete query.ids;
+        return query;
+      })(query),
+      meta: report.meta,
+      data: [],
+      totals: {},
+      taken_at: new Date(),
+    };
   }
 
   #fieldNameForColumnIndex({ entryKey, index, data }) {
@@ -129,22 +148,6 @@ class AnalyticsDataProcessor {
       return date;
     }
     return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-");
-  }
-
-  #initializeResult({ report, data, query }) {
-    return {
-      name: report.name,
-      sampling: data.metadata?.samplingMetadatas,
-      query: ((query) => {
-        query = Object.assign({}, query);
-        delete query.ids;
-        return query;
-      })(query),
-      meta: report.meta,
-      data: [],
-      totals: {},
-      taken_at: new Date(),
-    };
   }
 
   #processRow({ row, data }) {
