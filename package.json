@@ -81,7 +81,9 @@
     "p-retry": "^6.2.0",
     "pg-boss": "^9.0.3",
     "proxy-agent": "^6.4.0",
-    "winston": "^3.11.0"
+    "winston": "^3.11.0",
+    "commander": "^12.1.0",
+    "date-fns": "^3.6.0"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^10.3.1",
