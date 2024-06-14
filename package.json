@@ -74,7 +74,9 @@
     "googleapis": "^131.0.0",
     "minimist": "^1.2.8",
     "p-retry": "^6.2.0",
-    "winston": "^3.11.0"
+    "winston": "^3.11.0",
+    "commander": "^12.1.0",
+    "date-fns": "^3.6.0"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^10.3.1",
