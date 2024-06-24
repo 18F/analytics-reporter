@@ -15,7 +15,6 @@ logger.info("    Running /deploy/cron.js");
 logger.info("===================================");
 
 const scriptRootPath = `${process.env.ANALYTICS_ROOT_PATH}/deploy`;
-const scriptUARootPath = `${process.env.ANALYTICS_UA_ROOT_PATH}/deploy`;
 
 const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
   logger.info(`Beginning: ${scriptLoggingName}`);
@@ -38,10 +37,6 @@ const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
       logger.info(`${scriptLoggingName} received signal: ${signal}`);
     }
   });
-};
-
-const api_ua_run = () => {
-  runScriptWithLogName(`${scriptUARootPath}/api.sh`, "ua - api.sh");
 };
 
 const api_run = () => {
@@ -80,7 +75,6 @@ const calculateNextDailyRunTimeOffset = () => {
  * intervals going forward.
  */
 api_run();
-api_ua_run();
 daily_run();
 hourly_run();
 realtime_run();
@@ -93,9 +87,6 @@ setTimeout(() => {
   // API
   api_run();
   setInterval(api_run, 1000 * 60 * 60 * 24);
-  // UA API
-  api_ua_run();
-  setInterval(api_ua_run, 1000 * 60 * 60 * 24);
 }, calculateNextDailyRunTimeOffset());
 // hourly
 setInterval(hourly_run, 1000 * 60 * 60);
