@@ -1,0 +1,37 @@
+{
+  debug
+  log {
+    format console
+    level INFO
+  }
+  auto_https off
+}
+
+:{$PROXY_PORT} {
+  route {
+		# Act as a forward proxy for incoming requests
+    forward_proxy {
+      # Require a username/password on requests to this server to attempt to
+			# prevent non-application requests to this server. (Provided at deploy
+			# time to both this server and the application instance.)
+      basic_auth {$PROXY_USERNAME} {$PROXY_PASSWORD}
+			# Only allow outgoing requests to be made to an IP/domain using port 443
+      ports 443
+			# Don't send the request originator's IP as a "Forwarded for" header to
+			# prevent application IPs from leaking to network traffic listeners.
+			hide_ip
+      acl {
+				# Deny requests to local network IPs to prevent requests from outside
+				# the application network to access internal servers.
+        deny 10.0.0.0/8 127.0.0.0/8 172.16.0.0/12 192.168.0.0/16 ::1/128 fe80::/10
+	      allow *.amazonaws.com *.googleapis.com
+				deny all
+      }
+    }
+  }
+  log {
+    format json
+    level INFO
+    output stdout
+  }
+}

@@ -1,4 +1,6 @@
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { NodeHttpHandler } = require("@smithy/node-http-handler");
+const { ProxyAgent } = require("proxy-agent");
 const zlib = require("zlib");
 
 class S3Service {
@@ -17,6 +19,10 @@ class S3Service {
     process.env.AWS_SECRET_ACCESS_KEY = config.aws.secretAccessKey;
     process.env.AWS_REGION = config.aws.region;
 
+    // Create a proxy agent instance to configure in the SDK so that AWS SDK
+    // requests go through the egress proxy
+    const proxyAgent = new ProxyAgent();
+
     return new S3Client({
       accessKeyId: config.aws.accessKeyId,
       secretAccessKey: config.aws.secretAccessKey,
@@ -24,6 +30,10 @@ class S3Service {
       region: config.aws.region,
       s3ForcePathStyle: config.aws.s3ForcePathStyle,
       signatureVersion: config.aws.signatureVersion,
+      requestHandler: new NodeHttpHandler({
+        httpAgent: proxyAgent,
+        httpsAgent: proxyAgent,
+      }),
     });
   }
 
