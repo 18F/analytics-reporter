@@ -2,7 +2,7 @@ const path = require("path");
 const knexfile = require("../knexfile");
 
 // Application config
-class Config {
+class AppConfig {
   #options;
 
   /**
@@ -206,4 +206,4 @@ class Config {
 }
 
 // Set environment variables to configure the application.
-module.exports = Config;
+module.exports = AppConfig;

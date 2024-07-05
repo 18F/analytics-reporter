@@ -4,14 +4,29 @@ Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
 };
 
+/**
+ * Handles connection to the Postgres database and read/write operations.
+ */
 class PostgresPublisher {
   static ANALYTICS_DATA_TABLE_NAME = "analytics_data_ga4";
   #connectionConfig;
 
-  constructor(config) {
-    this.#connectionConfig = config.postgres;
+  /**
+   * @param {AppConfig} appConfig application config instance. Provides the
+   * configuration to create a database connection.
+   */
+  constructor(appConfig) {
+    this.#connectionConfig = appConfig.postgres;
   }
 
+  /**
+   *
+   * @param {Object} results the processed results of analytics report data.
+   * @param {Object[]} results.data an array of data points to write to the
+   * Postgres database.
+   * @returns {Promise} resolves when the database operations complete. Rejects
+   * if database operations have an error.
+   */
   async publish(results) {
     if (results.query.dimensions.some((obj) => obj.name === "date")) {
       const db = await knex({

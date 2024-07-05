@@ -27,7 +27,7 @@ class QueryGoogleAnalytics extends Action {
     const reportConfig = context.reportConfig;
     const query = await GoogleAnalyticsQueryBuilder.buildQuery(
       reportConfig,
-      context.config,
+      context.appConfig,
     );
     context.googleAnalyticsQuery = query;
 

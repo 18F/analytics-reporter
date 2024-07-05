@@ -18,19 +18,24 @@ describe("GoogleAnalyticsService", () => {
     runRealtimeReport: sinon.stub(),
     runReport: sinon.stub(),
   };
-  const config = {
+  const appConfig = {
     ga4CallRetryCount: 5,
     ga4CallRetryDelay: 1,
   };
   const logger = {
     debug: () => {},
+    info: () => {},
   };
   let subject;
 
   beforeEach(() => {
     analyticsDataClient.runRealtimeReport.reset();
     analyticsDataClient.runReport.reset();
-    subject = new GoogleAnalyticsService(analyticsDataClient, config, logger);
+    subject = new GoogleAnalyticsService(
+      analyticsDataClient,
+      appConfig,
+      logger,
+    );
   });
 
   describe(".runReportQuery", () => {
@@ -81,7 +86,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4CallRetryCount);
+          expect(retryCount).to.equal(appConfig.ga4CallRetryCount);
         });
       });
 
@@ -104,7 +109,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4CallRetryCount);
+          expect(retryCount).to.equal(appConfig.ga4CallRetryCount);
         });
       });
     });
@@ -168,7 +173,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4CallRetryCount);
+          expect(retryCount).to.equal(appConfig.ga4CallRetryCount);
         });
       });
 
@@ -191,7 +196,7 @@ describe("GoogleAnalyticsService", () => {
         });
 
         it("retries the configured number of times", () => {
-          expect(retryCount).to.equal(config.ga4CallRetryCount);
+          expect(retryCount).to.equal(appConfig.ga4CallRetryCount);
         });
       });
     });

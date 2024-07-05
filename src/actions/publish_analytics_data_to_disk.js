@@ -11,7 +11,7 @@ class PublishAnalyticsDataToDisk extends Action {
    * disk.
    */
   handles(context) {
-    return context.config.shouldPublishToDisk;
+    return context.appConfig.shouldPublishToDisk;
   }
 
   /**
@@ -25,7 +25,7 @@ class PublishAnalyticsDataToDisk extends Action {
     await DiskPublisher.publish(
       context.reportConfig,
       context.formattedAnalyticsData,
-      context.config,
+      context.appConfig,
     );
   }
 }

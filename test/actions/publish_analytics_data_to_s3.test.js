@@ -15,7 +15,7 @@ describe("PublishAnalyticsDataToS3", () => {
   describe(".handles", () => {
     describe("when config.shouldPublishToS3 is true", () => {
       beforeEach(() => {
-        context = { config: { shouldPublishToS3: true } };
+        context = { appConfig: { shouldPublishToS3: true } };
       });
 
       it("returns true", () => {
@@ -25,7 +25,7 @@ describe("PublishAnalyticsDataToS3", () => {
 
     describe("when config.shouldPublishToS3 is false", () => {
       beforeEach(() => {
-        context = { config: { shouldPublishToS3: false } };
+        context = { appConfig: { shouldPublishToS3: false } };
       });
 
       it("returns false", () => {
