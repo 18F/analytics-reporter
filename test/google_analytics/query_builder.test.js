@@ -2,7 +2,7 @@ const expect = require("chai").expect;
 const reportFixture = require("../support/fixtures/report");
 const GoogleAnalyticsQueryBuilder = require("../../src/google_analytics/query_builder");
 
-const config = {};
+const appConfig = {};
 
 describe("GoogleAnalyticsQueryBuilder", () => {
   describe(".buildQuery(report)", () => {
@@ -10,7 +10,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
 
     beforeEach(() => {
       report = Object.assign({}, reportFixture);
-      config.account = {
+      appConfig.account = {
         ids: "ga:123456",
       };
     });
@@ -21,7 +21,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
         b: "456def",
       };
 
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, config);
+      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, appConfig);
       expect(query.a).to.equal("123abc");
       expect(query.b).to.equal("456def");
     });
@@ -29,21 +29,21 @@ describe("GoogleAnalyticsQueryBuilder", () => {
     it("should set limit if it is set on the report", () => {
       report.query["limit"] = "3";
 
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, config);
+      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, appConfig);
       expect(query["limit"]).to.equal("3");
     });
 
     it("should set limit to 10000 if it is unset on the report", () => {
       report.query["limit"] = undefined;
 
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, config);
+      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, appConfig);
       expect(query["limit"]).to.equal("10000");
     });
 
-    it("should set the ids to the account ids specified by the config", () => {
-      config.account.ids = "ga:abc123";
+    it("should set the ids to the account ids specified by the appConfig", () => {
+      appConfig.account.ids = "ga:abc123";
 
-      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, config);
+      const query = GoogleAnalyticsQueryBuilder.buildQuery(report, appConfig);
       expect(query.ids).to.equal("ga:abc123");
     });
   });

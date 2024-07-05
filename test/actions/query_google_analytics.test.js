@@ -24,7 +24,7 @@ describe("QueryGoogleAnalytics", () => {
     const rawGoogleAnalyticsReportData = [{ foo: "bar" }];
     const googleAnalyticsQuery = { name: "users", realtime: true };
     const reportConfig = { name: "foobar", realtime: true };
-    const config = { fake: "config" };
+    const appConfig = { fake: "config" };
 
     beforeEach(async () => {
       debugLogSpy.resetHistory();
@@ -39,14 +39,17 @@ describe("QueryGoogleAnalytics", () => {
         googleAnalyticsQuery: googleAnalyticsQuery,
         logger: { debug: debugLogSpy },
         reportConfig: reportConfig,
-        config: config,
+        appConfig: appConfig,
       };
       await subject.executeStrategy(context);
     });
 
     it("calls GoogleAnalyticsQueryBuilder.buildQuery with the expected params", () => {
       expect(
-        GoogleAnalyticsQueryBuilder.buildQuery.calledWith(reportConfig, config),
+        GoogleAnalyticsQueryBuilder.buildQuery.calledWith(
+          reportConfig,
+          appConfig,
+        ),
       ).to.equal(true);
     });
 

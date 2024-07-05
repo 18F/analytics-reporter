@@ -1,18 +1,18 @@
 const expect = require("chai").expect;
 const knexfile = require("../knexfile");
-const Config = require("../src/config");
+const AppConfig = require("../src/app_config");
 
-describe("Config", () => {
+describe("AppConfig", () => {
   let subject;
 
   beforeEach(() => {
-    subject = new Config();
+    subject = new AppConfig();
   });
 
   describe(".format", () => {
     describe("when csv option is set", () => {
       beforeEach(() => {
-        subject = new Config({ csv: true });
+        subject = new AppConfig({ csv: true });
       });
 
       it("returns 'csv'", () => {
@@ -22,7 +22,7 @@ describe("Config", () => {
 
     describe("when csv option is omitted", () => {
       beforeEach(() => {
-        subject = new Config({});
+        subject = new AppConfig({});
       });
 
       it("returns 'json'", () => {
@@ -33,7 +33,7 @@ describe("Config", () => {
 
   describe(".output", () => {
     beforeEach(() => {
-      subject = new Config({ output: "foobar" });
+      subject = new AppConfig({ output: "foobar" });
     });
 
     it("returns the output option", () => {
@@ -44,7 +44,7 @@ describe("Config", () => {
   describe(".shouldPublishToDisk", () => {
     describe("when output option is set to a string", () => {
       beforeEach(() => {
-        subject = new Config({ output: "/tmp" });
+        subject = new AppConfig({ output: "/tmp" });
       });
 
       it("returns true", () => {
@@ -54,7 +54,7 @@ describe("Config", () => {
 
     describe("when output option is not set to a string", () => {
       beforeEach(() => {
-        subject = new Config({ output: true });
+        subject = new AppConfig({ output: true });
       });
 
       it("returns false", () => {
@@ -64,7 +64,7 @@ describe("Config", () => {
 
     describe("when output option is not set", () => {
       beforeEach(() => {
-        subject = new Config({});
+        subject = new AppConfig({});
       });
 
       it("returns false", () => {
@@ -76,7 +76,7 @@ describe("Config", () => {
   describe(".shouldPublishToS3", () => {
     describe("when publish option is set", () => {
       beforeEach(() => {
-        subject = new Config({ publish: "true" });
+        subject = new AppConfig({ publish: "true" });
       });
 
       it("returns true", () => {
@@ -86,7 +86,7 @@ describe("Config", () => {
 
     describe("when publish option is not set", () => {
       beforeEach(() => {
-        subject = new Config({});
+        subject = new AppConfig({});
       });
 
       it("returns false", () => {
@@ -98,7 +98,7 @@ describe("Config", () => {
   describe(".shouldLogAnalyticsData", () => {
     describe("when shouldPublishToDisk is true", () => {
       beforeEach(() => {
-        subject = new Config({ output: "/tmp" });
+        subject = new AppConfig({ output: "/tmp" });
       });
 
       it("returns false", () => {
@@ -108,7 +108,7 @@ describe("Config", () => {
 
     describe("when shouldPublishToS3 is true", () => {
       beforeEach(() => {
-        subject = new Config({ publish: "true" });
+        subject = new AppConfig({ publish: "true" });
       });
 
       it("returns false", () => {
@@ -118,7 +118,7 @@ describe("Config", () => {
 
     describe("when shouldPublishToDisk and shouldPublishToS3 are false", () => {
       beforeEach(() => {
-        subject = new Config({});
+        subject = new AppConfig({});
       });
 
       it("returns false", () => {
@@ -130,7 +130,7 @@ describe("Config", () => {
   describe(".shouldWriteToDatabase", () => {
     describe("when write-to-database option is set", () => {
       beforeEach(() => {
-        subject = new Config({ "write-to-database": "true" });
+        subject = new AppConfig({ "write-to-database": "true" });
       });
 
       it("returns true", () => {
@@ -140,7 +140,7 @@ describe("Config", () => {
 
     describe("when write-to-database option is not set", () => {
       beforeEach(() => {
-        subject = new Config({});
+        subject = new AppConfig({});
       });
 
       it("returns false", () => {
@@ -152,7 +152,7 @@ describe("Config", () => {
   describe(".slim", () => {
     describe("when slim option is set", () => {
       beforeEach(() => {
-        subject = new Config({ slim: "true" });
+        subject = new AppConfig({ slim: "true" });
       });
 
       it("returns true", () => {
@@ -162,7 +162,7 @@ describe("Config", () => {
 
     describe("when slim option is not set", () => {
       beforeEach(() => {
-        subject = new Config({});
+        subject = new AppConfig({});
       });
 
       it("returns false", () => {
@@ -175,7 +175,7 @@ describe("Config", () => {
     describe("when ANALYTICS_GA4_CALL_RETRY_COUNT is set", () => {
       beforeEach(() => {
         process.env.ANALYTICS_GA4_CALL_RETRY_COUNT = 3;
-        subject = new Config();
+        subject = new AppConfig();
       });
 
       afterEach(() => {
@@ -190,7 +190,7 @@ describe("Config", () => {
     describe("when ANALYTICS_GA4_CALL_RETRY_COUNT is not set", () => {
       beforeEach(() => {
         delete process.env.ANALYTICS_GA4_CALL_RETRY_COUNT;
-        subject = new Config();
+        subject = new AppConfig();
       });
 
       it("returns the default: 5", () => {
@@ -203,7 +203,7 @@ describe("Config", () => {
     describe("when ANALYTICS_GA4_CALL_RETRY_DELAY_MS is set", () => {
       beforeEach(() => {
         process.env.ANALYTICS_GA4_CALL_RETRY_DELAY_MS = 3;
-        subject = new Config();
+        subject = new AppConfig();
       });
 
       afterEach(() => {
@@ -218,7 +218,7 @@ describe("Config", () => {
     describe("when ANALYTICS_GA4_CALL_RETRY_DELAY_MS is not set", () => {
       beforeEach(() => {
         delete process.env.ANALYTICS_GA4_CALL_RETRY_DELAY_MS;
-        subject = new Config();
+        subject = new AppConfig();
       });
 
       it("returns the default: 1000", () => {
@@ -231,7 +231,7 @@ describe("Config", () => {
     describe("when AGENCY_NAME is set", () => {
       beforeEach(() => {
         process.env.AGENCY_NAME = "HUD";
-        subject = new Config();
+        subject = new AppConfig();
       });
 
       afterEach(() => {
@@ -246,7 +246,7 @@ describe("Config", () => {
     describe("when AGENCY_NAME is not set", () => {
       beforeEach(() => {
         delete process.env.AGENCY_NAME;
-        subject = new Config();
+        subject = new AppConfig();
       });
 
       it("returns the default: gov-wide", () => {
@@ -291,7 +291,7 @@ describe("Config", () => {
     describe("when ANALYTICS_LOG_LEVEL is set", () => {
       beforeEach(() => {
         process.env.ANALYTICS_LOG_LEVEL = "warn";
-        subject = new Config();
+        subject = new AppConfig();
       });
 
       afterEach(() => {
@@ -306,7 +306,7 @@ describe("Config", () => {
     describe("when ANALYTICS_LOG_LEVEL is not set", () => {
       beforeEach(() => {
         delete process.env.ANALYTICS_LOG_LEVEL;
-        subject = new Config();
+        subject = new AppConfig();
       });
 
       it("returns the default: debug", () => {

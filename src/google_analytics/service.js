@@ -1,14 +1,25 @@
 const GoogleAnalyticsQueryAuthorizer = require("./query_authorizer");
 const util = require("util");
 
+/**
+ * Handles connection to Google Analytics and query operations.
+ */
 class GoogleAnalyticsService {
   #analyticsDataClient;
-  #config;
+  #appConfig;
   #logger;
 
-  constructor(analyticsDataClient, config, logger) {
+  /**
+   * @param {BetaAnalyticsDataClient} analyticsDataClient the client for Google
+   * Analytics Data API operations.
+   * @param {AppConfig} appConfig application config instance. Provides the
+   * configuration  to create an S3 client and the file extension to use for
+   * write operations.
+   * @param {winston.Logger} logger a logger instance.
+   */
+  constructor(analyticsDataClient, appConfig, logger) {
     this.#analyticsDataClient = analyticsDataClient;
-    this.#config = config;
+    this.#appConfig = appConfig;
     this.#logger = logger;
   }
 
@@ -28,6 +39,8 @@ class GoogleAnalyticsService {
       authorizedQuery,
       isRealtime,
     );
+    this.#logger.info("auth call successful");
+    this.#logger.info(results);
     return results;
   }
 
@@ -36,7 +49,11 @@ class GoogleAnalyticsService {
     // to ESM module imports.
     const { default: pRetry } = await import("p-retry");
     const results = await pRetry(() => {
-      return GoogleAnalyticsQueryAuthorizer.authorizeQuery(query, this.#config);
+      this.#logger.debug("Running GA4 authorizeQuery");
+      return GoogleAnalyticsQueryAuthorizer.authorizeQuery(
+        query,
+        this.#appConfig,
+      );
     }, this.#retryOptions());
     return results;
   }
@@ -53,16 +70,18 @@ class GoogleAnalyticsService {
 
   #queryGoogleApi(authorizedQuery, isRealtime) {
     if (isRealtime) {
+      this.#logger.debug("Running GA4 runRealtimeReport");
       return this.#analyticsDataClient.runRealtimeReport(authorizedQuery);
     } else {
+      this.#logger.debug("Running GA4 runReport");
       return this.#analyticsDataClient.runReport(authorizedQuery);
     }
   }
 
   #retryOptions() {
     return {
-      retries: this.#config.ga4CallRetryCount,
-      minTimeout: this.#config.ga4CallRetryDelay,
+      retries: this.#appConfig.ga4CallRetryCount,
+      minTimeout: this.#appConfig.ga4CallRetryDelay,
       randomize: true,
       onFailedAttempt: (e) => {
         this.#logger.debug("GA4 API error encountered");

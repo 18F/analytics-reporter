@@ -3,42 +3,42 @@ const GoogleAnalyticsCredentialLoader = require("../../src/google_analytics/cred
 
 describe("GoogleAnalyticsCredentialLoader", () => {
   const subject = GoogleAnalyticsCredentialLoader;
-  let config;
+  let appConfig;
 
-  describe(".getCredentials(config)", () => {
+  describe(".getCredentials(appConfig)", () => {
     beforeEach(() => {
-      config = {};
+      appConfig = {};
     });
 
-    describe("when config.key is set", () => {
+    describe("when appConfig.key is set", () => {
       let result;
 
       beforeEach(() => {
-        config.email = "test@example.com";
-        config.key = "Shh, this is a secret";
-        result = subject.getCredentials(config);
+        appConfig.email = "test@example.com";
+        appConfig.key = "Shh, this is a secret";
+        result = subject.getCredentials(appConfig);
       });
 
-      it("returns the key and email in the config", () => {
-        expect(result).to.eql({ key: config.key, email: config.email });
+      it("returns the key and email in the appConfig", () => {
+        expect(result).to.eql({ key: appConfig.key, email: appConfig.email });
       });
     });
 
-    describe("when config.key_file is set", () => {
+    describe("when appConfig.key_file is set", () => {
       describe("and the keyfile is a PEM file", () => {
         let result;
 
         beforeEach(() => {
-          config.email = "test@example.com";
-          config.key = undefined;
-          config.key_file = "./test/support/fixtures/secret_key.pem";
-          result = subject.getCredentials(config);
+          appConfig.email = "test@example.com";
+          appConfig.key = undefined;
+          appConfig.key_file = "./test/support/fixtures/secret_key.pem";
+          result = subject.getCredentials(appConfig);
         });
 
-        it("returns the key from the key file and email from the config", () => {
+        it("returns the key from the key file and email from the appConfig", () => {
           expect(result).to.eql({
             key: "pem-key-file-not-actually-a-secret-key",
-            email: config.email,
+            email: appConfig.email,
           });
         });
       });
@@ -47,10 +47,10 @@ describe("GoogleAnalyticsCredentialLoader", () => {
         let result;
 
         beforeEach(() => {
-          config.email = "test@example.com";
-          config.key = undefined;
-          config.key_file = "./test/support/fixtures/secret_key.json";
-          result = subject.getCredentials(config);
+          appConfig.email = "test@example.com";
+          appConfig.key = undefined;
+          appConfig.key_file = "./test/support/fixtures/secret_key.json";
+          result = subject.getCredentials(appConfig);
         });
 
         it("returns the key and email from the key file", () => {
@@ -62,20 +62,20 @@ describe("GoogleAnalyticsCredentialLoader", () => {
       });
     });
 
-    describe("when config.analytics_credentials is set", () => {
+    describe("when appConfig.analytics_credentials is set", () => {
       describe("and the credentials are an object", () => {
         let result;
 
         beforeEach(() => {
           subject.analyticsCredentialsIndex = 0;
-          config.analytics_credentials = Buffer.from(
+          appConfig.analytics_credentials = Buffer.from(
             `{
                "email": "email@example.com",
                "key": "this-is-a-secret"
              }`,
             "utf8",
           ).toString("base64");
-          result = subject.getCredentials(config);
+          result = subject.getCredentials(appConfig);
         });
 
         it("returns the credentials", () => {
@@ -93,7 +93,7 @@ describe("GoogleAnalyticsCredentialLoader", () => {
 
         beforeEach(() => {
           subject.analyticsCredentialsIndex = 0;
-          config.analytics_credentials = Buffer.from(
+          appConfig.analytics_credentials = Buffer.from(
             `[
               {
                 "email": "email_1@example.com",
@@ -107,9 +107,9 @@ describe("GoogleAnalyticsCredentialLoader", () => {
             "utf8",
           ).toString("base64");
 
-          firstResult = subject.getCredentials(config);
-          secondResult = subject.getCredentials(config);
-          thirdResult = subject.getCredentials(config);
+          firstResult = subject.getCredentials(appConfig);
+          secondResult = subject.getCredentials(appConfig);
+          thirdResult = subject.getCredentials(appConfig);
         });
 
         it("returns the first item in the array on first call", () => {

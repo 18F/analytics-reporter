@@ -11,10 +11,10 @@ describe("LogAnalyticsData", () => {
   });
 
   describe(".handles", () => {
-    describe("when config.shouldLogAnalyticsData is true", () => {
+    describe("when appConfig.shouldLogAnalyticsData is true", () => {
       beforeEach(() => {
         context = {
-          config: { shouldLogAnalyticsData: true },
+          appConfig: { shouldLogAnalyticsData: true },
         };
       });
 
@@ -23,10 +23,10 @@ describe("LogAnalyticsData", () => {
       });
     });
 
-    describe("when config.shouldLogAnalyticsData is false", () => {
+    describe("when appConfig.shouldLogAnalyticsData is false", () => {
       beforeEach(() => {
         context = {
-          config: { shouldLogAnalyticsData: false },
+          appConfig: { shouldLogAnalyticsData: false },
         };
       });
 
@@ -45,7 +45,7 @@ describe("LogAnalyticsData", () => {
       context = {
         formattedAnalyticsData: formattedAnalyticsData,
         logger: { debug: () => {}, info: infoLogSpy },
-        reportConfig: { name: "test" },
+        reportappConfig: { name: "test" },
       };
       await subject.executeStrategy(context);
     });

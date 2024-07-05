@@ -20,7 +20,7 @@ class PublishAnalyticsDataToS3 extends Action {
    * AWS S3.
    */
   handles(context) {
-    return context.config.shouldPublishToS3;
+    return context.appConfig.shouldPublishToS3;
   }
 
   /**

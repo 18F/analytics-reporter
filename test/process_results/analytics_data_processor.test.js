@@ -7,7 +7,7 @@ const ResultTotalsCalculator = require("../../src/process_results/result_totals_
 
 proxyquire.noCallThru();
 
-const config = {};
+const appConfig = {};
 
 const AnalyticsDataProcessor = proxyquire(
   "../../src/process_results/analytics_data_processor",
@@ -16,7 +16,7 @@ const AnalyticsDataProcessor = proxyquire(
 
 describe("AnalyticsDataProcessor", () => {
   describe(".processData(report, data)", () => {
-    describe("when an agency is not set in config", () => {
+    describe("when an agency is not set in appConfig", () => {
       let report;
       let data;
       let subject;
@@ -24,10 +24,10 @@ describe("AnalyticsDataProcessor", () => {
       beforeEach(() => {
         report = Object.assign({}, reportFixture);
         data = Object.assign({}, dataFixture);
-        config.account = {
+        appConfig.account = {
           hostname: "",
         };
-        subject = new AnalyticsDataProcessor(config);
+        subject = new AnalyticsDataProcessor(appConfig);
       });
 
       it("should return results with the correct props", () => {
@@ -244,22 +244,22 @@ describe("AnalyticsDataProcessor", () => {
         expect(Object.keys(result.data[0]).length).to.equal(2);
       });
 
-      it("should add a hostname to realtime data if a hostname is specified by the config", () => {
+      it("should add a hostname to realtime data if a hostname is specified by the appConfig", () => {
         report.realtime = true;
-        config.account.hostname = "www.example.gov";
+        appConfig.account.hostname = "www.example.gov";
 
-        subject = new AnalyticsDataProcessor(config);
+        subject = new AnalyticsDataProcessor(appConfig);
 
         const result = subject.processData(report, data);
         expect(result.data[0].domain).to.equal("www.example.gov");
       });
 
-      it("should not overwrite the domain with a hostname from the config", () => {
+      it("should not overwrite the domain with a hostname from the appConfig", () => {
         let dataWithHostname;
         dataWithHostname = Object.assign({}, dataWithHostnameFixture);
         report.realtime = true;
-        config.account.hostname = "www.example.gov";
-        subject = new AnalyticsDataProcessor(config);
+        appConfig.account.hostname = "www.example.gov";
+        subject = new AnalyticsDataProcessor(appConfig);
 
         const result = subject.processData(report, dataWithHostname);
         expect(result.data[0].domain).to.equal("www.example0.com");
@@ -275,14 +275,14 @@ describe("AnalyticsDataProcessor", () => {
           "../../src/process_results/analytics_data_processor",
           { "./result_totals_calculator": { calculateTotals } },
         );
-        subject = new AnalyticsDataProcessor(config);
+        subject = new AnalyticsDataProcessor(appConfig);
 
         const result = subject.processData(report, data);
         expect(result.totals).to.deep.equal({ visits: 1234 });
       });
     });
 
-    describe("when an agency is set in config", () => {
+    describe("when an agency is set in appConfig", () => {
       let agency = "interior";
       let report;
       let data;
@@ -291,11 +291,11 @@ describe("AnalyticsDataProcessor", () => {
       beforeEach(() => {
         report = Object.assign({}, reportFixture);
         data = Object.assign({}, dataFixture);
-        config.account = {
+        appConfig.account = {
           agency_name: agency,
           hostname: "",
         };
-        subject = new AnalyticsDataProcessor(config);
+        subject = new AnalyticsDataProcessor(appConfig);
       });
 
       it("should return results with the correct props", () => {
@@ -512,22 +512,22 @@ describe("AnalyticsDataProcessor", () => {
         expect(Object.keys(result.data[0]).length).to.equal(2);
       });
 
-      it("should add a hostname to realtime data if a hostname is specified by the config", () => {
+      it("should add a hostname to realtime data if a hostname is specified by the appConfig", () => {
         report.realtime = true;
-        config.account.hostname = "www.example.gov";
+        appConfig.account.hostname = "www.example.gov";
 
-        subject = new AnalyticsDataProcessor(config);
+        subject = new AnalyticsDataProcessor(appConfig);
 
         const result = subject.processData(report, data);
         expect(result.data[0].domain).to.equal("www.example.gov");
       });
 
-      it("should not overwrite the domain with a hostname from the config", () => {
+      it("should not overwrite the domain with a hostname from the appConfig", () => {
         let dataWithHostname;
         dataWithHostname = Object.assign({}, dataWithHostnameFixture);
         report.realtime = true;
-        config.account.hostname = "www.example.gov";
-        subject = new AnalyticsDataProcessor(config);
+        appConfig.account.hostname = "www.example.gov";
+        subject = new AnalyticsDataProcessor(appConfig);
 
         const result = subject.processData(report, dataWithHostname);
         expect(result.data[0].domain).to.equal("www.example0.com");
@@ -543,7 +543,7 @@ describe("AnalyticsDataProcessor", () => {
           "../../src/process_results/analytics_data_processor",
           { "./result_totals_calculator": { calculateTotals } },
         );
-        subject = new AnalyticsDataProcessor(config);
+        subject = new AnalyticsDataProcessor(appConfig);
 
         const result = subject.processData(report, data);
         expect(result.totals).to.deep.equal({ visits: 1234 });

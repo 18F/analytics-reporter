@@ -2,9 +2,9 @@ const expect = require("chai").expect;
 const knex = require("knex");
 const database = require("../support/database");
 const resultsFixture = require("../support/fixtures/results");
-const Config = require("../../src/config");
+const AppConfig = require("../../src/app_config");
 const PostgresPublisher = require("../../src/publish/postgres");
-const config = new Config();
+const appConfig = new AppConfig();
 
 describe("PostgresPublisher", () => {
   let databaseClient, results, subject;
@@ -23,7 +23,7 @@ describe("PostgresPublisher", () => {
 
   beforeEach((done) => {
     results = Object.assign({}, resultsFixture);
-    subject = new PostgresPublisher(config);
+    subject = new PostgresPublisher(appConfig);
     database.resetSchema(databaseClient).then(() => done());
   });
 

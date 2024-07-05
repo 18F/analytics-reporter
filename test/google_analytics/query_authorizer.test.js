@@ -4,7 +4,7 @@ const googleAPIsMock = require("../support/mocks/googleapis-auth");
 
 proxyquire.noCallThru();
 
-const config = {};
+const appConfig = {};
 const googleapis = {};
 const GoogleAnalyticsCredentialLoader = {
   getCredentials: () => ({
@@ -34,14 +34,14 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
   describe(".authorizeQuery(query)", () => {
     beforeEach(() => {
       Object.assign(googleapis, googleAPIsMock());
-      config.email = "hello@example.com";
-      config.key = "123abc";
-      config.key_file = undefined;
+      appConfig.email = "hello@example.com";
+      appConfig.key = "123abc";
+      appConfig.key_file = undefined;
     });
 
     it("should resolve a query with the auth prop set to an authorized JWT", (done) => {
       subject
-        .authorizeQuery(query, config)
+        .authorizeQuery(query, appConfig)
         .then((query) => {
           expect(query.abc).to.equal(123);
           expect(query.auth).to.not.be.undefined;
@@ -53,7 +53,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
 
     it("should create a JWT with the proper scopes", (done) => {
       subject
-        .authorizeQuery({}, config)
+        .authorizeQuery({}, appConfig)
         .then((query) => {
           expect(query.auth.initArguments[3]).to.deep.equal([
             "https://www.googleapis.com/auth/analytics.readonly",
@@ -71,7 +71,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       };
 
       subject
-        .authorizeQuery({}, config)
+        .authorizeQuery({}, appConfig)
         .then(() => {
           expect(jwtAuthorized).to.equal(true);
           done();
@@ -87,7 +87,7 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       };
 
       subject
-        .authorizeQuery({}, config)
+        .authorizeQuery({}, appConfig)
         .catch((err) => {
           expect(jwtAuthorized).to.equal(true);
           expect(err.message).to.equal("Failed to authorize");
