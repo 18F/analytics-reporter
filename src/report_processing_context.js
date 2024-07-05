@@ -30,12 +30,12 @@ class ReportProcessingContext {
     return this.#asyncLocalStorage.getStore();
   }
 
-  get config() {
-    return this.#store.get("config");
+  get appConfig() {
+    return this.#store.get("appConfig");
   }
 
-  set config(config) {
-    this.#store.set("config", config);
+  set appConfig(appConfig) {
+    this.#store.set("appConfig", appConfig);
   }
 
   get formattedAnalyticsData() {

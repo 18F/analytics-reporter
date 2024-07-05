@@ -2,7 +2,7 @@ const { AsyncLocalStorage } = require("node:async_hooks");
 const { BetaAnalyticsDataClient } = require("@google-analytics/data");
 const util = require("util");
 const AnalyticsDataProcessor = require("./src/process_results/analytics_data_processor");
-const Config = require("./src/config");
+const AppConfig = require("./src/app_config");
 const ReportProcessingContext = require("./src/report_processing_context");
 const FormatProcessedAnalyticsData = require("./src/actions/format_processed_analytics_data");
 const GoogleAnalyticsService = require("./src/google_analytics/service");
@@ -43,12 +43,12 @@ const WriteAnalyticsDataToDatabase = require("./src/actions/write_analytics_data
  * frequency matching the passed string.
  */
 async function run(options = {}) {
-  const config = new Config(options);
+  const appConfig = new AppConfig(options);
   const context = new ReportProcessingContext(new AsyncLocalStorage());
-  const reportConfigs = config.filteredReportConfigurations;
+  const reportConfigs = appConfig.filteredReportConfigurations;
 
   for (const reportConfig of reportConfigs) {
-    await _processReport(config, context, reportConfig);
+    await _processReport(appConfig, context, reportConfig);
   }
 }
 
@@ -60,21 +60,21 @@ async function run(options = {}) {
  * throw so that subsequent reports will run if an error occurs in a previous
  * report.
  *
- * @param {Config} config the application config
+ * @param {AppConfig} appConfig the application config
  * @param {ReportProcessingContext} context
  * @param {Object} reportConfig the configuration object for the analytics
  * report to process.
  * @returns {Promise<void>} resolves when processing completes or has an error.
  */
-async function _processReport(config, context, reportConfig) {
+async function _processReport(appConfig, context, reportConfig) {
   return context.run(async () => {
-    const logger = Logger.initialize(config, reportConfig);
-    context.config = config;
+    const logger = Logger.initialize(appConfig, reportConfig);
+    context.appConfig = appConfig;
     context.logger = logger;
     context.reportConfig = reportConfig;
 
     try {
-      const processor = _buildProcessor(config, logger);
+      const processor = _buildProcessor(appConfig, logger);
       await processor.processChain(context);
       logger.info("Processing complete");
     } catch (e) {
@@ -90,19 +90,23 @@ async function _processReport(config, context, reportConfig) {
  * in the order provided to the processor here. The classes referenced here are
  * an implementation of the Chain of Responsibility design pattern.
  *
- * @param {Config} config an application config instance.
+ * @param {AppConfig} appConfig an application config instance.
  * @param {winston.Logger} logger an application logger instance.
  * @returns {Processor} an initialized processor instance.
  */
-function _buildProcessor(config, logger) {
+function _buildProcessor(appConfig, logger) {
   return new Processor([
     new QueryGoogleAnalytics(
-      new GoogleAnalyticsService(new BetaAnalyticsDataClient(), config, logger),
+      new GoogleAnalyticsService(
+        new BetaAnalyticsDataClient(),
+        appConfig,
+        logger,
+      ),
     ),
-    new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor(config)),
+    new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor(appConfig)),
     new FormatProcessedAnalyticsData(),
-    new WriteAnalyticsDataToDatabase(new PostgresPublisher(config)),
-    new PublishAnalyticsDataToS3(new S3Service(config)),
+    new WriteAnalyticsDataToDatabase(new PostgresPublisher(appConfig)),
+    new PublishAnalyticsDataToS3(new S3Service(appConfig)),
     new PublishAnalyticsDataToDisk(),
     new LogAnalyticsData(),
   ]);

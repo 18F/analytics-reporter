@@ -147,7 +147,9 @@ npm start
 dotenv -e .env npm start
 ```
 
-## Configuration and Google Analytics Setup
+## Configuration
+
+### Google Analytics
 
 * Enable [Google Analytics API](https://console.cloud.google.com/apis/library/analytics.googleapis.com) for your project in the Google developer dashboard.
 
@@ -220,27 +222,38 @@ export ANALYTICS_CREDENTIALS='[
 
 If you see a nicely formatted JSON file, you are all set.
 
-* (Optional) Authorize yourself for S3 publishing.
+### AWS
 
-If you plan to use this project's lightweight S3 publishing system, you'll need to add 6 more environment variables:
+To configure the app for publishing data to S3 set the following environment variables:
 
 ```
 export AWS_REGION=us-east-1
 export AWS_ACCESS_KEY_ID=[your-key]
 export AWS_SECRET_ACCESS_KEY=[your-secret-key]
-
 export AWS_BUCKET=[your-bucket]
 export AWS_BUCKET_PATH=[your-path]
 export AWS_CACHE_TIME=0
 ```
 
-There are cases where you want to use a custom  object storage server compatible with Amazon S3 APIs, like [minio](https://github.com/minio/minio), in that specific case you should set an extra env variable:
+There are cases where you want to use a custom object storage server compatible with Amazon S3 APIs, like [minio](https://github.com/minio/minio), in that specific case you should set an extra env variable:
 
 ```
 export AWS_S3_ENDPOINT=http://your-storage-server:port
 ```
 
-## Other configuration
+### Egress proxy config
+
+The application can be configured to use an egress proxy for HTTP calls which are external to the application's running environment.
+To configure the app to use an egress proxy, set the following environment variables:
+
+```
+export PROXY_FQDN=[The fully qualified domain of your proxy server]
+export PROXY_PORT=[The port for the proxy server]
+export PROXY_USERNAME=[The username to use for proxy requests]
+export PROXY_PASSWORD=[The password to use for proxy requests]
+```
+
+### Other configuration
 
 If you use a **single domain** for all of your analytics data, then your profile is likely set to return relative paths (e.g. `/faq`) and not absolute paths when accessing real-time reports.
 
@@ -411,6 +424,37 @@ server](https://github.com/18f/analytics-reporter-api) that consumes and publish
 
 To write reports to a database, use the `--write-to-database` option when
 starting the reporter.
+
+## Cloud.gov setup
+
+The application requires an S3 bucket and RDS instance running a Postgres database setup in cloud.gov as services.
+Examples below use the Cloudfoundry CLI.
+
+```bash
+# Create and bind an S3 bucket service to the app
+cf create-service s3 basic-public analytics-s3
+cf bind-service analytics-reporter analytics-s3
+
+# Create and bind a RDS Postgres service to the app
+cf create-service aws-rds small-psql analytics-reporter-database
+cf bind-service analytics-reporter analytics-reporter-database
+
+# Database migrations are handled by the analytics-reporter-api application.
+# Deploy the API server via CI to migrate the database.
+
+# Create an internal app route for the application (for the egress proxy to communicate back to the server).
+cf map-route analytics-reporter apps.internal --hostname analytics-reporter
+
+# Remove public egress permissions from the space running the application if it has them
+cf unbind-security-group public_networks_egress gsa-opp-analytics analytics-dev --lifecycle running
+
+# Create a network policy in the application's space which allows communication to the egress proxy which runs in a space with public egress permissions
+cf add-network-policy analytics-reporter analytics-egress-proxy -s analytics-public-egress -o gsa-opp-analytics --protocol tcp --port 8080
+
+# Create a network policy in the public-egress space which allows communication from the egress proxy back to the application.
+# The port for each API call the app makes is determined randomly, so allow the full range of port numbers.
+cf add-network-policy analytics-egress-proxy analytics-reporter -s analytics-dev -o gsa-opp-analytics --protocol tcp --port 1-65535
+```
 
 ## Upgrading from Universal Analytics
 

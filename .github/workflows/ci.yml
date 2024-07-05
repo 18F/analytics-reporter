@@ -63,6 +63,8 @@ jobs:
       CF_SPACE_NAME: ${{ vars.CF_SPACE_NAME_DEV }}
       DB_SERVICE_NAME: ${{ vars.DB_SERVICE_NAME_DEV }}
       NEW_RELIC_APP_NAME: ${{ vars.NEW_RELIC_APP_NAME_DEV }}
+      PROXY_FQDN: ${{ vars.PROXY_FQDN_DEV }}
+      PROXY_PORT: ${{ vars.PROXY_PORT }}
       S3_SERVICE_NAME: ${{ vars.S3_SERVICE_NAME_DEV }}
     secrets:
       ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
@@ -70,6 +72,8 @@ jobs:
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_DEV }}
       GA4_CREDS: ${{ secrets.GA4_CREDS }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_DEV }}
+      PROXY_USERNAME: ${{ secrets.PROXY_USERNAME_DEV }}
+      PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD_DEV }}
   deploy_stg:
     needs:
       - lint
@@ -86,6 +90,8 @@ jobs:
       CF_SPACE_NAME: ${{ vars.CF_SPACE_NAME_STG }}
       DB_SERVICE_NAME: ${{ vars.DB_SERVICE_NAME_STG }}
       NEW_RELIC_APP_NAME: ${{ vars.NEW_RELIC_APP_NAME_STG }}
+      PROXY_FQDN: ${{ vars.PROXY_FQDN_STG }}
+      PROXY_PORT: ${{ vars.PROXY_PORT }}
       S3_SERVICE_NAME: ${{ vars.S3_SERVICE_NAME_STG }}
     secrets:
       ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
@@ -93,6 +99,8 @@ jobs:
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_STG }}
       GA4_CREDS: ${{ secrets.GA4_CREDS }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_STG }}
+      PROXY_USERNAME: ${{ secrets.PROXY_USERNAME_STG }}
+      PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD_STG }}
   deploy_prd:
     needs:
       - lint
@@ -109,6 +117,8 @@ jobs:
       CF_SPACE_NAME: ${{ vars.CF_SPACE_NAME_PRD }}
       DB_SERVICE_NAME: ${{ vars.DB_SERVICE_NAME_PRD }}
       NEW_RELIC_APP_NAME: ${{ vars.NEW_RELIC_APP_NAME_PRD }}
+      PROXY_FQDN: ${{ vars.PROXY_FQDN_PRD }}
+      PROXY_PORT: ${{ vars.PROXY_PORT }}
       S3_SERVICE_NAME: ${{ vars.S3_SERVICE_NAME_PRD }}
     secrets:
       ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
@@ -116,3 +126,5 @@ jobs:
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_PRD }}
       GA4_CREDS: ${{ secrets.GA4_CREDS }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_PRD }}
+      PROXY_USERNAME: ${{ secrets.PROXY_USERNAME_PRD }}
+      PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD_PRD }}

@@ -17,7 +17,7 @@ describe("WriteAnalyticsDataToDatabase", () => {
       describe("and report is realtime", () => {
         beforeEach(() => {
           context = {
-            config: { shouldWriteToDatabase: true },
+            appConfig: { shouldWriteToDatabase: true },
             reportConfig: { realtime: true },
           };
         });
@@ -30,7 +30,7 @@ describe("WriteAnalyticsDataToDatabase", () => {
       describe("and report is not realtime", () => {
         beforeEach(() => {
           context = {
-            config: { shouldWriteToDatabase: true },
+            appConfig: { shouldWriteToDatabase: true },
             reportConfig: { realtime: false },
           };
         });
@@ -45,7 +45,7 @@ describe("WriteAnalyticsDataToDatabase", () => {
       describe("and report is realtime", () => {
         beforeEach(() => {
           context = {
-            config: { shouldWriteToDatabase: false },
+            appConfig: { shouldWriteToDatabase: false },
             reportConfig: { realtime: true },
           };
         });
@@ -58,7 +58,7 @@ describe("WriteAnalyticsDataToDatabase", () => {
       describe("and report is not realtime", () => {
         beforeEach(() => {
           context = {
-            config: { shouldWriteToDatabase: false },
+            appConfig: { shouldWriteToDatabase: false },
             reportConfig: { realtime: false },
           };
         });

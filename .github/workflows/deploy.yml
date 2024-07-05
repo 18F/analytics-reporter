@@ -27,6 +27,12 @@ on:
         type: string
       NEW_RELIC_APP_NAME:
         type: string
+      PROXY_FQDN:
+        required: true
+        type: string
+      PROXY_PORT:
+        required: true
+        type: string
       S3_SERVICE_NAME:
         required: true
         type: string
@@ -40,6 +46,10 @@ on:
       GA4_CREDS:
         required: true
       NEW_RELIC_LICENSE_KEY:
+      PROXY_USERNAME:
+        required: true
+      PROXY_PASSWORD:
+        required: true
 
 env:
   ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
@@ -56,6 +66,10 @@ env:
   GA4_CREDS: ${{ secrets.GA4_CREDS }}
   NEW_RELIC_APP_NAME: ${{ inputs.NEW_RELIC_APP_NAME }}
   NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+  PROXY_FQDN: ${{ inputs.PROXY_FQDN }}
+  PROXY_PORT: ${{ inputs.PROXY_PORT }}
+  PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
+  PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
   S3_SERVICE_NAME: ${{ inputs.S3_SERVICE_NAME }}
 
 jobs:
@@ -96,5 +110,10 @@ jobs:
           # Log into cloud.gov
           cf api api.fr.cloud.gov
           cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION_NAME -s $CF_SPACE_NAME
-          cf push -f "./manifest.yml" --strategy rolling
+          # Stop the running app (to save memory of two instances running until staging is complete)
+          cf stop $APP_NAME
+          # Deploy app
+          cf push -f "./manifest.yml"
+          # Create apps.internal route for the application
+          cf map-route $APP_NAME apps.internal --hostname $APP_NAME
           cf logout

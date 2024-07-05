@@ -22,7 +22,7 @@ class WriteAnalyticsDataToDatabase extends Action {
    */
   handles(context) {
     return (
-      context.config.shouldWriteToDatabase && !context.reportConfig.realtime
+      context.appConfig.shouldWriteToDatabase && !context.reportConfig.realtime
     );
   }
 
