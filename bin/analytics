@@ -15,6 +15,7 @@
  * --csv: CSV instead of JSON.
  * --frequency: Limit to reports with this 'frequency' value.
  * --debug: print debug details on STDOUT
+ * --write-to-database: Write data to a Postgres database
  */
 
 const minimist = require("minimist");
