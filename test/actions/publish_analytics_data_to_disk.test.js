@@ -19,9 +19,9 @@ describe("PublishAnalyticsDataToDisk", () => {
   });
 
   describe(".handles", () => {
-    describe("when config.shouldPublishToDisk is true", () => {
+    describe("when appConfig.shouldPublishToDisk is true", () => {
       beforeEach(() => {
-        context = { config: { shouldPublishToDisk: true } };
+        context = { appConfig: { shouldPublishToDisk: true } };
       });
 
       it("returns true", () => {
@@ -29,9 +29,9 @@ describe("PublishAnalyticsDataToDisk", () => {
       });
     });
 
-    describe("when config.shouldPublishToDisk is false", () => {
+    describe("when appConfig.shouldPublishToDisk is false", () => {
       beforeEach(() => {
-        context = { config: { shouldPublishToDisk: false } };
+        context = { appConfig: { shouldPublishToDisk: false } };
       });
 
       it("returns false", () => {
@@ -44,13 +44,13 @@ describe("PublishAnalyticsDataToDisk", () => {
     const debugLogSpy = sinon.spy();
     const formattedAnalyticsData = { slim: true };
     const reportConfig = { name: "foobar", slim: false };
-    const config = { format: "csv", slim: true };
+    const appConfig = { format: "csv", slim: true };
 
     beforeEach(async () => {
       debugLogSpy.resetHistory();
       DiskPublisher.publish.resetHistory();
       context = {
-        config: config,
+        appConfig: appConfig,
         formattedAnalyticsData: formattedAnalyticsData,
         logger: { debug: debugLogSpy },
         reportConfig: reportConfig,
@@ -63,7 +63,7 @@ describe("PublishAnalyticsDataToDisk", () => {
         DiskPublisher.publish.calledWith(
           reportConfig,
           formattedAnalyticsData,
-          config,
+          appConfig,
         ),
       ).to.equal(true);
     });

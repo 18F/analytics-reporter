@@ -1,5 +1,8 @@
 const ResultTotalsCalculator = require("./result_totals_calculator");
 
+/**
+ * Handles processing operations for raw analytics data.
+ */
 class AnalyticsDataProcessor {
   #agency;
   #hostname;
@@ -30,9 +33,13 @@ class AnalyticsDataProcessor {
     mobileDeviceModel: "mobile_device",
   };
 
-  constructor(config) {
-    this.#agency = config.account.agency_name;
-    this.#hostname = config.account.hostname;
+  /**
+   * @param {AppConfig} appConfig an instance of the application config class.
+   * Provides agency and hostname string values.
+   */
+  constructor(appConfig) {
+    this.#agency = appConfig.account.agency_name;
+    this.#hostname = appConfig.account.hostname;
   }
 
   /**

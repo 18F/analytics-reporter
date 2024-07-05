@@ -26,13 +26,13 @@ describe("FormatProcessedAnalyticsData", () => {
     describe("when report should be slim formatted", () => {
       const formattedAnalyticsData = { slim: true };
       const processedAnalyticsData = { foo: "bar" };
-      const config = { format: "json", slim: true };
+      const appConfig = { format: "json", slim: true };
       const reportConfig = { name: "foobar", slim: true };
 
       beforeEach(async () => {
         ResultFormatter.formatResult.returns(formattedAnalyticsData);
         context = {
-          config: config,
+          appConfig: appConfig,
           processedAnalyticsData: processedAnalyticsData,
           logger: { debug: debugLogSpy },
           reportConfig: reportConfig,
@@ -57,13 +57,13 @@ describe("FormatProcessedAnalyticsData", () => {
     describe("when report should not be slim formatted", () => {
       const formattedAnalyticsData = { slim: false };
       const processedAnalyticsData = { foo: "bar" };
-      const config = { format: "csv", slim: true };
+      const appConfig = { format: "csv", slim: true };
       const reportConfig = { name: "foobar", slim: true };
 
       beforeEach(async () => {
         ResultFormatter.formatResult.returns(formattedAnalyticsData);
         context = {
-          config: config,
+          appConfig: appConfig,
           processedAnalyticsData: processedAnalyticsData,
           logger: { debug: debugLogSpy },
           reportConfig: reportConfig,

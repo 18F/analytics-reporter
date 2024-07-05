@@ -39,10 +39,10 @@ describe("S3Service", () => {
   let report;
   let results;
   let subject;
-  let config = {};
+  let appConfig = {};
 
   beforeEach(() => {
-    config = {
+    appConfig = {
       aws: {
         bucket: "test-bucket",
         cache: 60,
@@ -63,7 +63,7 @@ describe("S3Service", () => {
       cb(null, "compressed data");
     };
 
-    subject = new S3Service({ ...config, format: "json" });
+    subject = new S3Service({ ...appConfig, format: "json" });
 
     subject
       .publish(report, `${results}`)
@@ -86,7 +86,7 @@ describe("S3Service", () => {
   });
 
   it("should publish compressed CSV results to the S3 bucket", (done) => {
-    config.aws.cache = undefined;
+    appConfig.aws.cache = undefined;
     report.name = "test-report";
     let gzipCalled = false;
 
@@ -95,7 +95,7 @@ describe("S3Service", () => {
       cb(null, "compressed data");
     };
 
-    subject = new S3Service({ ...config, format: "csv" });
+    subject = new S3Service({ ...appConfig, format: "csv" });
 
     subject
       .publish(report, `${results}`)
@@ -124,7 +124,7 @@ describe("S3Service", () => {
       cb(null, "compressed data");
     };
 
-    subject = new S3Service({ ...config, format: "json" });
+    subject = new S3Service({ ...appConfig, format: "json" });
 
     subject
       .publish(report, `${results}`)
@@ -138,7 +138,7 @@ describe("S3Service", () => {
   it("should reject if there is an error compressing the data", (done) => {
     zlibMock.gzip = (data, cb) => cb(new Error("test zlib error"));
 
-    subject = new S3Service({ ...config, format: "json" });
+    subject = new S3Service({ ...appConfig, format: "json" });
 
     subject
       .publish(report.name, `${results}`)

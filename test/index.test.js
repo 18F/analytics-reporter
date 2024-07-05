@@ -8,14 +8,14 @@ let reportConfigs;
 let logger;
 let processorError;
 
-class Config {
+class AppConfig {
   get filteredReportConfigurations() {
     return reportConfigs;
   }
 }
 
 class ReportProcessingContext {
-  #config;
+  #appConfig;
   #logger;
   #reportConfig;
 
@@ -24,12 +24,12 @@ class ReportProcessingContext {
     return callback();
   }
 
-  get config() {
-    return this.#config;
+  get appConfig() {
+    return this.#appConfig;
   }
 
-  set config(config) {
-    this.#config = config;
+  set appConfig(appConfig) {
+    this.#appConfig = appConfig;
   }
 
   get logger() {
@@ -64,7 +64,7 @@ class S3Service {}
 
 const subject = proxyquire("../index.js", {
   "node:async_hooks": { AsyncLocalStorage },
-  "./src/config": Config,
+  "./src/app_config": AppConfig,
   "./src/report_processing_context": ReportProcessingContext,
   "./src/processor": Processor,
   "./src/logger": {
@@ -92,8 +92,8 @@ describe("index", () => {
         await subject.run();
       });
 
-      it("sets a config instance on the context", () => {
-        expect(context.config instanceof Config).to.equal(true);
+      it("sets an app config instance on the context", () => {
+        expect(context.appConfig instanceof AppConfig).to.equal(true);
       });
 
       it("sets a report config on the context", () => {
@@ -116,8 +116,8 @@ describe("index", () => {
         await subject.run();
       });
 
-      it("sets a config instance on the context", () => {
-        expect(context.config instanceof Config).to.equal(true);
+      it("sets an app config instance on the context", () => {
+        expect(context.appConfig instanceof AppConfig).to.equal(true);
       });
 
       it("sets a report config on the context", () => {

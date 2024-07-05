@@ -16,8 +16,8 @@ class FormatProcessedAnalyticsData extends Action {
     context.formattedAnalyticsData = await ResultFormatter.formatResult(
       context.processedAnalyticsData,
       {
-        format: context.config.format,
-        slim: context.config.slim && context.reportConfig.slim,
+        format: context.appConfig.format,
+        slim: context.appConfig.slim && context.reportConfig.slim,
       },
     );
   }

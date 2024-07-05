@@ -10,7 +10,7 @@ class LogAnalyticsData extends Action {
    * data
    */
   handles(context) {
-    return context.config.shouldLogAnalyticsData;
+    return context.appConfig.shouldLogAnalyticsData;
   }
 
   /**
