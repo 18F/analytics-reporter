@@ -114,6 +114,4 @@ jobs:
           cf stop $APP_NAME
           # Deploy app
           cf push -f "./manifest.yml"
-          # Create apps.internal route for the application
-          cf map-route $APP_NAME apps.internal --hostname $APP_NAME
           cf logout

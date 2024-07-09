@@ -6,7 +6,6 @@ applications:
   # processes.
   memory: 1024M
   disk_quota: 1024M
-  no-route: true
   health-check-type: process
   buildpacks:
   - nodejs_buildpack
@@ -42,6 +41,8 @@ applications:
   services:
   - ${S3_SERVICE_NAME}
   - ${DB_SERVICE_NAME}
+  routes:
+  - route: ${APP_NAME}.apps.internal
   stack: cflinuxfs4
   timeout: 180
   path: .
