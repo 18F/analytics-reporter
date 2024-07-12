@@ -31,6 +31,8 @@ class AnalyticsDataProcessor {
     bounceRate: "bounce_rate",
     screenResolution: "screen_resolution",
     mobileDeviceModel: "mobile_device",
+    videoUrl: "video_url",
+    videoTitle: "video_title",
   };
 
   /**
