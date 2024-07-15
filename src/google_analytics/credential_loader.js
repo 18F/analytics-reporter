@@ -10,8 +10,8 @@ class GoogleAnalyticsCredentialLoader {
   /**
    * Gets google analytics credentials based on settings in the Config class.
    *
-   * @param {AppConfig} appConfig an instance of the application config class
-   * @returns {Object} a google analytics credential object with "email" and
+   * @param {import('../app_config')} appConfig an instance of the application config class
+   * @returns {object} a google analytics credential object with "email" and
    * "key" properties
    * @throws {Error} if no credentials are set in the application config
    */
@@ -19,15 +19,15 @@ class GoogleAnalyticsCredentialLoader {
     if (appConfig.key) {
       return { key: appConfig.key, email: appConfig.email };
     } else if (appConfig.key_file) {
-      return this._loadCredentialsFromKeyfile(appConfig);
+      return this.#loadCredentialsFromKeyfile(appConfig);
     } else if (appConfig.analytics_credentials) {
-      return this._loadCredentialsFromEnvironment(appConfig);
+      return this.#loadCredentialsFromEnvironment(appConfig);
     } else {
       throw new Error("No key or key file specified in appConfig");
     }
   }
 
-  static _loadCredentialsFromKeyfile(appConfig) {
+  static #loadCredentialsFromKeyfile(appConfig) {
     const keyfile = appConfig.key_file;
     if (!fs.existsSync(keyfile)) {
       throw new Error(`No such key file: ${keyfile}`);
@@ -44,16 +44,16 @@ class GoogleAnalyticsCredentialLoader {
     return { key, email };
   }
 
-  static _loadCredentialsFromEnvironment(appConfig) {
+  static #loadCredentialsFromEnvironment(appConfig) {
     const credentialData = JSON.parse(
       Buffer.from(appConfig.analytics_credentials, "base64").toString("utf8"),
     );
-    const credentialsArray = this._wrapArray(credentialData);
+    const credentialsArray = this.#wrapArray(credentialData);
     const index = this.analyticsCredentialsIndex++ % credentialsArray.length;
     return credentialsArray[index];
   }
 
-  static _wrapArray(object) {
+  static #wrapArray(object) {
     return Array.isArray(object) ? object : [object];
   }
 }

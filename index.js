@@ -22,24 +22,24 @@ const WriteAnalyticsDataToDatabase = require("./src/actions/write_analytics_data
  * a sequential chain of actions on each report object in the array. Some of the
  * actions performed are optional based on the options passed to this function.
  *
- * @param {Object} options an object with options to be used when processing
+ * @param {object} options an object with options to be used when processing
  * all reports.
- * @param {String} options.format the format of the analytics data produced.
+ * @param {string} options.format the format of the analytics data produced.
  * Accepted formats are "csv" or "json"
- * @param {String} options.output a string filepath where the analytics data
+ * @param {string} options.output a string filepath where the analytics data
  * will be written to disk after processing.
- * @param {Boolean} options.publish if true, the analytics data will be written
+ * @param {boolean} options.publish if true, the analytics data will be written
  * to AWS S3 after processing.
- * @param {Boolean} options.realtime if true, the application will use the
+ * @param {boolean} options.realtime if true, the application will use the
  * google analytics realtime data reporting API when requesting data.  Otherwise
  * the application uses the non-realtime data reporting API.
- * @param {Boolean} options.slim if true, the application will create a smaller
+ * @param {boolean} options.slim if true, the application will create a smaller
  * data object when formatting the processed data.
- * @param {Boolean} options['write-to-database'] if true, the application will
+ * @param {boolean} options.'write-to-database' if true, the application will
  * write the processed analytics data to the postgres database.
- * @param {String} options.only if set, runs only the report with name
+ * @param {string} options.only if set, runs only the report with name
  * matching the passed string.
- * @param {String} options.frequency if set, runs only the reports with
+ * @param {string} options.frequency if set, runs only the reports with
  * frequency matching the passed string.
  */
 async function run(options = {}) {
@@ -60,11 +60,12 @@ async function run(options = {}) {
  * throw so that subsequent reports will run if an error occurs in a previous
  * report.
  *
- * @param {AppConfig} appConfig the application config
- * @param {ReportProcessingContext} context
- * @param {Object} reportConfig the configuration object for the analytics
+ * @param {import('./src/app_config')} appConfig the application config
+ * @param {import('./src/report_processing_context')} context the
+ * report-specific context for processing.
+ * @param {object} reportConfig the configuration object for the analytics
  * report to process.
- * @returns {Promise<void>} resolves when processing completes or has an error.
+ * @returns {Promise} resolves when processing completes or has an error.
  */
 async function _processReport(appConfig, context, reportConfig) {
   return context.run(async () => {
@@ -90,9 +91,9 @@ async function _processReport(appConfig, context, reportConfig) {
  * in the order provided to the processor here. The classes referenced here are
  * an implementation of the Chain of Responsibility design pattern.
  *
- * @param {AppConfig} appConfig an application config instance.
- * @param {winston.Logger} logger an application logger instance.
- * @returns {Processor} an initialized processor instance.
+ * @param {import('./src/app_config')} appConfig an application config instance.
+ * @param {import('winston').Logger} logger an application logger instance.
+ * @returns {import('./src/processor')} an initialized processor instance.
  */
 function _buildProcessor(appConfig, logger) {
   return new Processor([

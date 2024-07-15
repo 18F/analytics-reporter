@@ -8,7 +8,8 @@ class ReportProcessingContext {
   #asyncLocalStorage;
 
   /**
-   * @param {AsyncLocalStorage} asyncLocalStorage the storage instance for
+   * @param {import('node:async_hooks').AsyncLocalStorage} asyncLocalStorage the
+   * storage instance which a data store for the context.
    */
   constructor(asyncLocalStorage) {
     this.#asyncLocalStorage = asyncLocalStorage;
@@ -17,9 +18,10 @@ class ReportProcessingContext {
   /**
    * Begins an async function where the AsyncLocalStorage instance's store holds
    * the data for the async function's life.
+   *
    * @param {Function} asyncFunction the async function for the class to provide
    * context data.
-   * @returns the result of the asyncFunction
+   * @returns {Promise} the result of the asyncFunction
    */
   run(asyncFunction) {
     const store = new Map();
