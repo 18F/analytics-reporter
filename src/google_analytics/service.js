@@ -39,8 +39,7 @@ class GoogleAnalyticsService {
       authorizedQuery,
       isRealtime,
     );
-    this.#logger.info("auth call successful");
-    this.#logger.info(results);
+    this.#logger.debug("auth call successful");
     return results;
   }
 
