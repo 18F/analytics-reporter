@@ -12,7 +12,7 @@ class PostgresPublisher {
   #connectionConfig;
 
   /**
-   * @param {AppConfig} appConfig application config instance. Provides the
+   * @param {import('../app_config')} appConfig application config instance. Provides the
    * configuration to create a database connection.
    */
   constructor(appConfig) {
@@ -20,9 +20,8 @@ class PostgresPublisher {
   }
 
   /**
-   *
-   * @param {Object} results the processed results of analytics report data.
-   * @param {Object[]} results.data an array of data points to write to the
+   * @param {object} results the processed results of analytics report data.
+   * @param {object[]} results.data an array of data points to write to the
    * Postgres database.
    * @returns {Promise} resolves when the database operations complete. Rejects
    * if database operations have an error.

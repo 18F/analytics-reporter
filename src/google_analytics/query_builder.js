@@ -1,7 +1,7 @@
 /**
- * @param {Object} reportConfig report config for the query to be created.
- * @param {AppConfig} appConfig application config instance.
- * @returns {Object} an object in the correct syntax for the google analytics
+ * @param {object} reportConfig report config for the query to be created.
+ * @param {import('../app_config')} appConfig application config instance.
+ * @returns {object} an object in the correct syntax for the google analytics
  * reporting API to execute.
  */
 const buildQuery = (reportConfig, appConfig) => {

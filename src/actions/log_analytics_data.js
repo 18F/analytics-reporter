@@ -5,8 +5,9 @@ const Action = require("./action");
  */
 class LogAnalyticsData extends Action {
   /**
-   * @param {ReportProcessingContext} context the context for the action chain.
-   * @returns {Boolean} true if the application config is set to log analytics
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
+   * @returns {boolean} true if the application config is set to log analytics
    * data
    */
   handles(context) {
@@ -16,7 +17,9 @@ class LogAnalyticsData extends Action {
   /**
    * Takes the formatted analytics data from the context and writes the data to
    * the application logs.
-   * @param {ReportProcessingContext} context the context for the action chain.
+   *
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
    */
   async executeStrategy(context) {
     context.logger.debug("Logging analytics data");

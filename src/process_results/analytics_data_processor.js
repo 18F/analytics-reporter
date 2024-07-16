@@ -36,7 +36,7 @@ class AnalyticsDataProcessor {
   };
 
   /**
-   * @param {AppConfig} appConfig an instance of the application config class.
+   * @param {import('../app_config')} appConfig an instance of the application config class.
    * Provides agency and hostname string values.
    */
   constructor(appConfig) {
@@ -45,10 +45,10 @@ class AnalyticsDataProcessor {
   }
 
   /**
-   * @param {Object} report The report object that was requested
-   * @param {Object} data The response object from the Google Analytics Data API
-   * @param {Object} query The query object for the report
-   * @returns {Object} The response data transformed to flatten the data
+   * @param {object} report The report object that was requested
+   * @param {object} data The response object from the Google Analytics Data API
+   * @param {object} query The query object for the report
+   * @returns {object} The response data transformed to flatten the data
    * structure, format dates, and map from GA keys to DAP keys. Data is filtered
    * as requested in the report object. This object also includes details from
    * the original report and query.
@@ -131,6 +131,10 @@ class AnalyticsDataProcessor {
    * If dimension or metric is found matching the provided name, then return an
    * object with rowKey matching the key in row where the value can be found and
    * index of the named value.  If no match is found, return null.
+   *
+   * @param {string} name the name of the dimension or metric
+   * @param {object} data the data row for which to find a header
+   * @returns {number} the index of the dimension or metric in the values array
    */
   #findDimensionOrMetricIndex(name, data) {
     const dimensionIndex = data.dimensionHeaders.findIndex((header) => {

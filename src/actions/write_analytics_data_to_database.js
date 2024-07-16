@@ -7,8 +7,8 @@ class WriteAnalyticsDataToDatabase extends Action {
   #postgresPublisher;
 
   /**
-   *
-   * @param {PostgresPublisher} postgresPublisher
+   * @param {import('../publish/postgres')} postgresPublisher the publisher
+   * instance
    */
   constructor(postgresPublisher) {
     super();
@@ -16,8 +16,9 @@ class WriteAnalyticsDataToDatabase extends Action {
   }
 
   /**
-   * @param {ReportProcessingContext} context the context for the action chain.
-   * @returns {Boolean} true if the application and report config is set to
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
+   * @returns {boolean} true if the application and report config is set to
    * write processed analytics data to the database.
    */
   handles(context) {
@@ -29,7 +30,9 @@ class WriteAnalyticsDataToDatabase extends Action {
   /**
    * Takes the processed analytics data from the context and writes the data to
    * the postgres database.
-   * @param {ReportProcessingContext} context the context for the action chain.
+   *
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
    */
   async executeStrategy(context) {
     context.logger.debug("Writing report data to database");

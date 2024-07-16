@@ -1,10 +1,10 @@
 /**
- * @param {Object} result the result of the analytics report API call after
+ * @param {object} result the result of the analytics report API call after
  * processing by the AnalyticsDataProcessor.
- * @param {Object} options options for the ResultTotalsCalculator.
- * @param {String[]} options.sumVisitsByColumns an array of columns to be
+ * @param {object} options options for the ResultTotalsCalculator.
+ * @param {string[]} options.sumVisitsByColumns an array of columns to be
  * totalled by the number of visits for each unique key in the column.
- * @returns {Object} totals for the results.
+ * @returns {object} totals for the results.
  */
 const calculateTotals = (result, options = {}) => {
   if (result.data.length === 0) {

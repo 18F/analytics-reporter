@@ -6,18 +6,21 @@ class Action {
    * Subclasses should override this method if there are instances where the
    * class should not execute on the context.
    *
-   * @param {ReportProcessingContext} context the context for the action chain.
-   * @returns {Boolean} true if the action should execute on the context.
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
+   * @returns {boolean} true if the action should execute on the context.
+   * Defaults to true if a context is passed.
    */
-  handles() {
-    return true;
+  handles(context) {
+    return !!context;
   }
 
   /**
    * Executes the logic of the Action using the strategy pattern and writes an
    * error log for debugging if an error occurs in execution.
    *
-   * @param {Context} context the context for the action chain.
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
    */
   async execute(context) {
     try {
@@ -32,10 +35,12 @@ class Action {
    * Provides an execution strategy to the execute method. Subclasses should
    * override this method to provide their action specific logic.
    *
-   * @param {ReportProcessingContext} context the context for the action chain.
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
+   * @returns {import('../report_processing_context')} the passed context
    */
-  async executeStrategy() {
-    return;
+  async executeStrategy(context) {
+    return context;
   }
 }
 

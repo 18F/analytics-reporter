@@ -10,12 +10,12 @@ class GoogleAnalyticsService {
   #logger;
 
   /**
-   * @param {BetaAnalyticsDataClient} analyticsDataClient the client for Google
-   * Analytics Data API operations.
-   * @param {AppConfig} appConfig application config instance. Provides the
+   * @param {import('@google-analytics/data').BetaAnalyticsDataClient} analyticsDataClient
+   * the client for Google Analytics Data API operations.
+   * @param {import('../app_config')} appConfig application config instance. Provides the
    * configuration  to create an S3 client and the file extension to use for
    * write operations.
-   * @param {winston.Logger} logger a logger instance.
+   * @param {import('winston').Logger} logger a logger instance.
    */
   constructor(analyticsDataClient, appConfig, logger) {
     this.#analyticsDataClient = analyticsDataClient;
@@ -27,11 +27,11 @@ class GoogleAnalyticsService {
    * Runs a GA report request. Retries with exponential backoff to help prevent
    * the app failing calls due to API rate limiting.
    *
-   * @param {Object} query the report to run in the format required by the GA4
+   * @param {object} query the report to run in the format required by the GA4
    * reporting API.
-   * @param {Boolean} isRealtime true if the report should use the realtime
+   * @param {boolean} isRealtime true if the report should use the realtime
    * report function
-   * @returns {Object} the results of the GA4 report API call.
+   * @returns {object} the results of the GA4 report API call.
    */
   async runReportQuery(query, isRealtime = false) {
     const authorizedQuery = await this.#authorizeQuery(query);

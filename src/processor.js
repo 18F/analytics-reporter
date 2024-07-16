@@ -1,8 +1,12 @@
+/**
+ * Handles processing a chain of actions
+ */
 class Processor {
   #actions;
 
   /**
-   * @param {Action[]} actions the chain of actions for the processor
+   * @param {import('../actions/action')[]} actions the chain of actions for the
+   * processor.
    */
   constructor(actions = []) {
     this.#actions = actions;
@@ -11,7 +15,7 @@ class Processor {
   /**
    * Process a chain of actions with a shared context.
    *
-   * @param {ReportProcessingContext} context the shared context.
+   * @param {import('./report_processing_context')} context the shared context.
    */
   async processChain(context) {
     for (const action of this.#actions) {

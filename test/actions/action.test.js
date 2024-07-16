@@ -10,8 +10,16 @@ describe("Action", () => {
       subject = new Action();
     });
 
-    it("returns true", () => {
-      expect(subject.handles()).to.equal(true);
+    describe("when a context is passed", () => {
+      it("returns true", () => {
+        expect(subject.handles({})).to.equal(true);
+      });
+    });
+
+    describe("when a context is passed", () => {
+      it("returns false", () => {
+        expect(subject.handles()).to.equal(false);
+      });
     });
   });
 
