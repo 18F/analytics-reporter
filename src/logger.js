@@ -1,9 +1,11 @@
 const winston = require("winston");
 
 /**
- * @param {AppConfig} appConfig the application config
- * @param {String} reportName the name of the report currently being processed
- * @returns {String} a standard tag for the logger to identify the specific
+ * @param {import('../app_config')} appConfig the application config
+ * @param {object} reportConfig the name of the report currently being processed
+ * @param {string} reportConfig.name the name of the report being run for this
+ * logger instance.
+ * @returns {string} a standard tag for the logger to identify the specific
  * report being processed when writing logs.
  */
 const tag = (appConfig, reportConfig) => {
@@ -26,13 +28,13 @@ module.exports = {
   /**
    * Creates an application logger instance.
    *
-   * @param {AppConfig} appConfig application config instance. Sets the log level and
+   * @param {import('../app_config')} appConfig application config instance. Sets the log level and
    * is also referenced to create a leading log tag for this logger instance.
-   * @param {Object} reportConfig config for the report being run for this
+   * @param {object} reportConfig config for the report being run for this
    * logger instance. Used to create a leading log tag for messages
-   * @param {String} reportConfig.name the name of the report being run for this
+   * @param {string} reportConfig.name the name of the report being run for this
    * logger instance. Used to create a leading log tag for messages
-   * @returns {winston.Logger} the configured logger instance
+   * @returns {import('winston').Logger} the configured logger instance
    */
   initialize: (appConfig = { logLevel: "debug" }, reportConfig = {}) => {
     return winston.createLogger({

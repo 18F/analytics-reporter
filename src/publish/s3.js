@@ -8,10 +8,9 @@ const zlib = require("zlib");
  */
 class S3Service {
   #appConfig;
-  #s3Client;
 
   /**
-   * @param {AppConfig} appConfig application config instance. Provides the
+   * @param {import('../app_config')} appConfig application config instance. Provides the
    * configuration  to create an S3 client and the file extension to use for
    * write operations.
    */
@@ -46,9 +45,8 @@ class S3Service {
 
   /**
    * Writes analytics data to a file in an S3 bucket.
-   *
-   * @param {String} name the name of the file to write.
-   * @param {Object[]} data an array of data points to write to the
+   * @param {string} name the name of the file to write.
+   * @param {object[]} data an array of data points to write to the
    * S3 bucket.
    * @returns {Promise} resolves when the S3 operations complete. Rejects
    * if S3 operations have an error.

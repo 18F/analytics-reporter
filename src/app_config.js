@@ -1,28 +1,30 @@
 const path = require("path");
 const knexfile = require("../knexfile");
 
-// Application config
+/**
+ * Application config
+ */
 class AppConfig {
   #options;
 
   /**
-   * @param {Object} options an object with options to be used when processing
+   * @param {object} options an object with options to be used when processing
    * all reports.
-   * @param {String} options.format the format of the analytics data produced.
+   * @param {string} options.format the format of the analytics data produced.
    * Accepted formats are "csv" or "json"
-   * @param {String} options.output a string filepath where the analytics data
+   * @param {string} options.output a string filepath where the analytics data
    * will be written to disk after processing.
-   * @param {Boolean} options.publish if true, the analytics data will be written
+   * @param {boolean} options.publish if true, the analytics data will be written
    * to AWS S3 after processing.
-   * @param {Boolean} options.realtime if true, the application will use the
+   * @param {boolean} options.realtime if true, the application will use the
    * google analytics realtime data API when requesting data.
-   * @param {Boolean} options.slim if true, the application will create a smaller
+   * @param {boolean} options.slim if true, the application will create a smaller
    * data object when formatting the processed data.
-   * @param {Boolean} options['write-to-database'] if true, the application will
+   * @param {boolean} options.'write-to-database' if true, the application will
    * write the processed analytics data to the postgres database.
-   * @param {String} options.only if set, runs only the report with name
+   * @param {string} options.only if set, runs only the report with name
    * matching the passed string.
-   * @param {String} options.frequency if set, runs only the reports with
+   * @param {string} options.frequency if set, runs only the reports with
    * frequency matching the passed string.
    */
   constructor(options = {}) {
@@ -54,21 +56,25 @@ class AppConfig {
   }
 
   /**
-   * @returns {Boolean} true if report configs with slim:true should have their
+   * @returns {boolean} true if report configs with slim:true should have their
    * data removed from report results and only include totals.
    */
   get slim() {
     return !!this.#options.slim;
   }
 
-  // The number of times to retry GA4 API calls. Defaults to 5
+  /**
+   * @returns {number} The number of times to retry GA4 API calls. Defaults to 5
+   */
   get ga4CallRetryCount() {
     return Number.parseInt(process.env.ANALYTICS_GA4_CALL_RETRY_COUNT || 5);
   }
 
-  // The number of milliseconds to delay before retrying a GA4 API call.
-  // Defaults to 1000. (This is only the first retry delay, subsequent calls
-  // will use exponential backoff.)
+  /**
+   * @returns {number} The number of milliseconds to delay before retrying a GA4
+   * API call. Defaults to 1000. (This is only the first retry delay, subsequent
+   * calls will use exponential backoff.)
+   */
   get ga4CallRetryDelay() {
     return Number.parseInt(
       process.env.ANALYTICS_GA4_CALL_RETRY_DELAY_MS || 1000,
@@ -91,8 +97,8 @@ class AppConfig {
     return process.env.ANALYTICS_LOG_LEVEL || "debug";
   }
 
-  // TODO: This doesn't seem to be used.
   get key() {
+    // TODO: This doesn't seem to be used.
     return process.env.ANALYTICS_KEY;
   }
 
@@ -107,17 +113,17 @@ class AppConfig {
     return process.env.ANALYTICS_CREDENTIALS;
   }
 
-  // TODO: This seems to be unused
   get debug() {
+    // TODO: This seems to be unused
     return !!process.env.ANALYTICS_DEBUG;
   }
 
-  /*
-    AWS S3 information.
-
-    Separately, you need to set AWS_REGION, AWS_ACCESS_KEY_ID, and
-    AWS_SECRET_ACCESS_KEY. The AWS SDK for Node reads these in automatically.
-  */
+  /**
+   * AWS S3 information.
+   * Separately, you need to set AWS_REGION, AWS_ACCESS_KEY_ID, and
+   * AWS_SECRET_ACCESS_KEY. The AWS SDK for Node reads these in automatically.
+   * @returns {object} the AWS config object
+   */
   get aws() {
     if (this.#isCloudGov) {
       return this.#cloudGovAwsConfig;
@@ -205,5 +211,4 @@ class AppConfig {
   }
 }
 
-// Set environment variables to configure the application.
 module.exports = AppConfig;

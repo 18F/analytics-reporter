@@ -6,8 +6,9 @@ const DiskPublisher = require("../publish/disk");
  */
 class PublishAnalyticsDataToDisk extends Action {
   /**
-   * @param {ReportProcessingContext} context the context for the action chain.
-   * @returns {Boolean} true if the application config is set to publish data to
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
+   * @returns {boolean} true if the application config is set to publish data to
    * disk.
    */
   handles(context) {
@@ -18,7 +19,9 @@ class PublishAnalyticsDataToDisk extends Action {
    * Takes the formatted analytics data from the context and writes the data to
    * disk at a path specified in the application config with the report name as
    * the filename.
-   * @param {ReportProcessingContext} context the context for the action chain.
+   *
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
    */
   async executeStrategy(context) {
     context.logger.debug("Publishing analytics data to disk");

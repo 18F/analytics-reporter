@@ -8,7 +8,8 @@ class QueryGoogleAnalytics extends Action {
   #googleAnalyticsService;
 
   /**
-   * @param {GoogleAnalyticsService} googleAnalyticsService
+   * @param {import('../google_analytics/service')} googleAnalyticsService the
+   * google analytics service instance.
    */
   constructor(googleAnalyticsService) {
     super();
@@ -21,7 +22,8 @@ class QueryGoogleAnalytics extends Action {
    * passed to the google analytics service to make the API call(s) necessary to
    * retrieve the data. The analytics data and the query are set to the context
    * to be used by subsequent actions.
-   * @param {ReportProcessingContext} context the context for the action chain.
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
    */
   async executeStrategy(context) {
     const reportConfig = context.reportConfig;

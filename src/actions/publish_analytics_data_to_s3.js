@@ -7,7 +7,7 @@ class PublishAnalyticsDataToS3 extends Action {
   #s3Service;
 
   /**
-   * @param {S3Service} s3Service
+   * @param {import('../publish/s3')} s3Service the S3Service instance
    */
   constructor(s3Service) {
     super();
@@ -15,8 +15,9 @@ class PublishAnalyticsDataToS3 extends Action {
   }
 
   /**
-   * @param {ReportProcessingContext} context the context for the action chain.
-   * @returns {Boolean} true if the application config is set to publish data to
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
+   * @returns {boolean} true if the application config is set to publish data to
    * AWS S3.
    */
   handles(context) {
@@ -27,7 +28,9 @@ class PublishAnalyticsDataToS3 extends Action {
    * Takes the formatted analytics data from the context and writes the data to
    * AWS S3 in a bucket and path specified in the application config with the
    * report name as the filename.
-   * @param {ReportProcessingContext} context the context for the action chain.
+   *
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
    */
   async executeStrategy(context) {
     context.logger.debug("Publishing analytics data to S3");
