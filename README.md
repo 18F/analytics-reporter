@@ -19,16 +19,126 @@ The process for adding features to this project is described in
 
 ## Local development setup
 
-### Prerequistites
+### Prerequisites
 
 * NodeJS > v20.x
-* A postgres DB running and/or docker installed
+* [dotenv-cli](https://www.npmjs.com/package/dotenv-cli)
+* (Optional) A postgres DB running and/or docker installed
 
-### Install dependencies
+### Preliminary setup
+
+1. Clone repo.
+2. Run `npm install` to install dependencies.
+2. Copy `env.example` to `.env`.
+
+Throughout this README, we'll be using dotenv and the `.env` file to manage environment variables locally. The `.env` file
+is ignored in the `.gitignore` file and should not be checked into the repository.
+
+### Configure access to the Google Analytics Data API
+
+In production, the analytics reporter pulls data from our Google Analytics 4 account via an API. To run the reporter locally (and the integration tests),
+you will need a Google Analytics data source to pull from. We have not set up any dev Google Analytics properties, so you will be using the production properties for
+local dev too. The reporter only needs read access to the GA account, so there's no danger of you corrupting the production data.
+
+API calls are authorized through a service account. The service account was set up according to the instructions [here](https://developers.google.com/analytics/devguides/reporting/data/v1/quickstart-client-libraries).
+Currently, there is no procedure to set up environment specific service accounts, so you will be using the same service account that is used in production.
+Keep in mind that you are sharing quotas with the production system and other environments. GA's quota system is described [here](https://developers.google.com/analytics/blog/2023/data-api-quota-management).
+
+#### Step 1 - Configure GA Data API credentials
+Request the Google Analytics Data API service account credentials from another member of the team. Save the received json file on your computer and 
+then set `GOOGLE_APPLICATION_CREDENTIALS` as the path to the json file in `.env`.
 
 ```bash
-npm install
+# Example
+export GOOGLE_APPLICATION_CREDENTIALS="/Users/my_user/service_account_creds.json"`
 ```
+
+#### Step 2 - Configure a GA property to pull reports for
+When the reporter runs, it will pull data from a single Google Analytics 4 property. [This directory](deploy/envs) contains a configuration
+file for each property. Choose a property and copy the environment variables from its file to your `.env` file.
+
+```bash
+# Example
+export ANALYTICS_REPORT_IDS="395251184"
+export AGENCY_NAME=general-services-administration
+export AWS_BUCKET_PATH=data/$AGENCY_NAME
+```
+
+## Running the application
+
+Now you can run the analytics reporter app to collect reports for the GA4 property you specified in ANALYTICS_REPORT_IDS:
+```bash
+# run all reports and print them as JSON to STDOUT
+dotenv ./bin/analytics
+
+# run all reports and save them to a directory
+# analytics.usa.gov can load reports from this format
+dotenv ./bin/analytics --output ./data/general-services-administration
+
+# run a single report
+dotenv ./bin/analytics --only devices
+```
+
+The analytics reporter script has additional runtime options which are described here.
+
+```bash
+npm install -g analytics-reporter
+```
+
+### Writing reports to S3
+The reporter can write reports to an S3 bucket. In production, this is where analytics.usa.gov loads its data from.
+
+```bash
+dotenv ./bin/analytics --publish
+```
+
+Before you publish to S3, you'll need to set 6 more environment variables in `.env`:
+
+```
+export AWS_REGION=[your-region]
+export AWS_ACCESS_KEY_ID=[your-key]
+export AWS_SECRET_ACCESS_KEY=[your-secret-key]
+export AWS_BUCKET=[your-bucket]
+export AWS_BUCKET_PATH=[your-path]
+export AWS_CACHE_TIME=0
+```
+
+If you want to experiment with S3 publishing, remember that S3 buckets may be created in a [Cloud.gov sandbox](https://cloud.gov/docs/pricing/free-limited-sandbox/).
+
+There may also be cases where you want to use a custom object storage server compatible with Amazon S3 APIs, like [minio](https://github.com/minio/minio), in that specific case you should set an extra env variable:
+
+```
+export AWS_S3_ENDPOINT=http://your-storage-server:port
+```
+
+### Writing report data to Postgres
+The reporter can also write reports to Postgres. In production, this is where the analytics reporter API loads its data from.
+
+```bash
+dotenv ./bin/analytics --write-to-database
+```
+
+In order to run this command, you'll need a Postgres
+database running on port 5432. There is a docker-compose file provided in the
+repo so that you can start an empty database with the command:
+
+```bash
+docker-compose up
+```
+
+The development
+DB connection in knexfile.js has some default connection config which can be
+overridden with environment variables.  If using the provided docker-compose DB
+then you can avoid setting the connection details. However, you do need to run migrations on the DB before running the reporter app.
+
+```bash
+npm run migrate
+```
+
+The database expects a particular schema which will be described in the [API
+server](https://github.com/18f/analytics-reporter-api) that consumes and publishes this data.
+
+## Other developer tasks
 
 ### Linting
 
@@ -102,144 +212,16 @@ same account credentials.
 
 ```bash
 # Run cucumber integration tests
-dotenv -e .env npm run cucumber
+dotenv npm run cucumber
 
 # Run cucumber integration tests with node debugging enabled
-dotenv -e .env npm run cucumber:debug
+dotenv npm run cucumber:debug
 ```
 
 The cucumber features and support files can be found in the `features` directory
 
-### Running the application as a npm package
-
-* To run the utility on your computer, install it through npm:
-
-```bash
-npm install -g analytics-reporter
-```
-
-### Running the application locally
-
-To run the application locally with database reporting, you'll need a postgres
-database running on port 5432. There is a docker-compose file provided in the
-repo so that you can start an empty database with the command:
-
-```bash
-docker-compose up
-```
-
-#### Setup environment
-
-See "Configuration and Google Analytics Setup" below for the required environment variables and other setup for Google Analytics auth.
-
-It may be easiest to use the dotenv-cli package to configure the environment for the application.
-
-Create a `.env` file using `env.example` as a template, with the correct credentials and other config values.
-This file is ignored in the `.gitignore` file and should not be checked in to the repository.
-
-#### Run the application
-
-```bash
-# running the app with no config
-npm start
-
-# running the app with dotenv-cli
-dotenv -e .env npm start
-```
 
 ## Configuration
-
-### Google Analytics
-
-* Enable [Google Analytics API](https://console.cloud.google.com/apis/library/analytics.googleapis.com) for your project in the Google developer dashboard.
-
-* Create a service account for API access in the [Google developer dashboard](https://console.cloud.google.com/iam-admin/serviceaccounts).
-
-* Go to the "KEYS" tab for your service account, create new key using "ADD KEY" button, and download the **JSON** private key file it gives you.
-
-* Grab the generated client email address (ends with `gserviceaccount.com`) from the contents of the .json file.
-
-* Grant that email address `Read, Analyze & Collaborate` permissions on the Google Analytics profile(s) whose data you wish to publish.
-
-* Set environment variables for `analytics-reporter`. It needs email address of service account, and view ID in the profile you authorized it to:
-
-```bash
-export ANALYTICS_REPORT_EMAIL="YYYYYYY@developer.gserviceaccount.com"
-export ANALYTICS_REPORT_IDS="XXXXXX"
-```
-
-You may wish to manage these using [`autoenv`](https://github.com/kennethreitz/autoenv). If you do, there is an `example.env` file you can copy to `.env` to get started.
-
-To find your Google Analytics view ID:
-
-  1. Sign in to your Analytics account.
-  1. Select the Admin tab.
-  1. Select an account from the dropdown in the ACCOUNT column.
-  1. Select a property from the dropdown in the PROPERTY column.
-  1. Select a view from the dropdown in the VIEW column.
-  1. Click "View Settings"
-  1. Copy the view ID.  You'll need to enter it with `ga:` as a prefix.
-
-* You can specify your private key through environment variables either as a file path, or the contents of the key (helpful for Heroku and Heroku-like systems).
-
-To specify a file path (useful in development or Linux server environments):
-
-```
-export ANALYTICS_KEY_PATH="/path/to/secret_key.json"
-```
-
-Alternatively, to specify the key directly (useful in a PaaS environment), paste in the contents of the JSON file's `private_key` field **directly and exactly**, in quotes, and **rendering actual line breaks** (not `\n`'s) (below example has been sanitized):
-
-```
-export ANALYTICS_KEY="-----BEGIN PRIVATE KEY-----
-[contents of key]
------END PRIVATE KEY-----
-"
-```
-
-If you have multiple accounts for a profile, you can set the `ANALYTICS_CREDENTIALS` variable with a JSON encoded array of those credentials and they'll be used to authorize API requests in a round-robin style.
-
-```
-export ANALYTICS_CREDENTIALS='[
-  {
-    "key": "-----BEGIN PRIVATE KEY-----\n[contents of key]\n-----END PRIVATE KEY-----",
-    "email": "email_1@example.com"
-  },
-  {
-    "key": "-----BEGIN PRIVATE KEY-----\n[contents of key]\n-----END PRIVATE KEY-----",
-    "email": "email_2@example.com"
-  }
-]'
-```
-
-* Make sure your computer or server is syncing its time with the world over NTP. Your computer's time will need to match those on Google's servers for the authentication to work.
-
-* Test your configuration by printing a report to STDOUT:
-
-```bash
-./bin/analytics --only users
-```
-
-If you see a nicely formatted JSON file, you are all set.
-
-### AWS
-
-To configure the app for publishing data to S3 set the following environment variables:
-
-```
-export AWS_REGION=us-east-1
-export AWS_ACCESS_KEY_ID=[your-key]
-export AWS_SECRET_ACCESS_KEY=[your-secret-key]
-export AWS_BUCKET=[your-bucket]
-export AWS_BUCKET_PATH=[your-path]
-export AWS_CACHE_TIME=0
-```
-
-There are cases where you want to use a custom object storage server compatible with Amazon S3 APIs, like [minio](https://github.com/minio/minio), in that specific case you should set an extra env variable:
-
-```
-export AWS_S3_ENDPOINT=http://your-storage-server:port
-```
 
 ### Egress proxy config
 
@@ -405,25 +387,6 @@ A report might look something like this:
 ```bash
 ./bin/analytics --publish --debug
 ```
-
-## Saving data to postgres
-
-The analytics reporter can write data is pulls from Google Analytics to a
-Postgres database. The postgres configuration can be set using environment
-variables:
-
-```bash
-export POSTGRES_HOST = "my.db.host.com"
-export POSTGRES_USER = "postgres"
-export POSTGRES_PASSWORD = "123abc"
-export POSTGRES_DATABASE = "analytics"
-```
-
-The database expects a particular schema which will be described in the [API
-server](https://github.com/18f/analytics-reporter-api) that consumes and publishes this data.
-
-To write reports to a database, use the `--write-to-database` option when
-starting the reporter.
 
 ## Cloud.gov setup
 
