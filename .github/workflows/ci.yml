@@ -70,7 +70,7 @@ jobs:
       ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
       CF_USERNAME: ${{ secrets.CF_USERNAME_DEV }}
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_DEV }}
-      GA4_CREDS: ${{ secrets.GA4_CREDS }}
+      GA4_CREDS: ${{ secrets.GA4_CREDS_DEV }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_DEV }}
       PROXY_USERNAME: ${{ secrets.PROXY_USERNAME_DEV }}
       PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD_DEV }}
@@ -97,7 +97,7 @@ jobs:
       ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
       CF_USERNAME: ${{ secrets.CF_USERNAME_STG }}
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_STG }}
-      GA4_CREDS: ${{ secrets.GA4_CREDS }}
+      GA4_CREDS: ${{ secrets.GA4_CREDS_STG }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_STG }}
       PROXY_USERNAME: ${{ secrets.PROXY_USERNAME_STG }}
       PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD_STG }}
@@ -124,7 +124,7 @@ jobs:
       ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
       CF_USERNAME: ${{ secrets.CF_USERNAME_PRD }}
       CF_PASSWORD: ${{ secrets.CF_PASSWORD_PRD }}
-      GA4_CREDS: ${{ secrets.GA4_CREDS }}
+      GA4_CREDS: ${{ secrets.GA4_CREDS_PRD }}
       NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_PRD }}
       PROXY_USERNAME: ${{ secrets.PROXY_USERNAME_PRD }}
       PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD_PRD }}
