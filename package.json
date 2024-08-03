@@ -70,7 +70,7 @@
     "@google-analytics/data": "^4.7.0",
     "@smithy/node-http-handler": "^3.0.0",
     "@snyk/protect": "^1.1269.0",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "fast-csv": "^4.3.6",
     "googleapis": "^140.0.0",
     "minimist": "^1.2.8",
