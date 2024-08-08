@@ -57,12 +57,11 @@ async function run(options = {}) {
  * @param options
  */
 async function runQueuePublish(options = {}) {
-  const dbHost =
-    process.env.VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["host"];
-  const dbUser =
-    process.env.VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["username"];
+  const VCAP_SERVICES_JSON = JSON.parse(process.env.VCAP_SERVICES);
+  const dbHost = VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["host"];
+  const dbUser = VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["username"];
   const dbPassword =
-    process.env.VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"];
+    VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"];
   const boss = new PgBoss(
     `postgres://${dbUser}:${dbPassword}@${dbHost}/pg_boss_message_queue`,
   );
