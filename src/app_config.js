@@ -179,6 +179,16 @@ class AppConfig {
     };
   }
 
+  get messageQueueDatabaseConnection() {
+    const connection =
+      knexfile[process.env.NODE_ENV || "development"].connection;
+    return `postgres://${connection.user}:${connection.password}@${connection.host}/${process.env.MESSAGE_QUEUE_DATABASE_NAME}${process.env.NODE_ENV == "production" ? "?ssl=true" : ""}`;
+  }
+
+  get messageQueueName() {
+    return process.env.MESSAGE_QUEUE_NAME;
+  }
+
   get postgres() {
     return knexfile[process.env.NODE_ENV || "development"].connection;
   }
