@@ -1,5 +1,6 @@
 const { AsyncLocalStorage } = require("node:async_hooks");
 const { BetaAnalyticsDataClient } = require("@google-analytics/data");
+const PgBoss = require("pg-boss");
 const util = require("util");
 const AnalyticsDataProcessor = require("./src/process_results/analytics_data_processor");
 const AppConfig = require("./src/app_config");
@@ -51,6 +52,36 @@ async function run(options = {}) {
     await _processReport(appConfig, context, reportConfig);
   }
 }
+
+/**
+ * @param options
+ */
+async function runQueuePublish(options = {}) {
+  const dbHost =
+    process.env.VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["host"];
+  const dbUser =
+    process.env.VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["username"];
+  const dbPassword =
+    process.env.VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"];
+  const boss = new PgBoss(
+    `postgres://${dbUser}:${dbPassword}@${dbHost}/pg_boss_message_queue`,
+  );
+
+  const appConfig = new AppConfig(options);
+  const reportConfigs = appConfig.filteredReportConfigurations;
+  const logger = Logger.initialize(appConfig);
+
+  boss.on("error", (error) => logger.error(error));
+  await boss.start();
+  const queue = "analytics-reporter-job-queue";
+
+  for (const reportConfig of reportConfigs) {
+    let jobId = await boss.send(queue, reportConfig);
+    logger.info(`created job in queue ${queue} with job ID ${jobId}`);
+  }
+}
+
+//async function queueConsume() {}
 
 /**
  * Creates a new ReportProcessingContext run for the processing of the report.
@@ -113,4 +144,4 @@ function _buildProcessor(appConfig, logger) {
   ]);
 }
 
-module.exports = { run };
+module.exports = { run, runQueuePublish };
