@@ -86,12 +86,24 @@ async function runQueuePublish(options = {}) {
     logger.info("boss stop event occurred");
     logger.info(msg);
   });
-  await boss.start();
+
+  try {
+    await boss.start();
+    logger.info(`boss started successfully`);
+  } catch (e) {
+    logger.error("boss start encountered an error");
+    logger.error(util.inspect(e));
+  }
   const queue = "analytics-reporter-job-queue";
 
   for (const reportConfig of reportConfigs) {
-    let jobId = await boss.send(queue, reportConfig);
-    logger.info(`created job in queue ${queue} with job ID ${jobId}`);
+    try {
+      let jobId = await boss.send(queue, reportConfig);
+      logger.info(`created job in queue ${queue} with job ID ${jobId}`);
+    } catch (e) {
+      logger.error("boss send encountered an error");
+      logger.error(util.inspect(e));
+    }
   }
 }
 
