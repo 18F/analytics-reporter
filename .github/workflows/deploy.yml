@@ -97,7 +97,7 @@ jobs:
           echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
       - name: Run envsubst on manifest.yml to set environment specific values
         run: |
-          mv manifest.yml manifest.yml.src
+          mv manifest.publisher.yml manifest.yml.src
           envsubst < manifest.yml.src > manifest.yml
           cat manifest.yml
       - name: Replace knexfile.js with .cloudgov version of that file
@@ -139,7 +139,7 @@ jobs:
           echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
       - name: Run envsubst on manifest.yml to set environment specific values
         run: |
-          mv manifest.yml manifest.yml.src
+          mv manifest.consumer.yml manifest.yml.src
           envsubst < manifest.yml.src > manifest.yml
           cat manifest.yml
       - name: Replace knexfile.js with .cloudgov version of that file
