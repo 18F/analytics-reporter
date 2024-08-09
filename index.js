@@ -62,9 +62,17 @@ async function runQueuePublish(options = {}) {
   const dbUser = VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["username"];
   const dbPassword =
     VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"];
-  const boss = new PgBoss(
-    `postgres://${dbUser}:${dbPassword}@${dbHost}/pg_boss_message_queue?ssl=true`,
-  );
+
+  let boss;
+  try {
+    boss = new PgBoss(
+      `postgres://${dbUser}:${dbPassword}@${dbHost}/pg_boss_message_queue?ssl=true`,
+    );
+    logger.info(`boss instance created successfully`);
+  } catch (e) {
+    logger.error("boss creation encountered an error");
+    logger.error(util.inspect(e));
+  }
 
   const appConfig = new AppConfig(options);
   const reportConfigs = appConfig.filteredReportConfigurations;
