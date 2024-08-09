@@ -63,7 +63,7 @@ async function runQueuePublish(options = {}) {
   const dbPassword =
     VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"];
   const boss = new PgBoss(
-    `postgres://${dbUser}:${dbPassword}@${dbHost}/pg_boss_message_queue`,
+    `postgres://${dbUser}:${dbPassword}@${dbHost}/pg_boss_message_queue?ssl=true`,
   );
 
   const appConfig = new AppConfig(options);
