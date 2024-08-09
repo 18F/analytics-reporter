@@ -6,7 +6,7 @@ if (process.env.NEW_RELIC_APP_NAME) {
   require("newrelic");
 }
 
-if (
+/*if (
   process.env.PROXY_FQDN &&
   process.env.PROXY_PORT &&
   process.env.PROXY_USERNAME &&
@@ -23,7 +23,7 @@ if (
   // expects it that way. See below:
   // https://github.com/grpc/grpc-node/blob/da54e75638d06633303f5071a08ca089806355bf/packages/grpc-js/src/http_proxy.ts#L53
   process.env.https_proxy = proxy_url;
-}
+}*/
 
 const spawn = require("child_process").spawn;
 const logger = require("../src/logger").initialize();

@@ -57,15 +57,90 @@ async function run(options = {}) {
  * @param options
  */
 async function runQueuePublish(options = {}) {
+  const appConfig = new AppConfig(options);
+  const reportConfigs = appConfig.filteredReportConfigurations;
+  const logger = Logger.initialize(appConfig);
+  const boss = _pgBossSetup(logger);
+
+  try {
+    await boss.start();
+    logger.debug(`boss started successfully`);
+  } catch (e) {
+    logger.error("boss start encountered an error");
+    logger.error(util.inspect(e));
+  }
+  const queue = "analytics-reporter-job-queue";
+
+  for (const reportConfig of reportConfigs) {
+    try {
+      let jobId = await boss.send(
+        queue,
+        _createQueueMessage(options, appConfig, reportConfig),
+      );
+      logger.info(`created job in queue ${queue} with job ID ${jobId}`);
+    } catch (e) {
+      logger.error("boss send encountered an error");
+      logger.error(util.inspect(e));
+    }
+  }
+
+  try {
+    await boss.stop();
+    logger.debug(`boss stopped`);
+  } catch (e) {
+    logger.error("boss stop encountered an error");
+    logger.error(util.inspect(e));
+  }
+}
+
+/**
+ * @returns {Promise} when the process ends
+ */
+async function runQueueConsume() {
+  const appConfig = new AppConfig();
+  const logger = Logger.initialize(appConfig);
+  const boss = _pgBossSetup(logger);
+
+  try {
+    await boss.start();
+    logger.debug(`boss started successfully`);
+  } catch (e) {
+    logger.error("boss start encountered an error");
+    logger.error(util.inspect(e));
+  }
+
+  const queue = "analytics-reporter-job-queue";
+
+  try {
+    await boss.work(queue, async (message) => {
+      process.env.AGENCY_NAME = message.agency_name;
+      process.env.ANALYTICS_REPORT_IDS = message.analytics_report_ids;
+      process.env.AWS_BUCKET_PATH = message.aws_bucket_path;
+
+      const appConfig = new AppConfig(message.options);
+      const context = new ReportProcessingContext(new AsyncLocalStorage());
+      await _processReport(appConfig, context, message.reportConfig);
+    });
+  } catch (e) {
+    logger.error("boss work encountered an error");
+    logger.error(util.inspect(e));
+  }
+
+  try {
+    await boss.stop();
+    logger.debug(`boss stopped`);
+  } catch (e) {
+    logger.error("boss stop encountered an error");
+    logger.error(util.inspect(e));
+  }
+}
+
+function _pgBossSetup(logger) {
   const VCAP_SERVICES_JSON = JSON.parse(process.env.VCAP_SERVICES);
   const dbHost = VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["host"];
   const dbUser = VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["username"];
   const dbPassword =
     VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"];
-
-  const appConfig = new AppConfig(options);
-  const reportConfigs = appConfig.filteredReportConfigurations;
-  const logger = Logger.initialize(appConfig);
 
   let boss;
   try {
@@ -95,35 +170,18 @@ async function runQueuePublish(options = {}) {
     logger.info(msg);
   });
 
-  try {
-    await boss.start();
-    logger.info(`boss started successfully`);
-  } catch (e) {
-    logger.error("boss start encountered an error");
-    logger.error(util.inspect(e));
-  }
-  const queue = "analytics-reporter-job-queue";
-
-  for (const reportConfig of reportConfigs) {
-    try {
-      let jobId = await boss.send(queue, reportConfig);
-      logger.info(`created job in queue ${queue} with job ID ${jobId}`);
-    } catch (e) {
-      logger.error("boss send encountered an error");
-      logger.error(util.inspect(e));
-    }
-  }
-
-  try {
-    await boss.stop();
-    logger.info(`boss stopped`);
-  } catch (e) {
-    logger.error("boss stop encountered an error");
-    logger.error(util.inspect(e));
-  }
+  return boss;
 }
 
-//async function queueConsume() {}
+function _createQueueMessage(options, appConfig, reportConfig) {
+  return {
+    agency_name: appConfig.agency_name,
+    analytics_report_ids: appConfig.account.ids,
+    aws_bucket_path: appConfig.aws.path,
+    options,
+    reportConfig,
+  };
+}
 
 /**
  * Creates a new ReportProcessingContext run for the processing of the report.
@@ -186,4 +244,4 @@ function _buildProcessor(appConfig, logger) {
   ]);
 }
 
-module.exports = { run, runQueuePublish };
+module.exports = { run, runQueuePublish, runQueueConsume };
