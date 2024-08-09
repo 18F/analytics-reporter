@@ -52,7 +52,7 @@ jobs:
       - lint
       - test
     if: github.ref == 'refs/heads/feature/poc_redis_cache'
-    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
+    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@feature/poc_redis_cache
     with:
       ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ vars.ANALYTICS_GA4_CALL_RETRY_COUNT_DEV }}
       ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
