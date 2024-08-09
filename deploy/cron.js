@@ -93,10 +93,10 @@ const calculateNextDailyRunTimeOffset = () => {
  * All scripts run immediately upon application start, then run again at
  * intervals going forward.
  */
-api_run();
-daily_run();
+//api_run();
+//daily_run();
 hourly_run();
-realtime_run();
+//realtime_run();
 
 // daily
 // Runs at 10 AM UTC, then every 24 hours afterwards
