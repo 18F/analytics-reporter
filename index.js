@@ -114,15 +114,13 @@ async function runQueueConsume() {
   try {
     await boss.work(queue, async (message) => {
       logger.info("message received");
-      logger.info(typeof message);
-      logger.info(util.inspect(message));
-      process.env.AGENCY_NAME = message.agency_name;
-      process.env.ANALYTICS_REPORT_IDS = message.analytics_report_ids;
-      process.env.AWS_BUCKET_PATH = message.aws_bucket_path;
+      process.env.AGENCY_NAME = message.data.agency_name;
+      process.env.ANALYTICS_REPORT_IDS = message.data.analytics_report_ids;
+      process.env.AWS_BUCKET_PATH = message.data.aws_bucket_path;
 
-      const appConfig = new AppConfig(message.options);
+      const appConfig = new AppConfig(message.data.options);
       const context = new ReportProcessingContext(new AsyncLocalStorage());
-      await _processReport(appConfig, context, message.reportConfig);
+      await _processReport(appConfig, context, message.data.reportConfig);
     });
   } catch (e) {
     logger.error("boss work encountered an error");
