@@ -51,10 +51,21 @@ const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
   });
 
   childProcess.on("close", (code, signal) => {
+    logger.info(`${scriptLoggingName} closed with code: ${code}`);
+    if (signal) {
+      logger.info(`${scriptLoggingName} received signal: ${signal}`);
+    }
+  });
+
+  childProcess.on("exit", (code, signal) => {
     logger.info(`${scriptLoggingName} exitted with code: ${code}`);
     if (signal) {
       logger.info(`${scriptLoggingName} received signal: ${signal}`);
     }
+  });
+
+  childProcess.on("error", (err) => {
+    logger.info(`${scriptLoggingName} errored: ${err}`);
   });
 };
 

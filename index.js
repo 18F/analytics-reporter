@@ -63,6 +63,10 @@ async function runQueuePublish(options = {}) {
   const dbPassword =
     VCAP_SERVICES_JSON["aws-rds"][0]["credentials"]["password"];
 
+  const appConfig = new AppConfig(options);
+  const reportConfigs = appConfig.filteredReportConfigurations;
+  const logger = Logger.initialize(appConfig);
+
   let boss;
   try {
     boss = new PgBoss(
@@ -73,10 +77,6 @@ async function runQueuePublish(options = {}) {
     logger.error("boss creation encountered an error");
     logger.error(util.inspect(e));
   }
-
-  const appConfig = new AppConfig(options);
-  const reportConfigs = appConfig.filteredReportConfigurations;
-  const logger = Logger.initialize(appConfig);
 
   boss.on("error", (error) => {
     logger.info("boss error event occurred");
