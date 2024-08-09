@@ -70,7 +70,22 @@ async function runQueuePublish(options = {}) {
   const reportConfigs = appConfig.filteredReportConfigurations;
   const logger = Logger.initialize(appConfig);
 
-  boss.on("error", (error) => logger.error(error));
+  boss.on("error", (error) => {
+    logger.info("boss error event occurred");
+    logger.info(error);
+  });
+  boss.on("monitor-states", (msg) => {
+    logger.info("boss monitor-states event occurred");
+    logger.info(msg);
+  });
+  boss.on("wip", (msg) => {
+    logger.info("boss wip event occurred");
+    logger.info(msg);
+  });
+  boss.on("stop", (msg) => {
+    logger.info("boss stop event occurred");
+    logger.info(msg);
+  });
   await boss.start();
   const queue = "analytics-reporter-job-queue";
 
