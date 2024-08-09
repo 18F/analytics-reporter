@@ -12,7 +12,6 @@ applications:
   command: node deploy/cron.js
   env:
     ANALYTICS_DEBUG: 'true'
-    ANALYTICS_DEPLOYED_TO_CLOUD_GOV: 'true'
     ANALYTICS_LOG_LEVEL: ${ANALYTICS_LOG_LEVEL}
     # The default property ID for reports (used for gov-wide reports)
     ANALYTICS_REPORT_IDS: '393249053'
