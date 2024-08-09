@@ -113,6 +113,9 @@ async function runQueueConsume() {
 
   try {
     await boss.work(queue, async (message) => {
+      logger.info("message received");
+      logger.info(typeof message);
+      logger.info(util.inspect(message));
       process.env.AGENCY_NAME = message.agency_name;
       process.env.ANALYTICS_REPORT_IDS = message.analytics_report_ids;
       process.env.AWS_BUCKET_PATH = message.aws_bucket_path;
@@ -159,10 +162,6 @@ function _pgBossSetup(logger) {
   });
   boss.on("monitor-states", (msg) => {
     logger.info("boss monitor-states event occurred");
-    logger.info(msg);
-  });
-  boss.on("wip", (msg) => {
-    logger.info("boss wip event occurred");
     logger.info(msg);
   });
   boss.on("stop", (msg) => {
