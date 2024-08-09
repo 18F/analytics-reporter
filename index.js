@@ -113,6 +113,14 @@ async function runQueuePublish(options = {}) {
       logger.error(util.inspect(e));
     }
   }
+
+  try {
+    await boss.stop();
+    logger.info(`boss stopped`);
+  } catch (e) {
+    logger.error("boss stop encountered an error");
+    logger.error(util.inspect(e));
+  }
 }
 
 //async function queueConsume() {}
