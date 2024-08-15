@@ -55,6 +55,7 @@ describe("S3Service", () => {
   });
 
   it("should publish compressed JSON results to the S3 bucket", (done) => {
+    appConfig.format = "json";
     report.name = "test-report";
     let gzipCalled = false;
 
@@ -66,7 +67,15 @@ describe("S3Service", () => {
     subject = new S3Service({ ...appConfig, format: "json" });
 
     subject
-      .publish(report, `${results}`)
+      .publish(
+        {
+          name: report.name,
+          bucket: appConfig.aws.bucket,
+          path: appConfig.aws.path,
+          format: appConfig.format,
+        },
+        `${results}`,
+      )
       .then((putObjectCommand) => {
         expect(putObjectCommand.config.Key).to.equal(
           "path/to/data/test-report.json",
@@ -85,7 +94,8 @@ describe("S3Service", () => {
       .catch(done);
   });
 
-  it("should publish compressed CSV results to the S3 bucket", (done) => {
+  it("should publish CSV results to the S3 bucket", (done) => {
+    appConfig.format = "csv";
     appConfig.aws.cache = undefined;
     report.name = "test-report";
     let gzipCalled = false;
@@ -98,7 +108,15 @@ describe("S3Service", () => {
     subject = new S3Service({ ...appConfig, format: "csv" });
 
     subject
-      .publish(report, `${results}`)
+      .publish(
+        {
+          name: report.name,
+          bucket: appConfig.aws.bucket,
+          path: appConfig.aws.path,
+          format: appConfig.format,
+        },
+        `${results}`,
+      )
       .then((putObjectCommand) => {
         expect(putObjectCommand.config.Key).to.equal(
           "path/to/data/test-report.csv",
@@ -116,6 +134,7 @@ describe("S3Service", () => {
   });
 
   it("should reject if there is an error uploading the data", (done) => {
+    appConfig.format = "json";
     shouldErrorOnSend = true;
     let gzipCalled = false;
 
@@ -127,7 +146,15 @@ describe("S3Service", () => {
     subject = new S3Service({ ...appConfig, format: "json" });
 
     subject
-      .publish(report, `${results}`)
+      .publish(
+        {
+          name: report.name,
+          bucket: appConfig.aws.bucket,
+          path: appConfig.aws.path,
+          format: appConfig.format,
+        },
+        `${results}`,
+      )
       .catch(() => {
         expect(gzipCalled).to.equal(true);
         done();
@@ -136,12 +163,21 @@ describe("S3Service", () => {
   });
 
   it("should reject if there is an error compressing the data", (done) => {
+    appConfig.format = "json";
     zlibMock.gzip = (data, cb) => cb(new Error("test zlib error"));
 
     subject = new S3Service({ ...appConfig, format: "json" });
 
     subject
-      .publish(report.name, `${results}`)
+      .publish(
+        {
+          name: report.name,
+          bucket: appConfig.aws.bucket,
+          path: appConfig.aws.path,
+          format: appConfig.format,
+        },
+        `${results}`,
+      )
       .catch((err) => {
         expect(err.message).to.equal("test zlib error");
         done();

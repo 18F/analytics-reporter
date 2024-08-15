@@ -46,13 +46,29 @@ describe("PublishAnalyticsDataToS3", () => {
         formattedAnalyticsData: formattedAnalyticsData,
         logger: { debug: debugLogSpy },
         reportConfig: reportConfig,
+        appConfig: {
+          aws: {
+            bucket: "test-bucket",
+            cache: 60,
+            path: "path/to/data",
+          },
+          format: "json",
+        },
       };
       await subject.executeStrategy(context);
     });
 
     it("calls s3Service.publish with analytics data and config options", () => {
       expect(
-        s3Service.publish.calledWith(reportConfig, formattedAnalyticsData),
+        s3Service.publish.calledWith(
+          {
+            name: context.reportConfig.name,
+            bucket: context.appConfig.aws.bucket,
+            path: context.appConfig.aws.path,
+            format: context.appConfig.format,
+          },
+          formattedAnalyticsData,
+        ),
       ).to.equal(true);
     });
   });

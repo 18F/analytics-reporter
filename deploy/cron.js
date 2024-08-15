@@ -6,24 +6,8 @@ if (process.env.NEW_RELIC_APP_NAME) {
   require("newrelic");
 }
 
-if (
-  process.env.PROXY_FQDN &&
-  process.env.PROXY_PORT &&
-  process.env.PROXY_USERNAME &&
-  process.env.PROXY_PASSWORD
-) {
-  const credentials = encodeURI(
-    `${process.env.PROXY_USERNAME}:${process.env.PROXY_PASSWORD}`,
-  );
-  const proxy_url = `http://${credentials}@${process.env.PROXY_FQDN}:${process.env.PROXY_PORT}`;
-  // Setting this env var is a standard way to enable proxying for HTTP client
-  // libraries.
-  process.env.HTTPS_PROXY = proxy_url;
-  // We have to set the lowercase version as well, because the grpc-js package
-  // expects it that way. See below:
-  // https://github.com/grpc/grpc-node/blob/da54e75638d06633303f5071a08ca089806355bf/packages/grpc-js/src/http_proxy.ts#L53
-  process.env.https_proxy = proxy_url;
-}
+const maxListenersExceededWarning = require("max-listeners-exceeded-warning");
+maxListenersExceededWarning();
 
 const spawn = require("child_process").spawn;
 const logger = require("../src/logger").initialize();
@@ -51,10 +35,21 @@ const runScriptWithLogName = (scriptPath, scriptLoggingName) => {
   });
 
   childProcess.on("close", (code, signal) => {
+    logger.info(`${scriptLoggingName} closed with code: ${code}`);
+    if (signal) {
+      logger.info(`${scriptLoggingName} received signal: ${signal}`);
+    }
+  });
+
+  childProcess.on("exit", (code, signal) => {
     logger.info(`${scriptLoggingName} exitted with code: ${code}`);
     if (signal) {
       logger.info(`${scriptLoggingName} received signal: ${signal}`);
     }
+  });
+
+  childProcess.on("error", (err) => {
+    logger.info(`${scriptLoggingName} errored: ${err}`);
   });
 };
 
@@ -90,13 +85,14 @@ const calculateNextDailyRunTimeOffset = () => {
 };
 
 /**
- * All scripts run immediately upon application start, then run again at
- * intervals going forward.
+ * All scripts run immediately upon application start (with a 10 second delay
+ * between each so that they don't all run at once), then run again at intervals
+ * going forward.
  */
-api_run();
-daily_run();
-hourly_run();
-realtime_run();
+setTimeout(realtime_run, 1000 * 10);
+setTimeout(hourly_run, 1000 * 20);
+setTimeout(daily_run, 1000 * 30);
+setTimeout(api_run, 1000 * 40);
 
 // daily
 // Runs at 10 AM UTC, then every 24 hours afterwards

@@ -92,7 +92,7 @@ class PostgresPublisher {
   }
 
   #convertDataAttributesToNumbers(data) {
-    const transformedData = Object.assign({}, data);
+    const transformedData = { ...data };
 
     const numbericalAttributes = ["visits", "total_events", "users"];
     numbericalAttributes.forEach((attributeName) => {
@@ -122,9 +122,13 @@ class PostgresPublisher {
         delete dataQuery.users;
         delete dataQuery.total_events;
         Object.keys(dataQuery).forEach((dataKey) => {
-          query = query.whereRaw(`data->>'${dataKey}' = ?`, [
-            dataQuery[dataKey],
-          ]);
+          // Replace single quotes with double single quotes to avoid SQL syntax
+          // problems when searching for strings with single quotes.
+          // Replace ? with \\? to avoid knex trying to substitute the question
+          // mark with a value.
+          query = query.whereRaw(
+            `data @> '{"${dataKey}":"${dataQuery[dataKey].replaceAll("'", "''").replaceAll("?", "\\?")}"}'::jsonb`,
+          );
         });
       } else {
         query = query.where({ [key]: row[key] });
