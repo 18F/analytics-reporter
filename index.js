@@ -128,6 +128,7 @@ async function runQueuePublish(options = {}) {
             appConfig.scriptName,
           ),
           {
+            priority: _messagePriority(reportConfig),
             singletonKey: `${appConfig.scriptName}-${appConfig.agency}-${reportConfig.name}-${appConfig.format}`,
           },
         );
@@ -192,6 +193,18 @@ function _createQueueMessage(options, agency, reportConfig, scriptName) {
     reportConfig,
     scriptName,
   };
+}
+
+function _messagePriority(reportConfig) {
+  if (!reportConfig.frequency) {
+    return 0;
+  } else if (reportConfig.frequency == "daily") {
+    return 1;
+  } else if (reportConfig.frequency == "hourly") {
+    return 2;
+  } else if (reportConfig.frequency == "realtime") {
+    return 3;
+  }
 }
 
 /**
