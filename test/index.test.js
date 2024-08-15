@@ -58,6 +58,10 @@ class Processor {
     }
     return Promise.resolve(reportConfig);
   }
+
+  static buildAnalyticsProcessor() {
+    return new Processor();
+  }
 }
 
 class S3Service {}
@@ -80,6 +84,7 @@ describe("index", () => {
     logger = {
       info: sinon.spy(),
       error: sinon.spy(),
+      clear: sinon.spy(),
     };
   });
 

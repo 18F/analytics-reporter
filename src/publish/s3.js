@@ -8,6 +8,7 @@ const zlib = require("zlib");
  */
 class S3Service {
   #appConfig;
+  #s3Client;
 
   /**
    * @param {import('../app_config')} appConfig application config instance. Provides the
@@ -16,6 +17,7 @@ class S3Service {
    */
   constructor(appConfig) {
     this.#appConfig = appConfig;
+    this.#s3Client = this.#buildS3Client(appConfig);
   }
 
   #buildS3Client(appConfig) {
@@ -51,20 +53,19 @@ class S3Service {
    * @returns {Promise} resolves when the S3 operations complete. Rejects
    * if S3 operations have an error.
    */
-  async publish({ name }, data) {
+  async publish({ name, bucket, path, format }, data) {
     const compressed = await this.#compress(data);
     const command = new PutObjectCommand({
-      Bucket: this.#appConfig.aws.bucket,
-      Key: this.#appConfig.aws.path + "/" + name + "." + this.#appConfig.format,
+      Bucket: bucket,
+      Key: path + "/" + name + "." + format,
       Body: compressed,
-      ContentType: this.#mime(this.#appConfig.format),
+      ContentType: this.#mime(format),
       ContentEncoding: "gzip",
       ACL: "public-read",
       CacheControl: "max-age=" + (this.#appConfig.aws.cache || 0),
     });
-    const s3Client = this.#buildS3Client(this.#appConfig);
 
-    return s3Client.send(command);
+    return this.#s3Client.send(command);
   }
 
   #compress(data) {

@@ -8,50 +8,57 @@ const winston = require("winston");
  * @returns {string} a standard tag for the logger to identify the specific
  * report being processed when writing logs.
  */
-const tag = (appConfig, reportConfig) => {
+const tag = ({ agencyName, reportName, scriptName }) => {
   let tagString = "";
 
-  if (appConfig.scriptName) {
-    tagString = tagString + `${appConfig.scriptName} - `;
+  if (scriptName) {
+    tagString = tagString + `${scriptName} - `;
   }
-  if (reportConfig.name) {
-    tagString = tagString + `${reportConfig.name} - `;
+  if (reportName) {
+    tagString = tagString + `${reportName} - `;
   }
-  if (appConfig.agency) {
-    tagString = tagString + `${appConfig.agency}`;
+  if (agencyName) {
+    tagString = tagString + `${agencyName}`;
   }
 
   return tagString;
 };
 
+const logLevel = process.env.ANALYTICS_LOG_LEVEL || "debug";
+const baseLogger = winston.createLogger({
+  level: logLevel,
+  format: winston.format.printf(
+    (logArgs) =>
+      `${winston.format.colorize().colorize(logArgs.level, logArgs.level)}: ${logArgs.label ? `[${logArgs.label}]` : ``} ${logArgs.message}`,
+  ),
+  transports: [
+    new winston.transports.Console({
+      level: logLevel,
+    }),
+  ],
+});
+
+/**
+ * Creates an application logger instance.
+ *
+ * @param {import('../app_config')} appConfig application config instance. Sets the log level and
+ * is also referenced to create a leading log tag for this logger instance.
+ * @param {object} reportConfig config for the report being run for this
+ * logger instance. Used to create a leading log tag for messages
+ * @param {string} reportConfig.name the name of the report being run for this
+ * logger instance. Used to create a leading log tag for messages
+ * @returns {import('winston').Logger} the configured logger instance
+ */
+const initialize = (appConfig = {}, reportConfig = {}) => {
+  return baseLogger.child({
+    label: tag({
+      agencyName: appConfig.agency,
+      reportName: reportConfig.name,
+      scriptName: appConfig.scriptName,
+    }),
+  });
+};
+
 module.exports = {
-  /**
-   * Creates an application logger instance.
-   *
-   * @param {import('../app_config')} appConfig application config instance. Sets the log level and
-   * is also referenced to create a leading log tag for this logger instance.
-   * @param {object} reportConfig config for the report being run for this
-   * logger instance. Used to create a leading log tag for messages
-   * @param {string} reportConfig.name the name of the report being run for this
-   * logger instance. Used to create a leading log tag for messages
-   * @returns {import('winston').Logger} the configured logger instance
-   */
-  initialize: (appConfig = { logLevel: "debug" }, reportConfig = {}) => {
-    return winston.createLogger({
-      level: appConfig.logLevel,
-      format: winston.format.combine(
-        winston.format.label({
-          label: tag(appConfig, reportConfig),
-          message: true,
-        }),
-        winston.format.colorize(),
-        winston.format.simple(),
-      ),
-      transports: [
-        new winston.transports.Console({
-          level: appConfig.logLevel,
-        }),
-      ],
-    });
-  },
+  initialize,
 };

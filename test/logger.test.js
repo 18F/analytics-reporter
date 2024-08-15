@@ -9,7 +9,14 @@ class WinstonConsoleMock {
 
 const winstonMock = {
   createLogger: (loggerConfig) => {
-    return loggerConfig;
+    return {
+      child: (childConfig) => {
+        return {
+          ...loggerConfig,
+          ...childConfig,
+        };
+      },
+    };
   },
   format: {
     combine: (...args) => {
@@ -21,8 +28,11 @@ const winstonMock = {
     label: (options) => {
       return options;
     },
-    simple: () => {
-      return "simple";
+    timestamp: () => {
+      return "timestamp";
+    },
+    printf: () => {
+      return "printf";
     },
   },
   transports: {
@@ -30,29 +40,34 @@ const winstonMock = {
   },
 };
 
-const logger = proxyquire("../src/logger", {
-  winston: winstonMock,
-});
-
 describe("logger", () => {
+  let subject;
+
   describe(".initialize", () => {
     describe("when config is provided", () => {
       const logLevel = "warn";
       const config = {
-        logLevel,
         scriptName: "foobar.sh",
         agency: "gov-wide",
       };
       const reportConfig = { name: "device" };
 
+      beforeEach(() => {
+        process.env.ANALYTICS_LOG_LEVEL = logLevel;
+        subject = proxyquire("../src/logger", {
+          winston: winstonMock,
+        });
+      });
+
+      afterEach(() => {
+        delete process.env.ANALYTICS_LOG_LEVEL;
+      });
+
       it("creates a logger with log level set to the environment value", () => {
-        expect(logger.initialize(config, reportConfig)).to.eql({
+        expect(subject.initialize(config, reportConfig)).to.eql({
           level: logLevel,
-          format: [
-            { label: "foobar.sh - device - gov-wide", message: true },
-            "colorize",
-            "simple",
-          ],
+          format: "printf",
+          label: "foobar.sh - device - gov-wide",
           transports: [new WinstonConsoleMock({ level: logLevel })],
         });
       });
@@ -61,10 +76,18 @@ describe("logger", () => {
     describe("when config is not provided", () => {
       const logLevel = "debug";
 
+      beforeEach(() => {
+        delete process.env.ANALYTICS_LOG_LEVEL;
+        subject = proxyquire("../src/logger", {
+          winston: winstonMock,
+        });
+      });
+
       it("creates a logger with log level set to debug", () => {
-        expect(logger.initialize()).to.eql({
+        expect(subject.initialize()).to.eql({
           level: logLevel,
-          format: [{ label: "", message: true }, "colorize", "simple"],
+          format: "printf",
+          label: "",
           transports: [new WinstonConsoleMock({ level: logLevel })],
         });
       });

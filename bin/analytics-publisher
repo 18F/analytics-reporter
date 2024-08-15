@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+
+/*
+ * Publish messages to the analytics reporter queue for each report based on the
+ * options passed to this script. Queue consumers act on each message,
+ * processing and storing the analytics data.
+ *
+ * Usage: analytics-publisher
+ *
+ * Defaults to printing JSON to STDOUT.
+ *
+ * --output: Output data to a directory.
+ * --publish: Publish to an S3 bucket.
+ * --only: only run one or more named reports.
+ * --slim: Where supported, use totals only (omit the `data` array).
+ *         Only applies to JSON, and reports where "slim": true.
+ * --csv: CSV instead of JSON.
+ * --frequency: Limit to reports with this 'frequency' value.
+ * --debug: print debug details on STDOUT
+ * --agenciesFile: The file path of a JSON array of agency objects. Reports will
+ *                 run for each agency provided in the array
+ */
+
+const minimist = require("minimist");
+const run = require("../index.js").runQueuePublish;
+const options = minimist(process.argv.slice(2));
+
+(async () => {
+  await run(options);
+})()
+

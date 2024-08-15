@@ -1,0 +1,42 @@
+applications:
+- name: ${APP_NAME}-consumer
+  instances: 2
+  # 1GB is needed right at startup because many child processes are spawned in
+  # parallel. This could be reduced if we limited the number of simultaneous
+  # processes.
+  memory: 384M
+  disk_quota: 512M
+  health-check-type: process
+  buildpacks:
+  - nodejs_buildpack
+  command: node deploy/consumer.js
+  env:
+    # This is a JSON string which has been base64 encoded
+    ANALYTICS_CREDENTIALS: ${ANALYTICS_CREDENTIALS}
+    ANALYTICS_DEBUG: 'true'
+    ANALYTICS_DEPLOYED_TO_CLOUD_GOV: 'true'
+    ANALYTICS_GA4_CALL_RETRY_COUNT: ${ANALYTICS_GA4_CALL_RETRY_COUNT}
+    ANALYTICS_LOG_LEVEL: ${ANALYTICS_LOG_LEVEL}
+    ANALYTICS_KEY_PATH: /home/vcap/app/${ANALYTICS_KEY_FILE_NAME}
+    ANALYTICS_REPORT_EMAIL: ${ANALYTICS_REPORT_EMAIL}
+    AWS_CACHE_TIME: '0'
+    GOOGLE_APPLICATION_CREDENTIALS: /home/vcap/app/${ANALYTICS_KEY_FILE_NAME}
+    MESSAGE_QUEUE_DATABASE_NAME: ${MESSAGE_QUEUE_DATABASE_NAME}
+    MESSAGE_QUEUE_NAME: ${MESSAGE_QUEUE_NAME}
+    NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
+    NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+    NODE_ENV: production
+    NODE_OPTIONS: --max-old-space-size=192
+    PGSSLMODE: true
+    PROXY_USERNAME: ${PROXY_USERNAME}
+    PROXY_PASSWORD: ${PROXY_PASSWORD}
+    PROXY_FQDN: ${PROXY_FQDN}
+    PROXY_PORT: ${PROXY_PORT}
+  services:
+  - ${S3_SERVICE_NAME}
+  - ${DB_SERVICE_NAME}
+  routes:
+  - route: ${APP_NAME}-consumer.apps.internal
+  stack: cflinuxfs4
+  timeout: 180
+  path: .
