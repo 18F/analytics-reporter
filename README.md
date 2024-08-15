@@ -8,7 +8,7 @@ A lightweight system for publishing analytics data from the Digital Analytics Pr
 This project uses the [Google Analytics Data API v1](https://developers.google.com/analytics/devguides/reporting/data/v1/rest) to acquire analytics data and then processes it into a flat data structure.
 
 The project previously used the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/)
-and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/), also known as Universal Analytics,  which has slightly different data points. See [Upgrading from Universal Analytics](#upgrading-from-universal-analytics) for more details. The Google Analytics v3 API will be deprecated on July 1, 2024.
+and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/), also known as Universal Analytics, which has slightly different data points. See [Upgrading from Universal Analytics](#upgrading-from-universal-analytics) for more details. The Google Analytics v3 API will be deprecated on July 1, 2024.
 
 This is used in combination with [analytics-reporter-api](https://github.com/18F/analytics-reporter-api) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
 
@@ -433,27 +433,38 @@ Examples below use the Cloudfoundry CLI.
 ```bash
 # Create and bind an S3 bucket service to the app
 cf create-service s3 basic-public analytics-s3
-cf bind-service analytics-reporter analytics-s3
+cf bind-service analytics-reporter-consumer analytics-s3
 
-# Create and bind a RDS Postgres service to the app
+# Create a RDS Postgres service for use by the app
 cf create-service aws-rds small-psql analytics-reporter-database
-cf bind-service analytics-reporter analytics-reporter-database
 
-# Database migrations are handled by the analytics-reporter-api application.
-# Deploy the API server via CI to migrate the database.
+# Connect to the database, enable pgcrypto extension, and create a new database
+# for the PgBoss message queue library
+cf connect-to-service -no-client analytics-develop analytics-reporter-database-develop
+psql -h localhost -p <port> -U <username> -d <database>
+`CREATE EXTENSION IF NOT EXISTS "pgcrypto";`
+`\dx` # check installed extension to ensure pgcrypto exists now.
+`CREATE DATABASE <message_queue_database_name>;`
 
-# Create an internal app route for the application (for the egress proxy to communicate back to the server).
-cf map-route analytics-reporter apps.internal --hostname analytics-reporter
+# Bind the database to both the publisher and consumer apps
+cf bind-service analytics-reporter-publisher analytics-reporter-database
+cf bind-service analytics-reporter-consumer analytics-reporter-database
+
+# Database migrations for the reporter's analytics database are handled by the
+# analytics-reporter-api application. Deploy the API server via CI to migrate
+# the database.
 
 # Remove public egress permissions from the space running the application if it has them
 cf unbind-security-group public_networks_egress gsa-opp-analytics analytics-dev --lifecycle running
 
 # Create a network policy in the application's space which allows communication to the egress proxy which runs in a space with public egress permissions
-cf add-network-policy analytics-reporter analytics-egress-proxy -s analytics-public-egress -o gsa-opp-analytics --protocol tcp --port 8080
+cf add-network-policy analytics-reporter-consumer analytics-egress-proxy -s analytics-public-egress -o gsa-opp-analytics --protocol tcp --port 8080
+
 
 # Create a network policy in the public-egress space which allows communication from the egress proxy back to the application.
 # The port for each API call the app makes is determined randomly, so allow the full range of port numbers.
-cf add-network-policy analytics-egress-proxy analytics-reporter -s analytics-dev -o gsa-opp-analytics --protocol tcp --port 1-65535
+cf target -s analytics-public-egress
+cf add-network-policy analytics-egress-proxy analytics-reporter-consumer -s analytics-dev -o gsa-opp-analytics --protocol tcp --port 1-65535
 ```
 
 ## Upgrading from Universal Analytics

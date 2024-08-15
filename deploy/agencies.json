@@ -1,0 +1,406 @@
+[
+  {
+    "analyticsReportIds": "397708109",
+    "awsBucketPath": "data/live"
+  },
+  {
+    "analyticsReportIds": "395456687",
+    "agencyName": "access-board",
+    "awsBucketPath": "data/access-board"
+  },
+  {
+    "analyticsReportIds": "395453549",
+    "agencyName": "agency-global-media",
+    "awsBucketPath": "data/agency-global-media"
+  },
+  {
+    "analyticsReportIds": "395450427",
+    "agencyName": "agency-international-development",
+    "awsBucketPath": "data/agency-international-development"
+  },
+  {
+    "analyticsReportIds": "395461442",
+    "agencyName": "agriculture",
+    "awsBucketPath": "data/agriculture"
+  },
+  {
+    "analyticsReportIds": "395213963",
+    "agencyName": "american-battle-monuments-commission",
+    "awsBucketPath": "data/american-battle-monuments-commission"
+  },
+  {
+    "analyticsReportIds": "395253935",
+    "agencyName": "commerce",
+    "awsBucketPath": "data/commerce"
+  },
+  {
+    "analyticsReportIds": "395463975",
+    "agencyName": "commission-civil-rights",
+    "awsBucketPath": "data/commission-civil-rights"
+  },
+  {
+    "analyticsReportIds": "395256592",
+    "agencyName": "commodity-futures-trading-commission",
+    "awsBucketPath": "data/commodity-futures-trading-commission"
+  },
+  {
+    "analyticsReportIds": "395252447",
+    "agencyName": "consumer-financial-protection-bureau",
+    "awsBucketPath": "data/consumer-financial-protection-bureau"
+  },
+  {
+    "analyticsReportIds": "395229915",
+    "agencyName": "consumer-product-safety-commission",
+    "awsBucketPath": "data/consumer-product-safety-commission"
+  },
+  {
+    "analyticsReportIds": "395233541",
+    "agencyName": "corporation-national-community-service",
+    "awsBucketPath": "data/corporation-national-community-service"
+  },
+  {
+    "analyticsReportIds": "395236998",
+    "agencyName": "defense-nuclear-facilities-safety-board",
+    "awsBucketPath": "data/defense-nuclear-facilities-safety-board"
+  },
+  {
+    "analyticsReportIds": "395251747",
+    "agencyName": "defense",
+    "awsBucketPath": "data/defense"
+  },
+  {
+    "analyticsReportIds": "451719437",
+    "agencyName": "denali-commission",
+    "awsBucketPath": "data/denali-commission"
+  },
+  {
+    "analyticsReportIds": "395246701",
+    "agencyName": "education",
+    "awsBucketPath": "data/education"
+  },
+  {
+    "analyticsReportIds": "395236978",
+    "agencyName": "energy",
+    "awsBucketPath": "data/energy"
+  },
+  {
+    "analyticsReportIds": "395252829",
+    "agencyName": "environmental-protection-agency",
+    "awsBucketPath": "data/environmental-protection-agency"
+  },
+  {
+    "analyticsReportIds": "395227834",
+    "agencyName": "equal-employment-opportunity-commission",
+    "awsBucketPath": "data/equal-employment-opportunity-commission"
+  },
+  {
+    "analyticsReportIds": "395437322",
+    "agencyName": "executive-office-president",
+    "awsBucketPath": "data/executive-office-president"
+  },
+  {
+    "analyticsReportIds": "433204342",
+    "agencyName": "farm-credit-administration",
+    "awsBucketPath": "data/farm-credit-administration"
+  },
+  {
+    "analyticsReportIds": "395455171",
+    "agencyName": "federal-bureau-investigation",
+    "awsBucketPath": "data/federal-bureau-investigation"
+  },
+  {
+    "analyticsReportIds": "395455467",
+    "agencyName": "federal-deposit-insurance-corporation",
+    "awsBucketPath": "data/federal-deposit-insurance-corporation"
+  },
+  {
+    "analyticsReportIds": "395446398",
+    "agencyName": "federal-election-commission",
+    "awsBucketPath": "data/federal-election-commission"
+  },
+  {
+    "analyticsReportIds": "395457791",
+    "agencyName": "federal-energy-regulatory-commission",
+    "awsBucketPath": "data/federal-energy-regulatory-commission"
+  },
+  {
+    "analyticsReportIds": "395442267",
+    "agencyName": "federal-housing-finance-agency",
+    "awsBucketPath": "data/federal-housing-finance-agency"
+  },
+  {
+    "analyticsReportIds": "445602092",
+    "agencyName": "federal-maritime-commission",
+    "awsBucketPath": "data/federal-maritime-commission"
+  },
+  {
+    "analyticsReportIds": "446076957",
+    "agencyName": "federal-mine-safety-health-review-commission",
+    "awsBucketPath": "data/federal-mine-safety-health-review-commission"
+  },
+  {
+    "analyticsReportIds": "395449505",
+    "agencyName": "federal-retirement-thrift-investment-board",
+    "awsBucketPath": "data/federal-retirement-thrift-investment-board"
+  },
+  {
+    "analyticsReportIds": "395449415",
+    "agencyName": "federal-trade-commission",
+    "awsBucketPath": "data/federal-trade-commission"
+  },
+  {
+    "analyticsReportIds": "395251184",
+    "agencyName": "general-services-administration",
+    "awsBucketPath": "data/general-services-administration"
+  },
+  {
+    "analyticsReportIds": "395460726",
+    "agencyName": "health-human-services",
+    "awsBucketPath": "data/health-human-services"
+  },
+  {
+    "analyticsReportIds": "395243274",
+    "agencyName": "homeland-security",
+    "awsBucketPath": "data/homeland-security"
+  },
+  {
+    "analyticsReportIds": "395457289",
+    "agencyName": "housing-urban-development",
+    "awsBucketPath": "data/housing-urban-development"
+  },
+  {
+    "analyticsReportIds": "424430051",
+    "agencyName": "inter-american-foundation",
+    "awsBucketPath": "data/inter-american-foundation"
+  },
+  {
+    "analyticsReportIds": "395227436",
+    "agencyName": "interior",
+    "awsBucketPath": "data/interior"
+  },
+  {
+    "analyticsReportIds": "395113416",
+    "agencyName": "international-development-finance-corporation",
+    "awsBucketPath": "data/international-development-finance-corporation"
+  },
+  {
+    "analyticsReportIds": "395460932",
+    "agencyName": "international-trade-commission",
+    "awsBucketPath": "data/international-trade-commission"
+  },
+  {
+    "analyticsReportIds": "395234366",
+    "agencyName": "justice",
+    "awsBucketPath": "data/justice"
+  },
+  {
+    "analyticsReportIds": "395262085",
+    "agencyName": "labor",
+    "awsBucketPath": "data/labor"
+  },
+  {
+    "analyticsReportIds": "395444789",
+    "agencyName": "merit-systems-protection-board",
+    "awsBucketPath": "data/merit-systems-protection-board"
+  },
+  {
+    "analyticsReportIds": "395454156",
+    "agencyName": "millennium-challenge-corporation",
+    "awsBucketPath": "data/millennium-challenge-corporation"
+  },
+  {
+    "analyticsReportIds": "395454267",
+    "agencyName": "national-aeronautics-space-administration",
+    "awsBucketPath": "data/national-aeronautics-space-administration"
+  },
+  {
+    "analyticsReportIds": "395458906",
+    "agencyName": "national-archives-records-administration",
+    "awsBucketPath": "data/national-archives-records-administration"
+  },
+  {
+    "analyticsReportIds": "395459624",
+    "agencyName": "national-capital-planning-commission",
+    "awsBucketPath": "data/national-capital-planning-commission"
+  },
+  {
+    "analyticsReportIds": "432696271",
+    "agencyName": "national-council-disability",
+    "awsBucketPath": "data/national-council-disability"
+  },
+  {
+    "analyticsReportIds": "395453466",
+    "agencyName": "national-credit-union-administration",
+    "awsBucketPath": "data/national-credit-union-administration"
+  },
+  {
+    "analyticsReportIds": "395455475",
+    "agencyName": "national-education-association",
+    "awsBucketPath": "data/national-education-association"
+  },
+  {
+    "analyticsReportIds": "395450224",
+    "agencyName": "national-endowment-humanities",
+    "awsBucketPath": "data/national-endowment-humanities"
+  },
+  {
+    "analyticsReportIds": "395452956",
+    "agencyName": "national-labor-relations-board",
+    "awsBucketPath": "data/national-labor-relations-board"
+  },
+  {
+    "analyticsReportIds": "425930242",
+    "agencyName": "national-mediation-board",
+    "awsBucketPath": "data/national-mediation-board"
+  },
+  {
+    "analyticsReportIds": "395455884",
+    "agencyName": "national-park-service",
+    "awsBucketPath": "data/national-park-service"
+  },
+  {
+    "analyticsReportIds": "426999924",
+    "agencyName": "national-reconnaissance-office",
+    "awsBucketPath": "data/national-reconnaissance-office"
+  },
+  {
+    "analyticsReportIds": "395443988",
+    "agencyName": "national-science-foundation",
+    "awsBucketPath": "data/national-science-foundation"
+  },
+  {
+    "analyticsReportIds": "395446803",
+    "agencyName": "national-transportation-safety-board",
+    "awsBucketPath": "data/national-transportation-safety-board"
+  },
+  {
+    "analyticsReportIds": "395460734",
+    "agencyName": "nuclear-regulatory-commission",
+    "awsBucketPath": "data/nuclear-regulatory-commission"
+  },
+  {
+    "analyticsReportIds": "436324183",
+    "agencyName": "nuclear-waste-technical-review-board",
+    "awsBucketPath": "data/nuclear-waste-technical-review-board"
+  },
+  {
+    "analyticsReportIds": "395449711",
+    "agencyName": "office-director-national-intelligence",
+    "awsBucketPath": "data/office-director-national-intelligence"
+  },
+  {
+    "analyticsReportIds": "395449111",
+    "agencyName": "office-government-ethics",
+    "awsBucketPath": "data/office-government-ethics"
+  },
+  {
+    "analyticsReportIds": "426919252",
+    "agencyName": "office-navajo-hopi-indian-relocation",
+    "awsBucketPath": "data/office-navajo-hopi-indian-relocation"
+  },
+  {
+    "analyticsReportIds": "395441051",
+    "agencyName": "office-personnel-management",
+    "awsBucketPath": "data/office-personnel-management"
+  },
+  {
+    "analyticsReportIds": "395459211",
+    "agencyName": "peace-corps",
+    "awsBucketPath": "data/peace-corps"
+  },
+  {
+    "analyticsReportIds": "395457296",
+    "agencyName": "pension-benefit-guaranty-corporation",
+    "awsBucketPath": "data/pension-benefit-guaranty-corporation"
+  },
+  {
+    "analyticsReportIds": "422356675",
+    "agencyName": "postal-inspection-service",
+    "awsBucketPath": "data/postal-inspection-service"
+  },
+  {
+    "analyticsReportIds": "407064941",
+    "agencyName": "postal-regulatory-commission",
+    "awsBucketPath": "data/postal-regulatory-commission"
+  },
+  {
+    "analyticsReportIds": "395466379",
+    "agencyName": "postal-service",
+    "awsBucketPath": "data/postal-service"
+  },
+  {
+    "analyticsReportIds": "395461632",
+    "agencyName": "privacy-civil-liberties-oversight-board",
+    "awsBucketPath": "data/privacy-civil-liberties-oversight-board"
+  },
+  {
+    "analyticsReportIds": "397625389",
+    "agencyName": "public-buildings-reform-board",
+    "awsBucketPath": "data/public-buildings-reform-board"
+  },
+  {
+    "analyticsReportIds": "395455287",
+    "agencyName": "railroad-retirement-board",
+    "awsBucketPath": "data/railroad-retirement-board"
+  },
+  {
+    "analyticsReportIds": "395463162",
+    "agencyName": "securities-exchange-commission",
+    "awsBucketPath": "data/securities-exchange-commission"
+  },
+  {
+    "analyticsReportIds": "395437327",
+    "agencyName": "small-business-administration",
+    "awsBucketPath": "data/small-business-administration"
+  },
+  {
+    "analyticsReportIds": "397629136",
+    "agencyName": "social-security-administration",
+    "awsBucketPath": "data/social-security-administration"
+  },
+  {
+    "analyticsReportIds": "395438870",
+    "agencyName": "special-inspector-general-afghanistan-restoration",
+    "awsBucketPath": "data/special-inspector-general-afghanistan-restoration"
+  },
+  {
+    "analyticsReportIds": "395253929",
+    "agencyName": "state",
+    "awsBucketPath": "data/state"
+  },
+  {
+    "analyticsReportIds": "395461338",
+    "agencyName": "surface-transportation-board",
+    "awsBucketPath": "data/surface-transportation-board"
+  },
+  {
+    "analyticsReportIds": "449053587",
+    "agencyName": "tennessee-valley-authority",
+    "awsBucketPath": "data/tennessee-valley-authority"
+  },
+  {
+    "analyticsReportIds": "397513313",
+    "agencyName": "trade-development-agency",
+    "awsBucketPath": "data/trade-development-agency"
+  },
+  {
+    "analyticsReportIds": "395245646",
+    "agencyName": "transportation",
+    "awsBucketPath": "data/transportation"
+  },
+  {
+    "analyticsReportIds": "395126080",
+    "agencyName": "treasury",
+    "awsBucketPath": "data/treasury"
+  },
+  {
+    "analyticsReportIds": "431046847",
+    "agencyName": "udall-foundation",
+    "awsBucketPath": "data/udall-foundation"
+  },
+  {
+    "analyticsReportIds": "395452039",
+    "agencyName": "veterans-affairs",
+    "awsBucketPath": "data/veterans-affairs"
+  }
+]

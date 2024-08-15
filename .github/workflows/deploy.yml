@@ -25,6 +25,12 @@ on:
       DB_SERVICE_NAME:
         required: true
         type: string
+      MESSAGE_QUEUE_DATABASE_NAME:
+        required: true
+        type: string
+      MESSAGE_QUEUE_NAME:
+        required: true
+        type: string
       NEW_RELIC_APP_NAME:
         type: string
       PROXY_FQDN:
@@ -64,6 +70,8 @@ env:
   CF_SPACE_NAME: ${{ inputs.CF_SPACE_NAME }}
   DB_SERVICE_NAME: ${{ inputs.DB_SERVICE_NAME }}
   GA4_CREDS: ${{ secrets.GA4_CREDS }}
+  MESSAGE_QUEUE_DATABASE_NAME: ${{ inputs.MESSAGE_QUEUE_DATABASE_NAME }}
+  MESSAGE_QUEUE_NAME: ${{ inputs.MESSAGE_QUEUE_NAME }}
   NEW_RELIC_APP_NAME: ${{ inputs.NEW_RELIC_APP_NAME }}
   NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
   PROXY_FQDN: ${{ inputs.PROXY_FQDN }}
@@ -73,7 +81,7 @@ env:
   S3_SERVICE_NAME: ${{ inputs.S3_SERVICE_NAME }}
 
 jobs:
-  deploy_reporter:
+  deploy_reporter_publisher:
     runs-on: ubuntu-latest
     steps:
       - name: Code checkout
@@ -97,7 +105,49 @@ jobs:
           echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
       - name: Run envsubst on manifest.yml to set environment specific values
         run: |
-          mv manifest.yml manifest.yml.src
+          mv manifest.publisher.yml manifest.yml.src
+          envsubst < manifest.yml.src > manifest.yml
+          cat manifest.yml
+      - name: Replace knexfile.js with .cloudgov version of that file
+        run: |
+          rm knexfile.js
+          mv knexfile.cloudgov.js knexfile.js
+      - name: Login to cloud.gov and deploy
+        run: |
+          set -e
+          # Log into cloud.gov
+          cf api api.fr.cloud.gov
+          cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION_NAME -s $CF_SPACE_NAME
+          # Stop the running app (to save memory of two instances running until staging is complete)
+          cf stop $APP_NAME
+          # Deploy app
+          cf push -f "./manifest.yml"
+          cf logout
+  deploy_reporter_consumer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: 'npm'
+      - name: Install node dependencies
+        # This causes npm install to omit dev dependencies per NPM docs.
+        env:
+          NODE_ENV: production
+        run: npm ci
+      - name: Install cloud foundry CLI for interacting with cloud.gov
+        run: |
+          sudo curl -v -L -o cf8-cli-installer_8.7.4_x86-64.deb 'https://packages.cloudfoundry.org/stable?release=debian64&version=8.7.4'
+          sudo dpkg -i cf8-cli-installer_8.7.4_x86-64.deb
+      - name: Write Google GA4 Credentials file from the value in GA4_CREDS env var.
+        run: |
+          echo $GA4_CREDS > ./my-analytics-ga4-65057af58daa.json
+      - name: Run envsubst on manifest.yml to set environment specific values
+        run: |
+          mv manifest.consumer.yml manifest.yml.src
           envsubst < manifest.yml.src > manifest.yml
           cat manifest.yml
       - name: Replace knexfile.js with .cloudgov version of that file
