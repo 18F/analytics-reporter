@@ -119,7 +119,7 @@ jobs:
           cf api api.fr.cloud.gov
           cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION_NAME -s $CF_SPACE_NAME
           # Stop the running app (to save memory of two instances running until staging is complete)
-          cf stop $APP_NAME
+          cf stop $APP_NAME-publisher
           # Deploy app
           cf push -f "./manifest.yml"
           cf logout
@@ -161,7 +161,7 @@ jobs:
           cf api api.fr.cloud.gov
           cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION_NAME -s $CF_SPACE_NAME
           # Stop the running app (to save memory of two instances running until staging is complete)
-          cf stop $APP_NAME
+          cf stop $APP_NAME-consumer
           # Deploy app
           cf push -f "./manifest.yml"
           cf logout
