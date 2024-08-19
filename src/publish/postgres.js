@@ -127,7 +127,9 @@ class PostgresPublisher {
           // Replace ? with \\? to avoid knex trying to substitute the question
           // mark with a value.
           query = query.whereRaw(
-            `data @> '{"${dataKey}":"${dataQuery[dataKey].replaceAll("'", "''").replaceAll("?", "\\?")}"}'::jsonb`,
+            `data @> '${JSON.stringify({ [dataKey]: dataQuery[dataKey] })
+              .replaceAll("'", "''")
+              .replaceAll("?", "\\?")}'::jsonb`,
           );
         });
       } else {
