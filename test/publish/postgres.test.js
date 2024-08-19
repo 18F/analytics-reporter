@@ -131,6 +131,11 @@ describe("PostgresPublisher", () => {
         },
         {
           date: "2017-02-11",
+          visits: "234",
+          browser: 'Fake string with "double" quote',
+        },
+        {
+          date: "2017-02-11",
           visits: "910",
           browser: "Fake string? with question mark",
         },
@@ -153,6 +158,11 @@ describe("PostgresPublisher", () => {
         },
         {
           date: "2017-02-11",
+          visits: "234",
+          browser: 'Fake string with "double" quote',
+        },
+        {
+          date: "2017-02-11",
           visits: "910",
           browser: "Fake string? with question mark",
         },
@@ -169,7 +179,7 @@ describe("PostgresPublisher", () => {
             .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
         .then((rows) => {
-          expect(rows).to.have.length(5);
+          expect(rows).to.have.length(6);
           done();
         })
         .catch(done);
