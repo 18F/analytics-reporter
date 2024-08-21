@@ -114,8 +114,8 @@ async function runQueuePublish(options = {}) {
   const queueClient = await _initQueueClient(appConfig, appLogger);
   const queue = "analytics-reporter-job-queue";
 
-  for (const reportConfig of reportConfigs) {
-    for (const agency of agencies) {
+  for (const agency of agencies) {
+    for (const reportConfig of reportConfigs) {
       process.env.AGENCY_NAME = agency.agencyName;
       const reportLogger = Logger.initialize(appConfig, reportConfig);
       try {
