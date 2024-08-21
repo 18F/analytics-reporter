@@ -23,7 +23,21 @@ const calculateTotals = (result, options = {}) => {
 
   if (options.sumVisitsByColumns && Array.isArray(options.sumVisitsByColumns)) {
     for (const column of options.sumVisitsByColumns) {
-      totals[`by_${column}`] = _sumVisitsByColumn({ column, result });
+      totals[`by_${column}`] = _sumMetricByColumn({
+        metric: "visits",
+        column,
+        result,
+      });
+    }
+  }
+
+  if (options.sumUsersByColumns && Array.isArray(options.sumUsersByColumns)) {
+    for (const column of options.sumUsersByColumns) {
+      totals[`by_${column}`] = _sumMetricByColumn({
+        metric: "users",
+        column,
+        result,
+      });
     }
   }
 
@@ -73,11 +87,11 @@ const _sumColumn = ({ result, column }) => {
   }, 0);
 };
 
-const _sumVisitsByColumn = ({ result, column }) => {
+const _sumMetricByColumn = ({ metric, result, column }) => {
   return result.data.reduce((categories, row) => {
     const category = row[column];
-    const visits = parseInt(row.visits);
-    categories[category] = (categories[category] || 0) + visits;
+    const count = parseInt(row[metric]);
+    categories[category] = (categories[category] || 0) + count;
     return categories;
   }, {});
 };

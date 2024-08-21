@@ -54,10 +54,10 @@
       }
     },
     {
-      "name": "screen-size",
+      "name": "screen-resolution",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "screen_resolution"
       ],
       "query": {
@@ -71,7 +71,7 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
         "dateRanges": [
@@ -82,8 +82,8 @@
         ],
         "orderBys": [
           {
-            "dimension": {
-              "dimensionName": "date"
+            "metric": {
+              "metricName": "totalUsers"
             },
             "desc": true
           }
@@ -91,7 +91,7 @@
       },
       "meta": {
         "name": "Screen Resolution",
-        "description": "90 days of Screen Resolution visits for all sites."
+        "description": "90 days of screen resolution demographics by user for all sites."
       }
     },
     {
