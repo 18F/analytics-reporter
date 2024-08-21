@@ -10,8 +10,8 @@ class AppConfig {
   /**
    * @param {object} options an object with options to be used when processing
    * all reports.
-   * @param {string} options.format the format of the analytics data produced.
-   * Accepted formats are "csv" or "json"
+   * @param {boolean} options.csv if true, format report data to CSV
+   * @param {boolean} options.json if true, format report data to JSON
    * @param {string} options.output a string filepath where the analytics data
    * will be written to disk after processing.
    * @param {boolean} options.publish if true, the analytics data will be written
@@ -33,6 +33,17 @@ class AppConfig {
 
   get format() {
     return this.#options.csv ? "csv" : "json";
+  }
+
+  get formats() {
+    const formats = [];
+    if (this.#options.csv) {
+      formats.push("csv");
+    }
+    if (this.#options.json) {
+      formats.push("json");
+    }
+    return formats;
   }
 
   get output() {
