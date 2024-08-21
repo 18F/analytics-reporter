@@ -138,6 +138,16 @@ describe("ResultTotalsCalculator", () => {
           it("should compute totals for desktop devices", () => {
             expect(totals.by_device.desktop).to.equal(300 + 600);
           });
+
+          it("sorts totals by visit count", () => {
+            expect(Object.entries(totals.by_device)).to.deep.equal(
+              Object.entries({
+                desktop: 900,
+                tablet: 700,
+                mobile: 500,
+              }),
+            );
+          });
         });
 
         describe("and there are multiple columns being totalled", () => {
@@ -260,6 +270,16 @@ describe("ResultTotalsCalculator", () => {
 
           it("should compute user totals for desktop devices", () => {
             expect(totals.by_device.desktop).to.equal(300 + 600);
+          });
+
+          it("sorts totals by user count", () => {
+            expect(Object.entries(totals.by_device)).to.deep.equal(
+              Object.entries({
+                desktop: 900,
+                tablet: 700,
+                mobile: 500,
+              }),
+            );
           });
         });
 

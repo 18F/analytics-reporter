@@ -82,6 +82,12 @@
         ],
         "orderBys": [
           {
+            "dimension": {
+              "dimensionName": "date"
+            },
+            "desc": true
+          },
+          {
             "metric": {
               "metricName": "totalUsers"
             },

@@ -28,6 +28,7 @@ const calculateTotals = (result, options = {}) => {
         column,
         result,
       });
+      totals[`by_${column}`] = _sortObjectByValues(totals[`by_${column}`]);
     }
   }
 
@@ -92,8 +93,12 @@ const _sumMetricByColumn = ({ metric, result, column }) => {
     const category = row[column];
     const count = parseInt(row[metric]);
     categories[category] = (categories[category] || 0) + count;
-    return categories;
+    return _sortObjectByValues(categories);
   }, {});
+};
+
+const _sortObjectByValues = (object) => {
+  return Object.fromEntries(Object.entries(object).sort((a, b) => b[1] - a[1]));
 };
 
 const _sumVisitsByCategoryWithDimension = ({ result, column, dimension }) => {
