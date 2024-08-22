@@ -27,11 +27,11 @@ describe("AnalyticsDataProcessor", () => {
         appConfig.account = {
           hostname: "",
         };
-        subject = new AnalyticsDataProcessor(appConfig);
+        subject = new AnalyticsDataProcessor();
       });
 
       it("should return results with the correct props", () => {
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.name).to.be.a("string");
         expect(result.query).to.be.an("object");
         expect(result.meta).to.be.an("object");
@@ -44,13 +44,13 @@ describe("AnalyticsDataProcessor", () => {
 
       it("should return results with an empty data array if data is undefined or has no rows", () => {
         data.rows = [];
-        expect(subject.processData(report, data).data).to.be.empty;
+        expect(subject.processData({ report, data }).data).to.be.empty;
         data.rows = undefined;
-        expect(subject.processData(report, data).data).to.be.empty;
+        expect(subject.processData({ report, data }).data).to.be.empty;
       });
 
       it("should delete the query ids for the GA response", () => {
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.query).to.not.have.property("ids");
       });
 
@@ -67,7 +67,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(Object.keys(result.data[0])).to.deep.equal([
           "file_name",
           "os",
@@ -80,7 +80,7 @@ describe("AnalyticsDataProcessor", () => {
         data.dimensionHeaders = [{ name: "date" }];
         data.rows = [{ dimensionValues: [{ value: "20170130" }] }];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data[0].date).to.equal("2017-01-30");
       });
 
@@ -88,7 +88,7 @@ describe("AnalyticsDataProcessor", () => {
         data.dimensionHeaders = [{ name: "date" }];
         data.rows = [{ dimensionValues: [{ value: "(other)" }] }];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data[0].date).to.equal("(other)");
       });
 
@@ -118,7 +118,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data).to.have.length(2);
         expect(result.data.map((row) => row.unmapped_column)).to.deep.equal([
           "20",
@@ -149,7 +149,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data).to.have.length(3);
       });
 
@@ -179,7 +179,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data).to.have.length(2);
         expect(result.data.map((row) => row.unmapped_column)).to.deep.equal([
           "20",
@@ -204,7 +204,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data[0].unmapped_column).to.be.undefined;
       });
 
@@ -222,7 +222,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data[0].unmapped_column).to.be.undefined;
       });
 
@@ -240,28 +240,32 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(Object.keys(result.data[0]).length).to.equal(2);
       });
 
-      it("should add a hostname to realtime data if a hostname is specified by the appConfig", () => {
+      it("should add a hostname to realtime data if a hostname is passed", () => {
         report.realtime = true;
-        appConfig.account.hostname = "www.example.gov";
+        let hostname = "www.example.gov";
 
-        subject = new AnalyticsDataProcessor(appConfig);
+        subject = new AnalyticsDataProcessor();
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data, hostname });
         expect(result.data[0].domain).to.equal("www.example.gov");
       });
 
-      it("should not overwrite the domain with a hostname from the appConfig", () => {
+      it("should not overwrite the domain with a passed hostname", () => {
         let dataWithHostname;
         dataWithHostname = Object.assign({}, dataWithHostnameFixture);
         report.realtime = true;
-        appConfig.account.hostname = "www.example.gov";
-        subject = new AnalyticsDataProcessor(appConfig);
+        let hostname = "www.example.gov";
+        subject = new AnalyticsDataProcessor();
 
-        const result = subject.processData(report, dataWithHostname);
+        const result = subject.processData({
+          report,
+          data: dataWithHostname,
+          hostname,
+        });
         expect(result.data[0].domain).to.equal("www.example0.com");
       });
 
@@ -275,14 +279,14 @@ describe("AnalyticsDataProcessor", () => {
           "../../src/process_results/analytics_data_processor",
           { "./result_totals_calculator": { calculateTotals } },
         );
-        subject = new AnalyticsDataProcessor(appConfig);
+        subject = new AnalyticsDataProcessor();
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.totals).to.deep.equal({ visits: 1234 });
       });
     });
 
-    describe("when an agency is set in appConfig", () => {
+    describe("when an agency is passed", () => {
       let agency = "interior";
       let report;
       let data;
@@ -291,15 +295,11 @@ describe("AnalyticsDataProcessor", () => {
       beforeEach(() => {
         report = Object.assign({}, reportFixture);
         data = Object.assign({}, dataFixture);
-        appConfig.account = {
-          agency_name: agency,
-          hostname: "",
-        };
-        subject = new AnalyticsDataProcessor(appConfig);
+        subject = new AnalyticsDataProcessor();
       });
 
       it("should return results with the correct props", () => {
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data, agency });
         expect(result.name).to.be.a("string");
         expect(result.query).to.be.an("object");
         expect(result.meta).to.be.an("object");
@@ -312,13 +312,13 @@ describe("AnalyticsDataProcessor", () => {
 
       it("should return results with an empty data array if data is undefined or has no rows", () => {
         data.rows = [];
-        expect(subject.processData(report, data).data).to.be.empty;
+        expect(subject.processData({ report, data }).data).to.be.empty;
         data.rows = undefined;
-        expect(subject.processData(report, data).data).to.be.empty;
+        expect(subject.processData({ report, data }).data).to.be.empty;
       });
 
       it("should delete the query ids for the GA response", () => {
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.query).to.not.have.property("ids");
       });
 
@@ -335,7 +335,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(Object.keys(result.data[0])).to.deep.equal([
           "file_name",
           "os",
@@ -348,7 +348,7 @@ describe("AnalyticsDataProcessor", () => {
         data.dimensionHeaders = [{ name: "date" }];
         data.rows = [{ dimensionValues: [{ value: "20170130" }] }];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data[0].date).to.equal("2017-01-30");
       });
 
@@ -356,7 +356,7 @@ describe("AnalyticsDataProcessor", () => {
         data.dimensionHeaders = [{ name: "date" }];
         data.rows = [{ dimensionValues: [{ value: "(other)" }] }];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data[0].date).to.equal("(other)");
       });
 
@@ -386,7 +386,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data).to.have.length(2);
         expect(result.data.map((row) => row.unmapped_column)).to.deep.equal([
           "20",
@@ -417,7 +417,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data).to.have.length(3);
       });
 
@@ -447,7 +447,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data).to.have.length(2);
         expect(result.data.map((row) => row.unmapped_column)).to.deep.equal([
           "20",
@@ -472,7 +472,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data[0].unmapped_column).to.be.undefined;
       });
 
@@ -490,7 +490,7 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.data[0].unmapped_column).to.be.undefined;
       });
 
@@ -508,28 +508,32 @@ describe("AnalyticsDataProcessor", () => {
           },
         ];
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(Object.keys(result.data[0]).length).to.equal(2);
       });
 
       it("should add a hostname to realtime data if a hostname is specified by the appConfig", () => {
         report.realtime = true;
-        appConfig.account.hostname = "www.example.gov";
+        let hostname = "www.example.gov";
 
-        subject = new AnalyticsDataProcessor(appConfig);
+        subject = new AnalyticsDataProcessor();
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data, hostname });
         expect(result.data[0].domain).to.equal("www.example.gov");
       });
 
-      it("should not overwrite the domain with a hostname from the appConfig", () => {
+      it("should not overwrite the domain with a passed hostname", () => {
         let dataWithHostname;
         dataWithHostname = Object.assign({}, dataWithHostnameFixture);
         report.realtime = true;
-        appConfig.account.hostname = "www.example.gov";
-        subject = new AnalyticsDataProcessor(appConfig);
+        let hostname = "www.example.gov";
+        subject = new AnalyticsDataProcessor();
 
-        const result = subject.processData(report, dataWithHostname);
+        const result = subject.processData({
+          report,
+          data: dataWithHostname,
+          hostname,
+        });
         expect(result.data[0].domain).to.equal("www.example0.com");
       });
 
@@ -543,9 +547,9 @@ describe("AnalyticsDataProcessor", () => {
           "../../src/process_results/analytics_data_processor",
           { "./result_totals_calculator": { calculateTotals } },
         );
-        subject = new AnalyticsDataProcessor(appConfig);
+        subject = new AnalyticsDataProcessor();
 
-        const result = subject.processData(report, data);
+        const result = subject.processData({ report, data });
         expect(result.totals).to.deep.equal({ visits: 1234 });
       });
     });

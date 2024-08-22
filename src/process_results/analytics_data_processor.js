@@ -4,8 +4,6 @@ const ResultTotalsCalculator = require("./result_totals_calculator");
  * Handles processing operations for raw analytics data.
  */
 class AnalyticsDataProcessor {
-  #agency;
-  #hostname;
   #mapping = {
     activeUsers: "active_visitors",
     fileName: "file_name",
@@ -36,25 +34,19 @@ class AnalyticsDataProcessor {
   };
 
   /**
-   * @param {import('../app_config')} appConfig an instance of the application config class.
-   * Provides agency and hostname string values.
-   */
-  constructor(appConfig) {
-    this.#agency = appConfig.account.agency_name;
-    this.#hostname = appConfig.account.hostname;
-  }
-
-  /**
-   * @param {object} report The report object that was requested
-   * @param {object} data The response object from the Google Analytics Data API
-   * @param {object} query The query object for the report
+   * @param {object} params the method parameters
+   * @param {string} params.agency the agency for the report
+   * @param {string} params.hostname the hostname for the report
+   * @param {object} params.report The report object that was requested
+   * @param {object} params.data The response object from the Google Analytics Data API
+   * @param {object} params.query The query object for the report
    * @returns {object} The response data transformed to flatten the data
    * structure, format dates, and map from GA keys to DAP keys. Data is filtered
    * as requested in the report object. This object also includes details from
    * the original report and query.
    */
-  processData(report, data, query) {
-    let result = this.#initializeResult({ report, data, query });
+  processData({ agency, hostname, report, data, query }) {
+    let result = this.#initializeResult({ agency, report, data, query });
 
     // If you use a filter that results in no data, you get null
     // back from google and need to protect against it.
@@ -77,7 +69,7 @@ class AnalyticsDataProcessor {
 
     // Process each row
     result.data = data.rows.map((row) => {
-      return this.#processRow({ row, report, data });
+      return this.#processRow({ hostname, row, data });
     });
 
     result.totals = ResultTotalsCalculator.calculateTotals(result, {
@@ -88,10 +80,10 @@ class AnalyticsDataProcessor {
     return result;
   }
 
-  #initializeResult({ report, data, query }) {
+  #initializeResult({ agency, report, data, query }) {
     return {
       name: report.name,
-      agency: this.#agency,
+      agency,
       sampling: data.metadata?.samplingMetadatas,
       query: ((query) => {
         query = Object.assign({}, query);
@@ -164,7 +156,7 @@ class AnalyticsDataProcessor {
     return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-");
   }
 
-  #processRow({ row, data }) {
+  #processRow({ hostname, row, data }) {
     const point = {};
 
     // Iterate through each entry in the object
@@ -194,8 +186,8 @@ class AnalyticsDataProcessor {
       });
     }
 
-    if (this.#hostname && !("domain" in point)) {
-      point.domain = this.#hostname;
+    if (hostname && !("domain" in point)) {
+      point.domain = hostname;
     }
 
     return point;
