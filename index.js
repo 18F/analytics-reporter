@@ -13,8 +13,8 @@ const Processor = require("./src/processor");
  *
  * @param {object} options an object with options to be used when processing
  * all reports.
- * @param {string} options.format the format of the analytics data produced.
- * Accepted formats are "csv" or "json"
+ * @param {boolean} options.csv if true, format report data to CSV
+ * @param {boolean} options.json if true, format report data to JSON
  * @param {string} options.output a string filepath where the analytics data
  * will be written to disk after processing.
  * @param {boolean} options.publish if true, the analytics data will be written
@@ -86,8 +86,8 @@ async function _processReport(appConfig, context, reportConfig, processor) {
  *
  * @param {object} options an object with options to be used when processing
  * all reports.
- * @param {string} options.format the format of the analytics data produced.
- * Accepted formats are "csv" or "json"
+ * @param {boolean} options.csv if true, format report data to CSV
+ * @param {boolean} options.json if true, format report data to JSON
  * @param {string} options.output a string filepath where the analytics data
  * will be written to disk after processing.
  * @param {boolean} options.publish if true, the analytics data will be written
@@ -114,8 +114,8 @@ async function runQueuePublish(options = {}) {
   const queueClient = await _initQueueClient(appConfig, appLogger);
   const queue = "analytics-reporter-job-queue";
 
-  for (const reportConfig of reportConfigs) {
-    for (const agency of agencies) {
+  for (const agency of agencies) {
+    for (const reportConfig of reportConfigs) {
       process.env.AGENCY_NAME = agency.agencyName;
       const reportLogger = Logger.initialize(appConfig, reportConfig);
       try {
@@ -129,7 +129,7 @@ async function runQueuePublish(options = {}) {
           ),
           {
             priority: _messagePriority(reportConfig),
-            singletonKey: `${appConfig.scriptName}-${appConfig.agency}-${reportConfig.name}-${appConfig.format}`,
+            singletonKey: `${appConfig.scriptName}-${appConfig.agency}-${reportConfig.name}`,
           },
         );
         if (jobId) {

@@ -44,28 +44,81 @@ describe("PublishAnalyticsDataToDisk", () => {
     const debugLogSpy = sinon.spy();
     const formattedAnalyticsData = { slim: true };
     const reportConfig = { name: "foobar", slim: false };
-    const appConfig = { format: "csv", slim: true };
 
-    beforeEach(async () => {
-      debugLogSpy.resetHistory();
-      DiskPublisher.publish.resetHistory();
-      context = {
-        appConfig: appConfig,
-        formattedAnalyticsData: formattedAnalyticsData,
-        logger: { debug: debugLogSpy },
-        reportConfig: reportConfig,
+    describe("when a single format is configured", () => {
+      const appConfig = {
+        formats: ["csv"],
+        slim: true,
+        output: "/path/to/dir",
       };
-      await subject.executeStrategy(context);
+
+      beforeEach(async () => {
+        debugLogSpy.resetHistory();
+        DiskPublisher.publish.resetHistory();
+        context = {
+          appConfig: appConfig,
+          formattedAnalyticsData: { csv: formattedAnalyticsData },
+          logger: { debug: debugLogSpy },
+          reportConfig: reportConfig,
+        };
+        await subject.executeStrategy(context);
+      });
+
+      it("calls DiskPublisher.publish with processed analytics data and config options", () => {
+        expect(
+          DiskPublisher.publish.calledWith({
+            name: reportConfig.name,
+            format: appConfig.formats[0],
+            data: formattedAnalyticsData,
+            directory: appConfig.output,
+          }),
+        ).to.equal(true);
+      });
     });
 
-    it("calls DiskPublisher.publish with processed analytics data and config options", () => {
-      expect(
-        DiskPublisher.publish.calledWith(
-          reportConfig,
-          formattedAnalyticsData,
-          appConfig,
-        ),
-      ).to.equal(true);
+    describe("when multiple formats are configured", () => {
+      const appConfig = {
+        formats: ["csv", "json"],
+        slim: true,
+        output: "/path/to/dir",
+      };
+
+      beforeEach(async () => {
+        debugLogSpy.resetHistory();
+        DiskPublisher.publish.resetHistory();
+        context = {
+          appConfig: appConfig,
+          formattedAnalyticsData: {
+            csv: formattedAnalyticsData,
+            json: formattedAnalyticsData,
+          },
+          logger: { debug: debugLogSpy },
+          reportConfig: reportConfig,
+        };
+        await subject.executeStrategy(context);
+      });
+
+      it("calls DiskPublisher.publish with processed analytics data and config options for format 1", () => {
+        expect(
+          DiskPublisher.publish.calledWith({
+            name: reportConfig.name,
+            format: appConfig.formats[0],
+            data: formattedAnalyticsData,
+            directory: appConfig.output,
+          }),
+        ).to.equal(true);
+      });
+
+      it("calls DiskPublisher.publish with processed analytics data and config options for format 2", () => {
+        expect(
+          DiskPublisher.publish.calledWith({
+            name: reportConfig.name,
+            format: appConfig.formats[1],
+            data: formattedAnalyticsData,
+            directory: appConfig.output,
+          }),
+        ).to.equal(true);
+      });
     });
   });
 });

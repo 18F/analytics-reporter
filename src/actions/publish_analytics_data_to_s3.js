@@ -34,16 +34,20 @@ class PublishAnalyticsDataToS3 extends Action {
    */
   async executeStrategy(context) {
     const appConfig = context.appConfig;
-    context.logger.debug("Publishing analytics data to S3");
-    await this.#s3Service.publish(
-      {
-        name: context.reportConfig.name,
-        bucket: appConfig.aws.bucket,
-        path: appConfig.aws.path,
-        format: appConfig.format,
-      },
-      context.formattedAnalyticsData,
-    );
+    for (const format of context.appConfig.formats) {
+      context.logger.debug(
+        `Publishing ${format.toUpperCase()} analytics data to S3`,
+      );
+      await this.#s3Service.publish(
+        {
+          name: context.reportConfig.name,
+          bucket: appConfig.aws.bucket,
+          path: appConfig.aws.path,
+          format,
+        },
+        context.formattedAnalyticsData[format],
+      );
+    }
   }
 }
 
