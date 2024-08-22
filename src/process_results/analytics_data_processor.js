@@ -82,6 +82,7 @@ class AnalyticsDataProcessor {
 
     result.totals = ResultTotalsCalculator.calculateTotals(result, {
       sumVisitsByColumns: report.sumVisitsByColumns,
+      sumUsersByColumns: report.sumUsersByColumns,
     });
 
     return result;

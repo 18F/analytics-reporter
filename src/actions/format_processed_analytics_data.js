@@ -15,13 +15,17 @@ class FormatProcessedAnalyticsData extends Action {
    */
   async executeStrategy(context) {
     context.logger.debug("Formatting analytics data");
-    context.formattedAnalyticsData = await ResultFormatter.formatResult(
-      context.processedAnalyticsData,
-      {
-        format: context.appConfig.format,
-        slim: context.appConfig.slim && context.reportConfig.slim,
-      },
-    );
+    const formattedAnalyticsData = {};
+    for (const format of context.appConfig.formats) {
+      formattedAnalyticsData[format] = await ResultFormatter.formatResult(
+        context.processedAnalyticsData,
+        {
+          format,
+          slim: context.appConfig.slim && context.reportConfig.slim,
+        },
+      );
+    }
+    context.formattedAnalyticsData = formattedAnalyticsData;
   }
 }
 

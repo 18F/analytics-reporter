@@ -39,37 +39,91 @@ describe("PublishAnalyticsDataToS3", () => {
     const formattedAnalyticsData = { slim: true };
     const reportConfig = { name: "foobar", slim: false };
 
-    beforeEach(async () => {
-      debugLogSpy.resetHistory();
-      s3Service.publish.resetHistory();
-      context = {
-        formattedAnalyticsData: formattedAnalyticsData,
-        logger: { debug: debugLogSpy },
-        reportConfig: reportConfig,
-        appConfig: {
-          aws: {
-            bucket: "test-bucket",
-            cache: 60,
-            path: "path/to/data",
+    describe("When a single format is configured", () => {
+      beforeEach(async () => {
+        debugLogSpy.resetHistory();
+        s3Service.publish.resetHistory();
+        context = {
+          formattedAnalyticsData: { json: formattedAnalyticsData },
+          logger: { debug: debugLogSpy },
+          reportConfig: reportConfig,
+          appConfig: {
+            aws: {
+              bucket: "test-bucket",
+              cache: 60,
+              path: "path/to/data",
+            },
+            formats: ["json"],
           },
-          format: "json",
-        },
-      };
-      await subject.executeStrategy(context);
+        };
+        await subject.executeStrategy(context);
+      });
+
+      it("calls s3Service.publish with analytics data and config options", () => {
+        expect(
+          s3Service.publish.calledWith(
+            {
+              name: context.reportConfig.name,
+              bucket: context.appConfig.aws.bucket,
+              path: context.appConfig.aws.path,
+              format: context.appConfig.formats[0],
+            },
+            formattedAnalyticsData,
+          ),
+        ).to.equal(true);
+      });
     });
 
-    it("calls s3Service.publish with analytics data and config options", () => {
-      expect(
-        s3Service.publish.calledWith(
-          {
-            name: context.reportConfig.name,
-            bucket: context.appConfig.aws.bucket,
-            path: context.appConfig.aws.path,
-            format: context.appConfig.format,
+    describe("When multiple formats are configured", () => {
+      beforeEach(async () => {
+        debugLogSpy.resetHistory();
+        s3Service.publish.resetHistory();
+        context = {
+          formattedAnalyticsData: {
+            csv: formattedAnalyticsData,
+            json: formattedAnalyticsData,
           },
-          formattedAnalyticsData,
-        ),
-      ).to.equal(true);
+          logger: { debug: debugLogSpy },
+          reportConfig: reportConfig,
+          appConfig: {
+            aws: {
+              bucket: "test-bucket",
+              cache: 60,
+              path: "path/to/data",
+            },
+            formats: ["csv", "json"],
+          },
+        };
+        await subject.executeStrategy(context);
+      });
+
+      it("calls s3Service.publish with analytics data and config options for format 1", () => {
+        expect(
+          s3Service.publish.calledWith(
+            {
+              name: context.reportConfig.name,
+              bucket: context.appConfig.aws.bucket,
+              path: context.appConfig.aws.path,
+              format: context.appConfig.formats[0],
+            },
+            formattedAnalyticsData,
+          ),
+        ).to.equal(true);
+      });
+
+      it("calls s3Service.publish with analytics data and config options for format 2", () => {
+        expect(
+          s3Service.publish.calledWith(
+            {
+              name: context.reportConfig.name,
+              bucket: context.appConfig.aws.bucket,
+              path: context.appConfig.aws.path,
+              format: context.appConfig.formats[1],
+            },
+            formattedAnalyticsData,
+          ),
+        ).to.equal(true);
+      });
     });
   });
 });

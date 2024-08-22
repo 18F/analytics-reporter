@@ -12,7 +12,10 @@
  * --only: only run one or more named reports.
  * --slim: Where supported, use totals only (omit the `data` array).
  *         Only applies to JSON, and reports where "slim": true.
- * --csv: CSV instead of JSON.
+ * --csv: Use format CSV for reports. If CSV and JSON are both specified, will
+ *        create reports for both formats.
+ * --json: Use format JSON for reports. If CSV and JSON are both specified, will
+ *         create reports for both formats.
  * --frequency: Limit to reports with this 'frequency' value.
  * --debug: print debug details on STDOUT
  */

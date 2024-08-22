@@ -23,7 +23,22 @@ const calculateTotals = (result, options = {}) => {
 
   if (options.sumVisitsByColumns && Array.isArray(options.sumVisitsByColumns)) {
     for (const column of options.sumVisitsByColumns) {
-      totals[`by_${column}`] = _sumVisitsByColumn({ column, result });
+      totals[`by_${column}`] = _sumMetricByColumn({
+        metric: "visits",
+        column,
+        result,
+      });
+      totals[`by_${column}`] = _sortObjectByValues(totals[`by_${column}`]);
+    }
+  }
+
+  if (options.sumUsersByColumns && Array.isArray(options.sumUsersByColumns)) {
+    for (const column of options.sumUsersByColumns) {
+      totals[`by_${column}`] = _sumMetricByColumn({
+        metric: "users",
+        column,
+        result,
+      });
     }
   }
 
@@ -73,13 +88,17 @@ const _sumColumn = ({ result, column }) => {
   }, 0);
 };
 
-const _sumVisitsByColumn = ({ result, column }) => {
+const _sumMetricByColumn = ({ metric, result, column }) => {
   return result.data.reduce((categories, row) => {
     const category = row[column];
-    const visits = parseInt(row.visits);
-    categories[category] = (categories[category] || 0) + visits;
-    return categories;
+    const count = parseInt(row[metric]);
+    categories[category] = (categories[category] || 0) + count;
+    return _sortObjectByValues(categories);
   }, {});
+};
+
+const _sortObjectByValues = (object) => {
+  return Object.fromEntries(Object.entries(object).sort((a, b) => b[1] - a[1]));
 };
 
 const _sumVisitsByCategoryWithDimension = ({ result, column, dimension }) => {
