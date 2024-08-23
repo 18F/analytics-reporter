@@ -26,11 +26,13 @@ class ProcessGoogleAnalyticsResults extends Action {
   async executeStrategy(context) {
     context.logger.debug("Processing GA report data");
     context.processedAnalyticsData =
-      await this.#analyticsDataProcessor.processData(
-        context.reportConfig,
-        context.rawGoogleAnalyticsReportData[0],
-        context.googleAnalyticsQuery,
-      );
+      await this.#analyticsDataProcessor.processData({
+        agency: context.appConfig.agency,
+        hostname: context.appConfig.account.hostname,
+        report: context.reportConfig,
+        data: context.rawGoogleAnalyticsReportData[0],
+        query: context.googleAnalyticsQuery,
+      });
   }
 }
 

@@ -129,7 +129,7 @@ async function runQueuePublish(options = {}) {
           ),
           {
             priority: _messagePriority(reportConfig),
-            singletonKey: `${appConfig.scriptName}-${appConfig.agency}-${reportConfig.name}`,
+            singletonKey: `${appConfig.scriptName}-${agency.agencyName}-${reportConfig.name}`,
           },
         );
         if (jobId) {
