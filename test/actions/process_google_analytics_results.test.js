@@ -18,12 +18,15 @@ describe("ProcessGoogleAnalyticsResults", () => {
     const googleAnalyticsQuery = { name: "users", realtime: true };
     const reportConfig = { name: "foobar" };
     const processedAnalyticsData = { fake: "data" };
+    const agency = "defense";
+    const hostname = "example.gov";
 
     beforeEach(async () => {
       debugLogSpy.resetHistory();
       analyticsDataProcessor.processData.resetHistory();
       analyticsDataProcessor.processData.returns(processedAnalyticsData);
       context = {
+        appConfig: { agency, account: { hostname } },
         rawGoogleAnalyticsReportData: rawGoogleAnalyticsReportData,
         googleAnalyticsQuery: googleAnalyticsQuery,
         logger: { debug: debugLogSpy },
@@ -34,11 +37,13 @@ describe("ProcessGoogleAnalyticsResults", () => {
 
     it("calls analyticsDataProcessor.processData with the expected params", () => {
       expect(
-        analyticsDataProcessor.processData.calledWith(
-          reportConfig,
-          rawGoogleAnalyticsReportData[0],
-          googleAnalyticsQuery,
-        ),
+        analyticsDataProcessor.processData.calledWith({
+          agency,
+          hostname,
+          report: reportConfig,
+          data: rawGoogleAnalyticsReportData[0],
+          query: googleAnalyticsQuery,
+        }),
       ).to.equal(true);
     });
 

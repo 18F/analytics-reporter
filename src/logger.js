@@ -1,9 +1,12 @@
 const winston = require("winston");
 
 /**
- * @param {import('../app_config')} appConfig the application config
- * @param {object} reportConfig the name of the report currently being processed
- * @param {string} reportConfig.name the name of the report being run for this
+ * @param {object} params the parameters for the method
+ * @param {string} params.agencyName the name of the agency for this logger
+ * instance.
+ * @param {string} params.reportName the name of the report being run for this
+ * logger instance.
+ * @param {string} params.scriptName the name of the script being run for this
  * logger instance.
  * @returns {string} a standard tag for the logger to identify the specific
  * report being processed when writing logs.

@@ -25,7 +25,7 @@ describe("ResultFormatter", () => {
     });
 
     it("should format results into JSON if the format is 'json'", (done) => {
-      const result = analyticsDataProcessor.processData(report, data);
+      const result = analyticsDataProcessor.processData({ report, data });
 
       ResultFormatter.formatResult(result, { format: "json" })
         .then((formattedResult) => {
@@ -37,7 +37,7 @@ describe("ResultFormatter", () => {
     });
 
     it("should remove the data attribute for JSON if options.slim is true", (done) => {
-      const result = analyticsDataProcessor.processData(report, data);
+      const result = analyticsDataProcessor.processData({ report, data });
 
       ResultFormatter.formatResult(result, { format: "json", slim: true })
         .then((formattedResult) => {
@@ -62,7 +62,7 @@ describe("ResultFormatter", () => {
     });
 
     it("should format results into CSV if the format is 'csv'", (done) => {
-      const result = analyticsDataProcessor.processData(report, data);
+      const result = analyticsDataProcessor.processData({ report, data });
 
       ResultFormatter.formatResult(result, {
         format: "csv",
@@ -84,7 +84,7 @@ describe("ResultFormatter", () => {
     });
 
     it("should throw an error if the format is unsupported", (done) => {
-      const result = analyticsDataProcessor.processData(report, data);
+      const result = analyticsDataProcessor.processData({ report, data });
 
       ResultFormatter.formatResult(result, {
         format: "xml",

@@ -32,7 +32,7 @@ describe("ResultTotalsCalculator", () => {
       });
 
       it("should return an empty object", () => {
-        const result = analyticsDataProcessor.processData(report, data);
+        const result = analyticsDataProcessor.processData({ report, data });
         const totals = ResultTotalsCalculator.calculateTotals(result);
 
         expect(totals).to.eql({});
@@ -57,7 +57,7 @@ describe("ResultTotalsCalculator", () => {
             { metricValues: [{ value: "15" }] },
             { metricValues: [{ value: "20" }] },
           ];
-          const result = analyticsDataProcessor.processData(report, data);
+          const result = analyticsDataProcessor.processData({ report, data });
           totals = ResultTotalsCalculator.calculateTotals(result);
         });
 
@@ -75,7 +75,7 @@ describe("ResultTotalsCalculator", () => {
             { metricValues: [{ value: "20" }] },
           ];
 
-          const result = analyticsDataProcessor.processData(report, data);
+          const result = analyticsDataProcessor.processData({ report, data });
           totals = ResultTotalsCalculator.calculateTotals(result);
         });
 
@@ -123,7 +123,7 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData(report, data);
+            const result = analyticsDataProcessor.processData({ report, data });
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -195,7 +195,7 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData(report, data);
+            const result = analyticsDataProcessor.processData({ report, data });
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -256,7 +256,7 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData(report, data);
+            const result = analyticsDataProcessor.processData({ report, data });
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -328,7 +328,7 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData(report, data);
+            const result = analyticsDataProcessor.processData({ report, data });
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -426,7 +426,7 @@ describe("ResultTotalsCalculator", () => {
             },
           ];
 
-          const result = analyticsDataProcessor.processData(report, data);
+          const result = analyticsDataProcessor.processData({ report, data });
 
           const totals = ResultTotalsCalculator.calculateTotals(result);
 
@@ -512,7 +512,7 @@ describe("ResultTotalsCalculator", () => {
             },
           ];
 
-          const result = analyticsDataProcessor.processData(report, data);
+          const result = analyticsDataProcessor.processData({ report, data });
 
           const totals = ResultTotalsCalculator.calculateTotals(result);
 

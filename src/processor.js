@@ -59,7 +59,7 @@ class Processor {
           logger,
         ),
       ),
-      new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor(appConfig)),
+      new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor()),
       new FormatProcessedAnalyticsData(),
       new WriteAnalyticsDataToDatabase(new PostgresPublisher(appConfig)),
       new PublishAnalyticsDataToS3(new S3Service(appConfig)),
