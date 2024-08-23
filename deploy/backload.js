@@ -70,9 +70,10 @@ const api_run = () => {
     const iterationTargetDate = subDays(new Date(), totalDaysAgo);
 
     const iterationDaysAgo = differenceInDays(today, iterationTargetDate) + 1;
-    const modifiedApiJsonString = JSON.stringify(apiReports)
-      .replaceAll('"yesterday"', `"${iterationDaysAgo}daysAgo"`)
-      .replaceAll('"3daysAgo"', `"${iterationDaysAgo}daysAgo"`);
+    const modifiedApiJsonString = JSON.stringify(apiReports).replaceAll(
+      '"yesterday"',
+      `"${iterationDaysAgo}daysAgo"`,
+    );
 
     fs.unlinkSync("reports/api.json");
     fs.writeFileSync("reports/api.original.json", JSON.stringify(apiReports));
