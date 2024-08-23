@@ -70,8 +70,8 @@ jobs:
       - lint
       - audit_dependencies
       - test
-    if: github.ref == 'refs/heads/develop'
-    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
+    if: github.ref == 'refs/heads/bugfix/backload_ga4_api_data'
+    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@bugfix/backload_ga4_api_data
     with:
       ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ vars.ANALYTICS_GA4_CALL_RETRY_COUNT_DEV }}
       ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}

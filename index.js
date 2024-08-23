@@ -136,6 +136,7 @@ async function runQueuePublish(options = {}) {
 
   for (const agency of agencies) {
     for (const reportConfig of reportConfigs) {
+      agency.agencyName = agency.agencyName || "";
       process.env.AGENCY_NAME = agency.agencyName;
       const reportLogger = Logger.initialize({
         agencyName: appConfig.agencyLogName,
