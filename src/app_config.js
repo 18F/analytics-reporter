@@ -197,7 +197,7 @@ class AppConfig {
   get messageQueueDatabaseConnection() {
     const connection =
       knexfile[process.env.NODE_ENV || "development"].connection;
-    return `postgres://${connection.user}:${connection.password}@${connection.host}/${process.env.MESSAGE_QUEUE_DATABASE_NAME}${process.env.NODE_ENV == "production" ? "?ssl=true" : ""}`;
+    return `postgres://${connection.user}:${connection.password}@${connection.host}:${process.env.POSTGRES_PORT}/${process.env.MESSAGE_QUEUE_DATABASE_NAME}${process.env.NODE_ENV == "production" ? "?ssl=true&sslmode=no-verify" : ""}`;
   }
 
   get messageQueueName() {

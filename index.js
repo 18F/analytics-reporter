@@ -146,12 +146,12 @@ async function runQueuePublish(options = {}) {
             retryLimit: 2,
             retryDelay: 10,
             retryBackoff: true,
-            singletonKey: `${appConfig.scriptName}-${agency.agencyName}-${reportConfig.name}`,
+            singletonKey: `${appConfig.scriptName}-${agency.agencyName}-${reportConfig.name}-${reportConfig.query.dateRanges[0].startDate}`,
           },
         );
         if (jobId) {
           reportLogger.info(
-            `Created job in queue: ${queue} with job ID: ${jobId}`,
+            `Created job in queue: ${queue} with job ID: ${jobId} for ${reportConfig.query.dateRanges[0].startDate}`,
           );
         } else {
           reportLogger.info(`Found a duplicate job in queue: ${queue}`);
@@ -241,7 +241,9 @@ async function runQueueConsume() {
       queue,
       { newJobCheckIntervalSeconds: 1 },
       async (message) => {
-        appLogger.info("Queue message received");
+        appLogger.info(
+          `Queue message received for ${message.data.reportConfig.query.dateRanges[0].startDate}`,
+        );
         process.env.AGENCY_NAME = message.data.agencyName;
         process.env.ANALYTICS_REPORT_IDS = message.data.analyticsReportIds;
         process.env.AWS_BUCKET_PATH = message.data.awsBucketPath;
