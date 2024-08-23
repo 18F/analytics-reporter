@@ -156,7 +156,7 @@ async function runQueuePublish(options = {}) {
         );
         if (messageId) {
           reportLogger.info(
-            `Created message in queue: ${queueClient.name} with message ID: ${messageId}`,
+            `Created job in queue: ${appConfig.messageQueueName} with job ID: ${jobId} for ${reportConfig.query.dateRanges[0].startDate}`,
           );
         } else {
           reportLogger.info(

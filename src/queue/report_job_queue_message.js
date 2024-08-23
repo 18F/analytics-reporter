@@ -63,11 +63,11 @@ class ReportJobQueueMessage extends QueueMessage {
    */
   sendOptions() {
     return {
-      priority: this.#messagePriority(this.#reportConfig.frequency),
+      priority: this.#messagePriority(reportConfig),
       retryLimit: 2,
       retryDelay: 10,
       retryBackoff: true,
-      singletonKey: `${this.#scriptName}-${this.#agencyName}-${this.#reportConfig.name}`,
+      singletonKey: `${this.#scriptName}-${this.#agencyName}-${this.#reportConfig.name}-${this.#reportConfig.query.dateRanges[0].startDate}`,
     };
   }
 
