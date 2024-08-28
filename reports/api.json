@@ -37,7 +37,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -85,7 +85,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -133,7 +133,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -181,7 +181,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -237,7 +237,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -285,7 +285,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -336,7 +336,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -395,7 +395,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -443,7 +443,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -494,7 +494,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -552,7 +552,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -600,7 +600,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
@@ -695,7 +695,7 @@
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
-                "int64Value": "100"
+                "int64Value": "50"
               }
             }
           }
