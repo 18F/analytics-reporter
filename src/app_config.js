@@ -93,7 +93,11 @@ class AppConfig {
   }
 
   get agency() {
-    return process.env.AGENCY_NAME || "gov-wide";
+    return process.env.AGENCY_NAME;
+  }
+
+  get agencyLogName() {
+    return this.agency || "gov-wide";
   }
 
   get scriptName() {
