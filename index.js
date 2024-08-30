@@ -1,10 +1,11 @@
 const { AsyncLocalStorage } = require("node:async_hooks");
-const PgBoss = require("pg-boss");
 const util = require("util");
 const AppConfig = require("./src/app_config");
 const ReportProcessingContext = require("./src/report_processing_context");
 const Logger = require("./src/logger");
 const Processor = require("./src/processor");
+const Queue = require("./src/queue/queue");
+const ReportJobQueueMessage = require("./src/queue/report_job_queue_message");
 
 /**
  * Gets an array of JSON report objects from the application confing, then runs
@@ -80,9 +81,9 @@ async function _processReport(appConfig, context, reportConfig, processor) {
 }
 
 /**
- * Gets an array of JSON report objects from the application confing, then runs
- * a sequential chain of actions on each report object in the array. Some of the
- * actions performed are optional based on the options passed to this function.
+ * Gets an array of agencies from the deploy/agencies.json file. Publishes a
+ * report job message to the queue for each report and agency based on the
+ * startup options.
  *
  * @param {object} options an object with options to be used when processing
  * all reports.
@@ -110,49 +111,44 @@ async function runQueuePublish(options = {}) {
   const agencies = _initAgencies(options.agenciesFile);
   const appConfig = new AppConfig(options);
   const reportConfigs = appConfig.filteredReportConfigurations;
-  const appLogger = Logger.initialize(appConfig);
-  const queueClient = await _initQueueClient(appConfig, appLogger);
-  const queue = "analytics-reporter-job-queue";
+  const appLogger = Logger.initialize({
+    agencyName: appConfig.agencyLogName,
+    scriptName: appConfig.scriptName,
+  });
+  const queue = await _initReportJobQueue(appConfig, appLogger);
 
   for (const agency of agencies) {
+    process.env.AGENCY_NAME = agency.agencyName || "";
     for (const reportConfig of reportConfigs) {
-      process.env.AGENCY_NAME = agency.agencyName;
-      const reportLogger = Logger.initialize(appConfig, reportConfig);
+      const reportLogger = Logger.initialize({
+        agencyName: appConfig.agencyLogName,
+        reportName: reportConfig.name,
+        scriptName: appConfig.scriptName,
+      });
       try {
-        let jobId = await queueClient.send(
-          queue,
-          _createQueueMessage(
-            options,
-            agency,
+        let jobId = await queue.sendMessage(
+          new ReportJobQueueMessage({
+            ...agency,
+            reportOptions: options,
             reportConfig,
-            appConfig.scriptName,
-          ),
-          {
-            priority: _messagePriority(reportConfig),
-            singletonKey: `${appConfig.scriptName}-${agency.agencyName}-${reportConfig.name}`,
-          },
+            scriptName: appConfig.scriptName,
+          }),
         );
         if (jobId) {
           reportLogger.info(
-            `Created job in queue: ${queue} with job ID: ${jobId}`,
+            `Created job in queue: ${queue.name} with job ID: ${jobId}`,
           );
         } else {
-          reportLogger.info(`Found a duplicate job in queue: ${queue}`);
+          reportLogger.info(`Found a duplicate job in queue: ${queue.name}`);
         }
       } catch (e) {
-        reportLogger.error(`Error sending to queue: ${queue}`);
+        reportLogger.error(`Error sending to queue: ${queue.name}`);
         reportLogger.error(util.inspect(e));
       }
     }
   }
 
-  try {
-    await queueClient.stop();
-    appLogger.debug(`Stopping queue client`);
-  } catch (e) {
-    appLogger.error("Error stopping queue client");
-    appLogger.error(util.inspect(e));
-  }
+  _stopQueue(queue, appLogger);
 }
 
 function _initAgencies(agencies_file) {
@@ -172,76 +168,67 @@ function _initAgencies(agencies_file) {
   return Array.isArray(agencies) ? agencies : legacyAgencies;
 }
 
-async function _initQueueClient(appConfig, logger) {
-  let queueClient;
+async function _initReportJobQueue(appConfig, logger) {
+  const queue = new Queue({
+    connectionString: appConfig.messageQueueDatabaseConnection,
+    queueName: appConfig.messageQueueName,
+    messageClass: ReportJobQueueMessage,
+  });
   try {
-    queueClient = new PgBoss(appConfig.messageQueueDatabaseConnection);
-    await queueClient.start();
-    logger.debug("Starting queue client");
+    await queue.start();
+    logger.debug(`Starting ${queue.name} queue client`);
   } catch (e) {
-    logger.error("Error starting queue client");
+    logger.error(`Error starting ${queue.name} queue client`);
     logger.error(util.inspect(e));
   }
-
-  return queueClient;
+  return queue;
 }
 
-function _createQueueMessage(options, agency, reportConfig, scriptName) {
-  return {
-    ...agency,
-    options,
-    reportConfig,
-    scriptName,
-  };
-}
-
-function _messagePriority(reportConfig) {
-  if (!reportConfig.frequency) {
-    return 0;
-  } else if (reportConfig.frequency == "daily") {
-    return 1;
-  } else if (reportConfig.frequency == "hourly") {
-    return 2;
-  } else if (reportConfig.frequency == "realtime") {
-    return 3;
+async function _stopQueue(queue, logger) {
+  try {
+    await queue.stop();
+    logger.debug(`Stopping ${queue.name} queue client`);
+  } catch (e) {
+    logger.error(`Error stopping ${queue.name} queue client`);
+    logger.error(util.inspect(e));
   }
 }
 
 /**
- * @returns {Promise} when the process ends
+ * Begins a queue consumer process which receives job messages from the
+ * analytics report job queue and processes the report for the received job.
  */
 async function runQueueConsume() {
   const appConfig = new AppConfig();
   const appLogger = Logger.initialize();
-  const queueClient = await _initQueueClient(appConfig, appLogger);
-  const queue = "analytics-reporter-job-queue";
+  const queue = await _initReportJobQueue(appConfig, appLogger);
 
   try {
     const context = new ReportProcessingContext(new AsyncLocalStorage());
     const processor = Processor.buildAnalyticsProcessor(appConfig, appLogger);
 
-    await queueClient.work(
-      queue,
-      { newJobCheckIntervalSeconds: 1 },
-      async (message) => {
-        appLogger.info("Queue message received");
-        process.env.AGENCY_NAME = message.data.agencyName;
-        process.env.ANALYTICS_REPORT_IDS = message.data.analyticsReportIds;
-        process.env.AWS_BUCKET_PATH = message.data.awsBucketPath;
-        process.env.ANALYTICS_SCRIPT_NAME = message.data.scriptName;
+    await queue.poll(async (message) => {
+      appLogger.info("Queue message received");
+      _setProcessEnvForMessage(message);
 
-        await _processReport(
-          new AppConfig(message.data.options),
-          context,
-          message.data.reportConfig,
-          processor,
-        );
-      },
-    );
+      await _processReport(
+        new AppConfig(message.options),
+        context,
+        message.reportConfig,
+        processor,
+      );
+    });
   } catch (e) {
     appLogger.error("Error polling queue for messages");
     appLogger.error(util.inspect(e));
   }
+}
+
+function _setProcessEnvForMessage(message) {
+  process.env.AGENCY_NAME = message.data.agencyName || "";
+  process.env.ANALYTICS_REPORT_IDS = message.data.analyticsReportIds || "";
+  process.env.AWS_BUCKET_PATH = message.data.awsBucketPath || "";
+  process.env.ANALYTICS_SCRIPT_NAME = message.data.scriptName || "";
 }
 
 module.exports = { run, runQueuePublish, runQueueConsume };
