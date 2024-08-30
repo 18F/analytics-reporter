@@ -1,27 +1,24 @@
 const winston = require("winston");
 
 /**
- * @param {object} params the parameters for the method
- * @param {string} params.agencyName the name of the agency for this logger
- * instance.
- * @param {string} params.reportName the name of the report being run for this
- * logger instance.
- * @param {string} params.scriptName the name of the script being run for this
- * logger instance.
+ * @param {object} params the parameter object
+ * @param {string} params.agencyName the agency name to use for log tagging.
+ * @param {string} params.reportName the report name to use for log tagging.
+ * @param {string} params.scriptName the script name to use for log tagging.
  * @returns {string} a standard tag for the logger to identify the specific
- * report being processed when writing logs.
+ * agency, report, and script being processed when writing logs.
  */
 const tag = ({ agencyName, reportName, scriptName }) => {
   let tagString = "";
 
   if (scriptName) {
-    tagString = tagString + `${scriptName} - `;
+    tagString = tagString + `${scriptName}`;
   }
   if (reportName) {
-    tagString = tagString + `${reportName} - `;
+    tagString = tagString + `${tagString ? " - " : ""}${reportName}`;
   }
   if (agencyName) {
-    tagString = tagString + `${agencyName}`;
+    tagString = tagString + `${tagString ? " - " : ""}${agencyName}`;
   }
 
   return tagString;
@@ -44,21 +41,19 @@ const baseLogger = winston.createLogger({
 /**
  * Creates an application logger instance.
  *
- * @param {import('../app_config')} appConfig application config instance. Sets the log level and
- * is also referenced to create a leading log tag for this logger instance.
- * @param {object} reportConfig config for the report being run for this
- * logger instance. Used to create a leading log tag for messages
- * @param {string} reportConfig.name the name of the report being run for this
- * logger instance. Used to create a leading log tag for messages
+ * @param {object} params the parameter object
+ * @param {string} params.agencyName the agency name to use for log tagging.
+ * @param {string} params.reportName the report name to use for log tagging.
+ * @param {string} params.scriptName the script name to use for log tagging.
  * @returns {import('winston').Logger} the configured logger instance
  */
-const initialize = (appConfig = {}, reportConfig = {}) => {
+const initialize = ({
+  agencyName = "",
+  reportName = "",
+  scriptName = "",
+} = {}) => {
   return baseLogger.child({
-    label: tag({
-      agencyName: appConfig.agency,
-      reportName: reportConfig.name,
-      scriptName: appConfig.scriptName,
-    }),
+    label: tag({ agencyName, reportName, scriptName }),
   });
 };
 
