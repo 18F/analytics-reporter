@@ -37,7 +37,10 @@ async function run(options = {}) {
   const reportConfigs = appConfig.filteredReportConfigurations;
   const processor = Processor.buildAnalyticsProcessor(
     appConfig,
-    Logger.initialize(appConfig),
+    Logger.initialize({
+      agencyName: appConfig.agencyLogName,
+      scriptName: appConfig.scriptName,
+    }),
   );
 
   for (const reportConfig of reportConfigs) {
@@ -64,7 +67,11 @@ async function run(options = {}) {
  */
 async function _processReport(appConfig, context, reportConfig, processor) {
   return context.run(async () => {
-    const logger = Logger.initialize(appConfig, reportConfig);
+    const logger = Logger.initialize({
+      agencyName: appConfig.agencyLogName,
+      scriptName: appConfig.scriptName,
+      reportName: reportConfig.name,
+    });
     context.appConfig = appConfig;
     context.logger = logger;
     context.reportConfig = reportConfig;
@@ -110,14 +117,21 @@ async function runQueuePublish(options = {}) {
   const agencies = _initAgencies(options.agenciesFile);
   const appConfig = new AppConfig(options);
   const reportConfigs = appConfig.filteredReportConfigurations;
-  const appLogger = Logger.initialize(appConfig);
+  const appLogger = Logger.initialize({
+    agencyName: appConfig.agencyLogName,
+    scriptName: appConfig.scriptName,
+  });
   const queueClient = await _initQueueClient(appConfig, appLogger);
   const queue = "analytics-reporter-job-queue";
 
   for (const agency of agencies) {
     for (const reportConfig of reportConfigs) {
       process.env.AGENCY_NAME = agency.agencyName;
-      const reportLogger = Logger.initialize(appConfig, reportConfig);
+      const reportLogger = Logger.initialize({
+        agencyName: appConfig.agencyLogName,
+        scriptName: appConfig.scriptName,
+        reportName: reportConfig.name,
+      });
       try {
         let jobId = await queueClient.send(
           queue,

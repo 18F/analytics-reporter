@@ -249,8 +249,36 @@ describe("AppConfig", () => {
         subject = new AppConfig();
       });
 
+      it("returns the default empty string", () => {
+        expect(subject.agency).to.equal("");
+      });
+    });
+  });
+
+  describe("agencyLogName", () => {
+    describe("when AGENCY_NAME is set", () => {
+      beforeEach(() => {
+        process.env.AGENCY_NAME = "HUD";
+        subject = new AppConfig();
+      });
+
+      afterEach(() => {
+        delete process.env.AGENCY_NAME;
+      });
+
+      it("returns the string set in the env var", () => {
+        expect(subject.agencyLogName).to.equal("HUD");
+      });
+    });
+
+    describe("when AGENCY_NAME is not set", () => {
+      beforeEach(() => {
+        delete process.env.AGENCY_NAME;
+        subject = new AppConfig();
+      });
+
       it("returns the default: gov-wide", () => {
-        expect(subject.agency).to.equal("gov-wide");
+        expect(subject.agencyLogName).to.equal("gov-wide");
       });
     });
   });
