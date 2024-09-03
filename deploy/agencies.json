@@ -407,7 +407,7 @@
   {
     "analyticsReportIds": "395457299",
     "agencyName": "us-courts",
-    "awsBucketPath": "data/us-court"
+    "awsBucketPath": "data/us-courts"
   },
   {
     "analyticsReportIds": "395452039",
