@@ -74,7 +74,7 @@ class PostgresPublisher {
   #rowForDataPoint({ results, dataPoint }) {
     const row = this.#dataForDataPoint(dataPoint);
     row.report_name = results.name;
-    row.report_agency = results.agency;
+    row.report_agency = results.agency ? results.agency : null;
     return row;
   }
 

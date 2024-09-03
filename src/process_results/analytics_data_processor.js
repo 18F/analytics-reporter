@@ -83,7 +83,7 @@ class AnalyticsDataProcessor {
   #initializeResult({ agency, report, data, query }) {
     return {
       name: report.name,
-      agency,
+      agency: agency ? agency : null,
       sampling: data.metadata?.samplingMetadatas,
       query: ((query) => {
         query = Object.assign({}, query);

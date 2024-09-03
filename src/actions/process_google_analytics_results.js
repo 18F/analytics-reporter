@@ -27,7 +27,7 @@ class ProcessGoogleAnalyticsResults extends Action {
     context.logger.debug("Processing GA report data");
     context.processedAnalyticsData =
       await this.#analyticsDataProcessor.processData({
-        agency: context.appConfig.agency,
+        agency: context.appConfig.agency ? context.appConfig.agency : null,
         hostname: context.appConfig.account.hostname,
         report: context.reportConfig,
         data: context.rawGoogleAnalyticsReportData[0],
