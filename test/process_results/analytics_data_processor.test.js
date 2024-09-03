@@ -39,7 +39,7 @@ describe("AnalyticsDataProcessor", () => {
         expect(result.totals).to.be.an("object");
         expect(result.totals).to.be.an("object");
         expect(result.taken_at).to.be.a("date");
-        expect(result.agency).to.be.undefined;
+        expect(result.agency).to.be.null;
       });
 
       it("should return results with an empty data array if data is undefined or has no rows", () => {
