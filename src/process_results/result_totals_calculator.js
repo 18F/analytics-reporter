@@ -20,6 +20,9 @@ const calculateTotals = (result, options = {}) => {
   if ("visits" in result.data[0]) {
     totals.visits = _sumColumn({ column: "visits", result });
   }
+  if ("total_events" in result.data[0]) {
+    totals.total_events = _sumColumn({ column: "total_events", result });
+  }
 
   if (options.sumVisitsByColumns && Array.isArray(options.sumVisitsByColumns)) {
     for (const column of options.sumVisitsByColumns) {
@@ -39,6 +42,20 @@ const calculateTotals = (result, options = {}) => {
         column,
         result,
       });
+    }
+  }
+
+  if (
+    options.sumTotalEventsByColumns &&
+    Array.isArray(options.sumTotalEventsByColumns)
+  ) {
+    for (const column of options.sumTotalEventsByColumns) {
+      totals[`by_${column}`] = _sumMetricByColumn({
+        metric: "total_events",
+        column,
+        result,
+      });
+      totals[`by_${column}`] = _sortObjectByValues(totals[`by_${column}`]);
     }
   }
 
