@@ -1891,6 +1891,51 @@
       }
     },
     {
+      "name": "top-download-file-extensions-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "fileExtension"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "matchType": "FULL_REGEXP",
+              "value": "^(file_download|download|downloads|(outbound downloads))$",
+              "caseSensitive": false
+            }
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloaded File Extensions (30 Days)",
+        "description": "Top 100 downloaded file extensions in the last 30 days."
+      }
+    },
+    {
       "name": "top-cities-realtime",
       "frequency": "realtime",
       "realtime": true,
