@@ -1905,38 +1905,25 @@
       }
     },
     {
-      "name": "users",
+      "name": "users-30-days",
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": [
-          {
-            "name": "date"
-          }
-        ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
         "dateRanges": [
           {
-            "startDate": "90daysAgo",
+            "startDate": "30daysAgo",
             "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "dimension": {
-              "dimensionName": "date"
-            },
-            "desc": true
           }
         ]
       },
       "meta": {
-        "name": "Visitors",
-        "description": "90 days of visits for all sites."
+        "name": "Total users",
+        "description": "Total distinct users for all sites in the last 30 days."
       }
     },
     {
