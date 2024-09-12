@@ -54,7 +54,73 @@
       }
     },
     {
-      "name": "screen-resolution",
+      "name": "screen-resolution-30-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumUsersByColumns": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "30 days of screen resolution demographics by user for all sites."
+      }
+    },
+    {
+      "name": "screen-resolution-90-days",
       "frequency": "daily",
       "slim": true,
       "sumUsersByColumns": [
