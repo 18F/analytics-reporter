@@ -1927,6 +1927,27 @@
       }
     },
     {
+      "name": "page-views-30-days",
+      "frequency": "daily",
+      "query": {
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ]
+      },
+      "meta": {
+        "name": "Total page views",
+        "description": "Total app screens or web pages viewed for all sites in the last 30 days."
+      }
+    },
+    {
       "name": "sessions-over-30-days",
       "frequency": "daily",
       "query": {
