@@ -2241,6 +2241,130 @@
         "name": "Top video plays 30 days",
         "description": "Top 100 video plays in the last 30 days"
       }
+    },
+    {
+      "name": "top-user-engagement-events-30-days",
+      "frequency": "daily",
+      "sumTotalEventsByColumns": [
+        "event_label"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          },
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "dap_event",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "session_start",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "custom",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "first_visit",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "user_engagement",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top User Engagement Events (30 Days)",
+        "description": "Top 100 user engagement events in the last 30 days."
+      }
     }
   ]
 }
