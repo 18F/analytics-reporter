@@ -350,6 +350,141 @@ describe("ResultTotalsCalculator", () => {
         });
       });
 
+      describe("and options.sumTotalEventsByColumns is provided", () => {
+        let options;
+
+        describe("and there is one column being totalled", () => {
+          beforeEach(() => {
+            options = { sumTotalEventsByColumns: ["file_extension"] };
+            report.name = "devices";
+            data.dimensionHeaders = [{ name: "fileExtension" }];
+            data.metricHeaders = [{ name: "eventCount" }];
+            data.rows = [
+              {
+                dimensionValues: [{ value: "pdf" }],
+                metricValues: [{ value: "100" }],
+              },
+              {
+                dimensionValues: [{ value: "jpg" }],
+                metricValues: [{ value: "200" }],
+              },
+              {
+                dimensionValues: [{ value: "txt" }],
+                metricValues: [{ value: "300" }],
+              },
+              {
+                dimensionValues: [{ value: "zip" }],
+                metricValues: [{ value: "400" }],
+              },
+              {
+                dimensionValues: [{ value: "xslx" }],
+                metricValues: [{ value: "500" }],
+              },
+              {
+                dimensionValues: [{ value: "docx" }],
+                metricValues: [{ value: "600" }],
+              },
+            ];
+
+            const result = analyticsDataProcessor.processData({ report, data });
+            totals = ResultTotalsCalculator.calculateTotals(result, options);
+          });
+
+          it("should compute event totals for mobile file_extensions", () => {
+            expect(totals.by_file_extension.pdf).to.equal(100);
+          });
+
+          it("should compute event totals for tablet file_extensions", () => {
+            expect(totals.by_file_extension.jpg).to.equal(200);
+          });
+
+          it("should compute event totals for desktop file_extensions", () => {
+            expect(totals.by_file_extension.txt).to.equal(300);
+          });
+
+          it("sorts totals by event count", () => {
+            expect(Object.entries(totals.by_file_extension)).to.deep.equal(
+              Object.entries({
+                docx: 600,
+                xslx: 500,
+                zip: 400,
+                txt: 300,
+                jpg: 200,
+                pdf: 100,
+              }),
+            );
+          });
+        });
+
+        describe("and there are multiple columns being totalled", () => {
+          beforeEach(() => {
+            options = {
+              sumTotalEventsByColumns: ["language", "language_code"],
+            };
+            report.name = "language";
+            data.dimensionHeaders = [
+              { name: "date" },
+              { name: "language" },
+              { name: "language_code" },
+            ];
+            data.metricHeaders = [{ name: "eventCount" }];
+            data.rows = [
+              {
+                dimensionValues: [
+                  { value: "20170130" },
+                  { value: "en" },
+                  { value: "en-us" },
+                ],
+                metricValues: [{ value: "100" }],
+              },
+              {
+                dimensionValues: [
+                  { value: "20170130" },
+                  { value: "es" },
+                  { value: "es-us" },
+                ],
+                metricValues: [{ value: "200" }],
+              },
+              {
+                dimensionValues: [
+                  { value: "20170131" },
+                  { value: "en" },
+                  { value: "en-us" },
+                ],
+                metricValues: [{ value: "300" }],
+              },
+              {
+                dimensionValues: [
+                  { value: "20170131" },
+                  { value: "es" },
+                  { value: "es-us" },
+                ],
+                metricValues: [{ value: "400" }],
+              },
+            ];
+
+            const result = analyticsDataProcessor.processData({ report, data });
+            totals = ResultTotalsCalculator.calculateTotals(result, options);
+          });
+
+          it("should compute event totals for en language", () => {
+            expect(totals.by_language.en).to.equal(100 + 300);
+          });
+
+          it("should compute event totals for es language", () => {
+            expect(totals.by_language.es).to.equal(200 + 400);
+          });
+
+          it("should compute event totals for en-us language code", () => {
+            expect(totals.by_language_code["en-us"]).to.equal(100 + 300);
+          });
+
+          it("should compute event totals for es-us language code", () => {
+            expect(totals.by_language_code["es-us"]).to.equal(200 + 400);
+          });
+        });
+      });
+
       describe("and report should sum visits for a combination of columns", () => {
         it("should compute totals for os-browsers by operating system and browser", () => {
           report.name = "os-browsers";
