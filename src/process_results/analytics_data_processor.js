@@ -6,6 +6,7 @@ const ResultTotalsCalculator = require("./result_totals_calculator");
 class AnalyticsDataProcessor {
   #mapping = {
     activeUsers: "active_visitors",
+    fileExtension: "file_extension",
     fileName: "file_name",
     fullPageUrl: "page",
     pageTitle: "page_title",
@@ -75,6 +76,7 @@ class AnalyticsDataProcessor {
     result.totals = ResultTotalsCalculator.calculateTotals(result, {
       sumVisitsByColumns: report.sumVisitsByColumns,
       sumUsersByColumns: report.sumUsersByColumns,
+      sumTotalEventsByColumns: report.sumTotalEventsByColumns,
     });
 
     return result;
