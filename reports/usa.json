@@ -17,44 +17,73 @@
       }
     },
     {
-      "name": "today",
-      "frequency": "hourly",
+      "name": "screen-resolution-30-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumUsersByColumns": [
+        "screen_resolution"
+      ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
-          },
-          {
-            "name": "hour"
+            "name": "screenResolution"
           }
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
         "dateRanges": [
           {
-            "startDate": "today",
-            "endDate": "today"
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "orderBys": [
           {
-            "dimension": {
-              "orderType": "NUMERIC",
-              "dimensionName": "hour"
-            }
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
           }
         ]
       },
       "meta": {
-        "name": "Yesterday",
-        "description": "Yesterdays's visits for all sites."
+        "name": "Screen Resolution",
+        "description": "30 days of screen resolution demographics by user for all sites."
       }
     },
     {
-      "name": "screen-resolution",
+      "name": "screen-resolution-90-days",
       "frequency": "daily",
       "slim": true,
       "sumUsersByColumns": [
@@ -77,6 +106,34 @@
             "endDate": "yesterday"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "orderBys": [
           {
             "metric": {
@@ -1004,59 +1061,6 @@
       }
     },
     {
-      "name": "top-landing-pages-30-days",
-      "frequency": "daily",
-      "query": {
-        "dimensions": [
-          {
-            "name": "hostName"
-          },
-          {
-            "name": "landingPagePlusQueryString"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "screenPageViews"
-          },
-          {
-            "name": "sessions"
-          },
-          {
-            "name": "activeUsers"
-          },
-          {
-            "name": "screenPageViewsPerSession"
-          },
-          {
-            "name": "averageSessionDuration"
-          },
-          {
-            "name": "bounceRate"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "screenPageViews"
-            },
-            "desc": true
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "30daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "limit": "20"
-      },
-      "meta": {
-        "name": "Top Landing Pages (30 Days)",
-        "description": "Top 20 landing pages for the last 30 days, measured by visits, for all sites."
-      }
-    },
-    {
       "name": "top-traffic-sources-30-days",
       "frequency": "daily",
       "query": {
@@ -1320,303 +1324,6 @@
       }
     },
     {
-      "name": "second-level-domains",
-      "frequency": "daily",
-      "query": {
-        "dimensions": [
-          {
-            "name": "hostName"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "14daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "sessions"
-            },
-            "desc": true
-          }
-        ],
-        "dimensionFilter": {
-          "filter": {
-            "fieldName": "hostname",
-            "stringFilter": {
-              "matchType": "FULL_REGEXP",
-              "value": "^[^\\.]+\\.[^\\.]+$",
-              "caseSensitive": false
-            }
-          },
-          "metricFilter": {
-            "filter": {
-              "fieldName": "sessions",
-              "numericFilter": {
-                "operation": "GREATER_THAN",
-                "value": {
-                  "int64Value": "0"
-                }
-              }
-            }
-          }
-        }
-      },
-      "limit": "10000",
-      "meta": {
-        "name": "Participating second-level domains.",
-        "description": "Participating second-level domains over the last 2 weeks with at least 1 session."
-      }
-    },
-    {
-      "name": "sites",
-      "frequency": "daily",
-      "query": {
-        "dimensions": [
-          {
-            "name": "hostName"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "14daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "sessions"
-            },
-            "desc": true
-          }
-        ]
-      },
-      "limit": "10000",
-      "meta": {
-        "name": "Participating hostnames.",
-        "description": "Participating hostnames over the last 14 days."
-      }
-    },
-    {
-      "name": "sites-extended",
-      "frequency": "daily",
-      "query": {
-        "dimensions": [
-          {
-            "name": "hostName"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "14daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "sessions"
-            },
-            "desc": true
-          }
-        ],
-        "metricFilter": {
-          "filter": {
-            "fieldName": "sessions",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "0"
-              }
-            }
-          }
-        }
-      },
-      "limit": "10000",
-      "meta": {
-        "name": "Participating hostnames.",
-        "description": "Participating hostnames over the last 14 days with at least 1 visit."
-      }
-    },
-    {
-      "name": "top-pages-30-days",
-      "frequency": "daily",
-      "query": {
-        "dimensions": [
-          {
-            "name": "hostName"
-          },
-          {
-            "name": "fullPageUrl"
-          },
-          {
-            "name": "pageTitle"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "screenPageViews"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "screenPageViews"
-            },
-            "desc": true
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "30daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "dimensionFilter": {
-          "andGroup": {
-            "expressions": [
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "limit": "30"
-      },
-      "meta": {
-        "name": "Top Pages (30 Days)",
-        "description": "Top 30 pages for the last 30 days, measured by page views, for all sites."
-      }
-    },
-    {
-      "name": "top-pages-7-days",
-      "frequency": "daily",
-      "query": {
-        "dimensions": [
-          {
-            "name": "hostName"
-          },
-          {
-            "name": "fullPageUrl"
-          },
-          {
-            "name": "pageTitle"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "screenPageViews"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "screenPageViews"
-            },
-            "desc": true
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "7daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "dimensionFilter": {
-          "andGroup": {
-            "expressions": [
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "limit": "30"
-      },
-      "meta": {
-        "name": "Top Pages (7 Days)",
-        "description": "Top 30 pages for the last week, measured by page views, for all sites."
-      }
-    },
-    {
       "name": "top-downloads-yesterday",
       "frequency": "daily",
       "query": {
@@ -1863,6 +1570,98 @@
       }
     },
     {
+      "name": "top-download-file-extensions-30-days",
+      "frequency": "daily",
+      "sumTotalEventsByColumns": [
+        "file_extension"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "fileExtension"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "matchType": "FULL_REGEXP",
+              "value": "^(file_download|download|downloads|(outbound downloads))$",
+              "caseSensitive": false
+            }
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloaded File Extensions (30 Days)",
+        "description": "Top 100 downloaded file extensions in the last 30 days."
+      }
+    },
+    {
+      "name": "users-with-file-downloads-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "matchType": "FULL_REGEXP",
+              "value": "^(file_download|download|downloads|(outbound downloads))$",
+              "caseSensitive": false
+            }
+          }
+        }
+      },
+      "meta": {
+        "name": "Users with File Downloads (30 Days)",
+        "description": "Count of total users with file download events in the last 30 days."
+      }
+    },
+    {
       "name": "top-cities-realtime",
       "frequency": "realtime",
       "realtime": true,
@@ -2106,81 +1905,46 @@
       }
     },
     {
-      "name": "last-48-hours",
-      "frequency": "realtime",
-      "query": {
-        "dimensions": [
-          {
-            "name": "date"
-          },
-          {
-            "name": "hour"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "yesterday",
-            "endDate": "today"
-          }
-        ],
-        "orderBys": [
-          {
-            "dimension": {
-              "orderType": "NUMERIC",
-              "dimensionName": "date"
-            }
-          },
-          {
-            "dimension": {
-              "orderType": "NUMERIC",
-              "dimensionName": "hour"
-            }
-          }
-        ]
-      },
-      "meta": {
-        "name": "Last 48 Hours",
-        "description": "Visits for all sites in the past 48 hours."
-      }
-    },
-    {
-      "name": "users",
+      "name": "users-30-days",
       "frequency": "daily",
       "slim": true,
       "query": {
-        "dimensions": [
-          {
-            "name": "date"
-          }
-        ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
         "dateRanges": [
           {
-            "startDate": "90daysAgo",
+            "startDate": "30daysAgo",
             "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "dimension": {
-              "dimensionName": "date"
-            },
-            "desc": true
           }
         ]
       },
       "meta": {
-        "name": "Visitors",
-        "description": "90 days of visits for all sites."
+        "name": "Total users",
+        "description": "Total distinct users for all sites in the last 30 days."
+      }
+    },
+    {
+      "name": "page-views-30-days",
+      "frequency": "daily",
+      "query": {
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ]
+      },
+      "meta": {
+        "name": "Total page views",
+        "description": "Total app screens or web pages viewed for all sites in the last 30 days."
       }
     },
     {
@@ -2476,6 +2240,130 @@
       "meta": {
         "name": "Top video plays 30 days",
         "description": "Top 100 video plays in the last 30 days"
+      }
+    },
+    {
+      "name": "top-user-engagement-events-30-days",
+      "frequency": "daily",
+      "sumTotalEventsByColumns": [
+        "event_label"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          },
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "dap_event",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "session_start",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "custom",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "first_visit",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "user_engagement",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top User Engagement Events (30 Days)",
+        "description": "Top 100 user engagement events in the last 30 days."
       }
     }
   ]
