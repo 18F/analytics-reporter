@@ -143,6 +143,9 @@ async function runQueuePublish(options = {}) {
           ),
           {
             priority: _messagePriority(reportConfig),
+            retryLimit: 2,
+            retryDelay: 10,
+            retryBackoff: true,
             singletonKey: `${appConfig.scriptName}-${agency.agencyName}-${reportConfig.name}`,
           },
         );

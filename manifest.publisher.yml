@@ -4,7 +4,7 @@ applications:
   # 1GB is needed right at startup because many child processes are spawned in
   # parallel. This could be reduced if we limited the number of simultaneous
   # processes.
-  memory: 256M
+  memory: 192M
   disk_quota: 512M
   health-check-type: process
   buildpacks:
