@@ -26,7 +26,7 @@ applications:
     NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
     NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
     NODE_ENV: production
-    NODE_OPTIONS: --max-old-space-size=192
+    NODE_OPTIONS: --max-old-space-size=312
     PGSSLMODE: true
     PROXY_USERNAME: ${PROXY_USERNAME}
     PROXY_PASSWORD: ${PROXY_PASSWORD}
