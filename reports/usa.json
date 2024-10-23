@@ -788,7 +788,7 @@
       }
     },
     {
-      "name": "top-10000-pages-and-screens-30-days",
+      "name": "top-100000-pages-and-screens-30-days",
       "frequency": "daily",
       "query": {
         "dimensions": [
@@ -905,11 +905,11 @@
             ]
           }
         },
-        "limit": "10000"
+        "limit": "100000"
       },
       "meta": {
-        "name": "Top 10000 pages and screens people are viewing (30 days)",
-        "description": "The top 10000 pages, measured by active onsite users, for all sites."
+        "name": "Top 100000 pages and screens people are viewing (30 days)",
+        "description": "The top 100000 pages, measured by active onsite users, for all sites."
       }
     },
     {
@@ -1332,13 +1332,10 @@
             "name": "pageTitle"
           },
           {
-            "name": "eventName"
-          },
-          {
-            "name": "fileName"
-          },
-          {
             "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
           }
         ],
         "metrics": [
@@ -1394,6 +1391,50 @@
                     }
                   }
                 }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
               }
             ]
           }
@@ -1414,13 +1455,10 @@
             "name": "pageTitle"
           },
           {
-            "name": "eventName"
-          },
-          {
-            "name": "fileName"
-          },
-          {
             "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
           }
         ],
         "metrics": [
@@ -1476,6 +1514,50 @@
                     }
                   }
                 }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
               }
             ]
           }
@@ -1496,13 +1578,10 @@
             "name": "pageTitle"
           },
           {
-            "name": "eventName"
-          },
-          {
-            "name": "fileName"
-          },
-          {
             "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
           }
         ],
         "metrics": [
@@ -1554,6 +1633,50 @@
                     "stringFilter": {
                       "matchType": "PARTIAL_REGEXP",
                       "value": ".*\\busps\\.com\\b.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "stringFilter": {
+                      "value": "(not set)",
                       "caseSensitive": false
                     }
                   }
@@ -1820,7 +1943,7 @@
             ]
           }
         },
-        "limit": "10000"
+        "limit": "100000"
       },
       "meta": {
         "name": "All Pages (Live)",
@@ -1828,7 +1951,7 @@
       }
     },
     {
-      "name": "top-10000-domains-30-days",
+      "name": "top-100000-domains-30-days",
       "frequency": "daily",
       "query": {
         "dimensions": [
@@ -1897,10 +2020,10 @@
             ]
           }
         },
-        "limit": "10000"
+        "limit": "100000"
       },
       "meta": {
-        "name": "Top 10000 Domains (30 Days)",
+        "name": "Top 100000 Domains (30 Days)",
         "description": "Last 30 days' domains, measured by page views and sessions, for the top 10000 sites."
       }
     },
