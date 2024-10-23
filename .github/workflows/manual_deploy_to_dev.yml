@@ -1,0 +1,31 @@
+name: Deploy to dev manually
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_dev:
+    uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
+    with:
+      ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ vars.ANALYTICS_GA4_CALL_RETRY_COUNT_DEV }}
+      ANALYTICS_KEY_FILE_NAME: ${{ vars.ANALYTICS_KEY_FILE_NAME }}
+      ANALYTICS_LOG_LEVEL: ${{ vars.ANALYTICS_LOG_LEVEL_DEV }}
+      ANALYTICS_REPORT_EMAIL: ${{ vars.ANALYTICS_REPORT_EMAIL }}
+      APP_NAME: ${{ vars.APP_NAME_DEV }}
+      CF_ORGANIZATION_NAME: ${{ vars.CF_ORGANIZATION_NAME }}
+      CF_SPACE_NAME: ${{ vars.CF_SPACE_NAME_DEV }}
+      DB_SERVICE_NAME: ${{ vars.DB_SERVICE_NAME_DEV }}
+      MESSAGE_QUEUE_DATABASE_NAME: ${{ vars.MESSAGE_QUEUE_DATABASE_NAME }}
+      MESSAGE_QUEUE_NAME: ${{ vars.MESSAGE_QUEUE_NAME }}
+      NEW_RELIC_APP_NAME: ${{ vars.NEW_RELIC_APP_NAME_DEV }}
+      PROXY_FQDN: ${{ vars.PROXY_FQDN_DEV }}
+      PROXY_PORT: ${{ vars.PROXY_PORT }}
+      S3_SERVICE_NAME: ${{ vars.S3_SERVICE_NAME_DEV }}
+    secrets:
+      ANALYTICS_CREDENTIALS: ${{ secrets.ANALYTICS_CREDENTIALS }}
+      CF_USERNAME: ${{ secrets.CF_USERNAME_DEV }}
+      CF_PASSWORD: ${{ secrets.CF_PASSWORD_DEV }}
+      GA4_CREDS: ${{ secrets.GA4_CREDS_DEV }}
+      NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY_DEV }}
+      PROXY_USERNAME: ${{ secrets.PROXY_USERNAME_DEV }}
+      PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD_DEV }}
