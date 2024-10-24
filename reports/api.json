@@ -447,7 +447,8 @@
               }
             }
           }
-        }
+        },
+        "limit": "100000"
       },
       "meta": {
         "name": "Domains",
@@ -556,7 +557,8 @@
               }
             }
           }
-        }
+        },
+        "limit": "100000"
       },
       "meta": {
         "name": "Participating second-level domains.",
@@ -604,7 +606,8 @@
               }
             }
           }
-        }
+        },
+        "limit": "100000"
       },
       "meta": {
         "name": "Participating hostnames.",
