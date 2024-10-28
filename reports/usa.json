@@ -26,6 +26,9 @@
       "query": {
         "dimensions": [
           {
+            "name": "month"
+          },
+          {
             "name": "screenResolution"
           }
         ],
@@ -59,7 +62,29 @@
                   "filter": {
                     "fieldName": "screenResolution",
                     "stringFilter": {
-                      "value": "other",
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(not set)",
                       "caseSensitive": false
                     }
                   }
@@ -70,12 +95,19 @@
         },
         "orderBys": [
           {
+            "dimension": {
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
             "metric": {
               "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Screen Resolution",
@@ -92,6 +124,9 @@
       "query": {
         "dimensions": [
           {
+            "name": "month"
+          },
+          {
             "name": "screenResolution"
           }
         ],
@@ -125,7 +160,29 @@
                   "filter": {
                     "fieldName": "screenResolution",
                     "stringFilter": {
-                      "value": "other",
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(not set)",
                       "caseSensitive": false
                     }
                   }
@@ -136,12 +193,19 @@
         },
         "orderBys": [
           {
+            "dimension": {
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
             "metric": {
               "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Screen Resolution",
@@ -152,12 +216,15 @@
       "name": "language",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "language",
         "language_code"
       ],
       "query": {
         "dimensions": [
+          {
+            "name": "month"
+          },
           {
             "name": "language"
           },
@@ -167,9 +234,103 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "90daysAgo",
@@ -179,28 +340,35 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "sessions"
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Browser Language",
-        "description": "90 days of visits by browser language for all sites."
+        "description": "90 days of browser language demographics by user for all sites."
       }
     },
     {
       "name": "devices",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "device"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "deviceCategory"
@@ -208,7 +376,7 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
         "dimensionFilter": {
@@ -224,6 +392,39 @@
                     }
                   }
                 }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
               }
             ]
           }
@@ -237,28 +438,35 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Devices",
-        "description": "30 days of desktop/mobile/tablet visits for all sites."
+        "description": "30 days of desktop/mobile/tablet demographics by user for all sites."
       }
     },
     {
       "name": "devices-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "device"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "deviceCategory"
@@ -266,9 +474,59 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "90daysAgo",
@@ -278,28 +536,35 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Devices - 90 days",
-        "description": "90 days of desktop/mobile/tablet visits for all sites."
+        "description": "90 days of desktop/mobile/tablet demographics by user for all sites."
       }
     },
     {
       "name": "device-model",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "mobile_device"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "mobileDeviceModel"
@@ -307,9 +572,59 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "mobileDeviceModel",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "mobileDeviceModel",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "mobileDeviceModel",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "mobileDeviceModel",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "90daysAgo",
@@ -319,28 +634,35 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Device Model",
-        "description": "90 days of visits by Device Model for all sites."
+        "description": "90 days of mobile device model demographics by user for all sites."
       }
     },
     {
       "name": "os",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "os"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "operatingSystem"
@@ -348,9 +670,59 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "30daysAgo",
@@ -360,28 +732,35 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Operating Systems",
-        "description": "30 days of visits, broken down by operating system and date, for all sites."
+        "description": "30 days of operating system demographics by user for all sites."
       }
     },
     {
       "name": "os-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "os"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "operatingSystem"
@@ -389,9 +768,59 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "90daysAgo",
@@ -401,28 +830,35 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Operating Systems - 90 Days",
-        "description": "90 days of visits, broken down by operating system and date, for all sites."
+        "description": "90 days of operating system demographics by user for all sites."
       }
     },
     {
       "name": "windows",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "os_version"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "operatingSystemVersion"
@@ -430,21 +866,7 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
-          }
-        ],
-        "dateRanges": [
-          {
-            "startDate": "30daysAgo",
-            "endDate": "yesterday"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "sessions"
-            },
-            "desc": true
+            "name": "totalUsers"
           }
         ],
         "dimensionFilter": {
@@ -454,24 +876,45 @@
               "value": "Windows"
             }
           }
-        }
+        },
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Windows",
-        "description": "30 days of visits from Windows users, broken down by operating system version and date, for all sites."
+        "description": "30 days of Windows users, broken down by operating system version and date, for all sites."
       }
     },
     {
       "name": "windows-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "os_version"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "operatingSystemVersion"
@@ -479,9 +922,67 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "90daysAgo",
@@ -490,37 +991,36 @@
         ],
         "orderBys": [
           {
+            "dimension": {
+              "dimensionName": "month"
+            },
+            "desc": true
+          },
+          {
             "metric": {
-              "metricName": "sessions"
+              "metricName": "totalUsers"
             },
             "desc": true
           }
         ],
-        "dimensionFilter": {
-          "filter": {
-            "fieldName": "operatingSystem",
-            "stringFilter": {
-              "value": "Windows"
-            }
-          }
-        }
+        "limit": "100000"
       },
       "meta": {
         "name": "Windows - 90 days",
-        "description": "90 days of visits from Windows users, broken down by operating system version and date, for all sites."
+        "description": "90 days of Windows users, broken down by operating system version and date, for all sites."
       }
     },
     {
       "name": "browsers",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "browser"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "browser"
@@ -528,9 +1028,59 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "30daysAgo",
@@ -540,34 +1090,35 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
             },
             "desc": true
           },
           {
             "metric": {
-              "metricName": "sessions"
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Browsers",
-        "description": "30 days of visits broken down by browser for all sites."
+        "description": "30 days of browser demographics by user for all sites."
       }
     },
     {
       "name": "browsers-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumUsersByColumns": [
         "browser"
       ],
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "browser"
@@ -575,9 +1126,59 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "90daysAgo",
@@ -587,21 +1188,22 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
             },
             "desc": true
           },
           {
             "metric": {
-              "metricName": "sessions"
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "Browsers - 90 days",
-        "description": "90 days of visits broken down by browser for all sites."
+        "description": "90 days of browser demographics by user for all sites."
       }
     },
     {
@@ -611,7 +1213,7 @@
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "browser"
@@ -622,9 +1224,103 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "90daysAgo",
@@ -634,21 +1330,22 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
             },
             "desc": true
           },
           {
             "metric": {
-              "metricName": "sessions"
+              "metricName": "totalUsers"
             },
             "desc": true
           }
-        ]
+        ],
+        "limit": "100000"
       },
       "meta": {
         "name": "OS-browser combinations",
-        "description": "90 days of visits broken down by browser and OS for all sites."
+        "description": "90 days of browser and OS demographics by user for all sites."
       }
     },
     {
@@ -658,7 +1355,7 @@
       "query": {
         "dimensions": [
           {
-            "name": "date"
+            "name": "month"
           },
           {
             "name": "browser"
@@ -669,9 +1366,111 @@
         ],
         "metrics": [
           {
-            "name": "sessions"
+            "name": "totalUsers"
           }
         ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              }
+            ]
+          }
+        },
         "dateRanges": [
           {
             "startDate": "90daysAgo",
@@ -681,29 +1480,182 @@
         "orderBys": [
           {
             "dimension": {
-              "dimensionName": "date"
+              "dimensionName": "month"
             },
             "desc": true
           },
           {
             "metric": {
-              "metricName": "sessions"
+              "metricName": "totalUsers"
             },
             "desc": true
           }
         ],
-        "dimensionFilter": {
-          "filter": {
-            "fieldName": "operatingSystem",
-            "stringFilter": {
-              "value": "Windows"
-            }
-          }
-        }
+        "limit": "100000"
       },
       "meta": {
         "name": "Windows-browser combinations",
-        "description": "90 days of visits broken down by Windows versions and browser for all sites."
+        "description": "90 days of Windows versions and browser demographics by user for all sites."
+      }
+    },
+    {
+      "name": "top-cities-realtime",
+      "frequency": "realtime",
+      "realtime": true,
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "limit": "100000"
+      },
+      "meta": {
+        "name": "Top Cities (Live)",
+        "description": "Top cities for active onsite users."
+      }
+    },
+    {
+      "name": "top-countries-realtime",
+      "frequency": "realtime",
+      "realtime": true,
+      "query": {
+        "dimensions": [
+          {
+            "name": "country"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "limit": "100000"
+      },
+      "meta": {
+        "name": "Top Countries (Live)",
+        "description": "Top countries for active onsite users."
       }
     },
     {
@@ -1782,103 +2734,6 @@
       "meta": {
         "name": "Users with File Downloads (30 Days)",
         "description": "Count of total users with file download events in the last 30 days."
-      }
-    },
-    {
-      "name": "top-cities-realtime",
-      "frequency": "realtime",
-      "realtime": true,
-      "query": {
-        "dimensions": [
-          {
-            "name": "city"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "activeUsers"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "activeUsers"
-            },
-            "desc": true
-          }
-        ],
-        "dimensionFilter": {
-          "andGroup": {
-            "expressions": [
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      },
-      "meta": {
-        "name": "Top Cities (Live)",
-        "description": "Top cities for active onsite users."
-      }
-    },
-    {
-      "name": "top-countries-realtime",
-      "frequency": "realtime",
-      "realtime": true,
-      "query": {
-        "dimensions": [
-          {
-            "name": "country"
-          }
-        ],
-        "metrics": [
-          {
-            "name": "activeUsers"
-          }
-        ],
-        "orderBys": [
-          {
-            "metric": {
-              "metricName": "activeUsers"
-            },
-            "desc": true
-          }
-        ]
-      },
-      "meta": {
-        "name": "Top Countries",
-        "description": "Top countries for active onsite users."
       }
     },
     {
