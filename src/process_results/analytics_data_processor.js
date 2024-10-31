@@ -162,13 +162,6 @@ class AnalyticsDataProcessor {
     return data;
   }
 
-  #formatDate(date) {
-    if (date == "(other)") {
-      return date;
-    }
-    return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-");
-  }
-
   #processRow({ hostname, row, data }) {
     const point = {};
 
@@ -189,6 +182,8 @@ class AnalyticsDataProcessor {
 
             if (field === "date") {
               modValue = this.#formatDate(value);
+            } else if (field === "yearMonth") {
+              modValue = this.#formatYearMonth(value);
             } else {
               modValue = value;
             }
@@ -211,6 +206,25 @@ class AnalyticsDataProcessor {
     const targetKey = entryKey.replace("Values", "Headers");
     const name = data[targetKey][index].name;
     return this.#mapping[name] || name;
+  }
+
+  #formatDate(date) {
+    if (date == "(other)") {
+      return date;
+    }
+    return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-");
+  }
+
+  /**
+   * @param {String} value a yearMonth dimension from GA.
+   * @returns {String} the yearMonth converted to readable format e.g '202410'
+   * converts to 'October 2024'.
+   */
+  #formatYearMonth(value) {
+    const year = parseInt(value.substring(0, 4));
+    const monthIndex = parseInt(value.substring(4)) - 1;
+    const date = new Date(year, monthIndex);
+    return date.toLocaleString("en-us", { month: "long", year: "numeric" });
   }
 }
 

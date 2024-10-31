@@ -84,6 +84,14 @@ describe("AnalyticsDataProcessor", () => {
         expect(result.data[0].date).to.equal("2017-01-30");
       });
 
+      it("should format yearMonth values", () => {
+        data.dimensionHeaders = [{ name: "yearMonth" }];
+        data.rows = [{ dimensionValues: [{ value: "202410" }] }];
+
+        const result = subject.processData({ report, data });
+        expect(result.data[0].yearMonth).to.equal("October 2024");
+      });
+
       it("should not format dates with value (other)", () => {
         data.dimensionHeaders = [{ name: "date" }];
         data.rows = [{ dimensionValues: [{ value: "(other)" }] }];
