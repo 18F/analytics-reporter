@@ -20,7 +20,7 @@
       "name": "screen-resolution-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -118,7 +118,7 @@
       "name": "screen-resolution-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -216,7 +216,7 @@
       "name": "language",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "language",
         "language_code"
       ],
@@ -362,7 +362,7 @@
       "name": "devices",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -460,7 +460,7 @@
       "name": "devices-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -558,7 +558,7 @@
       "name": "device-model",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "mobile_device"
       ],
       "query": {
@@ -656,7 +656,7 @@
       "name": "os",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -754,7 +754,7 @@
       "name": "os-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -852,7 +852,7 @@
       "name": "windows",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -908,7 +908,7 @@
       "name": "windows-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -1014,7 +1014,7 @@
       "name": "browsers",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -1112,7 +1112,7 @@
       "name": "browsers-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByColumns": [
+      "sumUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2054,7 +2054,7 @@
       "name": "top-session-channel-group-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumVisitsByDimensions": [
         "session_default_channel_group"
       ],
       "query": {
@@ -2132,7 +2132,7 @@
       "name": "top-session-source-medium-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumVisitsByColumns": [
+      "sumVisitsByDimensions": [
         "session_source_medium"
       ],
       "query": {
@@ -2647,7 +2647,7 @@
     {
       "name": "top-download-file-extensions-30-days",
       "frequency": "daily",
-      "sumTotalEventsByColumns": [
+      "sumTotalEventsByDimensions": [
         "file_extension"
       ],
       "query": {
@@ -3223,7 +3223,7 @@
     {
       "name": "top-user-engagement-events-30-days",
       "frequency": "daily",
-      "sumTotalEventsByColumns": [
+      "sumTotalEventsByDimensions": [
         "event_label"
       ],
       "query": {

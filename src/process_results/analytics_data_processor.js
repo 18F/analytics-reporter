@@ -74,9 +74,9 @@ class AnalyticsDataProcessor {
     });
 
     result.totals = ResultTotalsCalculator.calculateTotals(result, {
-      sumVisitsByColumns: report.sumVisitsByColumns,
-      sumUsersByColumns: report.sumUsersByColumns,
-      sumTotalEventsByColumns: report.sumTotalEventsByColumns,
+      sumVisitsByDimensions: report.sumVisitsByDimensions,
+      sumUsersByDimensions: report.sumUsersByDimensions,
+      sumTotalEventsByDimensions: report.sumTotalEventsByDimensions,
     });
 
     return result;
@@ -99,23 +99,18 @@ class AnalyticsDataProcessor {
     };
   }
 
-  #fieldNameForColumnIndex({ entryKey, index, data }) {
-    // data keys come back as values for the header keys
-    const targetKey = entryKey.replace("Values", "Headers");
-    const name = data[targetKey][index].name;
-    return this.#mapping[name] || name;
-  }
+  #removeColumnFromData({ column, data }) {
+    data = Object.assign(data);
 
-  #filterRowsBelowThreshold({ threshold, data }) {
-    data = Object.assign({}, data);
+    const columnToRemove = this.#findDimensionOrMetricIndex(column, data);
 
-    const column = this.#findDimensionOrMetricIndex(threshold.field, data);
-    if (column != null) {
-      data.rows = data.rows.filter((row) => {
-        return (
-          parseInt(row[column.rowKey][column.index].value) >=
-          parseInt(threshold.value)
-        );
+    if (columnToRemove != null) {
+      data[columnToRemove.rowKey.replace("Values", "Headers")].splice(
+        columnToRemove.index,
+        1,
+      );
+      data.rows.forEach((row) => {
+        row[columnToRemove.rowKey].splice(columnToRemove.index, 1);
       });
     }
 
@@ -149,6 +144,22 @@ class AnalyticsDataProcessor {
     } else {
       return { rowKey: "dimensionValues", index: dimensionIndex };
     }
+  }
+
+  #filterRowsBelowThreshold({ threshold, data }) {
+    data = Object.assign({}, data);
+
+    const column = this.#findDimensionOrMetricIndex(threshold.field, data);
+    if (column != null) {
+      data.rows = data.rows.filter((row) => {
+        return (
+          parseInt(row[column.rowKey][column.index].value) >=
+          parseInt(threshold.value)
+        );
+      });
+    }
+
+    return data;
   }
 
   #formatDate(date) {
@@ -195,22 +206,11 @@ class AnalyticsDataProcessor {
     return point;
   }
 
-  #removeColumnFromData({ column, data }) {
-    data = Object.assign(data);
-
-    const columnToRemove = this.#findDimensionOrMetricIndex(column, data);
-
-    if (columnToRemove != null) {
-      data[columnToRemove.rowKey.replace("Values", "Headers")].splice(
-        columnToRemove.index,
-        1,
-      );
-      data.rows.forEach((row) => {
-        row[columnToRemove.rowKey].splice(columnToRemove.index, 1);
-      });
-    }
-
-    return data;
+  #fieldNameForColumnIndex({ entryKey, index, data }) {
+    // data keys come back as values for the header keys
+    const targetKey = entryKey.replace("Values", "Headers");
+    const name = data[targetKey][index].name;
+    return this.#mapping[name] || name;
   }
 }
 

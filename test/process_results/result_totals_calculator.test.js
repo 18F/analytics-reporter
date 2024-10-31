@@ -84,12 +84,12 @@ describe("ResultTotalsCalculator", () => {
         });
       });
 
-      describe("and options.sumVisitsByColumns is provided", () => {
+      describe("and options.sumVisitsByDimensions is provided", () => {
         let options;
 
         describe("and there is one column being totalled", () => {
           beforeEach(() => {
-            options = { sumVisitsByColumns: ["device"] };
+            options = { sumVisitsByDimensions: ["device"] };
             report.name = "devices";
             data.dimensionHeaders = [
               { name: "date" },
@@ -152,7 +152,7 @@ describe("ResultTotalsCalculator", () => {
 
         describe("and there are multiple columns being totalled", () => {
           beforeEach(() => {
-            options = { sumVisitsByColumns: ["language", "language_code"] };
+            options = { sumVisitsByDimensions: ["language", "language_code"] };
             report.name = "language";
             data.dimensionHeaders = [
               { name: "date" },
@@ -217,12 +217,12 @@ describe("ResultTotalsCalculator", () => {
         });
       });
 
-      describe("and options.sumUsersByColumns is provided", () => {
+      describe("and options.sumUsersByDimensions is provided", () => {
         let options;
 
         describe("and there is one column being totalled", () => {
           beforeEach(() => {
-            options = { sumUsersByColumns: ["device"] };
+            options = { sumUsersByDimensions: ["device"] };
             report.name = "devices";
             data.dimensionHeaders = [
               { name: "date" },
@@ -285,7 +285,7 @@ describe("ResultTotalsCalculator", () => {
 
         describe("and there are multiple columns being totalled", () => {
           beforeEach(() => {
-            options = { sumUsersByColumns: ["language", "language_code"] };
+            options = { sumUsersByDimensions: ["language", "language_code"] };
             report.name = "language";
             data.dimensionHeaders = [
               { name: "date" },
@@ -350,12 +350,12 @@ describe("ResultTotalsCalculator", () => {
         });
       });
 
-      describe("and options.sumTotalEventsByColumns is provided", () => {
+      describe("and options.sumTotalEventsByDimensions is provided", () => {
         let options;
 
         describe("and there is one column being totalled", () => {
           beforeEach(() => {
-            options = { sumTotalEventsByColumns: ["file_extension"] };
+            options = { sumTotalEventsByDimensions: ["file_extension"] };
             report.name = "devices";
             data.dimensionHeaders = [{ name: "fileExtension" }];
             data.metricHeaders = [{ name: "eventCount" }];
@@ -419,7 +419,7 @@ describe("ResultTotalsCalculator", () => {
         describe("and there are multiple columns being totalled", () => {
           beforeEach(() => {
             options = {
-              sumTotalEventsByColumns: ["language", "language_code"],
+              sumTotalEventsByDimensions: ["language", "language_code"],
             };
             report.name = "language";
             data.dimensionHeaders = [
@@ -485,7 +485,7 @@ describe("ResultTotalsCalculator", () => {
         });
       });
 
-      describe("and report should sum visits for a combination of columns", () => {
+      describe("and report should sum users for a combination of columns", () => {
         it("should compute totals for os-browsers by operating system and browser", () => {
           report.name = "os-browsers";
           data.dimensionHeaders = [
@@ -493,7 +493,7 @@ describe("ResultTotalsCalculator", () => {
             { name: "operatingSystem" },
             { name: "browser" },
           ];
-          data.metricHeaders = [{ name: "sessions" }];
+          data.metricHeaders = [{ name: "totalUsers" }];
           data.rows = [
             {
               dimensionValues: [
@@ -579,7 +579,7 @@ describe("ResultTotalsCalculator", () => {
             { name: "operatingSystemVersion" },
             { name: "browser" },
           ];
-          data.metricHeaders = [{ name: "sessions" }];
+          data.metricHeaders = [{ name: "totalUsers" }];
           data.rows = [
             {
               dimensionValues: [
@@ -653,7 +653,6 @@ describe("ResultTotalsCalculator", () => {
 
           expect(totals.by_windows.XP.Chrome).to.equal(100 + 500);
           expect(totals.by_windows.XP.Firefox).to.equal(200 + 600);
-
           expect(totals.by_browsers.Chrome.XP).to.equal(100 + 500);
           expect(totals.by_browsers.Chrome.Vista).to.equal(300 + 700);
         });
