@@ -8,7 +8,9 @@ class FormatProcessedAnalyticsData extends Action {
   /**
    * Takes the processed analytics data from the context and changes the format
    * to JSON or CSV based on application and report config options. Writes the
-   * formatted data to the context for use in subsequent actions.
+   * formatted data to the context for use in subsequent actions. Removes the
+   * processed analytics data from the context to free memory when report data
+   * is very large.
    *
    * @param {import('../report_processing_context')} context the context for the
    * action chain.
@@ -26,6 +28,7 @@ class FormatProcessedAnalyticsData extends Action {
       );
     }
     context.formattedAnalyticsData = formattedAnalyticsData;
+    context.processedAnalyticsData = undefined;
   }
 }
 

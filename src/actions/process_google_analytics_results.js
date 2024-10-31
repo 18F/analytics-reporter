@@ -18,7 +18,9 @@ class ProcessGoogleAnalyticsResults extends Action {
   /**
    * Takes the raw analytics data from the context, processes it to a flatter
    * object schema, and adds totalling based on report config options. Writes
-   * the processed data to the context for use in subsequent actions.
+   * the processed data to the context for use in subsequent actions. Removes
+   * the raw query data from the context in order to free memory when report
+   * data is very large.
    *
    * @param {import('../report_processing_context')} context the context for the
    * action chain.
@@ -33,6 +35,7 @@ class ProcessGoogleAnalyticsResults extends Action {
         data: context.rawGoogleAnalyticsReportData[0],
         query: context.googleAnalyticsQuery,
       });
+    context.rawGoogleAnalyticsReportData = undefined;
   }
 }
 
