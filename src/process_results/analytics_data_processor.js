@@ -5,7 +5,6 @@ const ResultTotalsCalculator = require("./result_totals_calculator");
  */
 class AnalyticsDataProcessor {
   #mapping = {
-    activeUsers: "active_visitors",
     fileExtension: "file_extension",
     fileName: "file_name",
     fullPageUrl: "page",
@@ -24,7 +23,6 @@ class AnalyticsDataProcessor {
     landingPagePlusQueryString: "landing_page",
     sessionDefaultChannelGroup: "session_default_channel_group",
     screenPageViews: "pageviews",
-    totalUsers: "users",
     screenPageViewsPerSession: "pageviews_per_session",
     averageSessionDuration: "avg_session_duration",
     bounceRate: "bounce_rate",

@@ -72,7 +72,7 @@ describe("AnalyticsDataProcessor", () => {
           "file_name",
           "os",
           "visits",
-          "active_visitors",
+          "activeUsers",
         ]);
       });
 
@@ -348,7 +348,7 @@ describe("AnalyticsDataProcessor", () => {
           "file_name",
           "os",
           "visits",
-          "active_visitors",
+          "activeUsers",
         ]);
       });
 

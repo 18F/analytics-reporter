@@ -51,7 +51,7 @@ describe("ResultTotalsCalculator", () => {
 
       describe('and data has the "users" metric', () => {
         beforeEach(() => {
-          data.metricHeaders = [{ name: "users" }];
+          data.metricHeaders = [{ name: "totalUsers" }];
           data.rows = [
             { metricValues: [{ value: "10" }] },
             { metricValues: [{ value: "15" }] },
@@ -62,7 +62,7 @@ describe("ResultTotalsCalculator", () => {
         });
 
         it("computes totals for users", () => {
-          expect(totals.users).to.equal(10 + 15 + 20);
+          expect(totals.totalUsers).to.equal(10 + 15 + 20);
         });
       });
 

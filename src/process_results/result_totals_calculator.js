@@ -13,7 +13,7 @@ const calculateTotals = (result, options = {}) => {
 
   let totalledResult = result.data.reduce((totals, row) => {
     // Sum up simple metrics
-    _sumMetric({ totals, metricName: "users", row });
+    _sumMetric({ totals, metricName: "totalUsers", row });
     _sumMetric({ totals, metricName: "visits", row });
     _sumMetric({ totals, metricName: "total_events", row });
 
@@ -38,7 +38,7 @@ const calculateTotals = (result, options = {}) => {
       for (const dimensionName of options.sumUsersByDimensions) {
         _sumMetricByDimension({
           totals,
-          metricName: "users",
+          metricName: "totalUsers",
           dimensionName,
           row,
         });
@@ -151,7 +151,7 @@ function _sumUsersByCategoryWithDimension({
 
   const parentDimensionValue = row[parentDimensionName];
   const childDimensionValue = row[childDimensionName];
-  const users = parseInt(row.users);
+  const users = parseInt(row.totalUsers);
 
   totals[totalName][parentDimensionValue] =
     totals[totalName][parentDimensionValue] || {};
