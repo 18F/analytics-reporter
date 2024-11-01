@@ -17,6 +17,27 @@
       }
     },
     {
+      "name": "total-sessions-30-days",
+      "frequency": "daily",
+      "query": {
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ]
+      },
+      "meta": {
+        "name": "Sessions in the last 30 days",
+        "description": "Total count of visits for all sites in the last 30 days."
+      }
+    },
+    {
       "name": "screen-resolution-30-days",
       "frequency": "daily",
       "slim": true,
@@ -3130,7 +3151,7 @@
       }
     },
     {
-      "name": "sessions-over-30-days",
+      "name": "daily-sessions-30-days",
       "frequency": "daily",
       "query": {
         "dimensions": [
@@ -3159,8 +3180,8 @@
         ]
       },
       "meta": {
-        "name": "Sessions Over 30 Days",
-        "description": "Visits for all sites over 30 days."
+        "name": "Daily sessions over 30 days",
+        "description": "Visits for all sites broken down by day over 30 days."
       }
     },
     {
