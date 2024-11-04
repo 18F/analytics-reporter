@@ -214,8 +214,8 @@ class AnalyticsDataProcessor {
   }
 
   /**
-   * @param {String} value a yearMonth dimension from GA.
-   * @returns {String} the yearMonth converted to readable format e.g '202410'
+   * @param {string} value a yearMonth dimension from GA.
+   * @returns {string} the yearMonth converted to readable format e.g '202410'
    * converts to 'October 2024'.
    */
   #formatYearMonth(value) {

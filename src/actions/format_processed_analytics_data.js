@@ -28,7 +28,6 @@ class FormatProcessedAnalyticsData extends Action {
       );
     }
     context.formattedAnalyticsData = formattedAnalyticsData;
-    context.processedAnalyticsData = undefined;
   }
 }
 
