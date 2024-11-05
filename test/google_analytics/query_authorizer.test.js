@@ -39,61 +39,45 @@ describe("GoogleAnalyticsQueryAuthorizer", () => {
       appConfig.key_file = undefined;
     });
 
-    it("should resolve a query with the auth prop set to an authorized JWT", (done) => {
-      subject
-        .authorizeQuery(query, appConfig)
-        .then((query) => {
-          expect(query.abc).to.equal(123);
-          expect(query.auth).to.not.be.undefined;
-          expect(query.auth).to.be.an.instanceof(googleapis.Auth.JWT);
-          done();
-        })
-        .catch(done);
+    it("should resolve a query with the auth prop set to an authorized JWT", () => {
+      return subject.authorizeQuery(query, appConfig).then((query) => {
+        expect(query.abc).to.equal(123);
+        expect(query.auth).to.not.be.undefined;
+        expect(query.auth).to.be.an.instanceof(googleapis.Auth.JWT);
+      });
     });
 
-    it("should create a JWT with the proper scopes", (done) => {
-      subject
-        .authorizeQuery({}, appConfig)
-        .then((query) => {
-          expect(query.auth.initArguments[3]).to.deep.equal([
-            "https://www.googleapis.com/auth/analytics.readonly",
-          ]);
-          done();
-        })
-        .catch(done);
+    it("should create a JWT with the proper scopes", () => {
+      return subject.authorizeQuery({}, appConfig).then((query) => {
+        expect(query.auth.initArguments[3]).to.deep.equal([
+          "https://www.googleapis.com/auth/analytics.readonly",
+        ]);
+      });
     });
 
-    it("should authorize the JWT and resolve if it is valid", (done) => {
+    it("should authorize the JWT and resolve if it is valid", () => {
       let jwtAuthorized = false;
       googleapis.Auth.JWT.prototype.authorize = (callback) => {
         jwtAuthorized = true;
         callback(null, {});
       };
 
-      subject
-        .authorizeQuery({}, appConfig)
-        .then(() => {
-          expect(jwtAuthorized).to.equal(true);
-          done();
-        })
-        .catch(done);
+      return subject.authorizeQuery({}, appConfig).then(() => {
+        expect(jwtAuthorized).to.equal(true);
+      });
     });
 
-    it("should authorize the JWT and reject if it is invalid", (done) => {
+    it("should authorize the JWT and reject if it is invalid", () => {
       let jwtAuthorized = false;
       googleapis.Auth.JWT.prototype.authorize = (callback) => {
         jwtAuthorized = true;
         callback(new Error("Failed to authorize"));
       };
 
-      subject
-        .authorizeQuery({}, appConfig)
-        .catch((err) => {
-          expect(jwtAuthorized).to.equal(true);
-          expect(err.message).to.equal("Failed to authorize");
-          done();
-        })
-        .catch(done);
+      return subject.authorizeQuery({}, appConfig).catch((err) => {
+        expect(jwtAuthorized).to.equal(true);
+        expect(err.message).to.equal("Failed to authorize");
+      });
     });
   });
 });

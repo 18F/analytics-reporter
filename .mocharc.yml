@@ -1,5 +1,6 @@
 diff: true
 extension: ['js']
+full-trace: true
 package: './package.json'
 slow: '75'
 spec:

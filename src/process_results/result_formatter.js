@@ -33,7 +33,29 @@ const _formatJSON = (result, { slim }) => {
 };
 
 const _formatCSV = (result) => {
-  return csv.writeToString(result.data, { headers: true });
+  const mappedData = _mapCSVHeaders(result.data);
+  return csv.writeToString(mappedData, { headers: true });
+};
+
+function _mapCSVHeaders(dataArray) {
+  return dataArray.map((dataItem) => {
+    const newDataItem = {};
+    Object.keys(dataItem).forEach((key) => {
+      if (_keyMappings[key]) {
+        newDataItem[_keyMappings[key]] = dataItem[key];
+      } else {
+        newDataItem[key] = dataItem[key];
+      }
+    });
+
+    return newDataItem;
+  });
+}
+
+const _keyMappings = {
+  yearMonth: "Month-Year",
+  totalUsers: "Total Users",
+  activeUsers: "Active Users",
 };
 
 module.exports = { formatResult };

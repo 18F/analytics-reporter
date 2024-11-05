@@ -38,20 +38,25 @@ describe("LogAnalyticsData", () => {
 
   describe(".executeStrategy", () => {
     const infoLogSpy = sinon.spy();
-    const formattedAnalyticsData = { foo: "bar" };
+    const formattedAnalyticsData = { json: '{ foo: "bar" }', csv: "foo, bar" };
 
     beforeEach(async () => {
       infoLogSpy.resetHistory();
       context = {
         formattedAnalyticsData: formattedAnalyticsData,
         logger: { debug: () => {}, info: infoLogSpy },
-        reportappConfig: { name: "test" },
+        appConfig: { formats: ["json", "csv"] },
       };
       await subject.executeStrategy(context);
     });
 
     it("calls logger.info with the formatted analytics data", () => {
-      expect(infoLogSpy.calledWith(formattedAnalyticsData)).to.equal(true);
+      expect(infoLogSpy.calledWith(formattedAnalyticsData["json"])).to.equal(
+        true,
+      );
+      expect(infoLogSpy.calledWith(formattedAnalyticsData["csv"])).to.equal(
+        true,
+      );
     });
   });
 });

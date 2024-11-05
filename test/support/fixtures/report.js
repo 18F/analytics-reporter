@@ -2,8 +2,12 @@ module.exports = {
   name: "today",
   frequency: "hourly",
   query: {
-    dimensions: [{ name: "date" }, { name: "hour" }],
-    metrics: [{ name: "sessions" }],
+    dimensions: [{ name: "date" }, { name: "hour" }, { name: "yearMonth" }],
+    metrics: [
+      { name: "sessions" },
+      { name: "totalUsers" },
+      { name: "activeUsers" },
+    ],
     dateRanges: [{ startDate: "today", endDate: "today" }],
   },
   meta: {
