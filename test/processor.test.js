@@ -19,11 +19,9 @@ describe("Processor", () => {
       };
       const context = {};
 
-      beforeEach((done) => {
+      beforeEach(async () => {
         subject = new Processor([action]);
-        subject.processChain(context).then(() => {
-          done();
-        });
+        await subject.processChain(context);
       });
 
       it("calls execute on the action", () => {
@@ -40,11 +38,9 @@ describe("Processor", () => {
       };
       const context = {};
 
-      beforeEach((done) => {
+      beforeEach(async () => {
         subject = new Processor([action]);
-        subject.processChain(context).then(() => {
-          done();
-        });
+        await subject.processChain(context);
       });
 
       it("does not call execute on the action", () => {
@@ -67,11 +63,9 @@ describe("Processor", () => {
       };
       const context = {};
 
-      beforeEach((done) => {
+      beforeEach(async () => {
         subject = new Processor([action1, action2]);
-        subject.processChain(context).then(() => {
-          done();
-        });
+        await subject.processChain(context);
       });
 
       it("calls execute on each action", () => {

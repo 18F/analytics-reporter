@@ -41,12 +41,10 @@ describe("Action", () => {
         }
       }
 
-      beforeEach((done) => {
+      beforeEach(async () => {
         promiseExecuted = false;
         subject = new SuccessfulTestAction();
-        subject.execute(context).then(() => {
-          done();
-        });
+        await subject.execute(context);
       });
 
       it("executes the strategy and awaits", () => {
@@ -66,13 +64,11 @@ describe("Action", () => {
         }
       }
 
-      beforeEach((done) => {
+      beforeEach(async () => {
         promiseExecuted = false;
         errorlogSpy.resetHistory();
         subject = new UnsuccessfulTestAction();
-        subject.execute(context).catch(() => {
-          done();
-        });
+        await subject.execute(context).catch(() => {});
       });
 
       it("executes the strategy and awaits", () => {

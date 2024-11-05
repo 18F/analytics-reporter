@@ -9,26 +9,28 @@ const appConfig = new AppConfig();
 describe("PostgresPublisher", () => {
   let databaseClient, results, subject;
 
-  before((done) => {
+  before(async () => {
     process.env.NODE_ENV = "test";
     // Setup the database client
-    databaseClient = knex({ client: "pg", connection: database.connection });
-    done();
+    databaseClient = await knex({
+      client: "pg",
+      connection: database.connection,
+    });
   });
 
-  after((done) => {
+  after(async () => {
     // Clean up the database client
-    databaseClient.destroy().then(() => done());
+    await databaseClient.destroy();
   });
 
-  beforeEach((done) => {
+  beforeEach(async () => {
     results = Object.assign({}, resultsFixture);
     subject = new PostgresPublisher(appConfig);
-    database.resetSchema(databaseClient).then(() => done());
+    await database.resetSchema(databaseClient);
   });
 
   describe(".publish(results)", () => {
-    it("should insert a record for each results.data element", (done) => {
+    it("should insert a record for each results.data element", async () => {
       results.name = "report-name";
       results.data = [
         {
@@ -41,7 +43,7 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      subject
+      await subject
         .publish(results)
         .then(() => {
           return databaseClient(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME)
@@ -56,12 +58,10 @@ describe("PostgresPublisher", () => {
             expect(row.data.name).to.equal(data.name);
             expect(row.date.toISOString()).to.match(RegExp(`^${data.date}`));
           });
-          done();
-        })
-        .catch(done);
+        });
     });
 
-    it("should coerce certain values into numbers", (done) => {
+    it("should coerce certain values into numbers", async () => {
       results.name = "report-name";
       results.data = [
         {
@@ -72,7 +72,7 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      subject
+      await subject
         .publish(results)
         .then(() => {
           return databaseClient
@@ -85,12 +85,10 @@ describe("PostgresPublisher", () => {
           expect(row.data.visits).to.equal(123);
           expect(row.data.total_events).to.be.a("number");
           expect(row.data.total_events).to.equal(456);
-          done();
-        })
-        .catch(done);
+        });
     });
 
-    it("should ignore reports that don't have a date dimension", (done) => {
+    it("should ignore reports that don't have a date dimension", async () => {
       results.query = {
         dimensions: [{ name: "something" }, { name: "somethingElse" }],
       };
@@ -104,12 +102,10 @@ describe("PostgresPublisher", () => {
         })
         .then((rows) => {
           expect(rows).to.have.length(0);
-          done();
-        })
-        .catch(done);
+        });
     });
 
-    it("should ignore data points that have already been inserted", (done) => {
+    it("should ignore data points that have already been inserted", async () => {
       const firstResults = Object.assign({}, results);
       const secondResults = Object.assign({}, results);
 
@@ -168,7 +164,7 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      subject
+      await subject
         .publish(firstResults)
         .then(() => {
           return subject.publish(secondResults);
@@ -180,12 +176,10 @@ describe("PostgresPublisher", () => {
         })
         .then((rows) => {
           expect(rows).to.have.length(6);
-          done();
-        })
-        .catch(done);
+        });
     });
 
-    it("should overwrite existing data points if the number of visits or users has changed", (done) => {
+    it("should overwrite existing data points if the number of visits or users has changed", async () => {
       const firstResults = Object.assign({}, results);
       const secondResults = Object.assign({}, results);
 
@@ -214,7 +208,7 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      subject
+      await subject
         .publish(firstResults)
         .then(() => {
           return subject.publish(secondResults);
@@ -233,12 +227,10 @@ describe("PostgresPublisher", () => {
               expect(row.data.total_events).to.equal(400);
             }
           });
-          done();
-        })
-        .catch(done);
+        });
     });
 
-    it("should not not insert a record if the date is invalid", (done) => {
+    it("should not not insert a record if the date is invalid", async () => {
       results.data = [
         {
           date: "(other)",
@@ -250,7 +242,7 @@ describe("PostgresPublisher", () => {
         },
       ];
 
-      subject
+      await subject
         .publish(results)
         .then(() => {
           return databaseClient
@@ -260,9 +252,7 @@ describe("PostgresPublisher", () => {
         .then((rows) => {
           expect(rows).to.have.length(1);
           expect(rows[0].data.visits).to.equal(456);
-          done();
-        })
-        .catch(done);
+        });
     });
   });
 });
