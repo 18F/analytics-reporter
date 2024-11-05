@@ -72,7 +72,7 @@ describe("AnalyticsDataProcessor", () => {
           "file_name",
           "os",
           "visits",
-          "active_visitors",
+          "activeUsers",
         ]);
       });
 
@@ -82,6 +82,14 @@ describe("AnalyticsDataProcessor", () => {
 
         const result = subject.processData({ report, data });
         expect(result.data[0].date).to.equal("2017-01-30");
+      });
+
+      it("should format yearMonth values", () => {
+        data.dimensionHeaders = [{ name: "yearMonth" }];
+        data.rows = [{ dimensionValues: [{ value: "202410" }] }];
+
+        const result = subject.processData({ report, data });
+        expect(result.data[0].yearMonth).to.equal("October 2024");
       });
 
       it("should not format dates with value (other)", () => {
@@ -340,7 +348,7 @@ describe("AnalyticsDataProcessor", () => {
           "file_name",
           "os",
           "visits",
-          "active_visitors",
+          "activeUsers",
         ]);
       });
 

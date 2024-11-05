@@ -5,7 +5,6 @@ const ResultTotalsCalculator = require("./result_totals_calculator");
  */
 class AnalyticsDataProcessor {
   #mapping = {
-    activeUsers: "active_visitors",
     fileExtension: "file_extension",
     fileName: "file_name",
     fullPageUrl: "page",
@@ -24,7 +23,6 @@ class AnalyticsDataProcessor {
     landingPagePlusQueryString: "landing_page",
     sessionDefaultChannelGroup: "session_default_channel_group",
     screenPageViews: "pageviews",
-    totalUsers: "users",
     screenPageViewsPerSession: "pageviews_per_session",
     averageSessionDuration: "avg_session_duration",
     bounceRate: "bounce_rate",
@@ -74,9 +72,9 @@ class AnalyticsDataProcessor {
     });
 
     result.totals = ResultTotalsCalculator.calculateTotals(result, {
-      sumVisitsByColumns: report.sumVisitsByColumns,
-      sumUsersByColumns: report.sumUsersByColumns,
-      sumTotalEventsByColumns: report.sumTotalEventsByColumns,
+      sumVisitsByDimensions: report.sumVisitsByDimensions,
+      sumUsersByDimensions: report.sumUsersByDimensions,
+      sumTotalEventsByDimensions: report.sumTotalEventsByDimensions,
     });
 
     return result;
@@ -99,23 +97,18 @@ class AnalyticsDataProcessor {
     };
   }
 
-  #fieldNameForColumnIndex({ entryKey, index, data }) {
-    // data keys come back as values for the header keys
-    const targetKey = entryKey.replace("Values", "Headers");
-    const name = data[targetKey][index].name;
-    return this.#mapping[name] || name;
-  }
+  #removeColumnFromData({ column, data }) {
+    data = Object.assign(data);
 
-  #filterRowsBelowThreshold({ threshold, data }) {
-    data = Object.assign({}, data);
+    const columnToRemove = this.#findDimensionOrMetricIndex(column, data);
 
-    const column = this.#findDimensionOrMetricIndex(threshold.field, data);
-    if (column != null) {
-      data.rows = data.rows.filter((row) => {
-        return (
-          parseInt(row[column.rowKey][column.index].value) >=
-          parseInt(threshold.value)
-        );
+    if (columnToRemove != null) {
+      data[columnToRemove.rowKey.replace("Values", "Headers")].splice(
+        columnToRemove.index,
+        1,
+      );
+      data.rows.forEach((row) => {
+        row[columnToRemove.rowKey].splice(columnToRemove.index, 1);
       });
     }
 
@@ -151,11 +144,20 @@ class AnalyticsDataProcessor {
     }
   }
 
-  #formatDate(date) {
-    if (date == "(other)") {
-      return date;
+  #filterRowsBelowThreshold({ threshold, data }) {
+    data = Object.assign({}, data);
+
+    const column = this.#findDimensionOrMetricIndex(threshold.field, data);
+    if (column != null) {
+      data.rows = data.rows.filter((row) => {
+        return (
+          parseInt(row[column.rowKey][column.index].value) >=
+          parseInt(threshold.value)
+        );
+      });
     }
-    return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-");
+
+    return data;
   }
 
   #processRow({ hostname, row, data }) {
@@ -178,6 +180,8 @@ class AnalyticsDataProcessor {
 
             if (field === "date") {
               modValue = this.#formatDate(value);
+            } else if (field === "yearMonth") {
+              modValue = this.#formatYearMonth(value);
             } else {
               modValue = value;
             }
@@ -195,22 +199,30 @@ class AnalyticsDataProcessor {
     return point;
   }
 
-  #removeColumnFromData({ column, data }) {
-    data = Object.assign(data);
+  #fieldNameForColumnIndex({ entryKey, index, data }) {
+    // data keys come back as values for the header keys
+    const targetKey = entryKey.replace("Values", "Headers");
+    const name = data[targetKey][index].name;
+    return this.#mapping[name] || name;
+  }
 
-    const columnToRemove = this.#findDimensionOrMetricIndex(column, data);
-
-    if (columnToRemove != null) {
-      data[columnToRemove.rowKey.replace("Values", "Headers")].splice(
-        columnToRemove.index,
-        1,
-      );
-      data.rows.forEach((row) => {
-        row[columnToRemove.rowKey].splice(columnToRemove.index, 1);
-      });
+  #formatDate(date) {
+    if (date == "(other)") {
+      return date;
     }
+    return [date.substr(0, 4), date.substr(4, 2), date.substr(6, 2)].join("-");
+  }
 
-    return data;
+  /**
+   * @param {string} value a yearMonth dimension from GA.
+   * @returns {string} the yearMonth converted to readable format e.g '202410'
+   * converts to 'October 2024'.
+   */
+  #formatYearMonth(value) {
+    const year = parseInt(value.substring(0, 4));
+    const monthIndex = parseInt(value.substring(4)) - 1;
+    const date = new Date(year, monthIndex);
+    return date.toLocaleString("en-us", { month: "long", year: "numeric" });
   }
 }
 

@@ -14,12 +14,16 @@ module.exports = {
    * @param Object[] Describes dimension columns. The number of DimensionHeaders
    * and ordering of DimensionHeaders matches the dimensions present in rows.
    */
-  dimensionHeaders: [{ name: "date" }, { name: "hour" }],
+  dimensionHeaders: [{ name: "date" }, { name: "hour" }, { name: "yearMonth" }],
   /**
    * @param Object[] Describes metric columns. The number of MetricHeaders and
    * ordering of MetricHeaders matches the metrics present in rows.
    */
-  metricHeaders: [{ name: "sessions", type: "TYPE_INTEGER" }],
+  metricHeaders: [
+    { name: "sessions", type: "TYPE_INTEGER" },
+    { name: "totalUsers" },
+    { name: "activeUsers" },
+  ],
   /**
    * @param Row[] Rows of dimension value combinations and metric values in the
    * report.
@@ -35,8 +39,16 @@ module.exports = {
           value: `${index}`.length < 2 ? `0${index}` : `${index}`,
           oneValue: "value",
         },
+        {
+          value: "201701",
+          oneValue: "value",
+        },
       ],
-      metricValues: [{ value: `100`, oneValue: "value" }],
+      metricValues: [
+        { value: `100`, oneValue: "value" },
+        { value: `100`, oneValue: "value" },
+        { value: `100`, oneValue: "value" },
+      ],
     };
   }),
   /**
