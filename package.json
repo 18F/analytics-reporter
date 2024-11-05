@@ -13,6 +13,7 @@
     "pretest": "NODE_ENV=test npm run migrate",
     "start": "./bin/analytics",
     "test": "NODE_ENV=test mocha",
+    "test:debug": "NODE_ENV=test node --inspect-brk node_modules/mocha/bin/mocha",
     "coverage": "nyc --reporter html --reporter text -t coverage --report-dir coverage/summary npm run test",
     "prepare": "npm run snyk-protect",
     "snyk-protect": "snyk-protect",

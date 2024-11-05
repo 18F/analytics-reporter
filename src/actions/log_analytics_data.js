@@ -23,7 +23,9 @@ class LogAnalyticsData extends Action {
    */
   async executeStrategy(context) {
     context.logger.debug("Logging analytics data");
-    await context.logger.info(context.formattedAnalyticsData);
+    for (const format of context.appConfig.formats) {
+      await context.logger.info(context.formattedAnalyticsData[format]);
+    }
   }
 }
 
