@@ -19,8 +19,24 @@ jobs:
         run: npm ci
       - name: Lint javascript
         run: npm run lint
+  audit_dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: 'npm'
+      - name: Install node dependencies
+        run: npm ci
+      - name: Validate npm package signatures
+        run: npm audit signatures
   test:
-    needs: lint
+    needs:
+      - lint
+      - audit_dependencies
     runs-on: ubuntu-latest
     # Start Postgres as a service, wait until healthy. Uses latest Postgres version.
     services:
