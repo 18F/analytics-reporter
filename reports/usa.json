@@ -8,12 +8,15 @@
         "metrics": [
           {
             "name": "activeUsers"
+          },
+          {
+            "name": "screenPageViews"
           }
         ]
       },
       "meta": {
-        "name": "Active Users Right Now",
-        "description": "Number of users currently visiting all sites."
+        "name": "Active users and page views realtime",
+        "description": "Number of users currently visiting all sites and the number of page views."
       }
     },
     {
