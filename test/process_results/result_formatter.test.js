@@ -25,10 +25,10 @@ describe("ResultFormatter", () => {
       });
     });
 
-    it("should format results into JSON if the format is 'json'", () => {
+    it("should format results into JSON if the format is 'json'", async () => {
       const result = analyticsDataProcessor.processData({ report, data });
 
-      return ResultFormatter.formatResult(result, { format: "json" }).then(
+      await ResultFormatter.formatResult(result, { format: "json" }).then(
         (formattedResult) => {
           const json = JSON.parse(formattedResult);
           json.data.forEach((row, index) => {
@@ -46,10 +46,10 @@ describe("ResultFormatter", () => {
       );
     });
 
-    it("should remove the data attribute for JSON if options.slim is true", () => {
+    it("should remove the data attribute for JSON if options.slim is true", async () => {
       const result = analyticsDataProcessor.processData({ report, data });
 
-      return ResultFormatter.formatResult(result, {
+      await ResultFormatter.formatResult(result, {
         format: "json",
         slim: true,
       }).then((formattedResult) => {
@@ -58,19 +58,19 @@ describe("ResultFormatter", () => {
       });
     });
 
-    it("should reject if the data cannot be JSON stringified", () => {
+    it("should reject if the data cannot be JSON stringified", async () => {
       const array = [];
       array[0] = array;
 
-      return ResultFormatter.formatResult(array).catch((e) => {
+      await ResultFormatter.formatResult(array).catch((e) => {
         expect(e).to.match(/TypeError: Converting circular structure to JSON/);
       });
     });
 
-    it("should format results into CSV if the format is 'csv'", () => {
+    it("should format results into CSV if the format is 'csv'", async () => {
       const result = analyticsDataProcessor.processData({ report, data });
 
-      return ResultFormatter.formatResult(result, {
+      await ResultFormatter.formatResult(result, {
         format: "csv",
         slim: true,
       }).then((formattedResult) => {
@@ -89,10 +89,10 @@ describe("ResultFormatter", () => {
       });
     });
 
-    it("should throw an error if the format is unsupported", () => {
+    it("should throw an error if the format is unsupported", async () => {
       const result = analyticsDataProcessor.processData({ report, data });
 
-      return ResultFormatter.formatResult(result, {
+      await ResultFormatter.formatResult(result, {
         format: "xml",
         slim: true,
       }).catch((e) => {

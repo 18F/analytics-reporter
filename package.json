@@ -12,6 +12,8 @@
     "migrate": "knex migrate:latest",
     "pretest": "NODE_ENV=test npm run migrate",
     "start": "./bin/analytics",
+    "start:publisher": "dotenv -e .env.analytics node -- deploy/cron.js",
+    "start:consumer": "dotenv -e .env.analytics node -- deploy/consumer.js",
     "test": "NODE_ENV=test mocha",
     "test:debug": "NODE_ENV=test node --inspect-brk node_modules/mocha/bin/mocha",
     "coverage": "nyc --reporter html --reporter text -t coverage --report-dir coverage/summary npm run test",
@@ -52,7 +54,7 @@
     "*.md"
   ],
   "engines": {
-    "node": "20.x.x"
+    "node": "22.x.x"
   },
   "preferGlobal": true,
   "main": "index",
@@ -71,7 +73,6 @@
     "@google-analytics/data": "^4.7.0",
     "@smithy/node-http-handler": "^3.0.0",
     "@snyk/protect": "^1.1269.0",
-    "dotenv": "^16.3.1",
     "fast-csv": "^4.3.6",
     "googleapis": "^140.0.0",
     "max-listeners-exceeded-warning": "^0.0.1",
@@ -85,6 +86,8 @@
     "@cucumber/cucumber": "^10.3.1",
     "@eslint/js": "^8.57.0",
     "chai": "^4.4.0",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.3",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsdoc": "^48.7.0",

@@ -18,7 +18,7 @@ describe("DiskPublisher", () => {
 
   describe(".publish({ name, data, format, directory })", () => {
     context("when the format is json", () => {
-      it("should write the results to <output>/<report name>.json", (done) => {
+      it("should write the results to <output>/<report name>.json", async () => {
         const options = { output: "path/to/output", formats: ["json"] };
         const report = { name: "report-name" };
         const results = "I'm the results";
@@ -31,22 +31,19 @@ describe("DiskPublisher", () => {
           return null;
         };
 
-        DiskPublisher.publish({
+        await DiskPublisher.publish({
           name: report.name,
           data: results,
           format: options.formats[0],
           directory: options.output,
-        })
-          .then(() => {
-            expect(fileWritten).to.be.true;
-            done();
-          })
-          .catch(done);
+        }).then(() => {
+          expect(fileWritten).to.be.true;
+        });
       });
     });
 
     context("when the format is csv", () => {
-      it("should write the results to <output>/<report name>.csv", () => {
+      it("should write the results to <output>/<report name>.csv", async () => {
         const options = { output: "path/to/output", formats: ["csv"] };
         const report = { name: "report-name" };
         const results = "I'm the results";
@@ -59,7 +56,7 @@ describe("DiskPublisher", () => {
           return null;
         };
 
-        return DiskPublisher.publish({
+        await DiskPublisher.publish({
           name: report.name,
           data: results,
           format: options.formats[0],

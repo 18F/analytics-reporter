@@ -13,14 +13,30 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version-file: ".nvmrc"
           cache: 'npm'
       - name: Install node dependencies
         run: npm ci
       - name: Lint javascript
         run: npm run lint
+  audit_dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: 'npm'
+      - name: Install node dependencies
+        run: npm ci
+      - name: Validate npm package signatures
+        run: npm audit signatures
   test:
-    needs: lint
+    needs:
+      - lint
+      - audit_dependencies
     runs-on: ubuntu-latest
     # Start Postgres as a service, wait until healthy. Uses latest Postgres version.
     services:
@@ -43,7 +59,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version-file: ".nvmrc"
           cache: 'npm'
       - name: Install node dependencies
         run: npm ci
@@ -52,6 +68,7 @@ jobs:
   deploy_dev:
     needs:
       - lint
+      - audit_dependencies
       - test
     if: github.ref == 'refs/heads/develop'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
@@ -81,6 +98,7 @@ jobs:
   deploy_stg:
     needs:
       - lint
+      - audit_dependencies
       - test
     if: github.ref == 'refs/heads/staging'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
@@ -110,6 +128,7 @@ jobs:
   deploy_prd:
     needs:
       - lint
+      - audit_dependencies
       - test
     if: github.ref == 'refs/heads/master'
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
