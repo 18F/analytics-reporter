@@ -20,6 +20,27 @@
       }
     },
     {
+      "name": "realtime-event-counts",
+      "frequency": "realtime",
+      "realtime": true,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ]
+      },
+      "meta": {
+        "name": "Number of events of each type realtime",
+        "description": "Number of current events for each event name across all sites."
+      }
+    },
+    {
       "name": "total-sessions-30-days",
       "frequency": "daily",
       "query": {
