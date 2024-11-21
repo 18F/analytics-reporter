@@ -54,7 +54,7 @@ describe("S3Service", () => {
     zlibMock.gzip = (data, cb) => cb(null, data);
   });
 
-  it("should publish compressed JSON results to the S3 bucket", (done) => {
+  it("should publish compressed JSON results to the S3 bucket", async () => {
     appConfig.format = "json";
     report.name = "test-report";
     let gzipCalled = false;
@@ -66,7 +66,7 @@ describe("S3Service", () => {
 
     subject = new S3Service({ ...appConfig, format: "json" });
 
-    subject
+    await subject
       .publish(
         {
           name: report.name,
@@ -89,12 +89,10 @@ describe("S3Service", () => {
         expect(putObjectCommand.config.CacheControl).to.equal("max-age=60");
         expect(putObjectCommand.config.Body).to.equal("compressed data");
         expect(gzipCalled).to.equal(true);
-        done();
-      })
-      .catch(done);
+      });
   });
 
-  it("should publish CSV results to the S3 bucket", (done) => {
+  it("should publish CSV results to the S3 bucket", async () => {
     appConfig.format = "csv";
     appConfig.aws.cache = undefined;
     report.name = "test-report";
@@ -107,7 +105,7 @@ describe("S3Service", () => {
 
     subject = new S3Service({ ...appConfig, format: "csv" });
 
-    subject
+    await subject
       .publish(
         {
           name: report.name,
@@ -128,12 +126,10 @@ describe("S3Service", () => {
         expect(putObjectCommand.config.CacheControl).to.equal("max-age=0");
         expect(putObjectCommand.config.Body).to.equal("compressed data");
         expect(gzipCalled).to.equal(true);
-        done();
-      })
-      .catch(done);
+      });
   });
 
-  it("should reject if there is an error uploading the data", (done) => {
+  it("should reject if there is an error uploading the data", async () => {
     appConfig.format = "json";
     shouldErrorOnSend = true;
     let gzipCalled = false;
@@ -145,7 +141,7 @@ describe("S3Service", () => {
 
     subject = new S3Service({ ...appConfig, format: "json" });
 
-    subject
+    await subject
       .publish(
         {
           name: report.name,
@@ -157,18 +153,16 @@ describe("S3Service", () => {
       )
       .catch(() => {
         expect(gzipCalled).to.equal(true);
-        done();
-      })
-      .catch(done);
+      });
   });
 
-  it("should reject if there is an error compressing the data", (done) => {
+  it("should reject if there is an error compressing the data", async () => {
     appConfig.format = "json";
     zlibMock.gzip = (data, cb) => cb(new Error("test zlib error"));
 
     subject = new S3Service({ ...appConfig, format: "json" });
 
-    subject
+    await subject
       .publish(
         {
           name: report.name,
@@ -180,8 +174,6 @@ describe("S3Service", () => {
       )
       .catch((err) => {
         expect(err.message).to.equal("test zlib error");
-        done();
-      })
-      .catch(done);
+      });
   });
 });
