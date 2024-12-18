@@ -150,6 +150,16 @@
     "awsBucketPath": "data/federal-trade-commission"
   },
   {
+    "analyticsReportIds": "468622292",
+    "agencyName": "food-nutrition-service",
+    "awsBucketPath": "data/food-nutrition-service"
+  },
+  {
+    "analyticsReportIds": "469578931",
+    "agencyName": "forest-service",
+    "awsBucketPath": "data/forest-service"
+  },
+  {
     "analyticsReportIds": "395251184",
     "agencyName": "general-services-administration",
     "awsBucketPath": "data/general-services-administration"
@@ -245,6 +255,11 @@
     "awsBucketPath": "data/national-endowment-humanities"
   },
   {
+    "analyticsReportIds": "468338198",
+    "agencyName": "national-institute-standards-technology",
+    "awsBucketPath": "data/national-institute-standards-technology"
+  },
+  {
     "analyticsReportIds": "395452956",
     "agencyName": "national-labor-relations-board",
     "awsBucketPath": "data/national-labor-relations-board"
@@ -290,6 +305,11 @@
     "awsBucketPath": "data/nuclear-waste-technical-review-board"
   },
   {
+    "analyticsReportIds": "470606068",
+    "agencyName": "occupational-safety-health-commission",
+    "awsBucketPath": "data/occupational-safety-health-commission"
+  },
+  {
     "analyticsReportIds": "395449711",
     "agencyName": "office-director-national-intelligence",
     "awsBucketPath": "data/office-director-national-intelligence"
@@ -308,6 +328,11 @@
     "analyticsReportIds": "395441051",
     "agencyName": "office-personnel-management",
     "awsBucketPath": "data/office-personnel-management"
+  },
+  {
+    "analyticsReportIds": "468633563",
+    "agencyName": "patent-trademark-office",
+    "awsBucketPath": "data/patent-trademark-office"
   },
   {
     "analyticsReportIds": "395459211",
