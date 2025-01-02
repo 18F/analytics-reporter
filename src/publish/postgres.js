@@ -1,22 +1,20 @@
-const knex = require("knex");
-
 Promise.each = async function (arr, fn) {
   for (const item of arr) await fn(item);
 };
 
 /**
- * Handles connection to the Postgres database and read/write operations.
+ * Handles read/write operations to the Postgres database for analytics reports.
  */
 class PostgresPublisher {
   static ANALYTICS_DATA_TABLE_NAME = "analytics_data_ga4";
-  #connectionConfig;
+  #knex;
 
   /**
-   * @param {import('../app_config')} appConfig application config instance. Provides the
-   * configuration to create a database connection.
+   * @param {import('knex')} knexInstance an initialized instance of the knex
+   * library which provides a database connection.
    */
-  constructor(appConfig) {
-    this.#connectionConfig = appConfig.postgres;
+  constructor(knexInstance) {
+    this.#knex = knexInstance;
   }
 
   /**
@@ -28,47 +26,37 @@ class PostgresPublisher {
    */
   async publish(results) {
     if (results.query.dimensions.some((obj) => obj.name === "date")) {
-      const db = await knex({
-        client: "pg",
-        connection: this.#connectionConfig,
-      });
-      await this.#writeRegularResults({ db, results });
-      await db.destroy();
+      await this.#writeRegularResults({ results });
     } else {
       return;
     }
   }
 
-  #writeRegularResults({ db, results }) {
+  #writeRegularResults({ results }) {
     const rows = results.data.map((dataPoint) => {
       return this.#rowForDataPoint({ results, dataPoint });
     });
 
     const rowsToInsert = [];
     return Promise.each(rows, async (row) => {
-      const existingRow = await this.#queryForExistingRow({ db, row });
+      const existingRow = await this.#queryForExistingRow({ row });
       if (row.date === undefined) {
         return;
       } else if (existingRow.length === 0) {
         rowsToInsert.push(row);
       } else if (existingRow.length === 1) {
         await this.#handleExistingRow({
-          db,
           existingRow: existingRow[0],
           newRow: row,
         });
       }
-    })
-      .then(() => {
-        if (rowsToInsert.length > 0) {
-          return db(this.constructor.ANALYTICS_DATA_TABLE_NAME).insert(
-            rowsToInsert,
-          );
-        }
-      })
-      .then(() => {
-        return db.destroy();
-      });
+    }).then(() => {
+      if (rowsToInsert.length > 0) {
+        return this.#knex(this.constructor.ANALYTICS_DATA_TABLE_NAME).insert(
+          rowsToInsert,
+        );
+      }
+    });
   }
 
   #rowForDataPoint({ results, dataPoint }) {
@@ -110,8 +98,8 @@ class PostgresPublisher {
     }
   }
 
-  #queryForExistingRow({ db, row }) {
-    let query = db(this.constructor.ANALYTICS_DATA_TABLE_NAME);
+  #queryForExistingRow({ row }) {
+    let query = this.#knex(this.constructor.ANALYTICS_DATA_TABLE_NAME);
 
     Object.keys(row).forEach((key) => {
       if (row[key] === undefined) {
@@ -140,13 +128,13 @@ class PostgresPublisher {
     return query.select();
   }
 
-  #handleExistingRow({ db, existingRow, newRow }) {
+  #handleExistingRow({ existingRow, newRow }) {
     if (
       existingRow.data.visits != newRow.data.visits ||
       existingRow.data.users != newRow.data.users ||
       existingRow.data.total_events != newRow.data.total_events
     ) {
-      return db(this.constructor.ANALYTICS_DATA_TABLE_NAME)
+      return this.#knex(this.constructor.ANALYTICS_DATA_TABLE_NAME)
         .where({ id: existingRow.id })
         .update(newRow);
     }

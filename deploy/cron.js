@@ -61,18 +61,18 @@ const daily_run = () => {
   runScriptWithLogName(`${scriptRootPath}/daily.sh`, "daily.sh");
 };
 
-const hourly_run = () => {
+/*const hourly_run = () => {
   runScriptWithLogName(`${scriptRootPath}/hourly.sh`, "hourly.sh");
-};
+};*/
 
 const realtime_run = () => {
   runScriptWithLogName(`${scriptRootPath}/realtime.sh`, "realtime.sh");
 };
 
 /**
-  Daily reports run every morning at 10 AM UTC.
-  This calculates the offset between now and then for the next scheduled run.
-*/
+ * Daily and API reports run every morning at 10 AM UTC.
+ * This calculates the offset between now and then for the next scheduled run.
+ */
 const calculateNextDailyRunTimeOffset = () => {
   const currentTime = new Date();
   const nextRunTime = new Date(
@@ -85,26 +85,36 @@ const calculateNextDailyRunTimeOffset = () => {
 };
 
 /**
- * All scripts run immediately upon application start (with a 10 second delay
+ * All scripts run immediately upon application start (with a 60 second delay
  * between each so that they don't all run at once), then run again at intervals
  * going forward.
  */
 setTimeout(realtime_run, 1000 * 10);
-setTimeout(hourly_run, 1000 * 20);
-setTimeout(daily_run, 1000 * 30);
-setTimeout(api_run, 1000 * 40);
+// setTimeout(hourly_run, 1000 * 70); No hourly reports exist at this time.
+setTimeout(daily_run, 1000 * 70);
+setTimeout(api_run, 1000 * 130);
 
-// daily
+// Daily and API recurring script run setup.
 // Runs at 10 AM UTC, then every 24 hours afterwards
 setTimeout(() => {
-  daily_run();
-  setInterval(daily_run, 1000 * 60 * 60 * 24);
-  // API
-  api_run();
-  setInterval(api_run, 1000 * 60 * 60 * 24);
+  // Offset the daily script run by 30 seconds so that it never runs in parallel
+  // with the realtime script in order to save memory/CPU.
+  setTimeout(() => {
+    daily_run();
+    setInterval(daily_run, 1000 * 60 * 60 * 24);
+  }, 1000 * 30);
+
+  // setTimeout(hourly_run, 1000 * 60);
+
+  // Offset the API script run by 90 seconds so that it never runs in parallel
+  // with the daily or realtime scripts in order to save memory/CPU.
+  setTimeout(() => {
+    api_run();
+    setInterval(api_run, 1000 * 60 * 60 * 24);
+  }, 1000 * 90);
 }, calculateNextDailyRunTimeOffset());
-// hourly
-setInterval(hourly_run, 1000 * 60 * 60);
-// realtime. Runs every 15 minutes.
-// Google updates realtime reports every 30 minutes, so there is some overlap.
+// hourly (no hourly reports exist at this time).
+// setInterval(hourly_run, 1000 * 60 * 60);
+
+// Realtime recurring script run setup. Runs every 15 minutes.
 setInterval(realtime_run, 1000 * 60 * 15);

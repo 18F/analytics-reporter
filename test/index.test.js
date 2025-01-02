@@ -134,7 +134,11 @@ describe("index", () => {
       });
 
       it("logs that there was a processing error", () => {
-        expect(logger.error.calledWith("Encountered an error")).to.equal(true);
+        expect(
+          logger.error.calledWith(
+            "Encountered an error during report processing",
+          ),
+        ).to.equal(true);
       });
 
       it("logs the error", () => {
