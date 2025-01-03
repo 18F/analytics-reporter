@@ -21,7 +21,6 @@ applications:
     # The default path for reports (used for gov-wide reports)
     AWS_BUCKET_PATH: data/live
     AWS_CACHE_TIME: '0'
-    MESSAGE_QUEUE_DATABASE_NAME: ${MESSAGE_QUEUE_DATABASE_NAME}
     MESSAGE_QUEUE_NAME: ${MESSAGE_QUEUE_NAME}
     NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
     NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}

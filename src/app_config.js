@@ -35,13 +35,20 @@ class AppConfig {
     return this.#options.csv ? "csv" : "json";
   }
 
+  /**
+   * Array order here is important because the CSV formatter maps headers in
+   * place on the analytics report object and we don't want that mapping done on
+   * the JSON version.
+   *
+   * @returns {string[]} the formats to use for report formatting.
+   */
   get formats() {
     const formats = [];
-    if (this.#options.csv) {
-      formats.push("csv");
-    }
     if (this.#options.json) {
       formats.push("json");
+    }
+    if (this.#options.csv) {
+      formats.push("csv");
     }
     return formats;
   }
@@ -194,18 +201,12 @@ class AppConfig {
     };
   }
 
-  get messageQueueDatabaseConnection() {
-    const connection =
-      knexfile[process.env.NODE_ENV || "development"].connection;
-    return `postgres://${connection.user}:${connection.password}@${connection.host}/${process.env.MESSAGE_QUEUE_DATABASE_NAME}${process.env.NODE_ENV == "production" ? "?ssl=true" : ""}`;
-  }
-
   get messageQueueName() {
-    return process.env.MESSAGE_QUEUE_NAME;
+    return process.env.MESSAGE_QUEUE_NAME || "analytics_reporter_job_queue";
   }
 
-  get postgres() {
-    return knexfile[process.env.NODE_ENV || "development"].connection;
+  get knexConfig() {
+    return knexfile[process.env.NODE_ENV || "development"];
   }
 
   get static() {
