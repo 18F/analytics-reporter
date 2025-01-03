@@ -595,7 +595,7 @@ describe("AppConfig", () => {
     });
   });
 
-  describe(".postgres", () => {
+  describe(".knexConfig", () => {
     describe("when NODE_ENV is set", () => {
       beforeEach(() => {
         process.env.NODE_ENV = "production";
@@ -606,7 +606,7 @@ describe("AppConfig", () => {
       });
 
       it("returns the knexfile connection details for the node environment", () => {
-        expect(subject.postgres).to.equal(knexfile["production"].connection);
+        expect(subject.knexConfig).to.equal(knexfile["production"]);
       });
     });
 
@@ -616,7 +616,7 @@ describe("AppConfig", () => {
       });
 
       it("returns the knexfile connection details for the development environment", () => {
-        expect(subject.postgres).to.equal(knexfile["development"].connection);
+        expect(subject.knexConfig).to.equal(knexfile["development"]);
       });
     });
   });

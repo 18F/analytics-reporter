@@ -1,6 +1,15 @@
 const csv = require("fast-csv");
 
 /**
+ * Formats a processed Google Analytics report to a JSON string or CSV.
+ *
+ * NOTE: either option can modify the original object passed to this function.
+ * This is necessary because for large datasets, making a copy of the object
+ * can use an excessive amount of memory.
+ *
+ * JSON format with a slim option will delete the processed data's "data" field.
+ * CSV format will map headers to readable names for some columns.
+ *
  * @param {object} result an analytics object to be formatted.
  * @param {object} config optional configuration for the formatter.
  * @param {string} config.format the format to output can be "json" or "csv"
@@ -33,12 +42,11 @@ const _formatJSON = (result, { slim }) => {
 };
 
 const _formatCSV = (result) => {
-  const mappedData = _mapCSVHeaders(result.data);
-  return csv.writeToString(mappedData, { headers: true });
+  return csv.writeToString(_mapCSVHeaders(result.data), { headers: true });
 };
 
 function _mapCSVHeaders(dataArray) {
-  return dataArray.map((dataItem) => {
+  dataArray.forEach((dataItem, index) => {
     const newDataItem = {};
     Object.keys(dataItem).forEach((key) => {
       if (_keyMappings[key]) {
@@ -48,8 +56,9 @@ function _mapCSVHeaders(dataArray) {
       }
     });
 
-    return newDataItem;
+    dataArray[index] = newDataItem;
   });
+  return dataArray;
 }
 
 const _keyMappings = {

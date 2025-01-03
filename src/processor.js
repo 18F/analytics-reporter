@@ -45,12 +45,15 @@ class Processor {
    * referenced here are an implementation of the Chain of Responsibility design
    * pattern.
    *
-   * @param {import('../src/app_config')} appConfig an application config instance.
+   * @param {import('../src/app_config')} appConfig an application config
+   * instance.
    * @param {import('winston').Logger} logger an application logger instance.
+   * @param {import('knex')} knexInstance an initialized instance of the knex
+   * library for database operations.
    * @returns {Processor} an initialized processor instance with a chain of
    * analytics processing actions.
    */
-  static buildAnalyticsProcessor(appConfig, logger) {
+  static buildAnalyticsProcessor(appConfig, logger, knexInstance) {
     return new Processor([
       new QueryGoogleAnalytics(
         new GoogleAnalyticsService(
@@ -60,8 +63,8 @@ class Processor {
         ),
       ),
       new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor()),
+      new WriteAnalyticsDataToDatabase(new PostgresPublisher(knexInstance)),
       new FormatProcessedAnalyticsData(),
-      new WriteAnalyticsDataToDatabase(new PostgresPublisher(appConfig)),
       new PublishAnalyticsDataToS3(new S3Service(appConfig)),
       new PublishAnalyticsDataToDisk(),
       new LogAnalyticsData(),

@@ -6,4 +6,7 @@ const resetSchema = (db) => {
   return db(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME).delete();
 };
 
-module.exports = { connection: new AppConfig().postgres, resetSchema };
+module.exports = {
+  connection: new AppConfig().knexConfig.connection,
+  resetSchema,
+};
