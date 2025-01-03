@@ -17,7 +17,7 @@ class FormatProcessedAnalyticsData extends Action {
    */
   async executeStrategy(context) {
     context.logger.debug("Formatting analytics data");
-    const formattedAnalyticsData = {};
+    let formattedAnalyticsData = {};
     for (const format of context.appConfig.formats) {
       formattedAnalyticsData[format] = await ResultFormatter.formatResult(
         context.processedAnalyticsData,
@@ -27,7 +27,9 @@ class FormatProcessedAnalyticsData extends Action {
         },
       );
     }
+    context.processedAnalyticsData = undefined;
     context.formattedAnalyticsData = formattedAnalyticsData;
+    formattedAnalyticsData = undefined;
   }
 }
 

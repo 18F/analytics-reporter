@@ -25,9 +25,19 @@
     "awsBucketPath": "data/agriculture"
   },
   {
+    "analyticsReportIds": "470235781",
+    "agencyName": "air-force",
+    "awsBucketPath": "data/air-force"
+  },
+  {
     "analyticsReportIds": "395213963",
     "agencyName": "american-battle-monuments-commission",
     "awsBucketPath": "data/american-battle-monuments-commission"
+  },
+  {
+    "analyticsReportIds": "470089273",
+    "agencyName": "army",
+    "awsBucketPath": "data/army"
   },
   {
     "analyticsReportIds": "395253935",
@@ -265,6 +275,11 @@
     "awsBucketPath": "data/national-labor-relations-board"
   },
   {
+    "analyticsReportIds": "470944610",
+    "agencyName": "national-library-medicine",
+    "awsBucketPath": "data/national-library-medicine"
+  },
+  {
     "analyticsReportIds": "425930242",
     "agencyName": "national-mediation-board",
     "awsBucketPath": "data/national-mediation-board"
@@ -293,6 +308,11 @@
     "analyticsReportIds": "395446803",
     "agencyName": "national-transportation-safety-board",
     "awsBucketPath": "data/national-transportation-safety-board"
+  },
+  {
+    "analyticsReportIds": "470101393",
+    "agencyName": "navy",
+    "awsBucketPath": "data/navy"
   },
   {
     "analyticsReportIds": "395460734",

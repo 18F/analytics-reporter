@@ -2,17 +2,15 @@ const expect = require("chai").expect;
 const knex = require("knex");
 const database = require("../support/database");
 const resultsFixture = require("../support/fixtures/results");
-const AppConfig = require("../../src/app_config");
 const PostgresPublisher = require("../../src/publish/postgres");
-const appConfig = new AppConfig();
 
 describe("PostgresPublisher", () => {
-  let databaseClient, results, subject;
+  let knexInstance, results, subject;
 
   before(async () => {
     process.env.NODE_ENV = "test";
     // Setup the database client
-    databaseClient = await knex({
+    knexInstance = await knex({
       client: "pg",
       connection: database.connection,
     });
@@ -20,13 +18,13 @@ describe("PostgresPublisher", () => {
 
   after(async () => {
     // Clean up the database client
-    await databaseClient.destroy();
+    await knexInstance.destroy();
   });
 
   beforeEach(async () => {
     results = Object.assign({}, resultsFixture);
-    subject = new PostgresPublisher(appConfig);
-    await database.resetSchema(databaseClient);
+    subject = new PostgresPublisher(knexInstance);
+    await database.resetSchema(knexInstance);
   });
 
   describe(".publish(results)", () => {
@@ -46,7 +44,7 @@ describe("PostgresPublisher", () => {
       await subject
         .publish(results)
         .then(() => {
-          return databaseClient(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME)
+          return knexInstance(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME)
             .orderBy("date", "asc")
             .select();
         })
@@ -75,7 +73,7 @@ describe("PostgresPublisher", () => {
       await subject
         .publish(results)
         .then(() => {
-          return databaseClient
+          return knexInstance
             .select()
             .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
@@ -96,7 +94,7 @@ describe("PostgresPublisher", () => {
       subject
         .publish(results)
         .then(() => {
-          return databaseClient
+          return knexInstance
             .select()
             .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
@@ -170,7 +168,7 @@ describe("PostgresPublisher", () => {
           return subject.publish(secondResults);
         })
         .then(() => {
-          return databaseClient
+          return knexInstance
             .select()
             .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
@@ -214,7 +212,7 @@ describe("PostgresPublisher", () => {
           return subject.publish(secondResults);
         })
         .then(() => {
-          return databaseClient
+          return knexInstance
             .select()
             .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })
@@ -245,7 +243,7 @@ describe("PostgresPublisher", () => {
       await subject
         .publish(results)
         .then(() => {
-          return databaseClient
+          return knexInstance
             .select()
             .table(PostgresPublisher.ANALYTICS_DATA_TABLE_NAME);
         })

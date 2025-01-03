@@ -27,9 +27,6 @@ on:
       DB_SERVICE_NAME:
         required: true
         type: string
-      MESSAGE_QUEUE_DATABASE_NAME:
-        required: true
-        type: string
       MESSAGE_QUEUE_NAME:
         required: true
         type: string
@@ -72,7 +69,6 @@ env:
   CF_SPACE_NAME: ${{ inputs.CF_SPACE_NAME }}
   DB_SERVICE_NAME: ${{ inputs.DB_SERVICE_NAME }}
   GA4_CREDS: ${{ secrets.GA4_CREDS }}
-  MESSAGE_QUEUE_DATABASE_NAME: ${{ inputs.MESSAGE_QUEUE_DATABASE_NAME }}
   MESSAGE_QUEUE_NAME: ${{ inputs.MESSAGE_QUEUE_NAME }}
   NEW_RELIC_APP_NAME: ${{ inputs.NEW_RELIC_APP_NAME }}
   NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}

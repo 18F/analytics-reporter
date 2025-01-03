@@ -1,10 +1,12 @@
 const { AsyncLocalStorage } = require("node:async_hooks");
+const knex = require("knex");
 const PgBoss = require("pg-boss");
 const util = require("util");
 const AppConfig = require("./src/app_config");
 const ReportProcessingContext = require("./src/report_processing_context");
 const Logger = require("./src/logger");
 const Processor = require("./src/processor");
+const PgBossKnexAdapter = require("./src/pg_boss_knex_adapter");
 
 /**
  * Gets an array of JSON report objects from the application confing, then runs
@@ -80,7 +82,7 @@ async function _processReport(appConfig, context, reportConfig, processor) {
       await processor.processChain(context);
       logger.info("Processing complete");
     } catch (e) {
-      logger.error("Encountered an error");
+      logger.error("Encountered an error during report processing");
       logger.error(util.inspect(e));
     }
   });
@@ -121,8 +123,8 @@ async function runQueuePublish(options = {}) {
     agencyName: appConfig.agencyLogName,
     scriptName: appConfig.scriptName,
   });
-  const queueClient = await _initQueueClient(appConfig, appLogger);
-  const queue = "analytics-reporter-job-queue";
+  const knexInstance = await knex(appConfig.knexConfig);
+  const queueClient = await _initQueueClient(knexInstance, appLogger);
 
   for (const agency of agencies) {
     for (const reportConfig of reportConfigs) {
@@ -134,7 +136,7 @@ async function runQueuePublish(options = {}) {
       });
       try {
         let jobId = await queueClient.send(
-          queue,
+          appConfig.messageQueueName,
           _createQueueMessage(
             options,
             agency,
@@ -151,13 +153,17 @@ async function runQueuePublish(options = {}) {
         );
         if (jobId) {
           reportLogger.info(
-            `Created job in queue: ${queue} with job ID: ${jobId}`,
+            `Created job in queue: ${appConfig.messageQueueName} with job ID: ${jobId}`,
           );
         } else {
-          reportLogger.info(`Found a duplicate job in queue: ${queue}`);
+          reportLogger.info(
+            `Found a duplicate job in queue: ${appConfig.messageQueueName}`,
+          );
         }
       } catch (e) {
-        reportLogger.error(`Error sending to queue: ${queue}`);
+        reportLogger.error(
+          `Error sending to queue: ${appConfig.messageQueueName}`,
+        );
         reportLogger.error(util.inspect(e));
       }
     }
@@ -169,6 +175,9 @@ async function runQueuePublish(options = {}) {
   } catch (e) {
     appLogger.error("Error stopping queue client");
     appLogger.error(util.inspect(e));
+  } finally {
+    appLogger.debug(`Destroying database connection pool`);
+    knexInstance.destroy();
   }
 }
 
@@ -189,10 +198,10 @@ function _initAgencies(agencies_file) {
   return Array.isArray(agencies) ? agencies : legacyAgencies;
 }
 
-async function _initQueueClient(appConfig, logger) {
+async function _initQueueClient(knexInstance, logger) {
   let queueClient;
   try {
-    queueClient = new PgBoss(appConfig.messageQueueDatabaseConnection);
+    queueClient = new PgBoss({ db: new PgBossKnexAdapter(knexInstance) });
     await queueClient.start();
     logger.debug("Starting queue client");
   } catch (e) {
@@ -230,15 +239,19 @@ function _messagePriority(reportConfig) {
 async function runQueueConsume() {
   const appConfig = new AppConfig();
   const appLogger = Logger.initialize();
-  const queueClient = await _initQueueClient(appConfig, appLogger);
-  const queue = "analytics-reporter-job-queue";
+  const knexInstance = await knex(appConfig.knexConfig);
+  const queueClient = await _initQueueClient(knexInstance, appLogger);
 
   try {
     const context = new ReportProcessingContext(new AsyncLocalStorage());
-    const processor = Processor.buildAnalyticsProcessor(appConfig, appLogger);
+    const processor = Processor.buildAnalyticsProcessor(
+      appConfig,
+      appLogger,
+      knexInstance,
+    );
 
     await queueClient.work(
-      queue,
+      appConfig.messageQueueName,
       { newJobCheckIntervalSeconds: 1 },
       async (message) => {
         appLogger.info("Queue message received");
