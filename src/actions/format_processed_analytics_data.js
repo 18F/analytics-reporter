@@ -6,6 +6,16 @@ const ResultFormatter = require("../process_results/result_formatter");
  */
 class FormatProcessedAnalyticsData extends Action {
   /**
+   * @param {import('../report_processing_context')} context the context for the
+   * action chain.
+   * @returns {boolean} true if the application config is set to format
+   * processed analytics data.
+   */
+  handles(context) {
+    return context.appConfig.formats.length > 0;
+  }
+
+  /**
    * Takes the processed analytics data from the context and changes the format
    * to JSON or CSV based on application and report config options. Writes the
    * formatted data to the context for use in subsequent actions. Removes the
