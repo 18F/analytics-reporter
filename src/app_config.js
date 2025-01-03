@@ -58,7 +58,11 @@ class AppConfig {
   }
 
   get shouldPublishToDisk() {
-    return !!this.#options.output && typeof this.#options.output === "string";
+    return (
+      !!this.#options.output &&
+      !this.shouldWriteToDatabase &&
+      typeof this.#options.output === "string"
+    );
   }
 
   get shouldPublishToS3() {
