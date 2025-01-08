@@ -86,6 +86,7 @@
     "@cucumber/cucumber": "^10.3.1",
     "@eslint/js": "^8.57.0",
     "chai": "^4.4.0",
+    "chai-as-promised": "^8.0.1",
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.3",
     "eslint": "^8.56.0",
