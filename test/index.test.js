@@ -12,6 +12,10 @@ class AppConfig {
   get filteredReportConfigurations() {
     return reportConfigs;
   }
+
+  get shouldWriteToDatabase() {
+    return true;
+  }
 }
 
 class ReportProcessingContext {

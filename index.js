@@ -1,12 +1,12 @@
 const { AsyncLocalStorage } = require("node:async_hooks");
 const knex = require("knex");
-const PgBoss = require("pg-boss");
 const util = require("util");
 const AppConfig = require("./src/app_config");
 const ReportProcessingContext = require("./src/report_processing_context");
 const Logger = require("./src/logger");
 const Processor = require("./src/processor");
-const PgBossKnexAdapter = require("./src/pg_boss_knex_adapter");
+const Queue = require("./src/queue/queue");
+const ReportJobQueueMessage = require("./src/queue/report_job_queue_message");
 
 /**
  * Gets an array of JSON report objects from the application confing, then runs
@@ -37,12 +37,16 @@ async function run(options = {}) {
   const appConfig = new AppConfig(options);
   const context = new ReportProcessingContext(new AsyncLocalStorage());
   const reportConfigs = appConfig.filteredReportConfigurations;
+  const knexInstance = appConfig.shouldWriteToDatabase
+    ? await knex(appConfig.knexConfig)
+    : undefined;
   const processor = Processor.buildAnalyticsProcessor(
     appConfig,
     Logger.initialize({
       agencyName: appConfig.agencyLogName,
       scriptName: appConfig.scriptName,
     }),
+    knexInstance,
   );
 
   for (const reportConfig of reportConfigs) {
@@ -124,7 +128,11 @@ async function runQueuePublish(options = {}) {
     scriptName: appConfig.scriptName,
   });
   const knexInstance = await knex(appConfig.knexConfig);
-  const queueClient = await _initQueueClient(knexInstance, appLogger);
+  const queueClient = await _initQueueClient(
+    knexInstance,
+    appConfig.messageQueueName,
+    appLogger,
+  );
 
   for (const agency of agencies) {
     for (const reportConfig of reportConfigs) {
@@ -134,47 +142,35 @@ async function runQueuePublish(options = {}) {
         scriptName: appConfig.scriptName,
         reportName: reportConfig.name,
       });
+      let messageId;
       try {
-        let jobId = await queueClient.send(
-          appConfig.messageQueueName,
-          _createQueueMessage(
-            options,
-            agency,
+        messageId = await queueClient.sendMessage(
+          new ReportJobQueueMessage({
+            agencyName: agency.agencyName,
+            analyticsReportIds: agency.analyticsReportIds,
+            awsBucketPath: agency.awsBucketPath,
+            reportOptions: options,
             reportConfig,
-            appConfig.scriptName,
-          ),
-          {
-            priority: _messagePriority(reportConfig),
-            retryLimit: 2,
-            retryDelay: 10,
-            retryBackoff: true,
-            singletonKey: `${appConfig.scriptName}-${agency.agencyName}-${reportConfig.name}`,
-          },
+            scriptName: appConfig.scriptName,
+          }),
         );
-        if (jobId) {
+        if (messageId) {
           reportLogger.info(
-            `Created job in queue: ${appConfig.messageQueueName} with job ID: ${jobId}`,
+            `Created message in queue: ${queueClient.name} with message ID: ${messageId}`,
           );
         } else {
           reportLogger.info(
-            `Found a duplicate job in queue: ${appConfig.messageQueueName}`,
+            `Found a duplicate message in queue: ${queueClient.name}`,
           );
         }
       } catch (e) {
-        reportLogger.error(
-          `Error sending to queue: ${appConfig.messageQueueName}`,
-        );
-        reportLogger.error(util.inspect(e));
+        // Do nothing so that the remaining messages still process.
       }
     }
   }
 
   try {
     await queueClient.stop();
-    appLogger.debug(`Stopping queue client`);
-  } catch (e) {
-    appLogger.error("Error stopping queue client");
-    appLogger.error(util.inspect(e));
   } finally {
     appLogger.debug(`Destroying database connection pool`);
     knexInstance.destroy();
@@ -198,39 +194,15 @@ function _initAgencies(agencies_file) {
   return Array.isArray(agencies) ? agencies : legacyAgencies;
 }
 
-async function _initQueueClient(knexInstance, logger) {
-  let queueClient;
-  try {
-    queueClient = new PgBoss({ db: new PgBossKnexAdapter(knexInstance) });
-    await queueClient.start();
-    logger.debug("Starting queue client");
-  } catch (e) {
-    logger.error("Error starting queue client");
-    logger.error(util.inspect(e));
-  }
-
+async function _initQueueClient(knexInstance, queueName, logger) {
+  const queueClient = Queue.buildQueue({
+    knexInstance,
+    queueName,
+    messageClass: ReportJobQueueMessage,
+    logger,
+  });
+  await queueClient.start();
   return queueClient;
-}
-
-function _createQueueMessage(options, agency, reportConfig, scriptName) {
-  return {
-    ...agency,
-    options,
-    reportConfig,
-    scriptName,
-  };
-}
-
-function _messagePriority(reportConfig) {
-  if (!reportConfig.frequency) {
-    return 0;
-  } else if (reportConfig.frequency == "daily") {
-    return 1;
-  } else if (reportConfig.frequency == "hourly") {
-    return 2;
-  } else if (reportConfig.frequency == "realtime") {
-    return 3;
-  }
 }
 
 /**
@@ -240,7 +212,11 @@ async function runQueueConsume() {
   const appConfig = new AppConfig();
   const appLogger = Logger.initialize();
   const knexInstance = await knex(appConfig.knexConfig);
-  const queueClient = await _initQueueClient(knexInstance, appLogger);
+  const queueClient = await _initQueueClient(
+    knexInstance,
+    appConfig.messageQueueName,
+    appLogger,
+  );
 
   try {
     const context = new ReportProcessingContext(new AsyncLocalStorage());
@@ -250,24 +226,19 @@ async function runQueueConsume() {
       knexInstance,
     );
 
-    await queueClient.work(
-      appConfig.messageQueueName,
-      { newJobCheckIntervalSeconds: 1 },
-      async (message) => {
-        appLogger.info("Queue message received");
-        process.env.AGENCY_NAME = message.data.agencyName;
-        process.env.ANALYTICS_REPORT_IDS = message.data.analyticsReportIds;
-        process.env.AWS_BUCKET_PATH = message.data.awsBucketPath;
-        process.env.ANALYTICS_SCRIPT_NAME = message.data.scriptName;
+    await queueClient.poll(async (message) => {
+      process.env.AGENCY_NAME = message.agencyName;
+      process.env.ANALYTICS_REPORT_IDS = message.analyticsReportIds;
+      process.env.AWS_BUCKET_PATH = message.awsBucketPath;
+      process.env.ANALYTICS_SCRIPT_NAME = message.scriptName;
 
-        await _processReport(
-          new AppConfig(message.data.options),
-          context,
-          message.data.reportConfig,
-          processor,
-        );
-      },
-    );
+      await _processReport(
+        new AppConfig(message.options),
+        context,
+        message.reportConfig,
+        processor,
+      );
+    });
   } catch (e) {
     appLogger.error("Error polling queue for messages");
     appLogger.error(util.inspect(e));

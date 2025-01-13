@@ -14,6 +14,36 @@ describe("FormatProcessedAnalyticsData", () => {
   let context;
   let subject;
 
+  describe(".handles", () => {
+    beforeEach(() => {
+      subject = new FormatProcessedAnalyticsData();
+    });
+
+    describe("when appConfig.formats has values", () => {
+      beforeEach(() => {
+        context = {
+          appConfig: { formats: ["json"] },
+        };
+      });
+
+      it("returns true", () => {
+        expect(subject.handles(context)).to.equal(true);
+      });
+    });
+
+    describe("when appConfig.formats does not have values", () => {
+      beforeEach(() => {
+        context = {
+          appConfig: { formats: [] },
+        };
+      });
+
+      it("returns false", () => {
+        expect(subject.handles(context)).to.equal(false);
+      });
+    });
+  });
+
   describe(".executeStrategy", () => {
     const debugLogSpy = sinon.spy();
 

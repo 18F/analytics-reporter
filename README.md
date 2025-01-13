@@ -19,9 +19,9 @@ The process for adding features to this project is described in
 
 ## Local development setup
 
-### Prerequistites
+### Prerequisites
 
-* NodeJS > v20.x
+* NodeJS > v22.x
 * A postgres DB running and/or docker installed
 
 ### Install dependencies
@@ -144,7 +144,7 @@ This file is ignored in the `.gitignore` file and should not be checked in to th
 npm start
 
 # running the app with dotenv-cli
-dotenv -e .env npm start
+npx dotenv -e .env npm start
 ```
 
 ## Configuration
