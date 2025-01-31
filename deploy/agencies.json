@@ -80,6 +80,11 @@
     "awsBucketPath": "data/defense"
   },
   {
+    "analyticsReportIds": "474071448",
+    "agencyName": "defense-health-agency",
+    "awsBucketPath": "data/defense-health-agency"
+  },
+  {
     "analyticsReportIds": "451719437",
     "agencyName": "denali-commission",
     "awsBucketPath": "data/denali-commission"
@@ -218,6 +223,11 @@
     "analyticsReportIds": "395262085",
     "agencyName": "labor",
     "awsBucketPath": "data/labor"
+  },
+  {
+    "analyticsReportIds": "473868292",
+    "agencyName": "marines",
+    "awsBucketPath": "data/marines"
   },
   {
     "analyticsReportIds": "395444789",
@@ -408,6 +418,11 @@
     "analyticsReportIds": "397629136",
     "agencyName": "social-security-administration",
     "awsBucketPath": "data/social-security-administration"
+  },
+  {
+    "analyticsReportIds": "473935024",
+    "agencyName": "space-force",
+    "awsBucketPath": "data/space-force"
   },
   {
     "analyticsReportIds": "395438870",
