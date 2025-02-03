@@ -3243,6 +3243,206 @@
       }
     },
     {
+      "name": "top-session-source-medium-yesterday",
+      "frequency": "daily",
+      "slim": true,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "other / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "expected / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "outfordelivery / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources (Yesterday)",
+        "description": "Top 20 sources that initiated a session for the last 1 day, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium-7-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "other / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "expected / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "outfordelivery / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources (7 Days)",
+        "description": "Top 20 sources that initiated a session for the last 7 days, measured by visits, for all sites."
+      }
+    },
+    {
       "name": "top-session-source-medium-30-days",
       "frequency": "daily",
       "slim": true,
@@ -3340,6 +3540,106 @@
       "meta": {
         "name": "Top Session Sources (30 Days)",
         "description": "Top 20 sources that initiated a session for the last 30 days, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium-90-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "90daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "other / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "expected / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "outfordelivery / email",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources (90 Days)",
+        "description": "Top 20 sources that initiated a session for the last 90 days, measured by visits, for all sites."
       }
     },
     {
