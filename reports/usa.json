@@ -65,7 +65,7 @@
       "name": "screen-resolution-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -173,7 +173,7 @@
       "name": "screen-resolution-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -281,7 +281,7 @@
       "name": "screen-resolution-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -389,7 +389,7 @@
       "name": "screen-resolution-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -497,7 +497,7 @@
       "name": "language",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "language",
         "language_code"
       ],
@@ -654,7 +654,7 @@
       "name": "devices-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -762,7 +762,7 @@
       "name": "devices-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -870,7 +870,7 @@
       "name": "devices-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -978,7 +978,7 @@
       "name": "devices-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -1086,7 +1086,7 @@
       "name": "device-model",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "mobile_device"
       ],
       "query": {
@@ -1195,7 +1195,7 @@
       "name": "os-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -1303,7 +1303,7 @@
       "name": "os-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -1411,7 +1411,7 @@
       "name": "os-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -1519,7 +1519,7 @@
       "name": "os-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -1627,7 +1627,7 @@
       "name": "windows-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -1744,7 +1744,7 @@
       "name": "windows-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -1861,7 +1861,7 @@
       "name": "windows-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -1978,7 +1978,7 @@
       "name": "windows-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -2094,7 +2094,7 @@
       "name": "browsers-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2191,7 +2191,7 @@
       "name": "browsers-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2299,7 +2299,7 @@
       "name": "browsers-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2407,7 +2407,7 @@
       "name": "browsers-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumUsersByDimensions": [
+      "sumTotalUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2829,6 +2829,10 @@
       "name": "top-cities-realtime",
       "frequency": "realtime",
       "realtime": true,
+      "slim": true,
+      "sumActiveUsersByDimensions": [
+        "city"
+      ],
       "query": {
         "dimensions": [
           {
@@ -2897,12 +2901,275 @@
             },
             "desc": true
           }
-        ],
-        "limit": "100000"
+        ]
       },
       "meta": {
         "name": "Top Cities (Live)",
         "description": "Top cities for active onsite users."
+      }
+    },
+    {
+      "name": "top-cities-7-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumTotalUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities - 7 Days",
+        "description": "Top cities in last 7 days for onsite users."
+      }
+    },
+    {
+      "name": "top-cities-30-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumTotalUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities - 30 Days",
+        "description": "Top cities in last 30 days for onsite users."
+      }
+    },
+    {
+      "name": "top-cities-90-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumTotalUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "90daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities - 90 Days",
+        "description": "Top cities in last 90 days for onsite users."
       }
     },
     {
