@@ -2931,6 +2931,162 @@
       }
     },
     {
+      "name": "top-session-channel-group-yesterday",
+      "frequency": "daily",
+      "slim": true,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "unassigned",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "paid other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups (Yesterday)",
+        "description": "Top 20 channel groups that initiated a session for the last 1 day, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group-7-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "unassigned",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "paid other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups (7 Days)",
+        "description": "Top 20 channel groups that initiated a session for the last 7 days, measured by visits, for all sites."
+      }
+    },
+    {
       "name": "top-session-channel-group-30-days",
       "frequency": "daily",
       "slim": true,
@@ -3006,6 +3162,84 @@
       "meta": {
         "name": "Top Session Default Channel Groups (30 Days)",
         "description": "Top 20 channel groups that initiated a session for the last 30 days, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group-90-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "90daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "unassigned",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "paid other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups (90 Days)",
+        "description": "Top 20 channel groups that initiated a session for the last 90 days, measured by visits, for all sites."
       }
     },
     {
