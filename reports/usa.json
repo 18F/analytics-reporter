@@ -1192,7 +1192,223 @@
       }
     },
     {
-      "name": "os",
+      "name": "os-yesterday",
+      "frequency": "daily",
+      "slim": true,
+      "sumUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "totalUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems - Yesterday",
+        "description": "1 day of operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os-7-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "totalUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems - 7 Days",
+        "description": "7 days of operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os-30-days",
       "frequency": "daily",
       "slim": true,
       "sumUsersByDimensions": [
@@ -1292,11 +1508,10 @@
             },
             "desc": true
           }
-        ],
-        "limit": "100000"
+        ]
       },
       "meta": {
-        "name": "Operating Systems",
+        "name": "Operating Systems - 30 Days",
         "description": "30 days of operating system demographics by user for all sites."
       }
     },
@@ -1401,8 +1616,7 @@
             },
             "desc": true
           }
-        ],
-        "limit": "100000"
+        ]
       },
       "meta": {
         "name": "Operating Systems - 90 Days",
@@ -1410,7 +1624,241 @@
       }
     },
     {
-      "name": "windows",
+      "name": "windows-yesterday",
+      "frequency": "daily",
+      "slim": true,
+      "sumUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "totalUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ],
+        "limit": "100000"
+      },
+      "meta": {
+        "name": "Windows - Yesterday",
+        "description": "1 day of Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows-7-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "totalUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ],
+        "limit": "100000"
+      },
+      "meta": {
+        "name": "Windows - 7 Days",
+        "description": "7 days of Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows-30-days",
       "frequency": "daily",
       "slim": true,
       "sumUsersByDimensions": [
@@ -1522,7 +1970,7 @@
         "limit": "100000"
       },
       "meta": {
-        "name": "Windows",
+        "name": "Windows - 30 Days",
         "description": "30 days of Windows users, broken down by operating system version and date, for all sites."
       }
     },
@@ -1635,8 +2083,7 @@
             },
             "desc": true
           }
-        ],
-        "limit": "100000"
+        ]
       },
       "meta": {
         "name": "Windows - 90 days",
