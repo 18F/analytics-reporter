@@ -62,6 +62,222 @@
       }
     },
     {
+      "name": "screen-resolution-yesterday",
+      "frequency": "daily",
+      "slim": true,
+      "sumUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "totalUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution - Yesterday",
+        "description": "1 day of screen resolution demographics by user for all sites."
+      }
+    },
+    {
+      "name": "screen-resolution-7-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "totalUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution - 7 Days",
+        "description": "7 days of screen resolution demographics by user for all sites."
+      }
+    },
+    {
       "name": "screen-resolution-30-days",
       "frequency": "daily",
       "slim": true,
@@ -162,11 +378,10 @@
             },
             "desc": true
           }
-        ],
-        "limit": "100000"
+        ]
       },
       "meta": {
-        "name": "Screen Resolution",
+        "name": "Screen Resolution - 30 Days",
         "description": "30 days of screen resolution demographics by user for all sites."
       }
     },
@@ -271,11 +486,10 @@
             },
             "desc": true
           }
-        ],
-        "limit": "100000"
+        ]
       },
       "meta": {
-        "name": "Screen Resolution",
+        "name": "Screen Resolution - 90 Days",
         "description": "90 days of screen resolution demographics by user for all sites."
       }
     },
