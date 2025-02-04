@@ -138,17 +138,6 @@
             ]
           }
         },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "5"
-              }
-            }
-          }
-        },
         "orderBys": [
           {
             "dimension": {
@@ -244,17 +233,6 @@
                 }
               }
             ]
-          }
-        },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "5"
-              }
-            }
           }
         },
         "orderBys": [
@@ -494,7 +472,453 @@
       }
     },
     {
-      "name": "language",
+      "name": "languages-yesterday",
+      "frequency": "daily",
+      "slim": true,
+      "sumTotalUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language - Yesterday",
+        "description": "1 day of browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages-7-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumTotalUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "dateRanges": [
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language - 7 Days",
+        "description": "7 days of browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages-30-days",
+      "frequency": "daily",
+      "slim": true,
+      "sumTotalUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "totalUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "totalUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "totalUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language - 30 Days",
+        "description": "30 days of browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages-90-days",
       "frequency": "daily",
       "slim": true,
       "sumTotalUsersByDimensions": [
@@ -642,11 +1066,10 @@
             },
             "desc": true
           }
-        ],
-        "limit": "100000"
+        ]
       },
       "meta": {
-        "name": "Browser Language",
+        "name": "Browser Language - 90 Days",
         "description": "90 days of browser language demographics by user for all sites."
       }
     },
@@ -719,17 +1142,6 @@
                 }
               }
             ]
-          }
-        },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "1"
-              }
-            }
           }
         },
         "dateRanges": [
@@ -827,17 +1239,6 @@
                 }
               }
             ]
-          }
-        },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "5"
-              }
-            }
           }
         },
         "dateRanges": [
@@ -1262,17 +1663,6 @@
             ]
           }
         },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "5"
-              }
-            }
-          }
-        },
         "dateRanges": [
           {
             "startDate": "yesterday",
@@ -1368,17 +1758,6 @@
                 }
               }
             ]
-          }
-        },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "5"
-              }
-            }
           }
         },
         "dateRanges": [
@@ -1702,17 +2081,6 @@
             ]
           }
         },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "5"
-              }
-            }
-          }
-        },
         "dateRanges": [
           {
             "startDate": "yesterday",
@@ -1817,17 +2185,6 @@
                 }
               }
             ]
-          }
-        },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "5"
-              }
-            }
           }
         },
         "dateRanges": [
@@ -2256,17 +2613,6 @@
                 }
               }
             ]
-          }
-        },
-        "metricFilter": {
-          "filter": {
-            "fieldName": "totalUsers",
-            "numericFilter": {
-              "operation": "GREATER_THAN",
-              "value": {
-                "int64Value": "5"
-              }
-            }
           }
         },
         "dateRanges": [
