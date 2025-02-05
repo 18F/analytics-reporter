@@ -4,6 +4,12 @@
  * @param {object} options options for the ResultTotalsCalculator.
  * @param {string[]} options.sumVisitsByDimensions an array of columns to be
  * totalled by the number of visits for each unique key in the column.
+ * @param {string[]} options.sumActiveUsersByDimensions an array of columns to
+ * be totalled by the number of active users for each unique key in the column.
+ * @param {string[]} options.sumTotalUsersByDimensions an array of columns to
+ * be totalled by the number of active users for each unique key in the column.
+ * @param {string[]} options.sumTotalEventsByDimensions an array of columns to
+ * be totalled by the number of total events for each unique key in the column.
  * @returns {object} totals for the results.
  */
 const calculateTotals = (result, options = {}) => {
@@ -13,6 +19,7 @@ const calculateTotals = (result, options = {}) => {
 
   let totalledResult = result.data.reduce((totals, row) => {
     // Sum up simple metrics
+    _sumMetric({ totals, metricName: "activeUsers", row });
     _sumMetric({ totals, metricName: "totalUsers", row });
     _sumMetric({ totals, metricName: "visits", row });
     _sumMetric({ totals, metricName: "total_events", row });
@@ -32,10 +39,24 @@ const calculateTotals = (result, options = {}) => {
     }
 
     if (
-      options.sumUsersByDimensions &&
-      Array.isArray(options.sumUsersByDimensions)
+      options.sumActiveUsersByDimensions &&
+      Array.isArray(options.sumActiveUsersByDimensions)
     ) {
-      for (const dimensionName of options.sumUsersByDimensions) {
+      for (const dimensionName of options.sumActiveUsersByDimensions) {
+        _sumMetricByDimension({
+          totals,
+          metricName: "activeUsers",
+          dimensionName,
+          row,
+        });
+      }
+    }
+
+    if (
+      options.sumTotalUsersByDimensions &&
+      Array.isArray(options.sumTotalUsersByDimensions)
+    ) {
+      for (const dimensionName of options.sumTotalUsersByDimensions) {
         _sumMetricByDimension({
           totals,
           metricName: "totalUsers",

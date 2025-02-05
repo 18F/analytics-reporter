@@ -217,12 +217,147 @@ describe("ResultTotalsCalculator", () => {
         });
       });
 
-      describe("and options.sumUsersByDimensions is provided", () => {
+      describe("and options.sumActiveUsersByDimensions is provided", () => {
         let options;
 
         describe("and there is one column being totalled", () => {
           beforeEach(() => {
-            options = { sumUsersByDimensions: ["device"] };
+            options = { sumActiveUsersByDimensions: ["device"] };
+            report.name = "devices";
+            data.dimensionHeaders = [
+              { name: "date" },
+              { name: "deviceCategory" },
+            ];
+            data.metricHeaders = [{ name: "activeUsers" }];
+            data.rows = [
+              {
+                dimensionValues: [{ value: "20170130" }, { value: "mobile" }],
+                metricValues: [{ value: "100" }],
+              },
+              {
+                dimensionValues: [{ value: "20170130" }, { value: "tablet" }],
+                metricValues: [{ value: "200" }],
+              },
+              {
+                dimensionValues: [{ value: "20170130" }, { value: "desktop" }],
+                metricValues: [{ value: "300" }],
+              },
+              {
+                dimensionValues: [{ value: "20170131" }, { value: "mobile" }],
+                metricValues: [{ value: "400" }],
+              },
+              {
+                dimensionValues: [{ value: "20170131" }, { value: "tablet" }],
+                metricValues: [{ value: "500" }],
+              },
+              {
+                dimensionValues: [{ value: "20170131" }, { value: "desktop" }],
+                metricValues: [{ value: "600" }],
+              },
+            ];
+
+            const result = analyticsDataProcessor.processData({ report, data });
+            totals = ResultTotalsCalculator.calculateTotals(result, options);
+          });
+
+          it("should compute user totals for mobile devices", () => {
+            expect(totals.by_device.mobile).to.equal(100 + 400);
+          });
+
+          it("should compute user totals for tablet devices", () => {
+            expect(totals.by_device.tablet).to.equal(200 + 500);
+          });
+
+          it("should compute user totals for desktop devices", () => {
+            expect(totals.by_device.desktop).to.equal(300 + 600);
+          });
+
+          it("sorts totals by user count", () => {
+            expect(Object.entries(totals.by_device)).to.deep.equal(
+              Object.entries({
+                desktop: 900,
+                tablet: 700,
+                mobile: 500,
+              }),
+            );
+          });
+        });
+
+        describe("and there are multiple columns being totalled", () => {
+          beforeEach(() => {
+            options = {
+              sumActiveUsersByDimensions: ["language", "language_code"],
+            };
+            report.name = "language";
+            data.dimensionHeaders = [
+              { name: "date" },
+              { name: "language" },
+              { name: "language_code" },
+            ];
+            data.metricHeaders = [{ name: "activeUsers" }];
+            data.rows = [
+              {
+                dimensionValues: [
+                  { value: "20170130" },
+                  { value: "en" },
+                  { value: "en-us" },
+                ],
+                metricValues: [{ value: "100" }],
+              },
+              {
+                dimensionValues: [
+                  { value: "20170130" },
+                  { value: "es" },
+                  { value: "es-us" },
+                ],
+                metricValues: [{ value: "200" }],
+              },
+              {
+                dimensionValues: [
+                  { value: "20170131" },
+                  { value: "en" },
+                  { value: "en-us" },
+                ],
+                metricValues: [{ value: "300" }],
+              },
+              {
+                dimensionValues: [
+                  { value: "20170131" },
+                  { value: "es" },
+                  { value: "es-us" },
+                ],
+                metricValues: [{ value: "400" }],
+              },
+            ];
+
+            const result = analyticsDataProcessor.processData({ report, data });
+            totals = ResultTotalsCalculator.calculateTotals(result, options);
+          });
+
+          it("should compute user totals for en language", () => {
+            expect(totals.by_language.en).to.equal(100 + 300);
+          });
+
+          it("should compute user totals for es language", () => {
+            expect(totals.by_language.es).to.equal(200 + 400);
+          });
+
+          it("should compute user totals for en-us language code", () => {
+            expect(totals.by_language_code["en-us"]).to.equal(100 + 300);
+          });
+
+          it("should compute user totals for es-us language code", () => {
+            expect(totals.by_language_code["es-us"]).to.equal(200 + 400);
+          });
+        });
+      });
+
+      describe("and options.sumTotalUsersByDimensions is provided", () => {
+        let options;
+
+        describe("and there is one column being totalled", () => {
+          beforeEach(() => {
+            options = { sumTotalUsersByDimensions: ["device"] };
             report.name = "devices";
             data.dimensionHeaders = [
               { name: "date" },
@@ -285,7 +420,9 @@ describe("ResultTotalsCalculator", () => {
 
         describe("and there are multiple columns being totalled", () => {
           beforeEach(() => {
-            options = { sumUsersByDimensions: ["language", "language_code"] };
+            options = {
+              sumTotalUsersByDimensions: ["language", "language_code"],
+            };
             report.name = "language";
             data.dimensionHeaders = [
               { name: "date" },

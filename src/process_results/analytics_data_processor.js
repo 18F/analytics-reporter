@@ -73,7 +73,8 @@ class AnalyticsDataProcessor {
 
     result.totals = ResultTotalsCalculator.calculateTotals(result, {
       sumVisitsByDimensions: report.sumVisitsByDimensions,
-      sumUsersByDimensions: report.sumUsersByDimensions,
+      sumActiveUsersByDimensions: report.sumActiveUsersByDimensions,
+      sumTotalUsersByDimensions: report.sumTotalUsersByDimensions,
       sumTotalEventsByDimensions: report.sumTotalEventsByDimensions,
     });
 
