@@ -9,7 +9,7 @@ applications:
   health-check-type: process
   buildpacks:
   - nodejs_buildpack
-  command: (node deploy/backload.js --date 2024-12-24 && echo SUCCESS || echo FAIL) && sleep infinity
+  command: (node deploy/backload.js --date 2024-07-01 && echo SUCCESS || echo FAIL) && sleep infinity
   env:
     ANALYTICS_DEBUG: 'true'
     ANALYTICS_LOG_LEVEL: ${ANALYTICS_LOG_LEVEL}
