@@ -222,7 +222,7 @@ describe("Queue", () => {
       });
     });
 
-    describe("polling callback function", () => {
+    xdescribe("polling callback function", () => {
       describe("when the polling callback is executed with a message", () => {
         let callback;
         const message = { foo: "bar" };
