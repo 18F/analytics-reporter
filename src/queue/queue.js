@@ -70,6 +70,7 @@ class Queue {
    */
   async sendMessage(queueMessage) {
     try {
+      this.#logger.info(util.inspect(queueMessage.sendOptions()));
       const messageId = await this.#queueClient.send(
         this.#queueName,
         queueMessage.toJSON(),
