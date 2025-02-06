@@ -65,7 +65,7 @@
       "name": "screen-resolution-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -79,7 +79,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -147,7 +147,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -162,7 +162,7 @@
       "name": "screen-resolution-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -176,7 +176,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -244,7 +244,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -259,7 +259,7 @@
       "name": "screen-resolution-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -273,7 +273,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -334,7 +334,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -352,7 +352,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -367,7 +367,7 @@
       "name": "screen-resolution-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "screen_resolution"
       ],
       "query": {
@@ -381,7 +381,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -442,7 +442,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -460,7 +460,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -475,7 +475,7 @@
       "name": "languages-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "language",
         "language_code"
       ],
@@ -493,7 +493,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -605,7 +605,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -620,7 +620,7 @@
       "name": "languages-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "language",
         "language_code"
       ],
@@ -638,7 +638,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -750,7 +750,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -765,7 +765,7 @@
       "name": "languages-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "language",
         "language_code"
       ],
@@ -783,7 +783,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -882,7 +882,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -906,7 +906,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -921,7 +921,7 @@
       "name": "languages-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "language",
         "language_code"
       ],
@@ -939,7 +939,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1038,7 +1038,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -1062,7 +1062,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1160,7 +1160,7 @@
       "name": "devices-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -1174,7 +1174,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1242,7 +1242,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1257,7 +1257,7 @@
       "name": "devices-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -1271,7 +1271,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1339,7 +1339,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1354,7 +1354,7 @@
       "name": "devices-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -1368,7 +1368,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1423,7 +1423,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -1447,7 +1447,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1462,7 +1462,7 @@
       "name": "devices-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "device"
       ],
       "query": {
@@ -1476,7 +1476,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1531,7 +1531,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -1555,7 +1555,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1570,7 +1570,7 @@
       "name": "device-model",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "mobile_device"
       ],
       "query": {
@@ -1584,7 +1584,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1639,7 +1639,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -1663,7 +1663,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1679,7 +1679,7 @@
       "name": "os-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -1693,7 +1693,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1761,7 +1761,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1776,7 +1776,7 @@
       "name": "os-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -1790,7 +1790,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1858,7 +1858,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1873,7 +1873,7 @@
       "name": "os-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -1887,7 +1887,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -1942,7 +1942,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -1966,7 +1966,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -1981,7 +1981,7 @@
       "name": "os-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "os"
       ],
       "query": {
@@ -1995,7 +1995,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2050,7 +2050,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -2074,7 +2074,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2089,7 +2089,7 @@
       "name": "windows-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -2103,7 +2103,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2179,7 +2179,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2195,7 +2195,7 @@
       "name": "windows-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -2209,7 +2209,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2285,7 +2285,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2301,7 +2301,7 @@
       "name": "windows-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -2315,7 +2315,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2378,7 +2378,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -2402,7 +2402,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2418,7 +2418,7 @@
       "name": "windows-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "os_version"
       ],
       "query": {
@@ -2432,7 +2432,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2495,7 +2495,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -2519,7 +2519,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2534,7 +2534,7 @@
       "name": "browsers-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2548,7 +2548,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2616,7 +2616,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2631,7 +2631,7 @@
       "name": "browsers-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2645,7 +2645,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2713,7 +2713,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2728,7 +2728,7 @@
       "name": "browsers-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2742,7 +2742,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2797,7 +2797,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -2821,7 +2821,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2836,7 +2836,7 @@
       "name": "browsers-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "browser"
       ],
       "query": {
@@ -2850,7 +2850,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -2905,7 +2905,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -2929,7 +2929,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -2958,7 +2958,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -3057,7 +3057,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -3081,7 +3081,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -3111,7 +3111,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dimensionFilter": {
@@ -3218,7 +3218,7 @@
         },
         "metricFilter": {
           "filter": {
-            "fieldName": "totalUsers",
+            "fieldName": "activeUsers",
             "numericFilter": {
               "operation": "GREATER_THAN",
               "value": {
@@ -3242,7 +3242,7 @@
           },
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -3341,7 +3341,7 @@
       "name": "top-cities-yesterday",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "city"
       ],
       "query": {
@@ -3352,7 +3352,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -3414,7 +3414,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -3429,7 +3429,7 @@
       "name": "top-cities-7-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "city"
       ],
       "query": {
@@ -3440,7 +3440,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -3502,7 +3502,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -3517,7 +3517,7 @@
       "name": "top-cities-30-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "city"
       ],
       "query": {
@@ -3528,7 +3528,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -3590,7 +3590,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -3605,7 +3605,7 @@
       "name": "top-cities-90-days",
       "frequency": "daily",
       "slim": true,
-      "sumTotalUsersByDimensions": [
+      "sumActiveUsersByDimensions": [
         "city"
       ],
       "query": {
@@ -3616,7 +3616,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -3678,7 +3678,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -3779,7 +3779,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -3841,7 +3841,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -3863,7 +3863,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -3925,7 +3925,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -3947,7 +3947,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -4009,7 +4009,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -4031,7 +4031,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -4093,7 +4093,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -5954,7 +5954,7 @@
         ],
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -5966,7 +5966,7 @@
         "orderBys": [
           {
             "metric": {
-              "metricName": "totalUsers"
+              "metricName": "activeUsers"
             },
             "desc": true
           }
@@ -6140,7 +6140,7 @@
       "query": {
         "metrics": [
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
@@ -6575,7 +6575,7 @@
             "name": "eventCount"
           },
           {
-            "name": "totalUsers"
+            "name": "activeUsers"
           }
         ],
         "dateRanges": [
