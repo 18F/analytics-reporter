@@ -63,7 +63,7 @@ class ReportJobQueueMessage extends QueueMessage {
    */
   sendOptions() {
     return {
-      priority: this.#messagePriority(reportConfig),
+      priority: this.#messagePriority(this.#reportConfig.frequency),
       retryLimit: 2,
       retryDelay: 10,
       retryBackoff: true,
