@@ -48,14 +48,6 @@ class ReportProcessingContext {
     this.#store.set("formattedAnalyticsData", formattedAnalyticsData);
   }
 
-  get googleAnalyticsQuery() {
-    return this.#store.get("googleAnalyticsQuery");
-  }
-
-  set googleAnalyticsQuery(googleAnalyticsQuery) {
-    this.#store.set("googleAnalyticsQuery", googleAnalyticsQuery);
-  }
-
   get logger() {
     return this.#store.get("logger");
   }
@@ -64,23 +56,12 @@ class ReportProcessingContext {
     this.#store.set("logger", logger);
   }
 
-  get processedAnalyticsData() {
-    return this.#store.get("processedAnalyticsData");
+  get googleAnalyticsReportData() {
+    return this.#store.get("googleAnalyticsReportData");
   }
 
-  set processedAnalyticsData(processedAnalyticsData) {
-    this.#store.set("processedAnalyticsData", processedAnalyticsData);
-  }
-
-  get rawGoogleAnalyticsReportData() {
-    return this.#store.get("rawGoogleAnalyticsReportData");
-  }
-
-  set rawGoogleAnalyticsReportData(rawGoogleAnalyticsReportData) {
-    this.#store.set(
-      "rawGoogleAnalyticsReportData",
-      rawGoogleAnalyticsReportData,
-    );
+  set googleAnalyticsReportData(googleAnalyticsReportData) {
+    this.#store.set("googleAnalyticsReportData", googleAnalyticsReportData);
   }
 
   get reportConfig() {

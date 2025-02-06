@@ -18,22 +18,23 @@ const csv = require("fast-csv");
  * @returns {string} a JSON string or a CSV string depending on passed params.
  */
 const formatResult = (result, { format = "json", slim = false } = {}) => {
-  result = Object.assign({}, result);
-
   switch (format) {
-    case "json":
-      return _formatJSON(result, { slim });
-    case "csv":
-      return _formatCSV(result);
-    default:
+    case "json": {
+      /* eslint-disable no-unused-vars */
+      const { data, ...resultWithoutData } = result;
+      return _formatJSON(slim ? resultWithoutData : result);
+      /* eslint-enable no-unused-vars */
+    }
+    case "csv": {
+      return _formatCSV({ ...result });
+    }
+    default: {
       return Promise.reject("Unsupported format: " + format);
+    }
   }
 };
 
-const _formatJSON = (result, { slim }) => {
-  if (slim) {
-    delete result.data;
-  }
+const _formatJSON = (result) => {
   try {
     return Promise.resolve(JSON.stringify(result, null, 2));
   } catch (e) {

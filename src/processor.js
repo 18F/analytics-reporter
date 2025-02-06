@@ -1,10 +1,8 @@
 const { BetaAnalyticsDataClient } = require("@google-analytics/data");
-const AnalyticsDataProcessor = require("../src/process_results/analytics_data_processor");
 const FormatProcessedAnalyticsData = require("../src/actions/format_processed_analytics_data");
 const GoogleAnalyticsService = require("../src/google_analytics/service");
 const LogAnalyticsData = require("../src/actions/log_analytics_data");
 const PostgresPublisher = require("../src/publish/postgres");
-const ProcessGoogleAnalyticsResults = require("../src/actions/process_google_analytics_results");
 const PublishAnalyticsDataToDisk = require("../src/actions/publish_analytics_data_to_disk");
 const PublishAnalyticsDataToS3 = require("../src/actions/publish_analytics_data_to_s3");
 const S3Service = require("../src/publish/s3");
@@ -62,7 +60,6 @@ class Processor {
           logger,
         ),
       ),
-      new ProcessGoogleAnalyticsResults(new AnalyticsDataProcessor()),
       new WriteAnalyticsDataToDatabase(new PostgresPublisher(knexInstance)),
       new FormatProcessedAnalyticsData(),
       new PublishAnalyticsDataToS3(new S3Service(appConfig)),

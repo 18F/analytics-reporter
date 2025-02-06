@@ -36,7 +36,9 @@ class WriteAnalyticsDataToDatabase extends Action {
    */
   async executeStrategy(context) {
     context.logger.debug("Writing report data to database");
-    await this.#postgresPublisher.publish(context.processedAnalyticsData);
+    for (const dataItem of context.googleAnalyticsReportData) {
+      await this.#postgresPublisher.publish(dataItem.report);
+    }
   }
 }
 

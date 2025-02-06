@@ -38,7 +38,12 @@ describe("LogAnalyticsData", () => {
 
   describe(".executeStrategy", () => {
     const infoLogSpy = sinon.spy();
-    const formattedAnalyticsData = { json: '{ foo: "bar" }', csv: "foo, bar" };
+    const formattedAnalyticsData = [
+      {
+        json: { name: "foobar", report: { slim: true } },
+        csv: { name: "foobar", report: { slim: true } },
+      },
+    ];
 
     beforeEach(async () => {
       infoLogSpy.resetHistory();
@@ -51,12 +56,12 @@ describe("LogAnalyticsData", () => {
     });
 
     it("calls logger.info with the formatted analytics data", () => {
-      expect(infoLogSpy.calledWith(formattedAnalyticsData["json"])).to.equal(
-        true,
-      );
-      expect(infoLogSpy.calledWith(formattedAnalyticsData["csv"])).to.equal(
-        true,
-      );
+      expect(
+        infoLogSpy.calledWith(formattedAnalyticsData[0].json.report),
+      ).to.equal(true);
+      expect(
+        infoLogSpy.calledWith(formattedAnalyticsData[0].csv.report),
+      ).to.equal(true);
     });
   });
 });

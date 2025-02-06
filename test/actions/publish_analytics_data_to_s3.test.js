@@ -36,7 +36,12 @@ describe("PublishAnalyticsDataToS3", () => {
 
   describe(".executeStrategy", () => {
     const debugLogSpy = sinon.spy();
-    const formattedAnalyticsData = { slim: true };
+    const formattedAnalyticsData = [
+      {
+        json: { name: "foobar", report: { slim: true } },
+        csv: { name: "foobar", report: { slim: true } },
+      },
+    ];
     const reportConfig = { name: "foobar", slim: false };
 
     describe("When a single format is configured", () => {
@@ -44,7 +49,7 @@ describe("PublishAnalyticsDataToS3", () => {
         debugLogSpy.resetHistory();
         s3Service.publish.resetHistory();
         context = {
-          formattedAnalyticsData: { json: formattedAnalyticsData },
+          formattedAnalyticsData: formattedAnalyticsData,
           logger: { debug: debugLogSpy },
           reportConfig: reportConfig,
           appConfig: {
@@ -68,7 +73,7 @@ describe("PublishAnalyticsDataToS3", () => {
               path: context.appConfig.aws.path,
               format: context.appConfig.formats[0],
             },
-            formattedAnalyticsData,
+            formattedAnalyticsData[0].json.report,
           ),
         ).to.equal(true);
       });
@@ -79,10 +84,7 @@ describe("PublishAnalyticsDataToS3", () => {
         debugLogSpy.resetHistory();
         s3Service.publish.resetHistory();
         context = {
-          formattedAnalyticsData: {
-            csv: formattedAnalyticsData,
-            json: formattedAnalyticsData,
-          },
+          formattedAnalyticsData,
           logger: { debug: debugLogSpy },
           reportConfig: reportConfig,
           appConfig: {
@@ -106,7 +108,7 @@ describe("PublishAnalyticsDataToS3", () => {
               path: context.appConfig.aws.path,
               format: context.appConfig.formats[0],
             },
-            formattedAnalyticsData,
+            formattedAnalyticsData[0].json.report,
           ),
         ).to.equal(true);
       });
@@ -120,7 +122,7 @@ describe("PublishAnalyticsDataToS3", () => {
               path: context.appConfig.aws.path,
               format: context.appConfig.formats[1],
             },
-            formattedAnalyticsData,
+            formattedAnalyticsData[0].csv.report,
           ),
         ).to.equal(true);
       });
