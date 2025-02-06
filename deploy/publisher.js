@@ -17,26 +17,10 @@ const Bree = require("bree");
 const bree = new Bree({
   logger,
   jobs: [
-    // Runs `../jobs/realtime.js` 1 millisecond after the process starts and
-    // then every 15 minutes going forward.
+    // Runs `../jobs/backload_api.js` immediately on process start
     {
-      name: "realtime",
+      name: "backload_api",
       timeout: "1",
-      interval: "15m",
-    },
-    // Runs `../jobs/daily.js` 1 minute after the process starts and then at
-    // 10:01 AM every day going forward.
-    {
-      name: "daily",
-      timeout: "1m",
-      interval: "at 10:01 am",
-    },
-    // Runs `../jobs/api.js` 2 minutes after the process starts and then at
-    // 10:02 AM every day going forward.
-    {
-      name: "api",
-      timeout: "2m",
-      interval: "at 10:02 am",
     },
   ],
 });
