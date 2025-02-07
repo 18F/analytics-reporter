@@ -1,4 +1,4 @@
-process.env.ANALYTICS_REPORTS_PATH = "reports/usa.json";
+process.env.ANALYTICS_REPORTS_PATH = "reports/test.json";
 process.env.ANALYTICS_SCRIPT_NAME = "daily.js";
 
 const { runQueuePublish } = require("../index.js");

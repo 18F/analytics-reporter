@@ -1,0 +1,123 @@
+{
+  "reports": [
+    {
+      "name": "screen-resolution",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "yesterday",
+        "7-days",
+        "30-days",
+        "90-days",
+        "current-year",
+        "current-fiscal-year",
+        "previous-year",
+        "previous-fiscal-year"
+      ],
+      "sumActiveUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          },
+          {
+            "startDate": "7daysAgo",
+            "endDate": "yesterday"
+          },
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          },
+          {
+            "startDate": "90daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "null",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "stringFilter": {
+                      "value": "(not set)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "dimension": {
+              "dimensionName": "yearMonth"
+            },
+            "desc": true
+          },
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "Screen resolution demographics by user for all sites."
+      }
+    }
+  ]
+}

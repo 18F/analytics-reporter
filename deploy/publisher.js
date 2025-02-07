@@ -19,25 +19,25 @@ const bree = new Bree({
   jobs: [
     // Runs `../jobs/realtime.js` 1 millisecond after the process starts and
     // then every 15 minutes going forward.
-    {
+    /*{
       name: "realtime",
       timeout: "1",
       interval: "15m",
-    },
+    },*/
     // Runs `../jobs/daily.js` 1 minute after the process starts and then at
     // 10:01 AM every day going forward.
     {
       name: "daily",
-      timeout: "1m",
+      timeout: "1",
       interval: "at 10:01 am",
     },
     // Runs `../jobs/api.js` 2 minutes after the process starts and then at
     // 10:02 AM every day going forward.
-    {
+    /*{
       name: "api",
       timeout: "2m",
       interval: "at 10:02 am",
-    },
+    },*/
   ],
 });
 

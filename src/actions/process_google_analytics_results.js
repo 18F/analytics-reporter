@@ -1,4 +1,5 @@
 const Action = require("./action");
+const util = require('util');
 
 /**
  * Chain of responsibility action for processing google analytics data
@@ -26,6 +27,8 @@ class ProcessGoogleAnalyticsResults extends Action {
    * action chain.
    */
   async executeStrategy(context) {
+    context.logger.info(util.inspect(context.rawGoogleAnalyticsReportData[0].rows[0].dimensionValues));
+    context.logger.info(util.inspect(context.rawGoogleAnalyticsReportData[0].rows[0].metricValues));
     context.logger.debug("Processing GA report data");
     context.processedAnalyticsData =
       await this.#analyticsDataProcessor.processData({
