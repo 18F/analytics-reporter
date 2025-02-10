@@ -1,21 +1,35 @@
 ![Build Status](https://github.com/18F/analytics-reporter/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Snyk](https://snyk.io/test/github/18F/analytics-reporter/badge.svg)](https://snyk.io/test/github/18F/analytics-reporter)
-[![Code Climate](https://codeclimate.com/github/18F/analytics-reporter/badges/gpa.svg)](https://codeclimate.com/github/18F/analytics-reporter)
 
 # Analytics Reporter
 
 A lightweight system for publishing analytics data from the Digital Analytics Program (DAP) Google Analytics 4 government-wide property.
 This project uses the [Google Analytics Data API v1](https://developers.google.com/analytics/devguides/reporting/data/v1/rest) to acquire analytics data and then processes it into a flat data structure.
 
-The project previously used the [Google Analytics Core Reporting API v3](https://developers.google.com/analytics/devguides/reporting/core/v3/)
-and the [Google Analytics Real Time API v3](https://developers.google.com/analytics/devguides/reporting/realtime/v3/), also known as Universal Analytics, which has slightly different data points. See [Upgrading from Universal Analytics](#upgrading-from-universal-analytics) for more details. The Google Analytics v3 API will be deprecated on July 1, 2024.
-
-This is used in combination with [analytics-reporter-api](https://github.com/18F/analytics-reporter-api) to power the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
+This is used in combination with [analytics-reporter-api](https://github.com/18F/analytics-reporter-api) to provide the data which powers the government analytics website, [analytics.usa.gov](https://analytics.usa.gov).
 
 Available reports are named and described in [`api.json`](reports/api.json) and [`usa.json`](reports/usa.json). For now, they're hardcoded into the repository.
 
 The process for adding features to this project is described in
 [Development and deployment process](docs/development_and_deployment_process.md).
+
+## Architecture and Technical Overview
+
+The application has multiple jobs which run at scheduled intervals. See `deploy/publisher.js`
+for details on the jobs and the timing at which they are kicked off.
+
+The database functions as a queue using the [pg-boss library](https://github.com/timgit/pg-boss).
+The publisher process puts messages on the queue which represent analytics reports
+and how those reports should be fetched, processed, and published. One or more
+consumer processes receive messages from the queue in parallel and execute the
+corresponding tasks.
+
+The application can publish analytics data reports to AWS S3, to local file, to
+stdout, and/or to the database in JSON or CSV format.
+
+The two application components are deployed to cloud.gov for dev, staging, and
+production environments using GitHub Actions.  See `.github/workflows/ci.yml`
+for details on the CI and deployment processes.
 
 ## Local development setup
 
@@ -110,23 +124,7 @@ dotenv -e .env npm run cucumber:debug
 
 The cucumber features and support files can be found in the `features` directory
 
-### Running the application as a npm package
-
-* To run the utility on your computer, install it through npm:
-
-```bash
-npm install -g analytics-reporter
-```
-
 ### Running the application locally
-
-To run the application locally with database reporting, you'll need a postgres
-database running on port 5432. There is a docker-compose file provided in the
-repo so that you can start an empty database with the command:
-
-```bash
-docker-compose up
-```
 
 #### Setup environment
 
@@ -139,12 +137,31 @@ This file is ignored in the `.gitignore` file and should not be checked in to th
 
 #### Run the application
 
-```bash
-# running the app with no config
-npm start
+To run the application locally, you'll need a postgres
+database running on port 5432. There is a docker-compose file provided in the
+repo so that you can start an empty database with the command:
 
-# running the app with dotenv-cli
-npx dotenv -e .env npm start
+```bash
+docker-compose up
+```
+
+Once the database is running, run the database migrations to set the database
+schema:
+
+```bash
+npm run migrate
+```
+
+The application runs a queue publisher and a queue consumer, so the following
+commands will need to be run as separate processes to start the app (uses the
+dotenv package to set the environment variables for the processes):
+
+```bash
+# start publisher
+npx dotenv -e .env.analytics node -- deploy/publisher.js
+
+# start consumer
+npx dotenv -e .env.analytics node -- deploy/consumer.js
 ```
 
 ## Configuration
