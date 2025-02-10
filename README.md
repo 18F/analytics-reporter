@@ -22,7 +22,8 @@ The database functions as a queue using the [pg-boss library](https://github.com
 The publisher process puts messages on the queue which represent analytics reports
 and how those reports should be fetched, processed, and published. One or more
 consumer processes receive messages from the queue in parallel and execute the
-corresponding tasks.
+corresponding tasks. See the usage section below for more details about reports
+and jobs.
 
 The application can publish analytics data reports to AWS S3, to local file, to
 stdout, and/or to the database in JSON or CSV format.
@@ -231,14 +232,6 @@ export ANALYTICS_CREDENTIALS='[
 
 * Make sure your computer or server is syncing its time with the world over NTP. Your computer's time will need to match those on Google's servers for the authentication to work.
 
-* Test your configuration by printing a report to STDOUT:
-
-```bash
-./bin/analytics --only users
-```
-
-If you see a nicely formatted JSON file, you are all set.
-
 ### AWS
 
 To configure the app for publishing data to S3 set the following environment variables:
@@ -270,40 +263,30 @@ export PROXY_USERNAME=[The username to use for proxy requests]
 export PROXY_PASSWORD=[The password to use for proxy requests]
 ```
 
-### Other configuration
+## Usage
 
-If you use a **single domain** for all of your analytics data, then your profile is likely set to return relative paths (e.g. `/faq`) and not absolute paths when accessing real-time reports.
+Reports are created and stored by various methods by the consumer process.  Messages
+describing the reports are created by the publisher process which runs jobs at intervals.
 
-You can set a default domain, to be returned as data in all real-time data point:
+The publishing jobs pass options to the main `runQueuePublish` function in `index.js`
+Example:
 
-```
-export ANALYTICS_HOSTNAME=https://konklone.com
-```
+```javascript
+// jobs/some_job.js
+const { runQueuePublish } = require("../index.js");
+const options = {
+  json: true,
+  agenciesFile: `../deploy/agencies.json`,
+};
 
-This will produce points similar to the following:
-
-```json
-{
-  "page": "/post/why-google-is-hurrying-the-web-to-kill-sha-1",
-  "page_title": "Why Google is Hurrying the Web to Kill SHA-1",
-  "active_visitors": "1",
-  "domain": "https://konklone.com"
-}
-```
-
-## Use
-
-Reports are created and published using `npm start` or `./bin/analytics`
-
-```bash
-# using npm scripts
-npm start
-
-# running the app directly
-./bin/analytics
+(async () => {
+  await runQueuePublish(options);
+})();
 ```
 
-This will run every report, in sequence, and print out the resulting JSON to STDOUT.
+This will create a message on the queue for every report, in sequence, for all
+agencies defined in `../deploy/agencies.json`.  Consumer processes will print out
+the resulting report JSON to STDOUT for each message.
 
 A report might look something like this:
 
@@ -378,56 +361,30 @@ A report might look something like this:
 
 ### Options
 
-* `--output` - write the report result to a provided directory. Report files will be named with the name in the report configuration.
-
-```bash
-./bin/analytics --output /path/to/data
-```
-
-* `--publish` - Publish to an S3 bucket. Requires AWS environment variables set as described above.
-
-```bash
-./bin/analytics --publish
-```
-
-* `--write-to-database` - write data to a database. Requires a postgres configuration to be set in environment variables as described below.
-
-* `--only` - only run one or more specific reports. Multiple reports are comma separated.
-
-```bash
-./bin/analytics --only devices
-./bin/analytics --only devices,today
-```
-
-* `--slim` -Where supported, use totals only (omit the `data` array). Only applies to JSON, and reports where `"slim": true`.
-
-```bash
-./bin/analytics --only devices --slim
-```
-
-* `--csv` - Formats reports as CSV instead of the default JSON format.
-
-```bash
-./bin/analytics --csv
-```
-
-* `--frequency` - Run only reports with 'frequency' value matching the provided value.
-
-```bash
-./bin/analytics --frequency=realtime
-```
-
-* `--debug` - Print debug details on STDOUT.
-
-```bash
-./bin/analytics --publish --debug
-```
+* `output` - (string) Write the report result to the directory path provided in
+the string. Report files will be named with the name in the report configuration.
+* `publish` - (boolean) If true, publish reports to an S3 bucket. Requires AWS
+environment variables set as described above.
+* `write-to-database` - (boolean) If true, write data to a database. Requires a
+postgres configuration to be set in environment variables.
+* `only` - (string) Only run one specific report matching the name provided in
+the string.
+* `slim` - (boolean) Where supported, use totals only (omit the `data` array).
+Only applies to JSON format, and reports where `"slim": true`.
+* `csv` - (boolean) Formats reports as CSV format. Multiple formats can be set.
+* `json` - (boolean) Formats reports as JSON format. Multiple formats can be set.
+* `frequency` - (string) Run only reports with 'frequency' value matching the
+provided string.
+* `debug` - (boolean) Print debug details on STDOUT.
+* agenciesFile - (string) The path to a JSON file describing an array of objects
+with the GA property to use for reporting queries and the internal name of the
+agency. Reports will be run for all agency configuration objects in the file.
 
 ## Saving data to postgres
 
-The analytics reporter can write data is pulls from Google Analytics to a
-Postgres database. The postgres configuration can be set using environment
-variables:
+The analytics reporter can write data it pulls from Google Analytics to a
+Postgres database when the `write-to-database` option is set. The postgres
+configuration can be set using environment variables:
 
 ```bash
 export POSTGRES_HOST = "my.db.host.com"
@@ -439,12 +396,11 @@ export POSTGRES_DATABASE = "analytics"
 The database expects a particular schema which will be described in the [API
 server](https://github.com/18f/analytics-reporter-api) that consumes and publishes this data.
 
-To write reports to a database, use the `--write-to-database` option when
-starting the reporter.
-
 ## Cloud.gov setup
 
-The application requires an S3 bucket and RDS instance running a Postgres database setup in cloud.gov as services.
+The application requires an S3 bucket and RDS instance running a Postgres database
+setup in cloud.gov as services.
+
 Examples below use the Cloudfoundry CLI.
 
 ```bash
@@ -483,48 +439,6 @@ cf add-network-policy analytics-reporter-consumer analytics-egress-proxy -s anal
 cf target -s analytics-public-egress
 cf add-network-policy analytics-egress-proxy analytics-reporter-consumer -s analytics-dev -o gsa-opp-analytics --protocol tcp --port 1-65535
 ```
-
-## Upgrading from Universal Analytics
-
-### Background
-
-This project previously acquired data from Google Analytics V3, also known as Universal Analytics (UA).
-
-Google is retiring UA and is encouraging users to move to their new version Google Analytics V4 (GA4).
-UA will be deprecated on July 1st 2024.
-
-### Migration details
-
-Some data points have been removed or added by Google as part of the move to GA4.
-
-#### Deprecated fields
-
-- browser_version
-- has_social_referral
-- exits
-- exit_page
-
-#### New fields
-
-##### bounce_rate
-
-The percentage of sessions that were not engaged.  GA4 defines engaged as a
-session that lasts longer than 10 seconds or has multiple pageviews.
-
-##### file_name
-
-The page path of a downloaded file.
-
-##### language_code
-
-The ISO639 language setting of the user's device.  e.g. 'en-us'
-
-##### session_default_channel_group
-
-An enum which describes the session. Possible values:
-
-'Direct', 'Organic Search', 'Paid Social', 'Organic Social', 'Email',
-'Affiliates', 'Referral', 'Paid Search', 'Video', and 'Display'
 
 ## Public domain
 
