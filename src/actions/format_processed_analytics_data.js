@@ -27,16 +27,28 @@ class FormatProcessedAnalyticsData extends Action {
    */
   async executeStrategy(context) {
     context.logger.debug("Formatting analytics data");
-    let formattedAnalyticsData = {};
-    for (const format of context.appConfig.formats) {
-      formattedAnalyticsData[format] = await ResultFormatter.formatResult(
-        context.processedAnalyticsData,
-        {
-          format,
-          slim: context.appConfig.slim && context.reportConfig.slim,
-        },
-      );
+
+    let formattedAnalyticsData = [];
+    for (
+      let index = 0;
+      index < context.processedAnalyticsData.length;
+      index++
+    ) {
+      let formattedDataItem = {};
+      for (const format of context.appConfig.formats) {
+        formattedDataItem[format] = await ResultFormatter.formatResult(
+          context.processedAnalyticsData[index],
+          {
+            format,
+            slim: context.appConfig.slim && context.reportConfig.slim,
+          },
+        );
+        context.processedAnalyticsData[index] = undefined;
+        formattedAnalyticsData.push(formattedDataItem);
+        formattedDataItem = undefined;
+      }
     }
+
     context.processedAnalyticsData = undefined;
     context.formattedAnalyticsData = formattedAnalyticsData;
     formattedAnalyticsData = undefined;

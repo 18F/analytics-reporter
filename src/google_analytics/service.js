@@ -1,5 +1,6 @@
 const GoogleAnalyticsQueryAuthorizer = require("./query_authorizer");
 const util = require("util");
+const AnalyticsData = require("../analytics_data");
 
 /**
  * Handles connection to Google Analytics and query operations.
@@ -35,12 +36,12 @@ class GoogleAnalyticsService {
    */
   async runReportQuery(query, isRealtime = false) {
     const authorizedQuery = await this.#authorizeQuery(query);
-    const results = await this.#runAuthorizedReportQuery(
-      authorizedQuery,
-      isRealtime,
+    const results = AnalyticsData.fromGoogleAnalyticsQuery(
+      query,
+      await this.#runAuthorizedReportQuery(authorizedQuery, isRealtime),
     );
     this.#logger.debug("auth call successful");
-    return results;
+    return results.toJSON();
   }
 
   async #authorizeQuery(query) {

@@ -1,5 +1,4 @@
 const Action = require("./action");
-const util = require('util');
 
 /**
  * Chain of responsibility action for processing google analytics data
@@ -26,18 +25,21 @@ class ProcessGoogleAnalyticsResults extends Action {
    * @param {import('../report_processing_context')} context the context for the
    * action chain.
    */
-  async executeStrategy(context) {
-    context.logger.info(util.inspect(context.rawGoogleAnalyticsReportData[0].rows[0].dimensionValues));
-    context.logger.info(util.inspect(context.rawGoogleAnalyticsReportData[0].rows[0].metricValues));
+  executeStrategy(context) {
     context.logger.debug("Processing GA report data");
-    context.processedAnalyticsData =
-      await this.#analyticsDataProcessor.processData({
-        agency: context.appConfig.agency ? context.appConfig.agency : null,
-        hostname: context.appConfig.account.hostname,
-        report: context.reportConfig,
-        data: context.rawGoogleAnalyticsReportData[0],
-        query: context.googleAnalyticsQuery,
-      });
+    const processedData = [];
+    context.googleAnalyticsReportData.forEach((dataItem) => {
+      dataItem.push(
+        this.#analyticsDataProcessor.processData({
+          agency: context.appConfig.agency ? context.appConfig.agency : null,
+          hostname: context.appConfig.account.hostname,
+          report: context.reportConfig,
+          data: context.rawGoogleAnalyticsReportData[0],
+          query: context.googleAnalyticsQuery,
+        }),
+      );
+    });
+    context.processedAnalyticsData = processedData;
     context.rawGoogleAnalyticsReportData = undefined;
   }
 }

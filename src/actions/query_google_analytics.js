@@ -34,7 +34,7 @@ class QueryGoogleAnalytics extends Action {
     context.googleAnalyticsQuery = query;
 
     context.logger.debug("Fetching analytics report data from GA");
-    context.rawGoogleAnalyticsReportData =
+    context.googleAnalyticsReportData =
       await this.#googleAnalyticsService.runReportQuery(
         query,
         reportConfig.realtime,

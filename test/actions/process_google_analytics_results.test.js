@@ -14,14 +14,15 @@ describe("ProcessGoogleAnalyticsResults", () => {
 
   describe(".executeStrategy", () => {
     const debugLogSpy = sinon.spy();
-    const rawGoogleAnalyticsReportData = [{ foo: "bar" }];
     const googleAnalyticsQuery = { name: "users", realtime: true };
     const reportConfig = { name: "foobar" };
     const processedAnalyticsData = { fake: "data" };
     const agency = "defense";
     const hostname = "example.gov";
+    let rawGoogleAnalyticsReportData;
 
     beforeEach(async () => {
+      rawGoogleAnalyticsReportData = [{ foo: "bar" }];
       debugLogSpy.resetHistory();
       analyticsDataProcessor.processData.resetHistory();
       analyticsDataProcessor.processData.returns(processedAnalyticsData);
