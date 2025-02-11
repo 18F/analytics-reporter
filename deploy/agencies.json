@@ -165,6 +165,16 @@
     "awsBucketPath": "data/federal-trade-commission"
   },
   {
+    "analyticsReportIds": "475622147",
+    "agencyName": "fish-and-wildlife-service",
+    "awsBucketPath": "data/fish-and-wildlife-service"
+  },
+  {
+    "analyticsReportIds": "476162892",
+    "agencyName": "food-and-drug-administration",
+    "awsBucketPath": "data/food-and-drug-administration"
+  },
+  {
     "analyticsReportIds": "468622292",
     "agencyName": "food-nutrition-service",
     "awsBucketPath": "data/food-nutrition-service"
