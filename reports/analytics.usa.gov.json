@@ -1,0 +1,75 @@
+{
+  "reports": [
+    {
+      "name": "was-this-page-helpful-30-days",
+      "frequency": "daily",
+      "slim": false,
+      "sumTotalEventsByDimensions": [
+        "customEvent:event_label"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "customEvent:event_label"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "eventName",
+                  "stringFilter": {
+                    "value": "was_this_helpful_submit"
+                  }
+                }
+              },
+              {
+                "filter": {
+                  "fieldName": "hostName",
+                  "stringFilter": {
+                    "value": "analytics.usa.gov"
+                  }
+                }
+              },
+              {
+                "filter": {
+                  "fieldName": "customEvent:event_action",
+                  "stringFilter": {
+                    "value": "was_this_page_helpful_v3.0"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "meta": {
+          "name": "Was this page helpful - 30 Days",
+          "description": "30 days of event counts and labels (yes/no) for was this page helpful for analytics.usa.gov"
+        }
+      }
+    }
+  ]
+}

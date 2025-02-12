@@ -24,19 +24,26 @@ const bree = new Bree({
       timeout: "1",
       interval: "15m",
     },
-    // Runs `../jobs/daily.js` 1 minute after the process starts and then at
+    // Runs `../jobs/analytics.usa.gov_daily.js` 1 minute after the process starts and then at
     // 10:01 AM every day going forward.
     {
-      name: "daily",
-      timeout: "1m",
+      name: "analytics.usa.gov_daily",
+      timeout: "1",
       interval: "at 10:01 am",
     },
-    // Runs `../jobs/api.js` 2 minutes after the process starts and then at
+    // Runs `../jobs/daily.js` 2 minutes after the process starts and then at
     // 10:02 AM every day going forward.
     {
-      name: "api",
+      name: "daily",
       timeout: "2m",
       interval: "at 10:02 am",
+    },
+    // Runs `../jobs/api.js` 3 minutes after the process starts and then at
+    // 10:03 AM every day going forward.
+    {
+      name: "api",
+      timeout: "3m",
+      interval: "at 10:03 am",
     },
   ],
 });
