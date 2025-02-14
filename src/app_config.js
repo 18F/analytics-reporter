@@ -171,7 +171,7 @@ class AppConfig {
       // HTTP cache time in seconds. Defaults to 0.
       cache: process.env.AWS_CACHE_TIME,
       endpoint: `https://${VCAP_SERVICES_JSON["s3"][0]["credentials"]["endpoint"]}`,
-      accessKeyId: VCAP_SERVICES_JSON["s3"][0]["credentials"]["access_key_id"],
+      accessKeyId: "fake", //VCAP_SERVICES_JSON["s3"][0]["credentials"]["access_key_id"],
       secretAccessKey:
         VCAP_SERVICES_JSON["s3"][0]["credentials"]["secret_access_key"],
       region: VCAP_SERVICES_JSON["s3"][0]["credentials"]["region"],
