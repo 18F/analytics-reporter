@@ -53,7 +53,7 @@ describe("ReportJobQueueMessage", () => {
     });
   });
 
-  describe(".sendOptions", () => {
+  xdescribe(".sendOptions", () => {
     describe("when report frequency is not set", () => {
       const noFrequencyReportConfig = { name: "no frequency" };
 

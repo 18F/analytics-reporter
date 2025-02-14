@@ -70,6 +70,7 @@ class Queue {
    */
   async sendMessage(queueMessage) {
     try {
+      this.#logger.info(util.inspect(queueMessage.sendOptions()));
       const messageId = await this.#queueClient.send(
         this.#queueName,
         queueMessage.toJSON(),
@@ -90,7 +91,9 @@ class Queue {
    */
   poll(callback, options = { newJobCheckIntervalSeconds: 1 }) {
     return this.#queueClient.work(this.#queueName, options, async (message) => {
-      this.#logger.info("Queue message received");
+      this.#logger.info(
+        `Queue message received for ${message.data.reportConfig.query.dateRanges[0].startDate}`,
+      );
       await callback(this.#messageClass.fromMessage(message).toJSON());
     });
   }

@@ -67,7 +67,7 @@ class ReportJobQueueMessage extends QueueMessage {
       retryLimit: 2,
       retryDelay: 10,
       retryBackoff: true,
-      singletonKey: `${this.#scriptName}-${this.#agencyName}-${this.#reportConfig.name}`,
+      singletonKey: `${this.#scriptName}-${this.#agencyName}-${this.#reportConfig.name}-${this.#reportConfig.query.dateRanges[0].startDate}`,
     };
   }
 

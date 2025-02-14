@@ -136,6 +136,7 @@ async function runQueuePublish(options = {}) {
 
   for (const agency of agencies) {
     for (const reportConfig of reportConfigs) {
+      agency.agencyName = agency.agencyName || "";
       process.env.AGENCY_NAME = agency.agencyName;
       const reportLogger = Logger.initialize({
         agencyName: appConfig.agencyLogName,
@@ -156,7 +157,7 @@ async function runQueuePublish(options = {}) {
         );
         if (messageId) {
           reportLogger.info(
-            `Created message in queue: ${queueClient.name} with message ID: ${messageId}`,
+            `Created job in queue: ${appConfig.messageQueueName} for ${reportConfig.query.dateRanges[0].startDate}`,
           );
         } else {
           reportLogger.info(

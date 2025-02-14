@@ -222,6 +222,7 @@ class AppConfig {
       process.cwd(),
       process.env.ANALYTICS_REPORTS_PATH || "reports/usa.json",
     );
+    delete require.cache[require.resolve(reportFilePath)];
     return require(reportFilePath).reports;
   }
 
