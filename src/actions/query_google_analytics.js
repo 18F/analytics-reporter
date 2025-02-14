@@ -34,11 +34,23 @@ class QueryGoogleAnalytics extends Action {
     context.googleAnalyticsQuery = query;
 
     context.logger.debug("Fetching analytics report data from GA");
-    context.rawGoogleAnalyticsReportData =
-      await this.#googleAnalyticsService.runReportQuery(
-        query,
-        reportConfig.realtime,
-      );
+    try {
+      context.rawGoogleAnalyticsReportData =
+        await this.#googleAnalyticsService.runReportQuery(
+          query,
+          reportConfig.realtime,
+        );
+    } catch (e) {
+      if (process.env.NEW_RELIC_APP_NAME) {
+        const newrelic = require("newrelic");
+        newrelic.noticeError(
+          e,
+          { message: "Google analytics report query failed" },
+          false,
+        );
+      }
+      throw e;
+    }
   }
 }
 

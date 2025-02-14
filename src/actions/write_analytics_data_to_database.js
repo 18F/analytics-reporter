@@ -36,7 +36,19 @@ class WriteAnalyticsDataToDatabase extends Action {
    */
   async executeStrategy(context) {
     context.logger.debug("Writing report data to database");
-    await this.#postgresPublisher.publish(context.processedAnalyticsData);
+    try {
+      await this.#postgresPublisher.publish(context.processedAnalyticsData);
+    } catch (e) {
+      if (process.env.NEW_RELIC_APP_NAME) {
+        const newrelic = require("newrelic");
+        newrelic.noticeError(
+          e,
+          { message: "Writing data to the API database failed" },
+          false,
+        );
+      }
+      throw e;
+    }
   }
 }
 

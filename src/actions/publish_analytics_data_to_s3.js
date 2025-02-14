@@ -38,15 +38,27 @@ class PublishAnalyticsDataToS3 extends Action {
       context.logger.debug(
         `Publishing ${format.toUpperCase()} analytics data to S3`,
       );
-      await this.#s3Service.publish(
-        {
-          name: context.reportConfig.name,
-          bucket: appConfig.aws.bucket,
-          path: appConfig.aws.path,
-          format,
-        },
-        context.formattedAnalyticsData[format],
-      );
+      try {
+        await this.#s3Service.publish(
+          {
+            name: context.reportConfig.name,
+            bucket: appConfig.aws.bucket,
+            path: appConfig.aws.path,
+            format,
+          },
+          context.formattedAnalyticsData[format],
+        );
+      } catch (e) {
+        if (process.env.NEW_RELIC_APP_NAME) {
+          const newrelic = require("newrelic");
+          newrelic.noticeError(
+            e,
+            { message: "Writing data S3 for the website failed" },
+            false,
+          );
+        }
+        throw e;
+      }
     }
   }
 }
