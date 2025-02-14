@@ -50,12 +50,18 @@ class PublishAnalyticsDataToS3 extends Action {
         );
       } catch (e) {
         if (process.env.NEW_RELIC_APP_NAME) {
-          const newrelic = require("newrelic");
-          newrelic.noticeError(
-            e,
-            { message: "Writing data S3 for the website failed" },
-            false,
-          );
+          context.logger.debug(`New Relic error should publish about S3`);
+          try {
+            const newrelic = require("newrelic");
+            newrelic.noticeError(
+              e,
+              { message: "Writing data S3 for the website failed" },
+              false,
+            );
+          } catch (err) {
+            context.logger.debug(`New Relic SDK had an error`);
+            throw err;
+          }
         }
         throw e;
       }
