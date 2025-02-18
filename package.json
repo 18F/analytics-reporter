@@ -103,7 +103,7 @@
   },
   "optionalDependencies": {
     "knex": "^3.1.0",
-    "newrelic": "^11.9.0",
+    "newrelic": "^12.13.0",
     "pg": "^8.11.3"
   },
   "snyk": true

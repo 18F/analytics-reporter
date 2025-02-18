@@ -9,7 +9,7 @@ applications:
   health-check-type: process
   buildpacks:
   - nodejs_buildpack
-  command: node -r newrelic deploy/publisher.js
+  command: node deploy/publisher.js
   env:
     ANALYTICS_DEBUG: 'true'
     ANALYTICS_LOG_LEVEL: ${ANALYTICS_LOG_LEVEL}
@@ -22,8 +22,6 @@ applications:
     AWS_BUCKET_PATH: data/live
     AWS_CACHE_TIME: '0'
     MESSAGE_QUEUE_NAME: ${MESSAGE_QUEUE_NAME}
-    NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
-    NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
     NODE_ENV: production
     NODE_OPTIONS: --max-old-space-size=192
   services:
