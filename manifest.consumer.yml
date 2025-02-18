@@ -9,7 +9,7 @@ applications:
   health-check-type: process
   buildpacks:
   - nodejs_buildpack
-  command: node deploy/consumer.js
+  command: node -r newrelic deploy/consumer.js
   env:
     # This is a JSON string which has been base64 encoded
     ANALYTICS_CREDENTIALS: ${ANALYTICS_CREDENTIALS}
