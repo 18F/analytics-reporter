@@ -19,6 +19,8 @@ if (
   // Setting this env var is a standard way to enable proxying for HTTP client
   // libraries.
   process.env.HTTPS_PROXY = proxy_url;
+  // New relic needs it's own special var name to use the proxy.
+  process.env.NEW_RELIC_PROXY_URL = proxy_url;
   // We have to set the lowercase version as well, because the grpc-js package
   // expects it that way. See below:
   // https://github.com/grpc/grpc-node/blob/da54e75638d06633303f5071a08ca089806355bf/packages/grpc-js/src/http_proxy.ts#L53
