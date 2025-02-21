@@ -2,10 +2,6 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-if (process.env.NEW_RELIC_APP_NAME) {
-  require("newrelic");
-}
-
 const logger = require("../src/logger").initialize();
 logger.info("===================================");
 logger.info("=== STARTING ANALYTICS-REPORTER ===");
@@ -28,7 +24,7 @@ const bree = new Bree({
     // 10:01 AM every day going forward.
     {
       name: "analytics.usa.gov_daily",
-      timeout: "1",
+      timeout: "1m",
       interval: "at 10:01 am",
     },
     // Runs `../jobs/daily.js` 2 minutes after the process starts and then at

@@ -25,13 +25,15 @@ class PublishAnalyticsDataToDisk extends Action {
    */
   async executeStrategy(context) {
     context.logger.debug("Publishing analytics data to disk");
-    for (const format of context.appConfig.formats) {
-      await DiskPublisher.publish({
-        name: context.reportConfig.name,
-        data: context.formattedAnalyticsData[format],
-        format,
-        directory: context.appConfig.output,
-      });
+    for (const dataItem of context.formattedAnalyticsData) {
+      for (const format of context.appConfig.formats) {
+        await DiskPublisher.publish({
+          name: dataItem[format].name,
+          data: dataItem[format].report,
+          format,
+          directory: context.appConfig.output,
+        });
+      }
     }
   }
 }

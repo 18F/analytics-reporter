@@ -42,7 +42,12 @@ describe("PublishAnalyticsDataToDisk", () => {
 
   describe(".executeStrategy", () => {
     const debugLogSpy = sinon.spy();
-    const formattedAnalyticsData = { slim: true };
+    const formattedAnalyticsData = [
+      {
+        json: { name: "foobar", report: { slim: true } },
+        csv: { name: "foobar", report: { slim: true } },
+      },
+    ];
     const reportConfig = { name: "foobar", slim: false };
 
     describe("when a single format is configured", () => {
@@ -57,7 +62,7 @@ describe("PublishAnalyticsDataToDisk", () => {
         DiskPublisher.publish.resetHistory();
         context = {
           appConfig: appConfig,
-          formattedAnalyticsData: { csv: formattedAnalyticsData },
+          formattedAnalyticsData,
           logger: { debug: debugLogSpy },
           reportConfig: reportConfig,
         };
@@ -69,7 +74,7 @@ describe("PublishAnalyticsDataToDisk", () => {
           DiskPublisher.publish.calledWith({
             name: reportConfig.name,
             format: appConfig.formats[0],
-            data: formattedAnalyticsData,
+            data: formattedAnalyticsData[0].csv.report,
             directory: appConfig.output,
           }),
         ).to.equal(true);
@@ -88,10 +93,7 @@ describe("PublishAnalyticsDataToDisk", () => {
         DiskPublisher.publish.resetHistory();
         context = {
           appConfig: appConfig,
-          formattedAnalyticsData: {
-            csv: formattedAnalyticsData,
-            json: formattedAnalyticsData,
-          },
+          formattedAnalyticsData,
           logger: { debug: debugLogSpy },
           reportConfig: reportConfig,
         };
@@ -103,7 +105,7 @@ describe("PublishAnalyticsDataToDisk", () => {
           DiskPublisher.publish.calledWith({
             name: reportConfig.name,
             format: appConfig.formats[0],
-            data: formattedAnalyticsData,
+            data: formattedAnalyticsData[0].csv.report,
             directory: appConfig.output,
           }),
         ).to.equal(true);
@@ -114,7 +116,7 @@ describe("PublishAnalyticsDataToDisk", () => {
           DiskPublisher.publish.calledWith({
             name: reportConfig.name,
             format: appConfig.formats[1],
-            data: formattedAnalyticsData,
+            data: formattedAnalyticsData[0].json.report,
             directory: appConfig.output,
           }),
         ).to.equal(true);

@@ -26,19 +26,35 @@ class QueryGoogleAnalytics extends Action {
    * action chain.
    */
   async executeStrategy(context) {
+    const agency = context.appConfig.agency ? context.appConfig.agency : null;
     const reportConfig = context.reportConfig;
-    const query = await GoogleAnalyticsQueryBuilder.buildQuery(
+    const queries = await GoogleAnalyticsQueryBuilder.buildQueries(
       reportConfig,
       context.appConfig,
     );
-    context.googleAnalyticsQuery = query;
 
     context.logger.debug("Fetching analytics report data from GA");
-    context.rawGoogleAnalyticsReportData =
-      await this.#googleAnalyticsService.runReportQuery(
+    const dataItems = [];
+    for (const query of queries) {
+      const queryResult = await this.#googleAnalyticsService.runReportQuery(
         query,
         reportConfig.realtime,
       );
+      queryResult.forEach((result) => {
+        dataItems.push(result);
+      });
+    }
+
+    context.googleAnalyticsReportData = dataItems.map((dataItem, index) => {
+      if (reportConfig.dateRanges && reportConfig.dateRanges[index]) {
+        dataItem.name = `${reportConfig.name}-${reportConfig.dateRanges[index]}`;
+      } else {
+        dataItem.name = reportConfig.name;
+      }
+      dataItem.processData(reportConfig, agency);
+      dataItem.addTotals(reportConfig);
+      return { name: dataItem.name, report: dataItem.toJSON() };
+    });
   }
 }
 
