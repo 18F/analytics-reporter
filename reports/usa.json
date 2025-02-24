@@ -100,41 +100,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "screenResolution",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "screenResolution",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "screenResolution",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "screenResolution",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -200,41 +173,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "language",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "language",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "language",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "language",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -244,41 +190,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "languageCode",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "languageCode",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "languageCode",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "languageCode",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -338,41 +257,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "deviceCategory",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "deviceCategory",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "deviceCategory",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "deviceCategory",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -434,41 +326,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "deviceCategory",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "deviceCategory",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "deviceCategory",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "deviceCategory",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -519,41 +384,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "mobileDeviceModel",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "mobileDeviceModel",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "mobileDeviceModel",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "mobileDeviceModel",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -621,41 +459,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "operatingSystem",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystem",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystem",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystem",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -736,41 +547,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "operatingSystemVersion",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystemVersion",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystemVersion",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystemVersion",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -832,41 +616,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -928,41 +685,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -972,41 +702,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "operatingSystem",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystem",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystem",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystem",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1075,41 +778,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "browser",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1119,41 +795,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "operatingSystemVersion",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystemVersion",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystemVersion",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "operatingSystemVersion",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1228,41 +877,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "city",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1321,41 +943,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "city",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "city",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1400,41 +995,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "country",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "country",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "country",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "country",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1489,41 +1057,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "country",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "country",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "country",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "country",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1576,30 +1117,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1625,6 +1150,170 @@
       "meta": {
         "name": "Top Pages (Live)",
         "description": "The top 30 pages, measured by active onsite users, for all sites."
+      }
+    },
+    {
+      "name": "top-viewed-pages",
+      "frequency": "daily",
+      "dateRanges": [
+        "yesterday",
+        "7-days",
+        "30-days",
+        "90-days",
+        "current-year",
+        "current-fiscal-year",
+        "previous-year",
+        "previous-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages people are viewing",
+        "description": "The top 10000 pages, measured by screen page views for all sites."
+      }
+    },
+    {
+      "name": "top-pages-by-active-user",
+      "frequency": "daily",
+      "dateRanges": [
+        "yesterday",
+        "7-days",
+        "30-days",
+        "90-days",
+        "current-year",
+        "current-fiscal-year",
+        "previous-year",
+        "previous-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages by active users",
+        "description": "The top 10000 pages, measured by active users for all sites."
       }
     },
     {
@@ -1669,63 +1358,16 @@
                   "filter": {
                     "fieldName": "unifiedScreenName",
                     "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "other",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "(not set)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "/",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
+                      "inListFilter": {
+                        "values": [
+                          "(other)",
+                          "other",
+                          "(not set)",
+                          "null",
+                          ""
+                        ],
+                        "caseSensitive": false
+                      }
                     }
                   }
                 }
@@ -1798,30 +1440,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostName",
-                    "stringFilter": {
-                      "value": "",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -1919,30 +1545,15 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "sessionDefaultChannelGroup",
-                    "stringFilter": {
-                      "value": "unassigned",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "sessionDefaultChannelGroup",
-                    "stringFilter": {
-                      "value": "paid other",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "sessionDefaultChannelGroup",
-                    "stringFilter": {
-                      "value": "(other)",
+                    "inListFilter": {
+                      "values": [
+                        "unassigned",
+                        "paid other",
+                        "(other)",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -2002,52 +1613,17 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "sessionSourceMedium",
-                    "stringFilter": {
-                      "value": "(not set)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "sessionSourceMedium",
-                    "stringFilter": {
-                      "value": "other / email",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "sessionSourceMedium",
-                    "stringFilter": {
-                      "value": "expected / email",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "sessionSourceMedium",
-                    "stringFilter": {
-                      "value": "outfordelivery / email",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "sessionSourceMedium",
-                    "stringFilter": {
-                      "value": "(other)",
+                    "inListFilter": {
+                      "values": [
+                        "other / email",
+                        "expected / email",
+                        "outfordelivery / email",
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -2153,8 +1729,7 @@
           "filter": {
             "fieldName": "eventName",
             "stringFilter": {
-              "matchType": "FULL_REGEXP",
-              "value": "^(file_download|download|downloads|(outbound downloads))$",
+              "value": "file_download",
               "caseSensitive": false
             }
           },
@@ -2163,66 +1738,15 @@
               {
                 "notExpression": {
                   "filter": {
-                    "fieldName": "fileName",
-                    "stringFilter": {
-                      "matchType": "PARTIAL_REGEXP",
-                      "value": ".*\\\\.(zip|doc)\\b.*",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "fullPageUrl",
-                    "stringFilter": {
-                      "matchType": "PARTIAL_REGEXP",
-                      "value": ".*\\busps\\.com\\b.*",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
                     "fieldName": "pageTitle",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "pageTitle",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "pageTitle",
-                    "stringFilter": {
-                      "value": "",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "pageTitle",
-                    "stringFilter": {
-                      "value": "(not set)",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -2268,30 +1792,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "unifiedScreenName",
-                    "stringFilter": {
-                      "value": "",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -2345,30 +1853,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "hostname",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostname",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "hostname",
-                    "stringFilter": {
-                      "value": "",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
@@ -2471,30 +1963,14 @@
                 "notExpression": {
                   "filter": {
                     "fieldName": "videoTitle",
-                    "stringFilter": {
-                      "value": "(other)",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "videoTitle",
-                    "stringFilter": {
-                      "value": "null",
-                      "caseSensitive": false
-                    }
-                  }
-                }
-              },
-              {
-                "notExpression": {
-                  "filter": {
-                    "fieldName": "videoTitle",
-                    "stringFilter": {
-                      "value": "",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
                       "caseSensitive": false
                     }
                   }
