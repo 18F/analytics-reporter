@@ -1,25 +1,10 @@
 const expect = require("chai").expect;
-const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
 const dataFixture = require("../support/fixtures/data");
 const ResultTotalsCalculator = require("../../src/process_results/result_totals_calculator");
-
-proxyquire.noCallThru();
-
-const AnalyticsDataProcessor = proxyquire(
-  "../../src/process_results/analytics_data_processor",
-  { "./result_totals_calculator": ResultTotalsCalculator },
-);
+const AnalyticsData = require("../../src/analytics_data");
 
 describe("ResultTotalsCalculator", () => {
-  let analyticsDataProcessor;
-
-  beforeEach(() => {
-    analyticsDataProcessor = new AnalyticsDataProcessor({
-      account: { hostname: "" },
-    });
-  });
-
   describe("calculateTotals(result)", () => {
     describe("when the report data is empty", () => {
       let report;
@@ -32,7 +17,13 @@ describe("ResultTotalsCalculator", () => {
       });
 
       it("should return an empty object", () => {
-        const result = analyticsDataProcessor.processData({ report, data });
+        const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+          report.query,
+          [data],
+        )[0];
+        analyticsData.name = report.name;
+        analyticsData.processData(report);
+        const result = analyticsData.toJSON();
         const totals = ResultTotalsCalculator.calculateTotals(result);
 
         expect(totals).to.eql({});
@@ -53,11 +44,18 @@ describe("ResultTotalsCalculator", () => {
         beforeEach(() => {
           data.metricHeaders = [{ name: "totalUsers" }];
           data.rows = [
-            { metricValues: [{ value: "10" }] },
-            { metricValues: [{ value: "15" }] },
-            { metricValues: [{ value: "20" }] },
+            { ...data.rows[0], metricValues: [{ value: "10" }] },
+            { ...data.rows[1], metricValues: [{ value: "15" }] },
+            { ...data.rows[2], metricValues: [{ value: "20" }] },
           ];
-          const result = analyticsDataProcessor.processData({ report, data });
+
+          const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+            report.query,
+            [data],
+          )[0];
+          analyticsData.name = report.name;
+          analyticsData.processData(report);
+          const result = analyticsData.toJSON();
           totals = ResultTotalsCalculator.calculateTotals(result);
         });
 
@@ -70,12 +68,18 @@ describe("ResultTotalsCalculator", () => {
         beforeEach(() => {
           data.metricHeaders = [{ name: "sessions" }];
           data.rows = [
-            { metricValues: [{ value: "10" }] },
-            { metricValues: [{ value: "15" }] },
-            { metricValues: [{ value: "20" }] },
+            { ...data.rows[0], metricValues: [{ value: "10" }] },
+            { ...data.rows[1], metricValues: [{ value: "15" }] },
+            { ...data.rows[2], metricValues: [{ value: "20" }] },
           ];
 
-          const result = analyticsDataProcessor.processData({ report, data });
+          const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+            report.query,
+            [data],
+          )[0];
+          analyticsData.name = report.name;
+          analyticsData.processData(report);
+          const result = analyticsData.toJSON();
           totals = ResultTotalsCalculator.calculateTotals(result);
         });
 
@@ -123,7 +127,13 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData({ report, data });
+            const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+              report.query,
+              [data],
+            )[0];
+            analyticsData.name = report.name;
+            analyticsData.processData(report);
+            const result = analyticsData.toJSON();
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -195,7 +205,13 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData({ report, data });
+            const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+              report.query,
+              [data],
+            )[0];
+            analyticsData.name = report.name;
+            analyticsData.processData(report);
+            const result = analyticsData.toJSON();
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -256,7 +272,13 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData({ report, data });
+            const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+              report.query,
+              [data],
+            )[0];
+            analyticsData.name = report.name;
+            analyticsData.processData(report);
+            const result = analyticsData.toJSON();
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -330,7 +352,13 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData({ report, data });
+            const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+              report.query,
+              [data],
+            )[0];
+            analyticsData.name = report.name;
+            analyticsData.processData(report);
+            const result = analyticsData.toJSON();
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -391,7 +419,13 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData({ report, data });
+            const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+              report.query,
+              [data],
+            )[0];
+            analyticsData.name = report.name;
+            analyticsData.processData(report);
+            const result = analyticsData.toJSON();
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -465,7 +499,13 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData({ report, data });
+            const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+              report.query,
+              [data],
+            )[0];
+            analyticsData.name = report.name;
+            analyticsData.processData(report);
+            const result = analyticsData.toJSON();
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -523,7 +563,13 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData({ report, data });
+            const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+              report.query,
+              [data],
+            )[0];
+            analyticsData.name = report.name;
+            analyticsData.processData(report);
+            const result = analyticsData.toJSON();
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -600,7 +646,13 @@ describe("ResultTotalsCalculator", () => {
               },
             ];
 
-            const result = analyticsDataProcessor.processData({ report, data });
+            const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+              report.query,
+              [data],
+            )[0];
+            analyticsData.name = report.name;
+            analyticsData.processData(report);
+            const result = analyticsData.toJSON();
             totals = ResultTotalsCalculator.calculateTotals(result, options);
           });
 
@@ -698,8 +750,13 @@ describe("ResultTotalsCalculator", () => {
             },
           ];
 
-          const result = analyticsDataProcessor.processData({ report, data });
-
+          const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+            report.query,
+            [data],
+          )[0];
+          analyticsData.name = report.name;
+          analyticsData.processData(report);
+          const result = analyticsData.toJSON();
           const totals = ResultTotalsCalculator.calculateTotals(result);
 
           expect(totals.by_os.Windows.Chrome).to.equal(100 + 500);
@@ -784,8 +841,13 @@ describe("ResultTotalsCalculator", () => {
             },
           ];
 
-          const result = analyticsDataProcessor.processData({ report, data });
-
+          const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+            report.query,
+            [data],
+          )[0];
+          analyticsData.name = report.name;
+          analyticsData.processData(report);
+          const result = analyticsData.toJSON();
           const totals = ResultTotalsCalculator.calculateTotals(result);
 
           expect(totals.by_windows.XP.Chrome).to.equal(100 + 500);

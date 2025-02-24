@@ -1,0 +1,220 @@
+{
+  "reports": [
+    {
+      "name": "top-download-file-extensions-30-days",
+      "frequency": "daily",
+      "sumTotalEventsByDimensions": [
+        "file_extension"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "fileExtension"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "matchType": "FULL_REGEXP",
+              "value": "^(file_download|download|downloads|(outbound downloads))$",
+              "caseSensitive": false
+            }
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloaded File Extensions (30 Days)",
+        "description": "Top 100 downloaded file extensions in the last 30 days."
+      }
+    },
+    {
+      "name": "users-with-file-downloads-30-days",
+      "frequency": "daily",
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "matchType": "FULL_REGEXP",
+              "value": "^(file_download|download|downloads|(outbound downloads))$",
+              "caseSensitive": false
+            }
+          }
+        }
+      },
+      "meta": {
+        "name": "Users with File Downloads (30 Days)",
+        "description": "Count of total users with file download events in the last 30 days."
+      }
+    },
+    {
+      "name": "top-user-engagement-events-30-days",
+      "frequency": "daily",
+      "sumTotalEventsByDimensions": [
+        "event_label"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          },
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "30daysAgo",
+            "endDate": "yesterday"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "dap_event",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "session_start",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "custom",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "first_visit",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "user_engagement",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "(other)",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "eventName",
+                    "stringFilter": {
+                      "value": "other",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top User Engagement Events (30 Days)",
+        "description": "Top 100 user engagement events in the last 30 days."
+      }
+    }
+  ]
+}

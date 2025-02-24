@@ -1,32 +1,30 @@
 const chai = require("chai");
 const expect = chai.expect;
-const proxyquire = require("proxyquire");
 const reportFixture = require("../support/fixtures/report");
 const dataFixture = require("../support/fixtures/data");
-const ResultTotalsCalculator = require("../../src/process_results/result_totals_calculator");
+const AnalyticsData = require("../../src/analytics_data");
 
-const AnalyticsDataProcessor = proxyquire(
-  "../../src/process_results/analytics_data_processor",
-  { "./result_totals_calculator": ResultTotalsCalculator },
-);
 const ResultFormatter = require("../../src/process_results/result_formatter");
 
 describe("ResultFormatter", () => {
   describe("formatResult(result, options)", () => {
     let report;
     let data;
-    let analyticsDataProcessor;
 
     beforeEach(() => {
       report = Object.assign({}, reportFixture);
       data = Object.assign({}, dataFixture);
-      analyticsDataProcessor = new AnalyticsDataProcessor({
-        account: { hostname: "" },
-      });
     });
 
     it("should format results into JSON if the format is 'json'", async () => {
-      const result = analyticsDataProcessor.processData({ report, data });
+      const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+        report.query,
+        [data],
+      )[0];
+      analyticsData.name = report.name;
+      analyticsData.processData(report);
+      analyticsData.addTotals(report);
+      const result = analyticsData.toJSON();
 
       await ResultFormatter.formatResult(result, { format: "json" }).then(
         (formattedResult) => {
@@ -47,7 +45,14 @@ describe("ResultFormatter", () => {
     });
 
     it("should remove the data attribute for JSON if options.slim is true", async () => {
-      const result = analyticsDataProcessor.processData({ report, data });
+      const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+        report.query,
+        [data],
+      )[0];
+      analyticsData.name = report.name;
+      analyticsData.processData(report);
+      analyticsData.addTotals(report);
+      const result = analyticsData.toJSON();
 
       await ResultFormatter.formatResult(result, {
         format: "json",
@@ -68,7 +73,14 @@ describe("ResultFormatter", () => {
     });
 
     it("should format results into CSV if the format is 'csv'", async () => {
-      const result = analyticsDataProcessor.processData({ report, data });
+      const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+        report.query,
+        [data],
+      )[0];
+      analyticsData.name = report.name;
+      analyticsData.processData(report);
+      analyticsData.addTotals(report);
+      const result = analyticsData.toJSON();
 
       await ResultFormatter.formatResult(result, {
         format: "csv",
@@ -78,7 +90,7 @@ describe("ResultFormatter", () => {
         const [header, ...rows] = lines;
 
         expect(header).to.equal(
-          "date,hour,Month-Year,visits,Total Users,Active Users",
+          "date,hour,Month-Year,Total Users,Active Users,visits",
         );
         rows.forEach((row) => {
           // Each CSV row should match 2017-01-30,00,100,January 2017,100,100
@@ -90,7 +102,14 @@ describe("ResultFormatter", () => {
     });
 
     it("should throw an error if the format is unsupported", async () => {
-      const result = analyticsDataProcessor.processData({ report, data });
+      const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+        report.query,
+        [data],
+      )[0];
+      analyticsData.name = report.name;
+      analyticsData.processData(report);
+      analyticsData.addTotals(report);
+      const result = analyticsData.toJSON();
 
       await ResultFormatter.formatResult(result, {
         format: "xml",

@@ -20,14 +20,12 @@ class GoogleAnalyticsQueryAuthorizer {
     const scopes = ["https://www.googleapis.com/auth/analytics.readonly"];
     const jwt = new googleapis.Auth.JWT(email, null, key, scopes);
 
-    query = Object.assign({}, query, { auth: jwt });
-
     return new Promise((resolve, reject) => {
       jwt.authorize((err) => {
         if (err) {
           reject(err);
         } else {
-          resolve(query);
+          resolve({ ...query, auth: jwt });
         }
       });
     });
