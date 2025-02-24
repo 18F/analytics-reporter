@@ -72,15 +72,18 @@ describe("WriteAnalyticsDataToDatabase", () => {
 
   describe(".executeStrategy", () => {
     const debugLogSpy = sinon.spy();
-    const processedAnalyticsData = { fake: "data" };
+    const googleAnalyticsReportData = [
+      { report: { fake: "data" } },
+      { report: { foo: "bar" } },
+    ];
     const reportConfig = { name: "foobar" };
 
     beforeEach(async () => {
       debugLogSpy.resetHistory();
       postgresPublisher.publish.resetHistory();
-      postgresPublisher.publish.returns(processedAnalyticsData);
+      postgresPublisher.publish.returns(googleAnalyticsReportData[0]);
       context = {
-        processedAnalyticsData: processedAnalyticsData,
+        googleAnalyticsReportData: googleAnalyticsReportData,
         logger: { debug: debugLogSpy },
         reportConfig: reportConfig,
       };
@@ -89,7 +92,15 @@ describe("WriteAnalyticsDataToDatabase", () => {
 
     it("calls postgresPublisher.publish with the expected params", () => {
       expect(
-        postgresPublisher.publish.calledWith(processedAnalyticsData),
+        postgresPublisher.publish.calledWith(
+          googleAnalyticsReportData[0].report,
+        ),
+      ).to.equal(true);
+
+      expect(
+        postgresPublisher.publish.calledWith(
+          googleAnalyticsReportData[1].report,
+        ),
       ).to.equal(true);
     });
   });

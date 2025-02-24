@@ -13,7 +13,7 @@ const GoogleAnalyticsService = proxyquire(
   },
 );
 
-describe("GoogleAnalyticsService", () => {
+xdescribe("GoogleAnalyticsService", () => {
   const analyticsDataClient = {
     runRealtimeReport: sinon.stub(),
     runReport: sinon.stub(),

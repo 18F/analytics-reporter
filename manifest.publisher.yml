@@ -22,8 +22,6 @@ applications:
     AWS_BUCKET_PATH: data/live
     AWS_CACHE_TIME: '0'
     MESSAGE_QUEUE_NAME: ${MESSAGE_QUEUE_NAME}
-    NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
-    NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
     NODE_ENV: production
     NODE_OPTIONS: --max-old-space-size=192
   services:

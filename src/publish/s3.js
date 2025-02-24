@@ -54,15 +54,14 @@ class S3Service {
    * if S3 operations have an error.
    */
   async publish({ name, bucket, path, format }, data) {
-    const compressed = await this.#compress(data);
     const command = new PutObjectCommand({
       Bucket: bucket,
-      Key: path + "/" + name + "." + format,
-      Body: compressed,
+      Key: `${path}/${name}.${format}`,
+      Body: await this.#compress(data),
       ContentType: this.#mime(format),
       ContentEncoding: "gzip",
       ACL: "public-read",
-      CacheControl: "max-age=" + (this.#appConfig.aws.cache || 0),
+      CacheControl: `max-age=${this.#appConfig.aws.cache || 0}`,
     });
 
     return this.#s3Client.send(command);
