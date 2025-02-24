@@ -83,11 +83,11 @@ describe("GoogleAnalyticsQueryBuilder", () => {
                 },
                 {
                   endDate: "49daysAgo",
-                  startDate: "415daysAgo",
+                  startDate: "414daysAgo",
                 },
                 {
                   endDate: "141daysAgo",
-                  startDate: "507daysAgo",
+                  startDate: "506daysAgo",
                 },
               ],
             },
@@ -168,11 +168,11 @@ describe("GoogleAnalyticsQueryBuilder", () => {
                 },
                 {
                   endDate: "291daysAgo",
-                  startDate: "657daysAgo",
+                  startDate: "656daysAgo",
                 },
                 {
                   endDate: "18daysAgo",
-                  startDate: "383daysAgo",
+                  startDate: "382daysAgo",
                 },
               ],
             },
