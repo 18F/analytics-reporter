@@ -70,7 +70,11 @@ class AppConfig {
   }
 
   get shouldLogAnalyticsData() {
-    return !(this.shouldPublishToDisk || this.shouldPublishToS3);
+    return !(
+      this.shouldPublishToDisk ||
+      this.shouldPublishToS3 ||
+      this.shouldWriteToDatabase
+    );
   }
 
   get shouldWriteToDatabase() {
