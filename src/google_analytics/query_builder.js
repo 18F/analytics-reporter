@@ -62,14 +62,16 @@ function _mapStringToDateRange(rangeString) {
   );
   const daysSinceStartOfPreviousYear =
     differenceInDays(startOfCurrentYear(), startOfPreviousYear()) +
-    daysSinceStartOfCurrentYear;
+    daysSinceStartOfCurrentYear -
+    1;
   const daysSinceStartOfCurrentFiscalYear = differenceInDays(
     today(),
     startOfCurrentFiscalYear(),
   );
   const daysSinceStartOfPreviousFiscalYear =
     differenceInDays(startOfCurrentFiscalYear(), startOfPreviousFiscalYear()) +
-    daysSinceStartOfCurrentFiscalYear;
+    daysSinceStartOfCurrentFiscalYear -
+    1;
   const descriptorToDateRangeHashMap = {
     yesterday: { startDate: "yesterday", endDate: "yesterday" },
     "7-days": { startDate: "7daysAgo", endDate: "yesterday" },
