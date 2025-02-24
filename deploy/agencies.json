@@ -39,6 +39,11 @@
     "agencyName": "army",
     "awsBucketPath": "data/army"
   },
+   {
+    "analyticsReportIds": "478871357",
+    "agencyName": "center-disease-control",
+    "awsBucketPath": "data/center-disease-control"
+  },
   {
     "analyticsReportIds": "395253935",
     "agencyName": "commerce",
