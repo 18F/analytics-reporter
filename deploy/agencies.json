@@ -475,6 +475,11 @@
     "awsBucketPath": "data/treasury"
   },
   {
+    "analyticsReportIds": "479040670",
+    "agencyName": "osc",
+    "awsBucketPath": "data/osc"
+  },
+  {
     "analyticsReportIds": "431046847",
     "agencyName": "udall-foundation",
     "awsBucketPath": "data/udall-foundation"
