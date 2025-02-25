@@ -28,14 +28,14 @@ const bree = new Bree({
       interval: "at 10:02 am",
     },
     // Runs `../jobs/daily.js` 4 minutes after the process starts and then at
-    // 10:02 AM every day going forward.
+    // 6:04 AM and 10:04 AM every day going forward.
     {
       name: "daily",
       timeout: "4m",
-      interval: "at 10:04 am",
+      interval: "at 6:04 am also at 10:04 am",
     },
     // Runs `../jobs/api.js` 6 minutes after the process starts and then at
-    // 10:03 AM every day going forward.
+    // 10:06 AM every day going forward.
     {
       name: "api",
       timeout: "6m",
