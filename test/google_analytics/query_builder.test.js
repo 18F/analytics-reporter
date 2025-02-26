@@ -74,20 +74,20 @@ describe("GoogleAnalyticsQueryBuilder", () => {
               property: `properties/${appConfig.account.ids}`,
               dateRanges: [
                 {
-                  endDate: "yesterday",
-                  startDate: "49daysAgo",
+                  endDate: "yesterday", // 2/18/2025
+                  startDate: "49daysAgo", // 1/1/2025
                 },
                 {
-                  endDate: "yesterday",
-                  startDate: "141daysAgo",
+                  endDate: "yesterday", // 2/18/2025
+                  startDate: "141daysAgo", // 10/1/2024
                 },
                 {
-                  endDate: "49daysAgo",
-                  startDate: "414daysAgo",
+                  endDate: "50daysAgo", // 12/31/2024
+                  startDate: "415daysAgo", // 1/1/2024
                 },
                 {
-                  endDate: "141daysAgo",
-                  startDate: "506daysAgo",
+                  endDate: "142daysAgo", // 9/30/2024
+                  startDate: "507daysAgo", // 10/1/2023
                 },
               ],
             },
@@ -159,20 +159,20 @@ describe("GoogleAnalyticsQueryBuilder", () => {
               property: `properties/${appConfig.account.ids}`,
               dateRanges: [
                 {
-                  endDate: "yesterday",
-                  startDate: "291daysAgo",
+                  endDate: "yesterday", // 10/18/2025
+                  startDate: "291daysAgo", // 1/1/2025
                 },
                 {
-                  endDate: "yesterday",
-                  startDate: "18daysAgo",
+                  endDate: "yesterday", // 10/18/2025
+                  startDate: "18daysAgo", // 10/1/2025
                 },
                 {
-                  endDate: "291daysAgo",
-                  startDate: "656daysAgo",
+                  endDate: "292daysAgo", // 12/31/2024
+                  startDate: "657daysAgo", // 1/1/2024
                 },
                 {
-                  endDate: "18daysAgo",
-                  startDate: "382daysAgo",
+                  endDate: "19daysAgo", // 9/30/2025
+                  startDate: "383daysAgo", // 10/1/2024
                 },
               ],
             },
