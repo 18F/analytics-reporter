@@ -1975,6 +1975,18 @@
                     }
                   }
                 }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
               }
             ]
           }
