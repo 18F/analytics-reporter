@@ -131,17 +131,1102 @@
       }
     },
     {
+      "name": "screen-resolution",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "Screen resolution demographics by user for all sites."
+      }
+    },
+    {
+      "name": "screen-resolution",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "Screen resolution demographics by user for all sites."
+      }
+    },
+    {
+      "name": "screen-resolution",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "Screen resolution demographics by user for all sites."
+      }
+    },
+    {
+      "name": "screen-resolution",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "Screen resolution demographics by user for all sites."
+      }
+    },
+    {
+      "name": "screen-resolution",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "Screen resolution demographics by user for all sites."
+      }
+    },
+    {
+      "name": "screen-resolution",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "Screen resolution demographics by user for all sites."
+      }
+    },
+    {
+      "name": "screen-resolution",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "screen_resolution"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "screenResolution"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "screenResolution",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Screen Resolution",
+        "description": "Screen resolution demographics by user for all sites."
+      }
+    },
+    {
       "name": "languages",
       "frequency": "daily",
       "slim": true,
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language",
+        "description": "Browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language",
+        "description": "Browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language",
+        "description": "Browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language",
+        "description": "Browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language",
+        "description": "Browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language",
+        "description": "Browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "language",
+        "language_code"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "language"
+          },
+          {
+            "name": "languageCode"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "language",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "languageCode",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browser Language",
+        "description": "Browser language demographics by user for all sites."
+      }
+    },
+    {
+      "name": "languages",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -292,16 +1377,443 @@
       "frequency": "daily",
       "slim": true,
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "device"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "Desktop/mobile/tablet demographics by user for all sites."
+      }
+    },
+    {
+      "name": "devices",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "device"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "Desktop/mobile/tablet demographics by user for all sites."
+      }
+    },
+    {
+      "name": "devices",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "device"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "Desktop/mobile/tablet demographics by user for all sites."
+      }
+    },
+    {
+      "name": "devices",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "device"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "Desktop/mobile/tablet demographics by user for all sites."
+      }
+    },
+    {
+      "name": "devices",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "device"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "Desktop/mobile/tablet demographics by user for all sites."
+      }
+    },
+    {
+      "name": "devices",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "device"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "Desktop/mobile/tablet demographics by user for all sites."
+      }
+    },
+    {
+      "name": "devices",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "device"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "deviceCategory",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Devices",
+        "description": "Desktop/mobile/tablet demographics by user for all sites."
+      }
+    },
+    {
+      "name": "devices",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
         "previous-fiscal-year"
       ],
-      "dateRangeChunkSize": 4,
+      "dateRangeChunkSize": 1,
       "sumActiveUsersByDimensions": [
         "device"
       ],
@@ -425,16 +1937,520 @@
       "frequency": "daily",
       "slim": true,
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems",
+        "description": "Operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems",
+        "description": "Operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems",
+        "description": "Operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems",
+        "description": "Operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems",
+        "description": "Operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems",
+        "description": "Operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystem"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystem",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Operating Systems",
+        "description": "Operating system demographics by user for all sites."
+      }
+    },
+    {
+      "name": "os",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
         "previous-fiscal-year"
       ],
-      "dateRangeChunkSize": 3,
+      "dateRangeChunkSize": 1,
       "sumActiveUsersByDimensions": [
         "os"
       ],
@@ -505,16 +2521,499 @@
       "frequency": "daily",
       "slim": true,
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "os_version"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "operatingSystemVersion"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "filter": {
+                  "fieldName": "operatingSystem",
+                  "stringFilter": {
+                    "value": "Windows"
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "operatingSystemVersion",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Windows",
+        "description": "Windows users, broken down by operating system version and date, for all sites."
+      }
+    },
+    {
+      "name": "windows",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
         "previous-fiscal-year"
       ],
-      "dateRangeChunkSize": 4,
+      "dateRangeChunkSize": 1,
       "sumActiveUsersByDimensions": [
         "os_version"
       ],
@@ -582,16 +3081,520 @@
       "frequency": "daily",
       "slim": true,
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "browser"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "browser"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "Browser demographics by user for all sites."
+      }
+    },
+    {
+      "name": "browsers",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "browser"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "browser"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "Browser demographics by user for all sites."
+      }
+    },
+    {
+      "name": "browsers",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "browser"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "browser"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "Browser demographics by user for all sites."
+      }
+    },
+    {
+      "name": "browsers",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "browser"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "browser"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "Browser demographics by user for all sites."
+      }
+    },
+    {
+      "name": "browsers",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "browser"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "browser"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "Browser demographics by user for all sites."
+      }
+    },
+    {
+      "name": "browsers",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "browser"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "browser"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "Browser demographics by user for all sites."
+      }
+    },
+    {
+      "name": "browsers",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "browser"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "yearMonth"
+          },
+          {
+            "name": "browser"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "browser",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "metricFilter": {
+          "filter": {
+            "fieldName": "activeUsers",
+            "numericFilter": {
+              "operation": "GREATER_THAN",
+              "value": {
+                "int64Value": "5"
+              }
+            }
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Browsers",
+        "description": "Browser demographics by user for all sites."
+      }
+    },
+    {
+      "name": "browsers",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
         "previous-fiscal-year"
       ],
-      "dateRangeChunkSize": 2,
+      "dateRangeChunkSize": 1,
       "sumActiveUsersByDimensions": [
         "browser"
       ],
@@ -912,13 +3915,419 @@
       "frequency": "daily",
       "slim": true,
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities",
+        "description": "Top cities for onsite users."
+      }
+    },
+    {
+      "name": "top-cities",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities",
+        "description": "Top cities for onsite users."
+      }
+    },
+    {
+      "name": "top-cities",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities",
+        "description": "Top cities for onsite users."
+      }
+    },
+    {
+      "name": "top-cities",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities",
+        "description": "Top cities for onsite users."
+      }
+    },
+    {
+      "name": "top-cities",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities",
+        "description": "Top cities for onsite users."
+      }
+    },
+    {
+      "name": "top-cities",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities",
+        "description": "Top cities for onsite users."
+      }
+    },
+    {
+      "name": "top-cities",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumActiveUsersByDimensions": [
+        "city"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "city"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "city",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Cities",
+        "description": "Top cities for onsite users."
+      }
+    },
+    {
+      "name": "top-cities",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1029,13 +4438,391 @@
       "name": "top-countries",
       "frequency": "daily",
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "country"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Countries",
+        "description": "Top countries for onsite users."
+      }
+    },
+    {
+      "name": "top-countries",
+      "frequency": "daily",
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "country"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Countries",
+        "description": "Top countries for onsite users."
+      }
+    },
+    {
+      "name": "top-countries",
+      "frequency": "daily",
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "country"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Countries",
+        "description": "Top countries for onsite users."
+      }
+    },
+    {
+      "name": "top-countries",
+      "frequency": "daily",
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "country"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Countries",
+        "description": "Top countries for onsite users."
+      }
+    },
+    {
+      "name": "top-countries",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "country"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Countries",
+        "description": "Top countries for onsite users."
+      }
+    },
+    {
+      "name": "top-countries",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "country"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Countries",
+        "description": "Top countries for onsite users."
+      }
+    },
+    {
+      "name": "top-countries",
+      "frequency": "daily",
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "country"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "country",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ]
+      },
+      "meta": {
+        "name": "Top Countries",
+        "description": "Top countries for onsite users."
+      }
+    },
+    {
+      "name": "top-countries",
+      "frequency": "daily",
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1156,13 +4943,531 @@
       "name": "top-viewed-pages",
       "frequency": "daily",
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages people are viewing",
+        "description": "The top 10000 pages, measured by screen page views for all sites."
+      }
+    },
+    {
+      "name": "top-viewed-pages",
+      "frequency": "daily",
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages people are viewing",
+        "description": "The top 10000 pages, measured by screen page views for all sites."
+      }
+    },
+    {
+      "name": "top-viewed-pages",
+      "frequency": "daily",
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages people are viewing",
+        "description": "The top 10000 pages, measured by screen page views for all sites."
+      }
+    },
+    {
+      "name": "top-viewed-pages",
+      "frequency": "daily",
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages people are viewing",
+        "description": "The top 10000 pages, measured by screen page views for all sites."
+      }
+    },
+    {
+      "name": "top-viewed-pages",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages people are viewing",
+        "description": "The top 10000 pages, measured by screen page views for all sites."
+      }
+    },
+    {
+      "name": "top-viewed-pages",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages people are viewing",
+        "description": "The top 10000 pages, measured by screen page views for all sites."
+      }
+    },
+    {
+      "name": "top-viewed-pages",
+      "frequency": "daily",
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "screenPageViews"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "screenPageViews"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages people are viewing",
+        "description": "The top 10000 pages, measured by screen page views for all sites."
+      }
+    },
+    {
+      "name": "top-viewed-pages",
+      "frequency": "daily",
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1238,13 +5543,531 @@
       "name": "top-pages-by-active-user",
       "frequency": "daily",
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages by active users",
+        "description": "The top 10000 pages, measured by active users for all sites."
+      }
+    },
+    {
+      "name": "top-pages-by-active-user",
+      "frequency": "daily",
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages by active users",
+        "description": "The top 10000 pages, measured by active users for all sites."
+      }
+    },
+    {
+      "name": "top-pages-by-active-user",
+      "frequency": "daily",
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages by active users",
+        "description": "The top 10000 pages, measured by active users for all sites."
+      }
+    },
+    {
+      "name": "top-pages-by-active-user",
+      "frequency": "daily",
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages by active users",
+        "description": "The top 10000 pages, measured by active users for all sites."
+      }
+    },
+    {
+      "name": "top-pages-by-active-user",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages by active users",
+        "description": "The top 10000 pages, measured by active users for all sites."
+      }
+    },
+    {
+      "name": "top-pages-by-active-user",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages by active users",
+        "description": "The top 10000 pages, measured by active users for all sites."
+      }
+    },
+    {
+      "name": "top-pages-by-active-user",
+      "frequency": "daily",
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          },
+          {
+            "name": "pagePath"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "activeUsers"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "activeUsers"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "10000"
+      },
+      "meta": {
+        "name": "Top 10000 pages by active users",
+        "description": "The top 10000 pages, measured by active users for all sites."
+      }
+    },
+    {
+      "name": "top-pages-by-active-user",
+      "frequency": "daily",
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1398,13 +6221,440 @@
       "name": "top-domains",
       "frequency": "daily",
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "30"
+      },
+      "meta": {
+        "name": "Top Domains",
+        "description": "Top 30 domains, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-domains",
+      "frequency": "daily",
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "30"
+      },
+      "meta": {
+        "name": "Top Domains",
+        "description": "Top 30 domains, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-domains",
+      "frequency": "daily",
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "30"
+      },
+      "meta": {
+        "name": "Top Domains",
+        "description": "Top 30 domains, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-domains",
+      "frequency": "daily",
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "30"
+      },
+      "meta": {
+        "name": "Top Domains",
+        "description": "Top 30 domains, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-domains",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "30"
+      },
+      "meta": {
+        "name": "Top Domains",
+        "description": "Top 30 domains, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-domains",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "30"
+      },
+      "meta": {
+        "name": "Top Domains",
+        "description": "Top 30 domains, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-domains",
+      "frequency": "daily",
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "hostName"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dateRanges": [
+          {
+            "startDate": "yesterday",
+            "endDate": "yesterday"
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "hostName",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "30"
+      },
+      "meta": {
+        "name": "Top Domains",
+        "description": "Top 30 domains, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-domains",
+      "frequency": "daily",
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1506,13 +6756,433 @@
       "frequency": "daily",
       "slim": true,
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "inListFilter": {
+                      "values": [
+                        "unassigned",
+                        "paid other",
+                        "(other)",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups",
+        "description": "Top 20 channel groups that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "inListFilter": {
+                      "values": [
+                        "unassigned",
+                        "paid other",
+                        "(other)",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups",
+        "description": "Top 20 channel groups that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "inListFilter": {
+                      "values": [
+                        "unassigned",
+                        "paid other",
+                        "(other)",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups",
+        "description": "Top 20 channel groups that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "inListFilter": {
+                      "values": [
+                        "unassigned",
+                        "paid other",
+                        "(other)",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups",
+        "description": "Top 20 channel groups that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "inListFilter": {
+                      "values": [
+                        "unassigned",
+                        "paid other",
+                        "(other)",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups",
+        "description": "Top 20 channel groups that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "inListFilter": {
+                      "values": [
+                        "unassigned",
+                        "paid other",
+                        "(other)",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups",
+        "description": "Top 20 channel groups that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_default_channel_group"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionDefaultChannelGroup"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionDefaultChannelGroup",
+                    "inListFilter": {
+                      "values": [
+                        "unassigned",
+                        "paid other",
+                        "(other)",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Default Channel Groups",
+        "description": "Top 20 channel groups that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-channel-group",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1574,13 +7244,447 @@
       "frequency": "daily",
       "slim": true,
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "inListFilter": {
+                      "values": [
+                        "other / email",
+                        "expected / email",
+                        "outfordelivery / email",
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources",
+        "description": "Top 20 sources that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "inListFilter": {
+                      "values": [
+                        "other / email",
+                        "expected / email",
+                        "outfordelivery / email",
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources",
+        "description": "Top 20 sources that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "inListFilter": {
+                      "values": [
+                        "other / email",
+                        "expected / email",
+                        "outfordelivery / email",
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources",
+        "description": "Top 20 sources that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "inListFilter": {
+                      "values": [
+                        "other / email",
+                        "expected / email",
+                        "outfordelivery / email",
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources",
+        "description": "Top 20 sources that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "inListFilter": {
+                      "values": [
+                        "other / email",
+                        "expected / email",
+                        "outfordelivery / email",
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources",
+        "description": "Top 20 sources that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "inListFilter": {
+                      "values": [
+                        "other / email",
+                        "expected / email",
+                        "outfordelivery / email",
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources",
+        "description": "Top 20 sources that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "sumVisitsByDimensions": [
+        "session_source_medium"
+      ],
+      "query": {
+        "dimensions": [
+          {
+            "name": "sessionSourceMedium"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "sessions"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "sessions"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "sessionSourceMedium",
+                    "inListFilter": {
+                      "values": [
+                        "other / email",
+                        "expected / email",
+                        "outfordelivery / email",
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "20"
+      },
+      "meta": {
+        "name": "Top Session Sources",
+        "description": "Top 20 sources that initiated a session, measured by visits, for all sites."
+      }
+    },
+    {
+      "name": "top-session-source-medium",
+      "frequency": "daily",
+      "slim": true,
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1690,13 +7794,489 @@
       "name": "top-downloads",
       "frequency": "daily",
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "file_download",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloads",
+        "description": "Top 100 downloads"
+      }
+    },
+    {
+      "name": "top-downloads",
+      "frequency": "daily",
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "file_download",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloads",
+        "description": "Top 100 downloads"
+      }
+    },
+    {
+      "name": "top-downloads",
+      "frequency": "daily",
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "file_download",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloads",
+        "description": "Top 100 downloads"
+      }
+    },
+    {
+      "name": "top-downloads",
+      "frequency": "daily",
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "file_download",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloads",
+        "description": "Top 100 downloads"
+      }
+    },
+    {
+      "name": "top-downloads",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "file_download",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloads",
+        "description": "Top 100 downloads"
+      }
+    },
+    {
+      "name": "top-downloads",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "file_download",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloads",
+        "description": "Top 100 downloads"
+      }
+    },
+    {
+      "name": "top-downloads",
+      "frequency": "daily",
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "pageTitle"
+          },
+          {
+            "name": "fullPageUrl"
+          },
+          {
+            "name": "linkUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "file_download",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pageTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top Downloads",
+        "description": "Top 100 downloads"
+      }
+    },
+    {
+      "name": "top-downloads",
+      "frequency": "daily",
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1914,13 +8494,573 @@
       "name": "top-video-plays",
       "frequency": "daily",
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
@@ -1971,6 +9111,18 @@
                         "null",
                         ""
                       ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
                       "caseSensitive": false
                     }
                   }
