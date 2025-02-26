@@ -67,8 +67,16 @@ class ReportJobQueueMessage extends QueueMessage {
       retryLimit: 2,
       retryDelay: 10,
       retryBackoff: true,
-      singletonKey: `${this.#scriptName}-${this.#agencyName}-${this.#reportConfig.name}`,
+      singletonKey: this.#singletonKey(),
     };
+  }
+
+  #singletonKey() {
+    if (this.#reportConfig.dateRanges) {
+      return `${this.#scriptName}-${this.#agencyName}-${this.#reportConfig.name}-${this.#reportConfig.dateRanges[0]}`;
+    } else {
+      return `${this.#scriptName}-${this.#agencyName}-${this.#reportConfig.name}`;
+    }
   }
 
   #messagePriority(reportFrequency) {
