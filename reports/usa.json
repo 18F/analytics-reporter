@@ -1914,13 +1914,573 @@
       "name": "top-video-plays",
       "frequency": "daily",
       "dateRanges": [
-        "yesterday",
-        "7-days",
-        "30-days",
-        "90-days",
-        "current-year",
-        "current-fiscal-year",
-        "previous-year",
+        "yesterday"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "7-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "30-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "90-days"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "current-fiscal-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
+        "previous-year"
+      ],
+      "dateRangeChunkSize": 1,
+      "query": {
+        "dimensions": [
+          {
+            "name": "eventName"
+          },
+          {
+            "name": "videoTitle"
+          },
+          {
+            "name": "videoUrl"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "eventCount"
+          }
+        ],
+        "orderBys": [
+          {
+            "metric": {
+              "metricName": "eventCount"
+            },
+            "desc": true
+          }
+        ],
+        "dimensionFilter": {
+          "filter": {
+            "fieldName": "eventName",
+            "stringFilter": {
+              "value": "video_start",
+              "caseSensitive": false
+            }
+          },
+          "andGroup": {
+            "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoTitle",
+                    "inListFilter": {
+                      "values": [
+                        "(other)",
+                        "other",
+                        "(not set)",
+                        "null",
+                        ""
+                      ],
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              },
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "videoUrl",
+                    "stringFilter": {
+                      "matchType": "FULL_REGEXP",
+                      "value": "^blob:.*",
+                      "caseSensitive": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "limit": "100"
+      },
+      "meta": {
+        "name": "Top video plays",
+        "description": "Top 100 video plays"
+      }
+    },
+    {
+      "name": "top-video-plays",
+      "frequency": "daily",
+      "dateRanges": [
         "previous-fiscal-year"
       ],
       "dateRangeChunkSize": 1,
