@@ -39,6 +39,11 @@
     "agencyName": "army",
     "awsBucketPath": "data/army"
   },
+  {
+    "analyticsReportIds": "47783782",
+    "agencyName": "army-corps-of-engineers",
+    "awsBucketPath": "data/army-corps-of-engineers"
+  },
    {
     "analyticsReportIds": "478871357",
     "agencyName": "center-disease-control",
