@@ -10,6 +10,11 @@
     "awsBucketPath": "data/access-board"
   },
   {
+    "analyticsReportIds": "479952322",
+    "agencyName": "administration-children-families",
+    "awsBucketPath": "data/administration-children-families"
+  },
+  {
     "analyticsReportIds": "395453549",
     "agencyName": "agency-global-media",
     "awsBucketPath": "data/agency-global-media"
