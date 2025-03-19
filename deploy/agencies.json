@@ -85,6 +85,11 @@
     "awsBucketPath": "data/corporation-national-community-service"
   },
   {
+    "analyticsReportIds": "481791849",
+    "agencyName": "defense-logistics-agency",
+    "awsBucketPath": "data/defense-logistics-agency"
+  },
+  {
     "analyticsReportIds": "395236998",
     "agencyName": "defense-nuclear-facilities-safety-board",
     "awsBucketPath": "data/defense-nuclear-facilities-safety-board"
