@@ -17,11 +17,11 @@ const buildQueries = (reportConfig, appConfig) => {
   query.property = `properties/${appConfig.account.ids}`;
   query.ids = appConfig.account.ids;
 
-  if (reportConfig.dateRanges) {
-    return _buildQueriesForRanges(reportConfig, query);
-  } else {
-    return [query];
-  }
+  const queries = reportConfig.dateRanges
+    ? _buildQueriesForRanges(reportConfig, query)
+    : [query];
+
+  return queries.map((builtQuery) => _addBotTrafficFilter(builtQuery));
 };
 
 function _buildQueriesForRanges(reportConfig, query) {
@@ -94,6 +94,71 @@ function _mapStringToDateRange(rangeString) {
   };
 
   return descriptorToDateRangeHashMap[rangeString];
+}
+
+function _addBotTrafficFilter(query) {
+  const filterExpression = _botTrafficFilter();
+  const queryWithFilter = { ...query };
+
+  if (!query.dimensionFilter) {
+    queryWithFilter.dimensionFilter = filterExpression;
+    return queryWithFilter;
+  }
+
+  // if (
+  //   query.dimensionFilter.andGroup &&
+  //   Array.isArray(query.dimensionFilter.andGroup.expressions)
+  // ) {
+  //   queryWithFilter.dimensionFilter = {
+  //     andGroup: {
+  //       expressions: [
+  //         ...query.dimensionFilter.andGroup.expressions,
+  //         filterExpression,
+  //       ],
+  //     },
+  //   };
+  //   return queryWithFilter;
+  // }
+
+  queryWithFilter.dimensionFilter = {
+    andGroup: {
+      expressions: [query.dimensionFilter, filterExpression],
+    },
+  };
+
+  return queryWithFilter;
+}
+
+function _botTrafficFilter() {
+  // Identifies events with a specific signature
+  // characteristic of a wave of bot traffic that began in Sept 2025
+  const late2025ChinaSingaporeFilter = {
+    andGroup: {
+      expressions: [
+        {
+          filter: {
+            fieldName: "screenResolution",
+            stringFilter: {
+              matchType: "EXACT",
+              value: "1280x1200",
+            },
+          },
+        },
+        {
+          filter: {
+            fieldName: "country",
+            inListFilter: {
+              values: ["China", "Singapore"],
+            },
+          },
+        },
+      ],
+    },
+  };
+
+  return {
+    notExpression: { ...late2025ChinaSingaporeFilter },
+  };
 }
 
 module.exports = { buildQueries };

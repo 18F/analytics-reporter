@@ -109,7 +109,7 @@ npm run coverage
 
 The integration tests for this repo require the google analytics credentials to
 be set in the environment. This can be setup with the dotenv-cli package as
-described in "Setup Environment" section above.
+described in "Setup Environment" section below.
 
 Note that these tests make real requests to google analytics APIs and should be
 run sparingly to avoid being rate limited in our live apps which use the

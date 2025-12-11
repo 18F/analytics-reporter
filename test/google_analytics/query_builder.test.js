@@ -1,4 +1,5 @@
 const expect = require("chai").expect;
+const sinon = require("sinon");
 const timekeeper = require("timekeeper");
 const reportFixture = require("../support/fixtures/report");
 const GoogleAnalyticsQueryBuilder = require("../../src/google_analytics/query_builder");
@@ -42,7 +43,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
         });
 
         it("returns an array of queries with dateRanges set in groups based on the chunk size", () => {
-          expect(actual).to.deep.equal([
+          sinon.assert.match(actual, [
             {
               ...reportConfig.query,
               ids: appConfig.account.ids,
@@ -66,6 +67,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
                   startDate: "90daysAgo",
                 },
               ],
+              dimensionFilter: sinon.match.object,
             },
             {
               ...reportConfig.query,
@@ -90,6 +92,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
                   startDate: "507daysAgo", // 10/1/2023
                 },
               ],
+              dimensionFilter: sinon.match.object,
             },
           ]);
         });
@@ -127,7 +130,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
         });
 
         it("returns an array of queries with dateRanges set in groups based on the chunk size", () => {
-          expect(actual).to.deep.equal([
+          sinon.assert.match(actual, [
             {
               ...reportConfig.query,
               ids: appConfig.account.ids,
@@ -151,6 +154,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
                   startDate: "90daysAgo",
                 },
               ],
+              dimensionFilter: sinon.match.object,
             },
             {
               ...reportConfig.query,
@@ -175,6 +179,7 @@ describe("GoogleAnalyticsQueryBuilder", () => {
                   startDate: "383daysAgo", // 10/1/2024
                 },
               ],
+              dimensionFilter: sinon.match.object,
             },
           ]);
         });
@@ -231,6 +236,35 @@ describe("GoogleAnalyticsQueryBuilder", () => {
           appConfig,
         );
         expect(query[0].ids).to.equal("ga:abc123");
+      });
+
+      it("should add the bot traffic dimension filter if there is no existing dimension filter", () => {
+        const queries = GoogleAnalyticsQueryBuilder.buildQueries(
+          reportConfig,
+          appConfig,
+        );
+        expect(queries[0].dimensionFilter).to.have.property("notExpression");
+      });
+
+      it("should incorporate the bot traffic dimension filter if there is an existing dimension filter", () => {
+        const dimensionFilter = {
+          filter: {
+            fieldName: "screenResolution",
+            inListFilter: {
+              values: ["(other)", "other", "(not set)", "null", ""],
+              caseSensitive: false,
+            },
+          },
+        };
+        reportConfig.query["dimensionFilter"] = dimensionFilter;
+
+        const queries = GoogleAnalyticsQueryBuilder.buildQueries(
+          reportConfig,
+          appConfig,
+        );
+
+        expect(queries[0].dimensionFilter).to.have.deep.nested.property("andGroup.expressions[0]", dimensionFilter);
+        expect(queries[0].dimensionFilter).to.have.nested.property("andGroup.expressions[1].notExpression");
       });
     });
   });
