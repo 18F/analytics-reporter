@@ -5,6 +5,8 @@ on:
 
 jobs:
   deploy_dev:
+    permissions:
+      contents: read
     uses: 18F/analytics-reporter/.github/workflows/deploy.yml@develop
     with:
       ANALYTICS_GA4_CALL_RETRY_COUNT: ${{ vars.ANALYTICS_GA4_CALL_RETRY_COUNT_DEV }}
