@@ -4994,6 +4994,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5069,6 +5070,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5144,6 +5146,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5219,6 +5222,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5294,6 +5298,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5369,6 +5374,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5444,6 +5450,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5519,6 +5526,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5594,6 +5602,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5669,6 +5678,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5744,6 +5754,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5819,6 +5830,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5894,6 +5906,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -5969,6 +5982,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -6044,6 +6058,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -6119,6 +6134,7 @@
                     "fieldName": "pagePath",
                     "inListFilter": {
                       "values": [
+                        "(data deleted)",
                         "(other)",
                         "other",
                         "(not set)",
@@ -6176,6 +6192,26 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
+              {
+                "notExpression": {
+                  "filter": {
+                    "fieldName": "pagePath",
+                    "stringFilter": {
+                      "inListFilter": {
+                        "values": [
+                          "(data deleted)",
+                          "(other)",
+                          "other",
+                          "(not set)",
+                          "null",
+                          ""
+                        ],
+                        "caseSensitive": false
+                      }
+                    }
+                  }
+                }
+              },
               {
                 "notExpression": {
                   "filter": {
