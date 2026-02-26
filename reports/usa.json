@@ -4973,34 +4973,6 @@
             "expressions": [
               {
                 "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
                     "inListFilter": {
@@ -5074,34 +5046,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
@@ -5179,34 +5123,6 @@
             "expressions": [
               {
                 "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
                     "inListFilter": {
@@ -5280,34 +5196,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
@@ -5385,34 +5273,6 @@
             "expressions": [
               {
                 "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
                     "inListFilter": {
@@ -5486,34 +5346,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
@@ -5591,34 +5423,6 @@
             "expressions": [
               {
                 "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
                     "inListFilter": {
@@ -5692,34 +5496,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
@@ -5797,34 +5573,6 @@
             "expressions": [
               {
                 "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
                     "inListFilter": {
@@ -5898,34 +5646,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
@@ -6003,34 +5723,6 @@
             "expressions": [
               {
                 "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
                     "inListFilter": {
@@ -6104,34 +5796,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
@@ -6209,34 +5873,6 @@
             "expressions": [
               {
                 "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
                     "inListFilter": {
@@ -6310,34 +5946,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
@@ -6415,34 +6023,6 @@
             "expressions": [
               {
                 "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "notExpression": {
                   "filter": {
                     "fieldName": "hostName",
                     "inListFilter": {
@@ -6516,34 +6096,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
@@ -6624,34 +6176,6 @@
         "dimensionFilter": {
           "andGroup": {
             "expressions": [
-              {
-                "notExpression": {
-                  "andGroup": {
-                    "expressions": [
-                      {
-                        "filter": {
-                          "fieldName": "hostName",
-                          "stringFilter": {
-                            "matchType": "EXACT",
-                            "value": "etap.nsf.gov",
-                            "caseSensitive": false
-                          }
-                        }
-                      },
-                      {
-                        "filter": {
-                          "fieldName": "pagePath",
-                          "stringFilter": {
-                            "matchType": "BEGINS_WITH",
-                            "value": "/reference-writer",
-                            "caseSensitive": false
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              },
               {
                 "notExpression": {
                   "filter": {
