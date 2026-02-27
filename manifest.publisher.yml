@@ -5,7 +5,7 @@ applications:
   # parallel. This could be reduced if we limited the number of simultaneous
   # processes.
   memory: 192M
-  disk_quota: 512M
+  disk_quota: 1G
   health-check-type: process
   buildpacks:
   - nodejs_buildpack
