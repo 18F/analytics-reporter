@@ -109,7 +109,7 @@ npm run coverage
 
 The integration tests for this repo require the google analytics credentials to
 be set in the environment. This can be setup with the dotenv-cli package as
-described in "Setup Environment" section above.
+described in the [Setup Environment](#setup-environment) section.
 
 Note that these tests make real requests to google analytics APIs and should be
 run sparingly to avoid being rate limited in our live apps which use the
@@ -117,10 +117,10 @@ same account credentials.
 
 ```bash
 # Run cucumber integration tests
-dotenv -e .env npm run cucumber
+npx dotenv -- npm run cucumber
 
 # Run cucumber integration tests with node debugging enabled
-dotenv -e .env npm run cucumber:debug
+npx dotenv -- npm run cucumber:debug
 ```
 
 The cucumber features and support files can be found in the `features` directory
@@ -129,7 +129,7 @@ The cucumber features and support files can be found in the `features` directory
 
 #### Setup environment
 
-See "Configuration and Google Analytics Setup" below for the required environment variables and other setup for Google Analytics auth.
+See [Configuration - Google Analytics](#google-analytics)  for the required environment variables and other setup for Google Analytics auth.
 
 It may be easiest to use the dotenv-cli package to configure the environment for the application.
 
@@ -163,6 +163,17 @@ npx dotenv -e .env.analytics node -- deploy/publisher.js
 
 # start consumer
 npx dotenv -e .env.analytics node -- deploy/consumer.js
+```
+
+To run a single report for a specific agency, set AGENCY_NAME and ANALYTICS_REPORT_IDS in your .env file (refer to `../deploy/agencies.json`)
+and then run:
+
+```bash
+# general format
+npx dotenv -- npm start -- --only=REPORT_NAME --json --output=/path/to/output
+
+# example
+npx dotenv -- npm start -- --only=devices --json --output=./output
 ```
 
 ## Configuration
