@@ -2,6 +2,7 @@
 [![Snyk](https://snyk.io/test/github/18F/analytics-reporter/badge.svg)](https://snyk.io/test/github/18F/analytics-reporter)
 
 # Analytics Reporter
+[![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/18F/analytics-reporter)
 
 A lightweight system for publishing analytics data from the Digital Analytics Program (DAP) Google Analytics 4 government-wide property.
 This project uses the [Google Analytics Data API v1](https://developers.google.com/analytics/devguides/reporting/data/v1/rest) to acquire analytics data and then processes it into a flat data structure.
