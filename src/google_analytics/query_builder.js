@@ -18,58 +18,58 @@ const buildQueries = (reportConfig, appConfig) => {
   query.ids = appConfig.account.ids;
 
   if (reportConfig.dateRanges) {
-    return _buildQueriesForRanges(reportConfig, query);
+    const today = new Date();
+    return _buildQueriesForRanges(reportConfig, query, today);
   } else {
     return [query];
   }
 };
 
-function _buildQueriesForRanges(reportConfig, query) {
+function _buildQueriesForRanges(reportConfig, query, today = new Date()) {
   const queries = [];
   const chunkSize = reportConfig.dateRangeChunkSize || 1;
   for (let i = 0; i < reportConfig.dateRanges.length; i += chunkSize) {
     const chunk = reportConfig.dateRanges.slice(i, i + chunkSize);
-    const newQuery = { ...query, dateRanges: _toReportingApiDateRanges(chunk) };
+    const newQuery = { ...query, dateRanges: _toReportingApiDateRanges(chunk, today) };
     queries.push(newQuery);
   }
   return queries;
 }
 
-function _toReportingApiDateRanges(unparsedRanges) {
+function _toReportingApiDateRanges(unparsedRanges, today = new Date()) {
   return unparsedRanges.map((rangeString) => {
-    return _mapStringToDateRange(rangeString);
+    return _mapStringToDateRange(rangeString, today);
   });
 }
 
-function _mapStringToDateRange(rangeString) {
-  const today = () => new Date();
-  const startOfCurrentYear = () => startOfYear(today());
-  const startOfPreviousYear = () =>
-    startOfYear(subYears(startOfCurrentYear(), 1));
+function _mapStringToDateRange(rangeString, today = new Date()) {
+  const startOfCurrentYear = startOfYear(today);
+  const startOfPreviousYear = startOfYear(subYears(startOfCurrentYear, 1));
   const startOfCurrentFiscalYear = () => {
-    const nextFiscalYearStart = () => new Date(today().getFullYear(), 9, 1);
-    if (isBefore(today(), nextFiscalYearStart())) {
-      return subYears(nextFiscalYearStart(), 1);
+    const nextFiscalYearStart = new Date(today.getFullYear(), 9, 1);
+    if (isBefore(today, nextFiscalYearStart)) {
+      return subYears(nextFiscalYearStart, 1);
     } else {
-      return nextFiscalYearStart();
+      return nextFiscalYearStart;
     }
   };
-  const startOfPreviousFiscalYear = () =>
-    subYears(startOfCurrentFiscalYear(), 1);
+  const startOfPreviousFiscalYear = subYears(startOfCurrentFiscalYear(), 1);
   const daysSinceStartOfCurrentYear = differenceInDays(
-    today(),
-    startOfCurrentYear(),
+    today,
+    startOfCurrentYear,
   );
-  const daysSinceStartOfPreviousYear =
-    differenceInDays(startOfCurrentYear(), startOfPreviousYear()) +
-    daysSinceStartOfCurrentYear;
+  const daysSinceStartOfPreviousYear = differenceInDays(
+    today,
+    startOfPreviousYear,
+  );
   const daysSinceStartOfCurrentFiscalYear = differenceInDays(
-    today(),
+    today,
     startOfCurrentFiscalYear(),
   );
-  const daysSinceStartOfPreviousFiscalYear =
-    differenceInDays(startOfCurrentFiscalYear(), startOfPreviousFiscalYear()) +
-    daysSinceStartOfCurrentFiscalYear;
+  const daysSinceStartOfPreviousFiscalYear = differenceInDays(
+    today,
+    startOfPreviousFiscalYear,
+  );
   const descriptorToDateRangeHashMap = {
     yesterday: { startDate: "yesterday", endDate: "yesterday" },
     "7-days": { startDate: "7daysAgo", endDate: "yesterday" },
