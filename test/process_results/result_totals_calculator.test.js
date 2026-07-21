@@ -30,6 +30,78 @@ describe("ResultTotalsCalculator", () => {
       });
     });
 
+    describe("when the report rows have a date dimension", () => {
+      let report;
+      let data;
+
+      const totalsForDates = (dates) => {
+        data.dimensionHeaders = [{ name: "date" }];
+        data.metricHeaders = [{ name: "totalUsers" }];
+        data.rows = dates.map((date) => {
+          return {
+            dimensionValues: [{ value: date }],
+            metricValues: [{ value: "10" }],
+          };
+        });
+
+        const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+          report.query,
+          [data],
+        )[0];
+        analyticsData.name = report.name;
+        analyticsData.processData(report);
+
+        return ResultTotalsCalculator.calculateTotals(analyticsData.toJSON());
+      };
+
+      beforeEach(() => {
+        report = Object.assign({}, reportFixture);
+        data = Object.assign({}, dataFixture);
+      });
+
+      it("sets start_date from the first row and end_date from the last", () => {
+        const totals = totalsForDates(["20170130", "20170131", "20170201"]);
+
+        expect(totals.start_date).to.equal("2017-01-30");
+        expect(totals.end_date).to.equal("2017-02-01");
+      });
+
+      it("skips a bogus (other) first row when setting start_date", () => {
+        const totals = totalsForDates(["(other)", "20170131", "20170201"]);
+
+        expect(totals.start_date).to.equal("2017-01-31");
+        expect(totals.end_date).to.equal("2017-02-01");
+      });
+    });
+
+    describe("when the report rows have no date dimension", () => {
+      it("does not set start_date or end_date", () => {
+        const report = Object.assign({}, reportFixture);
+        const data = Object.assign({}, dataFixture);
+        data.dimensionHeaders = [{ name: "browser" }];
+        data.metricHeaders = [{ name: "totalUsers" }];
+        data.rows = [
+          {
+            dimensionValues: [{ value: "Chrome" }],
+            metricValues: [{ value: "10" }],
+          },
+        ];
+
+        const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+          report.query,
+          [data],
+        )[0];
+        analyticsData.name = report.name;
+        analyticsData.processData(report);
+        const totals = ResultTotalsCalculator.calculateTotals(
+          analyticsData.toJSON(),
+        );
+
+        expect(totals).to.not.have.property("start_date");
+        expect(totals).to.not.have.property("end_date");
+      });
+    });
+
     describe("when the report data is not empty", () => {
       let totals;
       let report;
