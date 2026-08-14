@@ -442,7 +442,7 @@ cf bind-service analytics-reporter-consumer analytics-reporter-database
 cf unbind-security-group public_networks_egress gsa-opp-analytics analytics-dev --lifecycle running
 
 # Create a network policy in the application's space which allows communication to the egress proxy which runs in a space with public egress permissions
-cf add-network-policy analytics-reporter-production-consumer analytics-egress-proxy-prd -s analytics-public-egress -o gsa-opp-analytics --protocol tcp --port 61443
+cf add-network-policy analytics-reporter-consumer analytics-egress-proxy -s analytics-public-egress -o gsa-opp-analytics --protocol tcp --port 8080
 
 
 # Create a network policy in the public-egress space which allows communication from the egress proxy back to the application.

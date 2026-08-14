@@ -15,7 +15,7 @@ if (
   const credentials = encodeURI(
     `${process.env.PROXY_USERNAME}:${process.env.PROXY_PASSWORD}`,
   );
-  const proxy_url = `https://${credentials}@${process.env.PROXY_FQDN}:${process.env.PROXY_PORT}`;
+  const proxy_url = `http://${credentials}@${process.env.PROXY_FQDN}:${process.env.PROXY_PORT}`;
   // Setting this env var is a standard way to enable proxying for HTTP client
   // libraries.
   process.env.HTTPS_PROXY = proxy_url;
