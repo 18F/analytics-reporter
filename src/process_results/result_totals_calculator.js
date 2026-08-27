@@ -7,7 +7,7 @@
  * @param {string[]} options.sumActiveUsersByDimensions an array of columns to
  * be totalled by the number of active users for each unique key in the column.
  * @param {string[]} options.sumTotalUsersByDimensions an array of columns to
- * be totalled by the number of active users for each unique key in the column.
+ * be totalled by the number of total users for each unique key in the column.
  * @param {string[]} options.sumTotalEventsByDimensions an array of columns to
  * be totalled by the number of total events for each unique key in the column.
  * @returns {object} totals for the results.

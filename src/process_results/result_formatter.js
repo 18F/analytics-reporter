@@ -13,7 +13,7 @@ const csv = require("fast-csv");
  * @param {object} result an analytics object to be formatted.
  * @param {object} config optional configuration for the formatter.
  * @param {string} config.format the format to output can be "json" or "csv"
- * @param {boolean} config.slim whether the result should have it's data field
+ * @param {boolean} config.slim whether the result should have its data field
  * removed from the result of formatting (only for JSON format).
  * @returns {string} a JSON string or a CSV string depending on passed params.
  */
