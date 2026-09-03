@@ -77,7 +77,6 @@
     "date-fns": "^4.1.0",
     "fast-csv": "^4.3.6",
     "googleapis": "^140.0.0",
-    "knex": "^3.1.0",
     "max-listeners-exceeded-warning": "^0.0.1",
     "minimist": "^1.2.8",
     "newrelic": "^14.1.1",
@@ -106,6 +105,7 @@
     "yup": "^1.4.0"
   },
   "optionalDependencies": {
+    "knex": "^3.1.0",
     "pg": "^8.11.3"
   },
   "snyk": true
