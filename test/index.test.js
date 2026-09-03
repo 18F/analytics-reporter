@@ -7,6 +7,8 @@ let context;
 let reportConfigs;
 let logger;
 let processorError;
+let queueMessages;
+let pollError;
 
 class AppConfig {
   get filteredReportConfigurations() {
@@ -15,6 +17,14 @@ class AppConfig {
 
   get shouldWriteToDatabase() {
     return true;
+  }
+
+  get knexConfig() {
+    return {};
+  }
+
+  get messageQueueName() {
+    return "test_queue";
   }
 }
 
@@ -70,8 +80,30 @@ class Processor {
 
 class S3Service {}
 
+class Queue {
+  async start() {}
+
+  async poll(callback) {
+    if (pollError) {
+      throw pollError;
+    }
+    for (const message of queueMessages) {
+      await callback(message);
+    }
+  }
+
+  static buildQueue() {
+    return new Queue();
+  }
+}
+
+const knexStub = () => {
+  return { destroy: () => {} };
+};
+
 const subject = proxyquire("../index.js", {
   "node:async_hooks": { AsyncLocalStorage },
+  knex: knexStub,
   "./src/app_config": AppConfig,
   "./src/report_processing_context": ReportProcessingContext,
   "./src/processor": Processor,
@@ -81,6 +113,7 @@ const subject = proxyquire("../index.js", {
     },
   },
   "./src/publish/s3": S3Service,
+  "./src/queue/queue": Queue,
 });
 
 describe("index", () => {
@@ -149,6 +182,79 @@ describe("index", () => {
         expect(logger.error.calledWith(util.inspect(processorError))).to.equal(
           true,
         );
+      });
+    });
+  });
+
+  describe(".runQueueConsume", () => {
+    const message = {
+      agencyName: "agency",
+      analyticsReportIds: "1234",
+      awsBucketPath: "path/to/bucket",
+      scriptName: "script.js",
+      reportConfig: { foo: "bar" },
+      options: {},
+    };
+
+    beforeEach(() => {
+      processorError = undefined;
+      pollError = undefined;
+      queueMessages = [message];
+    });
+
+    describe("when a wrapJob function is provided", () => {
+      let wrapJob;
+
+      beforeEach(async () => {
+        wrapJob = sinon.spy((name, job) => job());
+        await subject.runQueueConsume({ wrapJob });
+      });
+
+      it("wraps each report processing job", () => {
+        expect(wrapJob.calledOnce).to.equal(true);
+      });
+
+      it("passes the job name to the wrapper", () => {
+        expect(wrapJob.firstCall.args[0]).to.equal("ProcessReport");
+      });
+
+      it("processes the report from the queue message", () => {
+        expect(context.reportConfig).to.equal(message.reportConfig);
+      });
+
+      it("logs processing complete", () => {
+        expect(logger.info.calledWith("Processing complete")).to.equal(true);
+      });
+    });
+
+    describe("when no wrapJob function is provided", () => {
+      beforeEach(async () => {
+        await subject.runQueueConsume();
+      });
+
+      it("processes the report from the queue message", () => {
+        expect(context.reportConfig).to.equal(message.reportConfig);
+      });
+
+      it("logs processing complete", () => {
+        expect(logger.info.calledWith("Processing complete")).to.equal(true);
+      });
+    });
+
+    describe("when polling the queue has an error", () => {
+      beforeEach(async () => {
+        pollError = new Error("queue is down");
+        await subject.runQueueConsume();
+      });
+
+      it("logs that there was a polling error", () => {
+        expect(
+          logger.error.calledWith("Error polling queue for messages"),
+        ).to.equal(true);
+      });
+
+      it("logs the error", () => {
+        expect(logger.error.calledWith(util.inspect(pollError))).to.equal(true);
       });
     });
   });
