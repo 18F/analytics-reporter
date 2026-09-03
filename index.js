@@ -1,6 +1,7 @@
 const { AsyncLocalStorage } = require("node:async_hooks");
 const knex = require("knex");
 const util = require("util");
+const newrelic = require("newrelic");
 const AppConfig = require("./src/app_config");
 const ReportProcessingContext = require("./src/report_processing_context");
 const Logger = require("./src/logger");
@@ -227,16 +228,21 @@ async function runQueueConsume() {
     );
 
     await queueClient.poll(async (message) => {
-      process.env.AGENCY_NAME = message.agencyName;
-      process.env.ANALYTICS_REPORT_IDS = message.analyticsReportIds;
-      process.env.AWS_BUCKET_PATH = message.awsBucketPath;
-      process.env.ANALYTICS_SCRIPT_NAME = message.scriptName;
+      return newrelic.startBackgroundTransaction(
+        "JobType/ProcessReport",
+        async () => {
+          process.env.AGENCY_NAME = message.agencyName;
+          process.env.ANALYTICS_REPORT_IDS = message.analyticsReportIds;
+          process.env.AWS_BUCKET_PATH = message.awsBucketPath;
+          process.env.ANALYTICS_SCRIPT_NAME = message.scriptName;
 
-      await _processReport(
-        new AppConfig(message.options),
-        context,
-        message.reportConfig,
-        processor,
+          await _processReport(
+            new AppConfig(message.options),
+            context,
+            message.reportConfig,
+            processor,
+          );
+        },
       );
     });
   } catch (e) {

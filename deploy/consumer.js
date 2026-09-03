@@ -1,10 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-
-if (process.env.NEW_RELIC_APP_NAME) {
-  require("newrelic");
-}
+require("newrelic");
 
 if (
   process.env.PROXY_FQDN &&
