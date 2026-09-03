@@ -1,7 +1,9 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-require("newrelic");
+// The newrelic module must be required before any module it instruments, so
+// this require needs to stay at the top of this file.
+const newrelic = require("newrelic");
 
 if (
   process.env.PROXY_FQDN &&
@@ -35,5 +37,11 @@ logger.info("===================================");
 const run = require("../index.js").runQueueConsume;
 
 (async () => {
-  await run();
+  await run({
+    // Report each report processing job to NewRelic as a background
+    // transaction. Grouping by "JobType" gives the transactions their own entry
+    // in the APM transaction type dropdown.
+    wrapJob: (name, job) =>
+      newrelic.startBackgroundTransaction(name, "JobType", job),
+  });
 })();

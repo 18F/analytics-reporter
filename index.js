@@ -1,7 +1,6 @@
 const { AsyncLocalStorage } = require("node:async_hooks");
 const knex = require("knex");
 const util = require("util");
-const newrelic = require("newrelic");
 const AppConfig = require("./src/app_config");
 const ReportProcessingContext = require("./src/report_processing_context");
 const Logger = require("./src/logger");
@@ -207,9 +206,30 @@ async function _initQueueClient(knexInstance, queueName, logger) {
 }
 
 /**
+ * The default job wrapper. Runs the job with no instrumentation. Entry points
+ * which have an APM agent loaded should pass their own wrapper instead. See
+ * deploy/consumer.js.
+ *
+ * @param {string} name the name of the job being run. Unused by the default
+ * wrapper.
+ * @param {Function} job the function which performs the job.
+ * @returns {Promise} resolves when the job completes.
+ */
+function _runJobUninstrumented(name, job) {
+  return job();
+}
+
+/**
+ * @param {object} options an object with options to be used when consuming
+ * report messages from the queue.
+ * @param {Function} options.wrapJob a function which receives a job name and
+ * the function which performs the job, and is responsible for invoking that
+ * function. Allows an entry point to wrap each job in an APM transaction
+ * without this module depending on an APM library. Defaults to running the job
+ * without instrumentation.
  * @returns {Promise} when the process ends
  */
-async function runQueueConsume() {
+async function runQueueConsume({ wrapJob = _runJobUninstrumented } = {}) {
   const appConfig = new AppConfig();
   const appLogger = Logger.initialize();
   const knexInstance = await knex(appConfig.knexConfig);
@@ -228,22 +248,19 @@ async function runQueueConsume() {
     );
 
     await queueClient.poll(async (message) => {
-      return newrelic.startBackgroundTransaction(
-        "JobType/ProcessReport",
-        async () => {
-          process.env.AGENCY_NAME = message.agencyName;
-          process.env.ANALYTICS_REPORT_IDS = message.analyticsReportIds;
-          process.env.AWS_BUCKET_PATH = message.awsBucketPath;
-          process.env.ANALYTICS_SCRIPT_NAME = message.scriptName;
+      return wrapJob("ProcessReport", async () => {
+        process.env.AGENCY_NAME = message.agencyName;
+        process.env.ANALYTICS_REPORT_IDS = message.analyticsReportIds;
+        process.env.AWS_BUCKET_PATH = message.awsBucketPath;
+        process.env.ANALYTICS_SCRIPT_NAME = message.scriptName;
 
-          await _processReport(
-            new AppConfig(message.options),
-            context,
-            message.reportConfig,
-            processor,
-          );
-        },
-      );
+        await _processReport(
+          new AppConfig(message.options),
+          context,
+          message.reportConfig,
+          processor,
+        );
+      });
     });
   } catch (e) {
     appLogger.error("Error polling queue for messages");
