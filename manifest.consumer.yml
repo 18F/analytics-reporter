@@ -9,6 +9,7 @@ applications:
   health-check-type: process
   buildpacks:
   - nodejs_buildpack
+  - binary_buildpack # for caddy egress-proxy
   command: node deploy/consumer.js
   env:
     # This is a JSON string which has been base64 encoded
@@ -21,6 +22,7 @@ applications:
     ANALYTICS_REPORT_EMAIL: ${ANALYTICS_REPORT_EMAIL}
     AWS_CACHE_TIME: '0'
     GOOGLE_APPLICATION_CREDENTIALS: /home/vcap/app/${ANALYTICS_KEY_FILE_NAME}
+    LOCAL_PROXY_PORT: ${LOCAL_PROXY_PORT}
     MESSAGE_QUEUE_NAME: ${MESSAGE_QUEUE_NAME}
     NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
     NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
@@ -34,6 +36,10 @@ applications:
   services:
   - ${S3_SERVICE_NAME}
   - ${DB_SERVICE_NAME}
+  sidecars:
+    - name: local-forward-proxy
+      process_types: ['web']
+      command: exec ./cg-egress-proxy/caddy run --config ./cg-egress-proxy/Caddyfile
   routes:
   - route: ${APP_NAME}-consumer.apps.internal
   stack: cflinuxfs4

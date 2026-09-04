@@ -1,0 +1,16 @@
+{
+	log {
+		format console
+		level INFO
+	}
+	auto_https off
+}
+
+:{$LOCAL_PROXY_PORT} {
+  route {
+    forward_proxy {
+        upstream https://{$PROXY_USERNAME}:{$PROXY_PASSWORD}@{$PROXY_FQDN}:{$PROXY_PORT}
+    }
+  }
+}
+

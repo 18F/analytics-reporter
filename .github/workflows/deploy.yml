@@ -41,6 +41,9 @@ on:
       S3_SERVICE_NAME:
         required: true
         type: string
+      LOCAL_PROXY_PORT:
+        required: true
+        type: string
     secrets:
       ANALYTICS_CREDENTIALS:
         required: true
@@ -69,6 +72,7 @@ env:
   CF_SPACE_NAME: ${{ inputs.CF_SPACE_NAME }}
   DB_SERVICE_NAME: ${{ inputs.DB_SERVICE_NAME }}
   GA4_CREDS: ${{ secrets.GA4_CREDS }}
+  LOCAL_PROXY_PORT: ${{ inputs.LOCAL_PROXY_PORT }}
   MESSAGE_QUEUE_NAME: ${{ inputs.MESSAGE_QUEUE_NAME }}
   NEW_RELIC_APP_NAME: ${{ inputs.NEW_RELIC_APP_NAME }}
   NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
