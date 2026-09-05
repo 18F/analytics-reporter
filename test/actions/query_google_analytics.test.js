@@ -276,6 +276,8 @@ describe("QueryGoogleAnalytics", () => {
         activeUsers: 2400,
         totalUsers: 2400,
         visits: 2400,
+        start_date: "2017-01-30",
+        end_date: "2017-01-30",
       });
     });
   });

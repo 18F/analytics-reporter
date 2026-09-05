@@ -126,9 +126,9 @@ const calculateTotals = (result, options = {}) => {
   }
 
   // Set the start and end date
-  if (result.data[0].data) {
+  if (result.data[0].date) {
     // Occasionally we'll get bogus start dates
-    if (result.date[0].date === "(other)") {
+    if (result.data[0].date === "(other)") {
       totalledResult.start_date = result.data[1].date;
     } else {
       totalledResult.start_date = result.data[0].date;
