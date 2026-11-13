@@ -520,4 +520,40 @@ describe("AnalyticsData", () => {
       });
     });
   });
+
+  describe(".processData", () => {
+    it("leaves a yearMonth dimension value it cannot parse unchanged", () => {
+      const query = {
+        dimensions: [{ name: "yearMonth" }],
+        metrics: [{ name: "sessions" }],
+      };
+      const gaResponse = [
+        {
+          dimensionHeaders: [{ name: "yearMonth" }],
+          metricHeaders: [{ name: "sessions" }],
+          rows: [
+            {
+              dimensionValues: [{ value: "202502" }],
+              metricValues: [{ value: "10" }],
+            },
+            {
+              dimensionValues: [{ value: "(other)" }],
+              metricValues: [{ value: "3" }],
+            },
+          ],
+        },
+      ];
+
+      const analyticsData = AnalyticsData.fromGoogleAnalyticsQuery(
+        query,
+        gaResponse,
+      )[0];
+      analyticsData.processData({ meta: {} }, "gov-wide");
+
+      expect(analyticsData.toJSON().data).to.deep.equal([
+        { yearMonth: "February 2025", visits: "10" },
+        { yearMonth: "(other)", visits: "3" },
+      ]);
+    });
+  });
 });
