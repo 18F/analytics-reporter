@@ -145,12 +145,16 @@ class AnalyticsData {
   /**
    * @param {string} value a yearMonth dimension from GA.
    * @returns {string} the yearMonth converted to readable format e.g '202410'
-   * converts to 'October 2024'.
+   * converts to 'October 2024'. Values which are not a year and month, such as
+   * '(other)', are returned unchanged.
    */
   #formatYearMonth(value) {
     const year = parseInt(value.substring(0, 4));
     const monthIndex = parseInt(value.substring(4)) - 1;
     const date = new Date(year, monthIndex);
+    if (isNaN(date.getTime())) {
+      return value;
+    }
     return date.toLocaleString("en-us", { month: "long", year: "numeric" });
   }
 
